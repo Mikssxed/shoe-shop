@@ -2,6 +2,7 @@ import theme from "@/theme";
 import { ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
+import "../styles/globals.css"
 
 export const metadata: Metadata = {
   title: "Shoe shop",
