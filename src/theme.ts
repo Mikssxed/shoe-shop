@@ -65,7 +65,9 @@ theme = createTheme({
     grey: {
       100: "#eaecf0",
       200: "#98a2b3",
+      300: "#F9FAFB",
       400: "#797979",
+      500: "#6E7378",
       700: "#494949",
     },
   },
@@ -73,6 +75,7 @@ theme = createTheme({
     MuiIconButton: {
       styleOverrides: {
         root: ({ theme }) => ({
+          borderRadius: "12px",
           "&:hover": { backgroundColor: theme.palette.grey[100] },
         }),
       },
@@ -184,6 +187,13 @@ theme = createTheme({
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             border: "none",
           },
+        }),
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: () => ({
+          backgroundColor: theme.palette.grey[300],
         }),
       },
     },

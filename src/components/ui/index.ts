@@ -1,5 +1,6 @@
+import BaseSidebar from "./BaseSidebar";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 import TextArea from "./TextArea";
 
-export { Dropdown, Input, TextArea };
+export { BaseSidebar, Dropdown, Input, TextArea };
