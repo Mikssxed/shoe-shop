@@ -1,12 +1,12 @@
 "use client";
 import { FilterSidebar, ProductList } from "@/components/common";
+import { useIsMobile } from "@/hooks";
 import {
   Box,
   IconButton,
   Stack,
   SxProps,
   Typography,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
@@ -97,7 +97,7 @@ const fakeFiltersData: FiltersData = {
 const Products = () => {
   const theme = useTheme();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useIsMobile();
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
