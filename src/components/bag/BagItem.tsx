@@ -1,8 +1,5 @@
-import { Box, Button, Typography } from "@mui/material"
-import trashIcon from "@/assets/icons/trash.svg"
 import Image from "next/image"
-import plusIcon from "@/assets/icons/plus.svg"
-import minusIcon from "@/assets/icons/minus.svg"
+import { Box, Button, Typography } from "@mui/material"
 
 //UPDATE PROPS
 interface BagItemProps {
@@ -130,8 +127,8 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 <Image
                   layout="fill"
                   objectFit="contain"
-                  src={minusIcon}
-                  alt="minus icon"
+                  src={'/public/icons/minus.svg'}
+                  alt="minus"
                 />
               </Button>
               <Typography
@@ -159,8 +156,8 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 <Image
                   layout="fill"
                   objectFit="contain"
-                  src={plusIcon}
-                  alt="plus icon"
+                  src={'/public/icons/plus.svg'}
+                  alt="plus"
                 />
               </Button>
             </Box>
@@ -207,8 +204,8 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               <Image
                 layout="fill"
                 objectFit="contain"
-                src={trashIcon}
-                alt="trash icon"
+                src={'/public/icons/trash.svg'}
+                alt="trash"
               />
             </Box>
             Delete

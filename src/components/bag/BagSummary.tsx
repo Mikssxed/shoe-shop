@@ -1,16 +1,14 @@
-import React from "react"
-import { Typography, Divider, Box, Button, TextField } from "@mui/material"
-import { useState } from "react"
-import BagPricingList from "@/components/bag/BagPricingList"
-import Image from "next/image"
-import dropdownIcon from "@/assets/icons/Vector8.svg"
+import React, { useState } from "react";
+import Image from "next/image";
+import { Typography, Divider, Box, Button, TextField } from "@mui/material";
+import BagPricingList from "@/components/bag/BagPricingList";
 
 interface BagSummaryProps {
-  subtotal: number
+  subtotal: number;
 }
 
 const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
-  const [showPromoInput, setShowPromoInput] = useState(false)
+  const [showPromoInput, setShowPromoInput] = useState(false);
   return (
     <Box
       sx={{
@@ -46,7 +44,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
       >
         Do you have a promocode?{" "}
         <Image
-          src={dropdownIcon}
+          src={"/public/icons/dropdown.svg"}
           style={{ marginLeft: "4px" }}
           alt="dropdown"
         />
@@ -96,7 +94,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         Checkout
       </Button>
     </Box>
-  )
-}
+  );
+};
 
-export default BagSummary
+export default BagSummary;

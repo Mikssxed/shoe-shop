@@ -94,7 +94,7 @@ export default function ProfileSidebar({
     <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
       <Avatar
         alt="Remy Sharp"
-        src="/avatar.png"
+        src="/images/avatar.png"
         sx={{ width: 64, height: 64 }}
       />
       <Toolbar

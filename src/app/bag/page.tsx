@@ -4,7 +4,6 @@ import { Container, Typography, Divider, Box, Button } from "@mui/material"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { Fragment, useMemo } from "react"
 import Image from "next/image"
-import bagTick from "@/assets/icons/bag-tick.svg"
 import "./index.css"
 import BagSummary from "@/components/bag/BagSummary"
 
@@ -182,7 +181,7 @@ const Bag = () => {
                 marginBottom: "10px",
               }}
             >
-              <Image src={bagTick} alt="bagTick" />
+              <Image src={'/public/icons/bag-tick.svg'} alt="bagTick" />
             </Box>
             <Typography
               sx={{

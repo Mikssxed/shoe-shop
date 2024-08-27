@@ -17,6 +17,7 @@ export const inter = Inter({
   subsets: ["latin"],
   fallback: ["system-ui", "arial"],
 });
+
 let theme = createTheme();
 
 theme = createTheme({
@@ -46,7 +47,8 @@ theme = createTheme({
     },
 
     body1: {
-      fontSize: 16,
+      fontSize: 15,
+      color: "#5c5c5c",
     },
     body2: {
       fontSize: 12,

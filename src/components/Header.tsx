@@ -50,7 +50,7 @@ const Header = () => {
           }}
         >
           <Box sx={{ display: "flex", flexGrow: 1 }}>
-            <Image alt="logo" width="40" height="30" src="/logo.png" />
+            <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
             <Typography
               align="center"
               sx={{ marginInline: "44px", lineHeight: "30px" }}
@@ -115,7 +115,7 @@ const Header = () => {
               {/*TODO: Change to user picture and add onclick to route to user profile or menu*/}
               <Avatar
                 alt="User avatar"
-                src="/avatar.png"
+                src="/images/avatar.png"
                 sx={{ width: 24, height: 24 }}
               />
             </Box>

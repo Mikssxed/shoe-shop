@@ -73,7 +73,7 @@ export default function Search({ open, handleClose }: SearchProps) {
         ref={boxRef}
       >
         <Box display={{ xs: "none", sm: "block" }}>
-          <Image alt="logo" width="40" height="30" src="/logo.png" />
+          <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
         </Box>
         <Box
           sx={{

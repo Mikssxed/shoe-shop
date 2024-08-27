@@ -1,11 +1,11 @@
+import SignUpForm from "@/components/forms/SignUpForm";
 import { Box, Link as MaterialLink, Typography } from "@mui/material";
-import LogInForm from "@/components/forms/LogInForm";
 
-export default function Login() {
+export default function SignUp() {
   return (
     <Box marginTop="40px">
       <Typography variant="h1" sx={{ lineHeight: "53px", fontSize: "45px" }}>
-        Welcome back
+        Create an account
       </Typography>
       <Typography
         variant="body1"
@@ -16,13 +16,13 @@ export default function Login() {
           marginTop: "16px",
         }}
       >
-        Please enter your details to log into your account.
+        Create an account to get an easy access to your dream shopping
       </Typography>
-      <LogInForm />
+      <SignUpForm />
       <Typography variant="body1" sx={{ textAlign: "center" }}>
-        Don’t have an account?{" "}
-        <MaterialLink href="/sign-up" underline="hover">
-          Sign up
+        Already have an account?{" "}
+        <MaterialLink href="/log-in" underline="hover">
+          Log in
         </MaterialLink>
       </Typography>
     </Box>
