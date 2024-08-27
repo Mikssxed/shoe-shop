@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Shoes Shop - Solvd Final Project
 
-First, run the development server:
+Welcome to our Shoes Shop web application! This platform allows users to explore a wide range of shoes, that are made to fit different shapes and sizes. Whether you're a shoe enthusiast or looking to sell your own products, our application provides a smooth experience.    
 
+Our Shoes Shop is designed to provide a user-friendly experience, whether you're looking to buy your next pair of shoes or start selling your own products. Enjoy the convenience of shopping or selling in one integrated platform!
+
+## Installation
+Clone the project
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  $ git clone git@github.com:ATErcan/solvd-team-1-final-project.git
 ```
+Install project with npm
+```bash
+  npm install
+  npm run dev
+```
+Go to http://localhost:3000/ (or to the port that hosts the app) in your browser
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Demo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The project is under development. Most of the features are not available at the moment. You can view the design of some pages. We will let you know you when new features are added. Please stay tuned.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- **Browse Products:** Users can easily view and search for a variety of shoes without needing to sign in.    
+- **User Authentication:** To purchase shoes, users must sign in to the website, ensuring a secure shopping experience. 
+- **Product Search:** Quickly find the exact shoes you're looking for using our intuitive search functionality.
+- **Buy and Sell Shoes:** Registered users can not only buy shoes but also add their own products to the shop for sale. Users have full control over their listings, with options to edit or remove their products at any time.  
+- **Product Management:** Manage your shoe listings with ease – update product details, sizes, and prices as needed.  
+- **Favorites and Bag:** Users can add shoes to their favorites or bag for easy access and a streamlined shopping experience.  
 
-To learn more about Next.js, take a look at the following resources:
+Some of these features are currently unavailable. They'll be available soon.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Framework**: Next.js
+- **Frontend**: React, Material-UI (MUI), Emotion for styling
+- **State Management**: React Query
+- **HTTP Client**: Axios
+- **Icons**: Iconsax-React, Material Icons
+- **Testing**: Jest, React Testing Library
+- **Language**: TypeScript, JavaScript
+- **Linting and Formatting**: ESLint
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributors
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Ahmet Talha Ercan](https://www.github.com/ATErcan)
+- [Wojciech Masłowski](https://github.com/Mikssxed)
+- [Kamil Witek](https://github.com/kamilwitek98)
+- [Szymon Wos](https://github.com/swos13)
+- [Vladyslav Kovalchuk](https://github.com/vladkvlchk). 
