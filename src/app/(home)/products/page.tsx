@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
 import { useEffect, useState } from "react";
-import { FiltersData, Product } from "../types";
+import { FiltersData, Product } from "../../types";
 
 const styles: Record<string, SxProps> = {
   filterButtons: {

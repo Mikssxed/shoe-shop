@@ -49,6 +49,7 @@ export default function BaseSidebar({
           boxSizing: "border-box",
           width: sidebarWidth,
           height: { xs: "100%", md: "calc(100vh - 120px)" }, // 120px is the height of the header TODO: change to theme value
+          top: { xs: 0, md: "120px" }, // 120px is the height of the header TODO: change to theme value
           border: "none",
           overflowX: "hidden",
         },
