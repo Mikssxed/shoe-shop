@@ -1,5 +1,5 @@
 "use client";
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { alpha, createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { Inter, Work_Sans } from "next/font/google";
 
 const workSans = Work_Sans({
@@ -133,6 +133,7 @@ theme = createTheme({
           textTransform: "none",
           whiteSpace: "nowrap",
           boxShadow: "none",
+          borderRadius: theme.spacing(),
           "&:hover": {
             boxShadow: "none",
           },
@@ -146,7 +147,6 @@ theme = createTheme({
           },
         }),
         outlined: ({ theme }) => ({
-          borderRadius: theme.spacing(),
           border: `1px solid ${theme.palette.primary.main}`,
           "&:hover": {
             color: theme.palette.common.white,
@@ -199,6 +199,17 @@ theme = createTheme({
         }),
       },
     },
+  },
+});
+
+theme = createTheme(theme, {
+  palette: {
+    backdrop: theme.palette.augmentColor({
+      color: {
+        main: alpha("#F3F3F3", 0.9),
+      },
+      name: "backdrop",
+    }),
   },
 });
 
