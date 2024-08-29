@@ -1,23 +1,23 @@
+import { Data, ProductAttributes } from "@/lib/types";
 import { Avatar, Grid, Stack, Typography, useTheme } from "@mui/material";
-
-import { Product } from "@/app/types";
 import { BagCross1 } from "iconsax-react";
 import ProductCard from "./ProductCard";
 
 type Props = {
   fullWidth?: boolean;
-  products: Product[];
+  products: Data<ProductAttributes>[];
 };
 
 const ProductList = ({ fullWidth, products }: Props) => {
   const theme = useTheme();
+
   return (
     <Grid
       container
       spacing={{ xs: 2, sm: 5, lg: 6, xl: 8 }}
       columns={{ xs: 12, md: 12, lg: 12, xl: fullWidth ? 10 : 12 }}
     >
-      {products?.map((product, index) => (
+      {products.map((product, index) => (
         <Grid
           key={product.id}
           item
@@ -31,7 +31,10 @@ const ProductList = ({ fullWidth, products }: Props) => {
             transition: "all 0.3s ease-in-out",
           }}
         >
-          <ProductCard imagePriority={index === 0} product={product} />
+          <ProductCard
+            imagePriority={index === 0}
+            product={{ ...product.attributes, id: product.id }}
+          />
         </Grid>
       ))}
       {products.length <= 0 && (

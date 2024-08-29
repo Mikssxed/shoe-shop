@@ -1,66 +1,20 @@
 "use client";
 import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
+import { Data, FiltersData, ProductAttributes } from "@/lib/types";
+import { useProducts } from "@/tools";
 import {
   Box,
+  CircularProgress,
   IconButton,
   Stack,
-  SxProps,
   Typography,
   useTheme,
 } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
-import { useEffect, useState } from "react";
-import { FiltersData, Product } from "../../types";
-
-const styles: Record<string, SxProps> = {
-  filterButtons: {
-    marginTop: "15px",
-    display: "flex",
-    gap: "10px",
-  },
-};
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // TODO: Remove this once the API is integrated
-const fakeProducts: Product[] = [
-  {
-    price: 29.99,
-    id: 1,
-    name: "Wireless Mouse",
-    image: "https://img.freepik.com/free-photo/pair-trainers_144627-3800.jpg",
-  },
-  {
-    price: 199.99,
-    id: 2,
-    name: "Mechanical Keyboard",
-    image: "https://img.freepik.com/free-photo/pair-trainers_144627-3800.jpg",
-  },
-  {
-    price: 499.99,
-    id: 3,
-    name: "27-inch Monitor",
-    image: "https://img.freepik.com/free-photo/pair-trainers_144627-3800.jpg",
-  },
-  {
-    price: 99.99,
-    id: 4,
-    name: "Bluetooth Headphones",
-    image: "https://img.freepik.com/free-photo/pair-trainers_144627-3800.jpg",
-  },
-  {
-    price: 49.99,
-    id: 5,
-    name: "Portable SSD",
-    image: "https://img.freepik.com/free-photo/pair-trainers_144627-3800.jpg",
-  },
-  {
-    price: 14.99,
-    id: 6,
-    name: "USB-C Hub",
-    image: "https://img.freepik.com/free-photo/pair-trainers_144627-3800.jpg",
-  },
-];
-
 const fakeFiltersData: FiltersData = {
   genders: [
     { id: 1, name: "Male" },
@@ -96,9 +50,16 @@ const fakeFiltersData: FiltersData = {
 
 const Products = () => {
   const theme = useTheme();
+  const bottomElementRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobile();
   const [showFilters, setShowFilters] = useState(false);
+  const { data, isLoading, hasNextPage, fetchNextPage } = useProducts();
+
+  const products: Data<ProductAttributes>[] | undefined = useMemo(
+    () => data?.pages.flatMap((page) => page.data),
+    [data]
+  );
 
   useEffect(() => {
     if (isMobile) {
@@ -112,11 +73,35 @@ const Products = () => {
     setShowFilters(!showFilters);
   };
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && hasNextPage) {
+            fetchNextPage();
+          }
+        });
+      },
+      { threshold: 1 }
+    );
+
+    const bottomElement = bottomElementRef.current;
+    if (bottomElement) {
+      observer.observe(bottomElement);
+    }
+
+    return () => {
+      if (bottomElement) {
+        observer.unobserve(bottomElement);
+      }
+    };
+  }, [bottomElementRef, hasNextPage, fetchNextPage]);
+
   return (
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{ maxWidth: 1850, marginX: "auto" }}
+      sx={{ maxWidth: 1850, marginX: "auto", paddingX: "20px" }}
     >
       <FilterSidebar
         onClose={() => setShowFilters(false)}
@@ -126,13 +111,16 @@ const Products = () => {
         productsCount={0}
         filtersData={fakeFiltersData}
       />
-      <Box sx={{ padding: { xs: "0 24px", md: 0 }, marginTop: 3 }}>
+      <Box
+        sx={{ padding: { xs: "0 24px", md: 0 }, marginTop: 3, width: "100%" }}
+      >
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             marginBottom: 3,
+            width: "100%",
           }}
         >
           <Typography variant="h1">Search Results</Typography>
@@ -152,7 +140,23 @@ const Products = () => {
             )}
           </IconButton>
         </Box>
-        <ProductList fullWidth={!showFilters} products={fakeProducts} />
+        {isLoading && (
+          <Box
+            sx={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 10,
+            }}
+          >
+            <CircularProgress size={100} />
+          </Box>
+        )}
+        {products && (
+          <ProductList fullWidth={!showFilters} products={products} />
+        )}
+        <div ref={bottomElementRef} />
       </Box>
     </Stack>
   );

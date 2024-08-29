@@ -1,4 +1,4 @@
-import { Product } from "@/app/types";
+import { ProductAttributes } from "@/lib/types";
 import {
   Box,
   Card,
@@ -15,7 +15,7 @@ import Link from "next/link";
 import { MouseEvent } from "react";
 
 type Props = {
-  product: Product;
+  product: ProductAttributes;
   imagePriority: boolean;
 };
 
@@ -68,10 +68,10 @@ const ProductCard = ({ product, imagePriority }: Props) => {
                 Add to cart
               </IconButton>
             </Box>
-            {product.image ? (
+            {product.images?.data ? (
               <Image
-                src={product.image}
-                alt={product.name}
+                src={product.images.data[0].attributes.url}
+                alt={product.name!}
                 fill
                 style={{ objectFit: "cover" }}
                 priority={imagePriority}
