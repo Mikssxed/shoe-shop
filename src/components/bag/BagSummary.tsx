@@ -44,7 +44,9 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
       >
         Do you have a promocode?{" "}
         <Image
-          src={"/public/icons/dropdown.svg"}
+          width={24}
+          height={24}
+          src={"/icons/dropdown.svg"}
           style={{ marginLeft: "4px" }}
           alt="dropdown"
         />

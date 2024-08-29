@@ -123,7 +123,7 @@ export default function UpdateProfile() {
       <Box sx={updateProfileInfoBoxStyles}>
         <Avatar
           alt="Remy Sharp"
-          src="/avatar.png"
+          src="/images/avatar.png"
           sx={updateProfileAvatarStyles}
         />
         {/* TODO: Replace the buttons below with reusable Button component */}

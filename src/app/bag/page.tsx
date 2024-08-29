@@ -1,18 +1,18 @@
-"use client"
-import BagItem from "@/components/bag/BagItem"
-import { Container, Typography, Divider, Box, Button } from "@mui/material"
-import { createTheme, ThemeProvider } from "@mui/material"
-import { Fragment, useMemo } from "react"
-import Image from "next/image"
-import "./index.css"
-import BagSummary from "@/components/bag/BagSummary"
+"use client";
+import BagItem from "@/components/bag/BagItem";
+import { Container, Typography, Divider, Box, Button } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { Fragment, useMemo } from "react";
+import Image from "next/image";
+import "./index.css";
+import BagSummary from "@/components/bag/BagSummary";
 
 //DELETE THENE AND PROVIDER
 const theme = createTheme({
   typography: {
     fontFamily: "Work+Sans",
   },
-})
+});
 
 //DUMMY DATA NEEDS TO BE CHANGED IN FUTURE
 const cart = [
@@ -58,13 +58,13 @@ const cart = [
     price: 110,
     amount: 1,
   },
-]
+];
 
 const Bag = () => {
   const subtotal = useMemo(
     () => cart.reduce((acc, shoe) => acc + shoe.price * shoe.amount, 0),
     [JSON.stringify(cart)]
-  )
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -181,7 +181,12 @@ const Bag = () => {
                 marginBottom: "10px",
               }}
             >
-              <Image src={'/public/icons/bag-tick.svg'} alt="bagTick" />
+              <Image
+                src={"/icons/bag-tick.svg"}
+                alt="bagTick"
+                width={24}
+                height={24}
+              />
             </Box>
             <Typography
               sx={{
@@ -279,7 +284,7 @@ const Bag = () => {
         </Button>
       </Box>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Bag
+export default Bag;

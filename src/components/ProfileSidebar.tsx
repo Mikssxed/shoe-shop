@@ -18,8 +18,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Avatar } from "@mui/material";
 import { profileSidebarData } from "@/lib/config/profile-sidebar";
-import * as Cross from "@/assets/icons/cross.png";
-import * as HamburgerMenu from "@/assets/icons/menu.png";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -214,7 +212,7 @@ export default function ProfileSidebar({
         }}
       >
         <Image
-          src={Cross}
+          src={'/icons/cross.svg'}
           alt="Close Sidebar Icon"
           width={10}
           height={10}

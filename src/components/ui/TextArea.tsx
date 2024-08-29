@@ -69,7 +69,12 @@ const Textarea = ({
             marginTop: "8px",
           }}
         >
-          <Image src={warningIcon} alt="" />
+          <Image
+            src={"/icons/warningIcon.svg"}
+            alt="warning"
+            width={15}
+            height={13}
+          />
           {errorMessage}
         </Box>
       )}

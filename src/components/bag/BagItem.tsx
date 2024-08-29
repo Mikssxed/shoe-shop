@@ -127,7 +127,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 <Image
                   layout="fill"
                   objectFit="contain"
-                  src={'/public/icons/minus.svg'}
+                  src={'/icons/minus.svg'}
                   alt="minus"
                 />
               </Button>
@@ -156,7 +156,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 <Image
                   layout="fill"
                   objectFit="contain"
-                  src={'/public/icons/plus.svg'}
+                  src={'/icons/plus.svg'}
                   alt="plus"
                 />
               </Button>
@@ -204,7 +204,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               <Image
                 layout="fill"
                 objectFit="contain"
-                src={'/public/icons/trash.svg'}
+                src={'/icons/trash.svg'}
                 alt="trash"
               />
             </Box>

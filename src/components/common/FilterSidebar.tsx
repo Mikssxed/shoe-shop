@@ -11,7 +11,6 @@ import Image from "next/image";
 import { BaseSidebar } from "../ui";
 import { Category } from "./Category";
 import PriceSlider from "./PriceSlider";
-import Cross from "/public/icons/cross.svg";
 
 type Props = {
   open: boolean;
@@ -61,8 +60,8 @@ export const FilterSidebar = ({
           {isMobile ? (
             <IconButton onClick={onClose} sx={{ display: { md: "none" } }}>
               <Image
-                src={Cross}
-                alt=""
+                src={'/icons/cross.svg'}
+                alt="close"
                 width={20}
                 height={20}
                 style={{

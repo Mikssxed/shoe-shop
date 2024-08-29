@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { ComponentProps, useId } from "react";
-import warningIcon from "/public/icons/warningIcon.svg";
 
 type InputProps = {
   label: string;
@@ -71,7 +70,7 @@ const Input = ({
             alignItems: "center",
           }}
         >
-          <Image src={warningIcon} alt="warning" />
+          <Image src={"/icons/warningIcon.svg"} alt="warning" width={15} height={13}/>
           <Typography
             component="p"
             sx={{
