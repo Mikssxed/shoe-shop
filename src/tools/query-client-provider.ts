@@ -1,4 +1,5 @@
 import * as ReactQuery from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
 
 const queryClient = new ReactQuery.QueryClient({
   defaultOptions: {
@@ -10,7 +11,7 @@ const queryClient = new ReactQuery.QueryClient({
       retry: (failureCount, error: AxiosError) => {
         if (failureCount >= 3) {
           console.error("Failed to fetch data after 3 attempts", error.message);
-          // TODO: DISPLAY ERROR TOAST
+          enqueueSnackbar("Failed to fetch data", { variant: "error" });
           return false;
         }
         if (
@@ -20,7 +21,7 @@ const queryClient = new ReactQuery.QueryClient({
           return true;
         }
         console.error("Failed to fetch data", error.message);
-        // TODO: DISPLAY ERROR TOAST
+        enqueueSnackbar("Failed to fetch data", { variant: "error" });
         return false;
       },
     },

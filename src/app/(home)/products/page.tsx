@@ -51,7 +51,6 @@ const fakeFiltersData: FiltersData = {
 const Products = () => {
   const theme = useTheme();
   const bottomElementRef = useRef<HTMLDivElement>(null);
-
   const isMobile = useIsMobile();
   const [showFilters, setShowFilters] = useState(false);
   const { data, isLoading, hasNextPage, fetchNextPage } = useProducts();

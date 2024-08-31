@@ -1,9 +1,9 @@
+import AppProvider from "@/lib/AppProvider";
 import theme from "@/theme";
 import { ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Shoe shop",
@@ -19,11 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="/icons/logo.svg" sizes="any" />
       <body>
-        <Providers>
+        <AppProvider>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>{children}</ThemeProvider>
           </AppRouterCacheProvider>
-        </Providers>
+        </AppProvider>
       </body>
     </html>
   );
