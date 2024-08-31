@@ -1,4 +1,4 @@
-import { FiltersData } from "@/app/types";
+import { BaseWithName, BaseWithValue, FiltersData } from "@/lib/types";
 import {
   Box,
   Button,
@@ -60,7 +60,7 @@ export const FilterSidebar = ({
           {isMobile ? (
             <IconButton onClick={onClose} sx={{ display: { md: "none" } }}>
               <Image
-                src={'/icons/cross.svg'}
+                src={"/icons/cross.svg"}
                 alt="close"
                 width={20}
                 height={20}
@@ -94,9 +94,12 @@ export const FilterSidebar = ({
           <Category
             key={name}
             name={name}
-            options={options?.map(({ id, name }) => ({
-              id,
-              value: name,
+            options={options.data?.map((option) => ({
+              id: option.id,
+              value:
+                name === "Sizes"
+                  ? (option.attributes as BaseWithValue).value
+                  : (option.attributes as BaseWithName).name,
             }))}
           />
         ))}

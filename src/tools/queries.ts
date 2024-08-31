@@ -1,5 +1,5 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { getProducts } from "./api";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getFiltersData, getProducts } from "./api";
 
 export const useProducts = () => {
   return useInfiniteQuery({
@@ -14,4 +14,8 @@ export const useProducts = () => {
     },
     initialPageParam: 1,
   });
+};
+
+export const useFilters = () => {
+  return useQuery({ queryKey: ["filters"], queryFn: getFiltersData });
 };

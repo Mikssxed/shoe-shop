@@ -1,16 +1,21 @@
 export type FiltersData = {
-  genders: Base[];
-  colors: Base[];
-  categories: Base[];
-  brands: Base[];
-  sizes: Base[];
+  genders: ApiResponseList<BaseWithName>;
+  colors: ApiResponseList<BaseWithName>;
+  categories: ApiResponseList<BaseWithName>;
+  brands: ApiResponseList<BaseWithName>;
+  sizes: ApiResponseList<BaseWithValue>;
 };
-
-// TODO: add correct types from response
 
 export type Base = {
   id: number;
+};
+
+export type BaseWithName = Base & {
   name: string;
+};
+
+export type BaseWithValue = Base & {
+  value: string;
 };
 
 export type RequestData<T> = {
@@ -43,3 +48,6 @@ type DefaultAttributes = {
   updatedAt: string;
   publishedAt: string;
 };
+
+export type ApiResponse<T> = ResponseData<Data<T>>;
+export type ApiResponseList<T> = ResponseData<Data<T>[]>;

@@ -1,4 +1,9 @@
-import { ProductsResponse } from "@/lib/types";
+import {
+  ApiResponseList,
+  BaseWithName,
+  BaseWithValue,
+  ProductsResponse,
+} from "@/lib/types";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -26,4 +31,27 @@ export const getProducts = async (page: number) => {
       "pagination[pageSize]": 12,
     },
   });
+};
+
+export const getFiltersData = async () => {
+  try {
+    const [genders, colors, categories, brands, sizes] = await Promise.all([
+      fetchData<ApiResponseList<BaseWithName>>("/genders"),
+      fetchData<ApiResponseList<BaseWithName>>("/colors"),
+      fetchData<ApiResponseList<BaseWithName>>("/categories"),
+      fetchData<ApiResponseList<BaseWithName>>("/brands"),
+      fetchData<ApiResponseList<BaseWithValue>>("/sizes"),
+    ]);
+
+    return {
+      genders,
+      colors,
+      categories,
+      brands,
+      sizes,
+    };
+  } catch (error) {
+    console.error("Error retrieving filters data:", error);
+    throw new Error("Could not get filters data");
+  }
 };

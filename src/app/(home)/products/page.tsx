@@ -1,8 +1,8 @@
 "use client";
 import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
-import { Data, FiltersData, ProductAttributes } from "@/lib/types";
-import { useProducts } from "@/tools";
+import { Data, ProductAttributes } from "@/lib/types";
+import { useFilters, useProducts } from "@/tools";
 import {
   Box,
   CircularProgress,
@@ -14,47 +14,13 @@ import {
 import { FilterRemove, FilterSearch } from "iconsax-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-// TODO: Remove this once the API is integrated
-const fakeFiltersData: FiltersData = {
-  genders: [
-    { id: 1, name: "Male" },
-    { id: 2, name: "Female" },
-    { id: 3, name: "Unisex" },
-  ],
-  colors: [
-    { id: 1, name: "Red" },
-    { id: 2, name: "Blue" },
-    { id: 3, name: "Green" },
-    { id: 4, name: "Black" },
-    { id: 5, name: "White" },
-  ],
-  categories: [
-    { id: 1, name: "Shirts" },
-    { id: 2, name: "Pants" },
-    { id: 3, name: "Shoes" },
-    { id: 4, name: "Accessories" },
-  ],
-  brands: [
-    { id: 1, name: "Brand A" },
-    { id: 2, name: "Brand B" },
-    { id: 3, name: "Brand C" },
-    { id: 4, name: "Brand D" },
-  ],
-  sizes: [
-    { id: 1, name: "Small" },
-    { id: 2, name: "Medium" },
-    { id: 3, name: "Large" },
-    { id: 4, name: "X-Large" },
-  ],
-};
-
 const Products = () => {
   const theme = useTheme();
   const bottomElementRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const [showFilters, setShowFilters] = useState(false);
   const { data, isLoading, hasNextPage, fetchNextPage } = useProducts();
-
+  const { data: filtersData } = useFilters();
   const products: Data<ProductAttributes>[] | undefined = useMemo(
     () => data?.pages.flatMap((page) => page.data),
     [data]
@@ -102,14 +68,16 @@ const Products = () => {
       justifyContent="center"
       sx={{ maxWidth: 1850, marginX: "auto", paddingX: "20px" }}
     >
-      <FilterSidebar
-        onClose={() => setShowFilters(false)}
-        isMobile={isMobile}
-        open={showFilters}
-        searchingString={""}
-        productsCount={0}
-        filtersData={fakeFiltersData}
-      />
+      {filtersData && (
+        <FilterSidebar
+          onClose={() => setShowFilters(false)}
+          isMobile={isMobile}
+          open={showFilters}
+          searchingString={""}
+          productsCount={0}
+          filtersData={filtersData}
+        />
+      )}
       <Box
         sx={{ padding: { xs: "0 24px", md: 0 }, marginTop: 3, width: "100%" }}
       >

@@ -1,4 +1,11 @@
-import { Data, RequestData, ResponseData } from "./data";
+import {
+  ApiResponse,
+  ApiResponseList,
+  BaseWithName,
+  BaseWithValue,
+  Data,
+  RequestData,
+} from "./data.type";
 
 export type Product = {
   id: number;
@@ -6,16 +13,6 @@ export type Product = {
   description: string;
   price: number;
   teamName: "team-1" | "team-2" | "team-3";
-};
-
-type BaseWithName = {
-  name: string;
-  id: number;
-};
-
-type BaseWithValue = {
-  value: string;
-  id: number;
 };
 
 type Image = {
@@ -29,16 +26,14 @@ type Image = {
   };
 };
 
-export type ProductAttributes = Partial<
-  Product & {
-    categories: RequestData<Data<BaseWithName>[]>;
-    sizes: RequestData<Data<BaseWithValue>[]>;
-    images: RequestData<Data<Image>[] | null>;
-    brand: RequestData<Data<BaseWithName>> | null;
-    color: RequestData<Data<BaseWithName> | null>;
-    gender: RequestData<Data<BaseWithName> | null>;
-  }
->;
+export type ProductAttributes = {
+  categories?: RequestData<Data<BaseWithName>[]>;
+  sizes?: RequestData<Data<BaseWithValue>[]>;
+  images?: RequestData<Data<Image>[] | null>;
+  brand?: RequestData<Data<BaseWithName>> | null;
+  color?: RequestData<Data<BaseWithName> | null>;
+  gender?: RequestData<Data<BaseWithName> | null>;
+} & Product;
 
-export type ProductResponse = ResponseData<Data<ProductAttributes>>;
-export type ProductsResponse = ResponseData<Data<ProductAttributes>[]>;
+export type ProductResponse = ApiResponse<ProductAttributes>;
+export type ProductsResponse = ApiResponseList<ProductAttributes>;
