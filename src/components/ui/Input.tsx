@@ -70,9 +70,15 @@ const Input = ({
             alignItems: "center",
           }}
         >
-          <Image src={"/icons/warningIcon.svg"} alt="warning" width={15} height={13}/>
+          <Image
+            src={"/icons/warningIcon.svg"}
+            alt="warning"
+            width={15}
+            height={13}
+          />
           <Typography
             component="p"
+            color={theme.palette.error.main}
             sx={{
               margin: 0,
               fontSize: theme.typography.body2,

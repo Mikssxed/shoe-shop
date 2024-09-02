@@ -3,6 +3,9 @@ import {
   BaseWithName,
   BaseWithValue,
   ProductsResponse,
+  IErrorResponse,
+  IUserPost,
+  IUserResponse,
 } from "@/lib/types";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
@@ -20,6 +23,23 @@ export const fetchData = async <T>(
   } catch (error) {
     console.error("Error retrieving data:", error);
     throw new Error("Could not get data");
+  }
+};
+
+export const postData = async <T>(
+  url: string,
+  options: Record<string, any>
+): Promise<T> => {
+  try {
+    const response: AxiosResponse<T> = await axiosInstance.post(url, options);
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    if (axios.isAxiosError(error)) {
+      throw error;
+    } else {
+      throw new Error("Unkhown error while request");
+    }
   }
 };
 
@@ -66,4 +86,8 @@ export const getFiltersData = async () => {
     console.error("Error retrieving filters data:", error);
     throw new Error("Could not get filters data");
   }
+};
+
+export const signUp = async (user: IUserPost): Promise<IUserResponse> => {
+  return postData<IUserResponse>("/auth/local/register", user);
 };

@@ -88,8 +88,7 @@ const Header = () => {
           >
             <SearchInput width="min(320px, 25vw)" height="48px" />
           </Box>
-          {/*TODO: Change link to the bag */}
-          <Link href="/">
+          <Link href="/bag">
             <Bag size="24" color="#494949" />
           </Link>
           <Box
