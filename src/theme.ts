@@ -52,6 +52,7 @@ theme = createTheme({
     },
     body2: {
       fontSize: 12,
+      color: "#5c5c5c",
     },
   },
   palette: {
