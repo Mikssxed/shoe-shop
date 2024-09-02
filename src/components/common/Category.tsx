@@ -1,3 +1,4 @@
+"use client";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -7,6 +8,7 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
 import { Option } from "./Option";
 
@@ -20,8 +22,15 @@ type CategoryProps = {
 };
 
 export const Category = ({ name, children, options }: CategoryProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const updateFilter = (option: string | number, action: "add" | "remove") => {
-    // TODO: implement filter update
+    const params = new URLSearchParams(searchParams);
+    if (action === "add") params.append(name.toLowerCase(), String(option));
+    if (action === "remove") params.delete(name.toLowerCase(), String(option));
+    router.push(`${pathname}?${params}`);
   };
 
   const handleAddFilter = (option: string | number) => {
@@ -66,9 +75,9 @@ export const Category = ({ name, children, options }: CategoryProps) => {
               <Option
                 key={id}
                 value={value}
-                checked={false}
-                onAddFilter={() => handleAddFilter!(value)}
-                onRemoveFilter={() => handleRemoveFilter!(value)}
+                checked={searchParams.has(name.toLowerCase(), String(value))}
+                onAddFilter={() => handleAddFilter(value)}
+                onRemoveFilter={() => handleRemoveFilter(value)}
               />
             ))}
           </Box>

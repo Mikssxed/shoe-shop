@@ -8,6 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { BaseSidebar } from "../ui";
 import { Category } from "./Category";
 import PriceSlider from "./PriceSlider";
@@ -30,11 +31,13 @@ export const FilterSidebar = ({
   onClose,
 }: Props) => {
   const theme = useTheme();
+  const router = useRouter();
+  const pathName = usePathname();
 
   const { genders, colors, brands, categories, sizes } = filtersData;
 
   const handleClearFilters = () => {
-    //TODO: implement clear filters
+    router.push(pathName);
   };
 
   const categoryData = [

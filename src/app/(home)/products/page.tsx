@@ -3,6 +3,7 @@ import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
 import { Data, ProductAttributes } from "@/lib/types";
 import { useFilters, useProducts } from "@/tools";
+import { buildParams } from "@/utils";
 import {
   Box,
   CircularProgress,
@@ -12,14 +13,18 @@ import {
   useTheme,
 } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const Products = () => {
   const theme = useTheme();
   const bottomElementRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const [showFilters, setShowFilters] = useState(false);
-  const { data, isLoading, hasNextPage, fetchNextPage } = useProducts();
+  const { data, isLoading, hasNextPage, fetchNextPage } = useProducts(
+    buildParams(searchParams)
+  );
   const { data: filtersData } = useFilters();
   const products: Data<ProductAttributes>[] | undefined = useMemo(
     () => data?.pages.flatMap((page) => page.data),

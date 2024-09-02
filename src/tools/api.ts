@@ -23,12 +23,24 @@ export const fetchData = async <T>(
   }
 };
 
-export const getProducts = async (page: number) => {
+export const getProducts = async (page: number, params?: {}) => {
   return fetchData<ProductsResponse>("/products", {
     params: {
       populate: "*",
       "pagination[page]": page,
       "pagination[pageSize]": 12,
+      ...params,
+    },
+  });
+};
+
+export const getMaxPrice = async () => {
+  return fetchData<ProductsResponse>("/products", {
+    params: {
+      "pagination[page]": 1,
+      "pagination[pageSize]": 1,
+      fields: "price",
+      sort: "price:desc",
     },
   });
 };

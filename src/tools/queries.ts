@@ -1,10 +1,10 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getFiltersData, getProducts } from "./api";
+import { getFiltersData, getMaxPrice, getProducts } from "./api";
 
-export const useProducts = () => {
+export const useProducts = (params?: {}) => {
   return useInfiniteQuery({
-    queryKey: ["products"],
-    queryFn: ({ pageParam }) => getProducts(pageParam),
+    queryKey: ["products", params],
+    queryFn: ({ pageParam }) => getProducts(pageParam, params),
     getNextPageParam: (lastPage) => {
       if (!lastPage) return undefined;
       const hasNextPage =
@@ -13,6 +13,13 @@ export const useProducts = () => {
       return hasNextPage ? lastPage?.meta?.pagination?.page! + 1 : undefined;
     },
     initialPageParam: 1,
+  });
+};
+
+export const useMaxPrice = () => {
+  return useQuery({
+    queryKey: ["maxPrice"],
+    queryFn: getMaxPrice,
   });
 };
 

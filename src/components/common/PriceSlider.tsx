@@ -1,12 +1,39 @@
+import { useMaxPrice } from "@/tools";
 import { Slider } from "@mui/material";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const PriceSlider = () => {
   const [priceRange, setPriceRange] = useState([-1, -1]);
   const [productMaxPrice, setProductMaxPrice] = useState(1000);
+  const searchParams = useSearchParams();
+  const { data } = useMaxPrice();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (data) {
+      const maxPrice = data.data[0].attributes.price;
+      setProductMaxPrice(maxPrice);
+      setPriceRange([0, maxPrice]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const minPrice = searchParams.get("minPrice");
+    const maxPrice = searchParams.get("maxPrice");
+    if (minPrice && maxPrice) {
+      setPriceRange([Number(minPrice), Number(maxPrice)]);
+    } else {
+      setPriceRange([0, productMaxPrice]);
+    }
+  }, [productMaxPrice, searchParams]);
 
   const handlePriceSelected = () => {
-    //TODO: Add logic to filter products based on price range
+    const params = new URLSearchParams(searchParams);
+    params.set("minPrice", String(priceRange[0]));
+    params.set("maxPrice", String(priceRange[1]));
+    router.push(`${pathname}?${params}`);
   };
 
   return (
