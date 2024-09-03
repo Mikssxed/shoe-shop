@@ -1,3 +1,5 @@
+import AddProductForm from "@/components/AddProductForm";
+
 export default function AddProduct() {
-  return <div>My Products</div>
+  return <AddProductForm />
 }

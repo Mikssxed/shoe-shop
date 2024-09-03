@@ -47,6 +47,10 @@ const Textarea = ({
           padding: "8px 15px",
           "& .MuiInputBase-input": {
             color: theme.palette.text.primary,
+            [theme.breakpoints.up("lg")]: {
+              minHeight: "276px",
+              padding: "16px",
+            },
           },
           border: !!errorMessage
             ? `2px solid ${theme.palette.error.main}`

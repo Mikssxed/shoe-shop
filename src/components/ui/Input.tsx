@@ -11,11 +11,10 @@ import {
 import Image from "next/image";
 import { ComponentProps, useId } from "react";
 
-type InputProps = {
+type InputProps = InputBaseProps & {
   label: string;
   required?: boolean;
   labelProps?: ComponentProps<typeof InputLabel>;
-  inputProps?: InputBaseProps;
   containerProps?: ComponentProps<typeof Box>;
   errorMessage?: string;
 };
@@ -25,8 +24,8 @@ const Input = ({
   required,
   containerProps,
   labelProps,
-  inputProps,
   errorMessage,
+  ...props
 }: InputProps) => {
   const id = useId();
   const theme = useTheme();
@@ -57,8 +56,13 @@ const Input = ({
           border: !!errorMessage
             ? `1px solid ${theme.palette.error.main}`
             : `1px solid ${theme.palette.grey[700]}`,
+          "& .MuiInputBase-input": {
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "10px"
+            },
+          },
         }}
-        {...inputProps}
+        {...props}
         id={id}
       />
       {errorMessage && (
