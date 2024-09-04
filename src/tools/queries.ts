@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getFiltersData, getMaxPrice, getProducts } from "./api";
+import { getFiltersData, getMaxPrice, getProduct, getProducts } from "./api";
 
 export const useProducts = (params?: {}) => {
   return useInfiniteQuery({
@@ -25,4 +25,8 @@ export const useMaxPrice = () => {
 
 export const useFilters = () => {
   return useQuery({ queryKey: ["filters"], queryFn: getFiltersData });
+};
+
+export const useProduct = (id: string) => {
+  return useQuery({ queryKey: ["product", id], queryFn: () => getProduct(id) });
 };

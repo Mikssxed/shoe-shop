@@ -2,6 +2,7 @@ import {
   ApiResponseList,
   BaseWithName,
   BaseWithValue,
+  ProductResponse,
   ProductsResponse,
   IErrorResponse,
   IUserPost,
@@ -61,6 +62,14 @@ export const getMaxPrice = async () => {
       "pagination[pageSize]": 1,
       fields: "price",
       sort: "price:desc",
+    },
+  });
+};
+
+export const getProduct = async (id: string) => {
+  return fetchData<ProductResponse>(`/products/${id}`, {
+    params: {
+      populate: "*",
     },
   });
 };
