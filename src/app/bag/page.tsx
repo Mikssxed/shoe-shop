@@ -1,18 +1,10 @@
-"use client";
-import BagItem from "@/components/bag/BagItem";
-import { Container, Typography, Divider, Box, Button } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material";
-import { Fragment, useMemo } from "react";
-import Image from "next/image";
-import "./index.css";
-import BagSummary from "@/components/bag/BagSummary";
-
-//DELETE THENE AND PROVIDER
-const theme = createTheme({
-  typography: {
-    fontFamily: "Work+Sans",
-  },
-});
+"use client"
+import BagItem from "@/components/bag/BagItem"
+import { Container, Typography, Divider, Box, Button } from "@mui/material"
+import { useTheme } from "@mui/material"
+import { Fragment, useMemo } from "react"
+import Image from "next/image"
+import BagSummary from "@/components/bag/BagSummary"
 
 //DUMMY DATA NEEDS TO BE CHANGED IN FUTURE
 const cart = [
@@ -58,16 +50,17 @@ const cart = [
     price: 110,
     amount: 1,
   },
-];
+]
 
 const Bag = () => {
+  const theme = useTheme()
   const subtotal = useMemo(
     () => cart.reduce((acc, shoe) => acc + shoe.price * shoe.amount, 0),
     [JSON.stringify(cart)]
-  );
+  )
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Typography
         sx={{
           padding: "14px 14px 0px 14px",
@@ -77,6 +70,7 @@ const Bag = () => {
           fontWeight: 500,
           lineHeight: { xs: "35px", md: "53px" },
         }}
+        color={theme.palette.text.primary}
       >
         Cart
       </Typography>
@@ -112,6 +106,7 @@ const Bag = () => {
                 fontWeight: 500,
                 lineHeight: { xs: "35px", md: "53px" },
               }}
+              color={theme.palette.text.primary}
             >
               Cart
             </Typography>
@@ -157,6 +152,7 @@ const Bag = () => {
               fontWeight: 500,
               lineHeight: { xs: "35px", md: "53px" },
             }}
+            color={theme.palette.text.primary}
           >
             Cart
           </Typography>
@@ -196,6 +192,7 @@ const Bag = () => {
                 fontSize: { xs: "16px", md: "20px" },
                 lineHeight: { xs: "20px", md: "24px" },
               }}
+              color={theme.palette.text.primary}
             >
               You don't have any products yet
             </Typography>
@@ -212,13 +209,10 @@ const Bag = () => {
               sx={{
                 marginTop: "41px",
                 borderRadius: "8px",
-                bgcolor: "#FE645E",
                 textTransform: "none",
-                fontFamily: "Work Sans",
-                "&:hover": { color: "#000" },
-                color: "white",
                 width: "148px",
               }}
+              variant="contained"
             >
               Add Product
             </Button>
@@ -237,6 +231,7 @@ const Bag = () => {
           fontWeight: 500,
           lineHeight: { xs: "35px", md: "53px" },
         }}
+        color={theme.palette.text.primary}
       >
         Summary
       </Typography>
@@ -271,7 +266,6 @@ const Bag = () => {
       >
         <Button
           sx={{
-            fontFamily: "Work Sans",
             textTransform: "none",
             bgcolor: "#FE645E",
             fontSize: "16px",
@@ -283,8 +277,8 @@ const Bag = () => {
           Checkout
         </Button>
       </Box>
-    </ThemeProvider>
-  );
-};
+    </>
+  )
+}
 
-export default Bag;
+export default Bag

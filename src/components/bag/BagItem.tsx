@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Box, Button, Typography } from "@mui/material"
+import { Box, Button, Typography, useTheme } from "@mui/material"
 
 //UPDATE PROPS
 interface BagItemProps {
@@ -18,6 +18,7 @@ interface BagItemProps {
 }
 
 const BagItem: React.FC<BagItemProps> = ({ data }) => {
+  const theme = useTheme()
   return (
     <Box
       sx={{
@@ -51,6 +52,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 fontSize: { xs: "12px", md: "20px", xl: "30px" },
                 lineHeight: { xs: "14px", md: "23px", xl: "35px" },
               }}
+              color={theme.palette.text.primary}
             >
               {data.teamName} {data.name}
             </Typography>
@@ -82,6 +84,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 fontSize: { xs: 12, md: 20, xl: 30 },
                 lineHeight: { xs: "14px", md: "23px", xl: "35.2px" },
               }}
+              color={theme.palette.text.primary}
             >
               ${data.price}
             </Typography>
@@ -127,7 +130,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 <Image
                   layout="fill"
                   objectFit="contain"
-                  src={'/icons/minus.svg'}
+                  src={"/icons/minus.svg"}
                   alt="minus"
                 />
               </Button>
@@ -156,7 +159,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 <Image
                   layout="fill"
                   objectFit="contain"
-                  src={'/icons/plus.svg'}
+                  src={"/icons/plus.svg"}
                   alt="plus"
                 />
               </Button>
@@ -190,7 +193,6 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               fontWeight: "400",
               textTransform: "none",
               color: "#6E7278",
-              fontFamily: "Work Sans",
             }}
           >
             <Box
@@ -204,7 +206,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               <Image
                 layout="fill"
                 objectFit="contain"
-                src={'/icons/trash.svg'}
+                src={"/icons/trash.svg"}
                 alt="trash"
               />
             </Box>

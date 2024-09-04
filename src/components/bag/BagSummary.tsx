@@ -1,14 +1,22 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import { Typography, Divider, Box, Button, TextField } from "@mui/material";
-import BagPricingList from "@/components/bag/BagPricingList";
+import React, { useState } from "react"
+import Image from "next/image"
+import {
+  Typography,
+  Divider,
+  Box,
+  Button,
+  TextField,
+  useTheme,
+} from "@mui/material"
+import BagPricingList from "@/components/bag/BagPricingList"
 
 interface BagSummaryProps {
-  subtotal: number;
+  subtotal: number
 }
 
 const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
-  const [showPromoInput, setShowPromoInput] = useState(false);
+  const [showPromoInput, setShowPromoInput] = useState(false)
+  const theme = useTheme()
   return (
     <Box
       sx={{
@@ -26,13 +34,13 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         fontWeight={500}
         lineHeight="53px"
         sx={{ marginBottom: "68px", display: { xs: "none", md: "block" } }}
+        color={theme.palette.text.primary}
       >
         Summary
       </Typography>
       <Button
         onClick={() => setShowPromoInput((prev) => !prev)}
         sx={{
-          fontFamily: "Work Sans",
           alignSelf: "flex-start",
           padding: "0",
           fontSize: { xs: "16px", sm: "20px" },
@@ -86,7 +94,6 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         sx={{
           display: { xs: "none", md: "block" },
           marginTop: { md: "70px", xl: "113px" },
-          fontFamily: "Work Sans",
           textTransform: "none",
           bgcolor: "#FE645E",
           fontSize: "16px",
@@ -96,7 +103,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         Checkout
       </Button>
     </Box>
-  );
-};
+  )
+}
 
-export default BagSummary;
+export default BagSummary

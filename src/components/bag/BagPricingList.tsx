@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material"
+import { Typography, Box, useTheme } from "@mui/material"
 
 interface BagPricingListProps {
   name: string
@@ -11,6 +11,7 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
   value,
   bold,
 }) => {
+  const theme = useTheme()
   return (
     <Box
       sx={{
@@ -25,6 +26,7 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
           lineHeight: { xs: "24px", sm: "35px" },
         }}
         fontWeight={bold ? 600 : 400}
+        color={theme.palette.text.primary}
       >
         {name}
       </Typography>
@@ -34,6 +36,7 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
           lineHeight: { xs: "24px", sm: "35px" },
         }}
         fontWeight={bold ? 600 : 400}
+        color={theme.palette.text.primary}
       >
         ${value}
       </Typography>
