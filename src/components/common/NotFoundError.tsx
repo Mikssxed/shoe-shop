@@ -1,14 +1,19 @@
 "use client";
 
 import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
-import notFoundImage from "@/../public/images/not_found.png";
+import Image from "next/image";
 import { useIsMobile } from "@/hooks";
-import Header from "../Header";
+import BaseErrorPage from "./BaseErrorPage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  desktopButtonsStyles,
+  errorMessageStyles,
+  errorTitleStyles,
+  mobileButtonsStyles,
+} from "@/styles/errorPage/errorStyles";
 
 const NotFoundError = () => {
-  const theme = useTheme();
   const isMobile = useIsMobile();
   const router = useRouter();
 
@@ -28,17 +33,14 @@ const NotFoundError = () => {
   };
 
   return (
-    <Box sx={{ md: "100dvh" }}>
-      {!isMobile && <Header />}
+    <BaseErrorPage>
       <Grid
         container
-        rowSpacing={{ xs: 4, md: 0 }}
         columns={{ xs: 1, md: 2 }}
         sx={{
           justifyContent: "center",
           width: "100%",
-          height: { xs: "100%", md: "calc(100vh - 120px)" }, //TODO: replace 120px with theme value
-          marginTop: { xs: 0 },
+          height: { xs: "100%", md: "calc(100% - 120px)" }, //TODO: replace 120px with theme value
           marginBottom: { xs: "44px", md: 0 },
         }}
       >
@@ -60,45 +62,25 @@ const NotFoundError = () => {
             position: "relative",
             zIndex: 2,
             display: "flex",
+            gap: { xs: "12px", md: "20px" },
+            justifyContent: { md: "center" },
             flexDirection: "column",
-            justifyContent: "center",
-            gap: "12px",
             marginInline: { xs: "28px", md: 0 },
             paddingInline: { xs: 0, md: "10%" },
           }}
         >
-          <Typography
-            variant="h1"
-            sx={{
-              color: theme.palette.text.primary,
-              textAlign: { xs: "center", md: "left" },
-              fontSize: { xs: "30px", md: "45px" },
-            }}
-          >
+          <Typography variant="h1" sx={errorTitleStyles}>
             Error 404
           </Typography>
           <Typography
             variant="body2"
-            sx={{
-              paddingBottom: "16px",
-              color: theme.palette.text.secondary,
-              textAlign: { xs: "center", md: "left" },
-              fontSize: { xs: "12px", md: "20px" },
-            }}
+            sx={{ paddingBottom: "18px", ...errorMessageStyles }}
           >
             Lorem Ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
             nonummy nibh euismod tincidunt ut laoreet dolore magna
           </Typography>
           {!isMobile && (
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                "& > *": { width: "152px" },
-              }}
-            >
+            <Grid item sx={desktopButtonsStyles}>
               <Buttons />
             </Grid>
           )}
@@ -108,34 +90,33 @@ const NotFoundError = () => {
           xs={1}
           sx={{
             position: "relative",
-            aspectRatio: { xs: 1, md: "auto" },
-            borderRadius: { xs: "0 0 39px 39px", md: 0 },
-            backgroundImage: `url(${notFoundImage.src})`,
-            backgroundSize: { xs: "110%", md: "cover", lg: "100% 100%" },
-            height: "100%",
-            backgroundRepeat: { xs: "no-repeat" },
-            backgroundPosition: "center center",
+            marginTop: { xs: "-24px", md: 0 },
+            minHeight: "400px",
+            "& > img": {
+              borderRadius: { xs: "0 0 39px 39px", md: 0 },
+              objectFit: { md: "fill" },
+            },
           }}
-        ></Grid>
-        {isMobile && (
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
+        >
+          <Image
+            src="/images/not_found.png"
+            alt="server error"
+            fill
+            sizes="(max-width: 900px) 100vw, 50vw"
+            priority
+            style={{
+              height: "100%",
               width: "100%",
-              minHeight: "40px",
-              marginX: "20px",
-              marginTop: { xs: "auto", md: 0 },
-              "& > *": { flexGrow: 1 },
             }}
-          >
+          />
+        </Grid>
+        {isMobile && (
+          <Grid item sx={mobileButtonsStyles}>
             <Buttons />
           </Grid>
         )}
       </Grid>
-    </Box>
+    </BaseErrorPage>
   );
 };
 
