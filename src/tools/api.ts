@@ -1,18 +1,17 @@
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { signIn } from "next-auth/react";
+
 import {
   ApiResponseList,
   BaseWithName,
   BaseWithValue,
   ProductResponse,
   ProductsResponse,
-  IErrorResponse,
-  IUserPost,
-  IUserResponse,
+  ISignUpRequest,
+  ISignUpResponse,
+  ILogInRequest,
 } from "@/lib/types";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: process.env.API_URL,
-});
+import axiosInstance from "@/tools/axios";
 
 export const fetchData = async <T>(
   url: string,
@@ -97,6 +96,16 @@ export const getFiltersData = async () => {
   }
 };
 
-export const signUp = async (user: IUserPost): Promise<IUserResponse> => {
-  return postData<IUserResponse>("/auth/local/register", user);
+export const logIn = async (user: ILogInRequest) => {
+  const result = signIn("credentials", {
+    redirect: false,
+    identifier: user.identifier,
+    password: user.password,
+  });
+
+  return result;
+};
+
+export const signUp = async (user: ISignUpRequest): Promise<ISignUpResponse> => {
+  return postData<ISignUpResponse>("/auth/local/register", user);
 };

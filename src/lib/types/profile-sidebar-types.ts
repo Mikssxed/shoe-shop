@@ -5,4 +5,5 @@ export interface ProfileSidebar {
   name: string;
   icon: Icon,
   path: string;
+  onClick?: () => void;
 }

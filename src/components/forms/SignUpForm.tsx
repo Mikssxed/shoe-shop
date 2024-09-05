@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button } from "@mui/material";
+import { Alert, Box, Button, Typography, useTheme } from "@mui/material";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 
-import ControlledInput from "@/components/ControlledInput";
+import ControlledInput from "@/components/common/ControlledInput";
 import { SignUpFormValidation } from "@/lib/validation";
-import { IUserResponse, IReactQueryError, IUserPost } from "@/lib/types";
+import { ISignUpResponse, IReactQueryError, ISignUpRequest } from "@/lib/types";
 import { signUp } from "@/tools";
 
 const defaultValues = {
@@ -22,9 +21,9 @@ const defaultValues = {
 
 const SignUpForm: React.FC = () => {
   const mutation: UseMutationResult<
-    IUserResponse,
+    ISignUpResponse,
     IReactQueryError,
-    IUserPost
+    ISignUpRequest
   > = useMutation({
     mutationFn: signUp,
   });
@@ -35,6 +34,8 @@ const SignUpForm: React.FC = () => {
     resolver: zodResolver(SignUpFormValidation),
     defaultValues,
   });
+
+  const theme = useTheme();
 
   const onSubmit = (data: z.infer<typeof SignUpFormValidation>) => {
     try {
@@ -49,91 +50,137 @@ const SignUpForm: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      redirect("/log-in");
-    }
-  }, [mutation.isSuccess]);
-
-  return (
-    <Box
-      component="form"
-      sx={{
-        margin: "40px 0 16px 0",
-        display: "flex",
-        flexDirection: "column",
-        gap: "24px",
-      }}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <ControlledInput
-        name="name"
-        control={control}
-        label="Name"
-        required
-        placeholder="Hayman Andrews"
-      />
-      <ControlledInput
-        name="email"
-        control={control}
-        label="Email"
-        required
-        placeholder="example@mail.com"
-      />
-      <ControlledInput
-        name="password"
-        control={control}
-        label="Password"
-        required
-        placeholder="at least 8 characters"
-        type="password"
-      />
-      <ControlledInput
-        name="confirmPassword"
-        control={control}
-        label="Confirm Password"
-        required
-        placeholder="at least 8 characters"
-        type="password"
-      />
-
-      {mutation.isError && (
-        <Box
-          sx={{
-            maxWidth: "436px",
-          }}
-        >
-          <Alert
-            severity="error"
-            sx={{
-              paddingY: "14px",
-              fontSize: "16px",
-              borderRadius: "8px",
-            }}
-          >
-            {mutation.error?.response?.data?.error?.message}
-          </Alert>
-        </Box>
-      )}
-
-      <Button
-        variant={"contained"}
-        type="submit"
-        disabled={mutation.isPending}
+  if (mutation.isSuccess) {
+    return (
+      <Alert
+        severity="success"
         sx={{
-          marginTop: mutation.isError ? "0px" : "66px",
           maxWidth: "436px",
           paddingY: "14px",
+          marginY: "14px",
           fontSize: "16px",
           borderRadius: "8px",
-          "&.Mui-disabled": {
-            border: "0",
-          },
         }}
       >
-        {mutation.isPending ? "Loading..." : "Sign Up"}
-      </Button>
-    </Box>
+        Success. Please, check your email inbox and confirm your registration
+      </Alert>
+    );
+  }
+
+  return (
+    <>
+      <Box
+        component="form"
+        sx={{
+          margin: "40px 0 16px 0",
+          display: "flex",
+          flexDirection: "column",
+          gap: "24px",
+        }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <ControlledInput
+          name="name"
+          control={control}
+          label="Name"
+          required
+          placeholder="Hayman Andrews"
+        />
+        <ControlledInput
+          name="email"
+          control={control}
+          label="Email"
+          required
+          placeholder="example@mail.com"
+        />
+        <ControlledInput
+          name="password"
+          control={control}
+          label="Password"
+          required
+          placeholder="at least 8 characters"
+          type="password"
+        />
+        <ControlledInput
+          name="confirmPassword"
+          control={control}
+          label="Confirm Password"
+          required
+          placeholder="at least 8 characters"
+          type="password"
+        />
+
+        {mutation.isError && (
+          <Box
+            sx={{
+              maxWidth: "436px",
+            }}
+          >
+            <Alert
+              severity={mutation.isSuccess ? "success" : "error"}
+              sx={{
+                paddingY: "14px",
+                fontSize: "16px",
+                borderRadius: "8px",
+              }}
+            >
+              {mutation.error?.response?.data?.error?.message ||
+                "Unknown error"}
+            </Alert>
+          </Box>
+        )}
+
+        <Button
+          variant={"contained"}
+          type="submit"
+          disabled={mutation.isPending}
+          sx={{
+            marginTop: mutation.isError ? "0px" : "66px",
+            maxWidth: "436px",
+            paddingY: "14px",
+            fontSize: "16px",
+            borderRadius: "8px",
+            "&.Mui-disabled": {
+              border: "0",
+            },
+          }}
+        >
+          {mutation.isPending ? "Loading..." : "Sign Up"}
+        </Button>
+      </Box>
+      <Box
+        component="div"
+        sx={{ display: "flex", justifyContent: "center", gap: "6px" }}
+      >
+        <Typography
+          variant="body1"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
+          }}
+        >
+          Already have an account?
+        </Typography>
+        <Link
+          href="/auth/sign-in"
+          style={{ textDecoration: "none", color: theme.palette.primary.main }}
+        >
+          <Typography
+            variant="body1"
+            color={theme.palette.primary.main}
+            sx={{
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Log in
+          </Typography>
+        </Link>
+      </Box>
+    </>
   );
 };
 

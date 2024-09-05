@@ -158,6 +158,7 @@ export default function ProfileSidebar({
             key={sidebarItem.id}
             disablePadding
             sx={{ marginBottom: "36px" }}
+            onClick={sidebarItem.onClick}
           >
             <ListItemButton
               disableGutters
@@ -227,6 +228,7 @@ export default function ProfileSidebar({
               key={sidebarItem.id}
               disablePadding
               sx={{ marginBottom: "36px" }}
+              onClick={sidebarItem.onClick}
             >
               <ListItemButton
                 disableGutters

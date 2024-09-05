@@ -1,8 +1,9 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { Bag, HambergerMenu, SearchNormal1 } from "iconsax-react";
-import SearchInput from "./SearchInput";
-import Search from "./Search";
 import {
   Toolbar,
   Box,
@@ -13,19 +14,15 @@ import {
   AppBar,
   Divider,
 } from "@mui/material";
-import { useState } from "react";
-import Link from "next/link";
+
+import Search from "./Search";
+import SearchInput from "./SearchInput";
 
 const Header = () => {
   const theme = useTheme();
-  //TODO: When auth will be finished change how it's set
-  const [auth, setAuth] = useState(false);
-  const [searchOn, setSearchOn] = useState(false);
+  const { status } = useSession();
 
-  //TODO: When auth page is finished route to signing page
-  const handleSignIn = () => {
-    setAuth(true);
-  };
+  const [searchOn, setSearchOn] = useState(false);
 
   return (
     <>
@@ -63,24 +60,29 @@ const Header = () => {
               Products
             </Typography>
           </Box>
-          {!auth && (
-            /*TODO: Change color when main colors will be set */
-            <Button
-              sx={{
-                width: "min(145px, 14vw)",
-                height: "48px",
-                display: { xs: "none", sm: "inline" },
-                typography: {
-                  textTransform: "none",
-                  fontWeight: "700",
-                },
+          {status === "unauthenticated" && (
+            <Link
+              href="/auth/sign-in"
+              style={{
+                textDecoration: "none",
               }}
-              variant="outlined"
-              onClick={handleSignIn}
-              color="primary"
             >
-              Sign in
-            </Button>
+              <Button
+                sx={{
+                  width: "min(145px, 14vw)",
+                  height: "48px",
+                  display: { xs: "none", sm: "inline" },
+                  typography: {
+                    textTransform: "none",
+                    fontWeight: "700",
+                  },
+                }}
+                variant="outlined"
+                color="primary"
+              >
+                Sign in
+              </Button>
+            </Link>
           )}
           <Box
             display={{ xs: "none", sm: "block" }}
@@ -100,7 +102,7 @@ const Header = () => {
           >
             <SearchNormal1 size="17" color="#494949" />
           </Box>
-          {auth && (
+          {status === "authenticated" && (
             <Box
               sx={{
                 marginLeft: { sm: "16px" },
@@ -112,11 +114,13 @@ const Header = () => {
               }}
             >
               {/*TODO: Change to user picture and add onclick to route to user profile or menu*/}
-              <Avatar
-                alt="User avatar"
-                src="/images/avatar.png"
-                sx={{ width: 24, height: 24 }}
-              />
+              <Link href="/profile/my-products">
+                <Avatar
+                  alt="User avatar"
+                  src="/images/avatar.png"
+                  sx={{ width: 24, height: 24 }}
+                />
+              </Link>
             </Box>
           )}
           <Box
