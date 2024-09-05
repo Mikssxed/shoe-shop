@@ -1,35 +1,17 @@
 "use client";
 import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
-import { Data, ProductAttributes } from "@/lib/types";
-import { useFilters, useProducts } from "@/tools";
-import { buildParams } from "@/utils";
-import {
-  Box,
-  CircularProgress,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { useFilters } from "@/tools";
+import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Products = () => {
   const theme = useTheme();
-  const bottomElementRef = useRef<HTMLDivElement>(null);
-  const searchParams = useSearchParams();
+
   const isMobile = useIsMobile();
   const [showFilters, setShowFilters] = useState(false);
-  const { data, isLoading, hasNextPage, fetchNextPage } = useProducts(
-    buildParams(searchParams)
-  );
   const { data: filtersData } = useFilters();
-  const products: Data<ProductAttributes>[] | undefined = useMemo(
-    () => data?.pages.flatMap((page) => page.data),
-    [data]
-  );
 
   useEffect(() => {
     if (isMobile) {
@@ -42,30 +24,6 @@ const Products = () => {
   const handleShowFilters = () => {
     setShowFilters(!showFilters);
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && hasNextPage) {
-            fetchNextPage();
-          }
-        });
-      },
-      { threshold: 1 }
-    );
-
-    const bottomElement = bottomElementRef.current;
-    if (bottomElement) {
-      observer.observe(bottomElement);
-    }
-
-    return () => {
-      if (bottomElement) {
-        observer.unobserve(bottomElement);
-      }
-    };
-  }, [bottomElementRef, hasNextPage, fetchNextPage]);
 
   return (
     <Stack
@@ -112,23 +70,7 @@ const Products = () => {
             )}
           </IconButton>
         </Box>
-        {isLoading && (
-          <Box
-            sx={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              zIndex: 10,
-            }}
-          >
-            <CircularProgress size={100} />
-          </Box>
-        )}
-        {products && (
-          <ProductList fullWidth={!showFilters} products={products} />
-        )}
-        <div ref={bottomElementRef} />
+        <ProductList fullWidth={!showFilters} />
       </Box>
     </Stack>
   );

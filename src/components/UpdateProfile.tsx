@@ -112,7 +112,7 @@ const ProfileInfoForm = () => {
 
 export default function UpdateProfile() {
   return (
-    <>
+    <Box>
       <Typography
         variant="h1"
         className={workSans.className}
@@ -160,6 +160,6 @@ export default function UpdateProfile() {
         Welcome back! Please enter your details to log into your account.
       </Typography>
       <ProfileInfoForm />
-    </>
+    </Box>
   );
 }

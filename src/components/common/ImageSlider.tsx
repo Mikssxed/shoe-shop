@@ -1,3 +1,4 @@
+"use client";
 import { useIsMobile } from "@/hooks";
 import { Box, IconButton, Stack, SxProps } from "@mui/material";
 import { ArrowLeft2, ArrowRight2 } from "iconsax-react";

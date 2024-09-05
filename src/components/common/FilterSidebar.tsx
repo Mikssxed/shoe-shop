@@ -1,3 +1,4 @@
+"use client";
 import { BaseWithName, BaseWithValue, FiltersData } from "@/lib/types";
 import {
   Box,
@@ -67,12 +68,6 @@ export const FilterSidebar = ({
                 alt="close"
                 width={20}
                 height={20}
-                style={{
-                  filter:
-                    theme.palette.mode === "dark"
-                      ? "brightness(10)"
-                      : "brightness(1)",
-                }}
               />
             </IconButton>
           ) : (

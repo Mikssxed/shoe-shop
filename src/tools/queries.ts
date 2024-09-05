@@ -12,6 +12,7 @@ export const useProducts = (params?: {}) => {
         lastPage?.meta?.pagination?.page!;
       return hasNextPage ? lastPage?.meta?.pagination?.page! + 1 : undefined;
     },
+    select: (data) => data.pages.flatMap((page) => page.data),
     initialPageParam: 1,
   });
 };

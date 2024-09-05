@@ -1,9 +1,27 @@
-import ProfileSidebar from "@/components/ProfileSidebar";
+import { ProfileSidebar } from "@/components/common";
+import { Container, Stack } from "@mui/material";
 
-export default function ProfileLayout({ children }: { children: React.ReactNode }) {
+export default function ProfileLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <ProfileSidebar> 
-      {children}
-    </ProfileSidebar>
-  )
+    <Stack
+      direction="row"
+      justifyContent="center"
+      sx={{ maxWidth: 1850, marginX: "auto", paddingX: "20px" }}
+    >
+      {/* TODO: handle toggling it */}
+      <ProfileSidebar open />
+      <Container
+        maxWidth="xl"
+        sx={{
+          padding: { xs: 0, md: "32px" },
+        }}
+      >
+        {children}
+      </Container>
+    </Stack>
+  );
 }
