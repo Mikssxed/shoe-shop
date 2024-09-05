@@ -19,7 +19,7 @@ const Dropdown = ({
   const id = useId();
   const theme = useTheme();
   return (
-    <Box sx={{ width: "100%", maxWidth: "250px" }}>
+    <Box sx={{ width: "100%", maxWidth: "436px" }}>
       {labelText && <InputLabel htmlFor={id}>{labelText}</InputLabel>}
       <Select
         id={id}
