@@ -20,7 +20,7 @@ const cart = [
     teamName: "Nike",
     gender: "Men",
     price: 160,
-    amount: 0,
+    amount: 1,
   },
   {
     name: "Air Max 90",
@@ -34,7 +34,7 @@ const cart = [
     teamName: "Nike",
     gender: "Women",
     price: 140,
-    amount: 0,
+    amount: 2,
   },
   {
     name: "Air Force 1 '07SE",
