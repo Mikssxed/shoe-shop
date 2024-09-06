@@ -94,7 +94,7 @@ const DeleteModal = ({
     <Modal
       open={open}
       onClose={onClose}
-      containerStyle={{
+      paperStyle={{
         display: "flex",
         justifyContent: "space-between",
         gap: { xs: "24px", md: "56px" },

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useIsMobile } from "@/hooks";
 import Cross from "/public/icons/cross.svg";
 import Modal from "./ui/Modal";
+import { Block } from "@mui/icons-material";
 
 type SearchProps = {
   open: boolean;
@@ -47,6 +48,7 @@ export default function Search({ open, onClose }: SearchProps) {
       onClose={handleClose}
       keepMounted={true}
       containerStyle={{
+        display: "block",
         "& > *": {
           alignItems: "flex-start",
         },
