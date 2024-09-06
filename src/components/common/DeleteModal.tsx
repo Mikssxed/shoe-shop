@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Box,
   Button,
   DialogActions,
   DialogContentText,
@@ -8,8 +9,8 @@ import {
   Divider,
   useTheme,
 } from "@mui/material";
-import Modal from "../ui/Modal";
 import Image from "next/image";
+import Modal from "../ui/Modal";
 import Cross from "/public/icons/cross.svg";
 
 type DeleteModalProps = {
@@ -33,7 +34,7 @@ const DeleteModal = ({
   const theme = useTheme();
 
   const Content = () => (
-    <>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "25px" }}>
       <DialogTitle
         sx={{
           display: "flex",
@@ -86,7 +87,7 @@ const DeleteModal = ({
           Delete
         </Button>
       </DialogActions>
-    </>
+    </Box>
   );
 
   return (
@@ -99,7 +100,6 @@ const DeleteModal = ({
         gap: { xs: "24px", md: "56px" },
         boxSizing: "border-box",
         borderRadius: theme.spacing(),
-        maxWidth: 656,
         width: { xs: "320px", md: "656px" },
       }}
     >

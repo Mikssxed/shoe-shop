@@ -1,5 +1,4 @@
-import { Dialog, useTheme } from "@mui/material";
-import { SxProps } from "@mui/material";
+import { Dialog, SxProps, useTheme } from "@mui/material";
 import { PropsWithChildren, useRef } from "react";
 
 type ModalProps = PropsWithChildren & {
@@ -37,6 +36,8 @@ const Modal = ({
         "& > .MuiBackdrop-root": {
           backgroundColor: "backdrop.main",
         },
+        justifyContent: "center",
+        display: "flex",
         ...containerStyle,
       }}
       PaperProps={{

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import EditProductModal from "../EditProductModal";
 import DeleteModal from "./DeleteModal";
 
 const styles: Record<string, SxProps> = {
@@ -23,19 +24,23 @@ type ButtonMenuProps = MenuProps & {
   productid: number;
   onDeleteProduct: () => void;
   name: string;
+  onEditProduct: () => void;
 };
 
 const ButtonMenu = ({
   name,
   productid,
   onDeleteProduct,
+  onEditProduct,
   ...props
 }: ButtonMenuProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const router = useRouter();
 
   return (
     <>
+      <EditProductModal open={openEdit} onClose={() => setOpenEdit(false)} />
       <Menu {...props}>
         <MenuList
           sx={{
@@ -55,7 +60,7 @@ const ButtonMenu = ({
             divider
             sx={styles.menuItem}
             onClick={(e) => {
-              router.push(`/profile/my-products?productId=${productid}`);
+              setOpenEdit(true);
               props.onClose?.(e, "backdropClick");
             }}
           >
