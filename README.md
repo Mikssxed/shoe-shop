@@ -38,6 +38,10 @@ Some of these features are currently unavailable. They'll be available soon.
 - **Frontend**: React, Material-UI (MUI), Emotion for styling
 - **State Management**: React Query
 - **HTTP Client**: Axios
+- **Form Management**: React Hook Form, with validation powered by Zod
+- **Authentication**: NextAuth.js
+- **Notifications**: Notistack
+
 - **Icons**: Iconsax-React, Material Icons
 - **Testing**: Jest, React Testing Library
 - **Language**: TypeScript, JavaScript
