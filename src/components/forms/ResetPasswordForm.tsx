@@ -1,9 +1,71 @@
 "use client";
 
-import { Box, Button } from "@mui/material";
-import { Input } from "@/components/ui";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
+
+import { Alert, Box, Button } from "@mui/material";
+import ControlledInput from "@/components/common/ControlledInput";
+import { ResetPasswordValidation } from "@/lib/validation";
+import { IReactQueryError, IResetPasswordRequest, IResetPasswordResponse } from "@/lib/types";
+import { resetPassword } from "@/tools";
+import { useSearchParams } from 'next/navigation'
+
+const defaultValues = {
+  password: "",
+  passwordConfirmation: ""
+};
 
 const ResetPasswordForm = () => {
+  const searchParams = useSearchParams();
+  const code: string | null = searchParams.get('code');
+
+  const mutation: UseMutationResult<
+    IResetPasswordResponse,
+    IReactQueryError,
+    IResetPasswordRequest
+  > = useMutation({
+    mutationFn: resetPassword,
+  });
+
+  const { handleSubmit, control } = useForm<
+    z.infer<typeof ResetPasswordValidation>
+  >({
+    resolver: zodResolver(ResetPasswordValidation),
+    defaultValues,
+  });
+
+  // TODO: Inform user with notification in case of an error 
+  const onSubmit = (data: z.infer<typeof ResetPasswordValidation>) => {
+    try {
+      mutation.mutateAsync({
+        ...data,
+        code: code
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // TODO: Replace this with a success and redirecting... notification
+  if(mutation.isSuccess) {
+    return (
+      <Alert
+        severity="success"
+        sx={{
+          maxWidth: "436px",
+          paddingY: "14px",
+          marginY: "14px",
+          fontSize: "16px",
+          borderRadius: "8px",
+        }}
+      >
+        Password reset successful.
+      </Alert>
+    );
+  }
+
   return (
     <Box
       component="form"
@@ -12,6 +74,7 @@ const ResetPasswordForm = () => {
         display: "flex",
         flexDirection: "column",
       }}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Box
         sx={{
@@ -20,36 +83,56 @@ const ResetPasswordForm = () => {
           gap: "24px",
         }}
       >
-        <Input
+        <ControlledInput
+          name="password"
+          control={control}
           label="Password"
           required
-          inputProps={{
-            placeholder: "at least 8 characters",
-            type: "password",
-          }}
+          placeholder="at least 8 characters"
+          type="password"
         />
-        <Input
+        <ControlledInput
+          name="passwordConfirmation"
+          control={control}
           label="Confirm Password"
           required
-          inputProps={{
-            placeholder: "at least 8 characters",
-            type: "password",
-          }}
+          placeholder="at least 8 characters"
+          type="password"
         />
+        {/* TODO: Replace this with error notification */}
+        {mutation.isError && (
+          <Box sx={{ maxWidth: "436px" }}>
+            <Alert
+              severity={mutation.isSuccess ? "success" : "error"}
+              sx={{
+                paddingY: "14px",
+                fontSize: "16px",
+                borderRadius: "8px",
+              }}
+            >
+              {mutation.error?.response?.data?.error?.message ||
+                "Unknown error"}
+            </Alert>
+          </Box>
+        )}
       </Box>
 
       <Button
         variant="contained"
         type="submit"
+        disabled={mutation.isPending}
         sx={{
           marginTop: "20px",
           maxWidth: "436px",
           paddingY: "14px",
           fontSize: "16px",
           borderRadius: "8px",
+          "&.Mui-disabled": {
+            border: "0",
+          },
         }}
       >
-        Reset Password
+        {mutation.isPending ? "Loading..." : "Reset Password"}
       </Button>
     </Box>
   );

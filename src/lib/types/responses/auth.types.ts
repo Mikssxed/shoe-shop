@@ -31,3 +31,8 @@ export interface ILogInResponse {
 export interface IForgotPasswordRes {
   ok: true;
 }
+
+export interface IResetPasswordResponse {
+  jwt: string;
+  user: IUser;
+}

@@ -13,6 +13,8 @@ import {
   IForgotPasswordReq,
   IForgotPasswordRes,
   IErrorResponse,
+  IResetPasswordRequest,
+  IResetPasswordResponse,
 } from "@/lib/types";
 import axiosInstance from "@/tools/axios";
 
@@ -120,3 +122,7 @@ export const forgotPassword = async (
 ): Promise<IForgotPasswordRes> => {
   return postData<IForgotPasswordRes>("/auth/forgot-password", data);
 };
+
+export const resetPassword = async (data: IResetPasswordRequest): Promise<IResetPasswordResponse> => {
+  return postData<IResetPasswordResponse>("/auth/reset-password", data);
+}

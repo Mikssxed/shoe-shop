@@ -36,14 +36,14 @@ export const ResetPasswordValidation = z
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    confirmPassword: z
+    passwordConfirmation: z
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords don't match",
-    path: ["confirmPassword"],
+    path: ["passwordConfirmation"],
   });
 
 export const ForgotPasswordValidation = z.object({
