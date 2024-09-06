@@ -1,10 +1,10 @@
 "use client";
-
 import { useIsMobile } from "@/hooks";
 import { profileSidebarData } from "@/lib/config/profile-sidebar";
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   IconButton,
   List,
@@ -15,22 +15,30 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BaseSidebar } from "../ui";
 
 type Props = {
   open: boolean;
+  onClose?: () => void;
 };
 
-export const ProfileSidebar = ({ open }: Props) => {
+export const ProfileSidebar = ({ open, onClose }: Props) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined
   );
   const currentPath = usePathname();
   const isMobile = useIsMobile();
+  const { data } = useSession();
+  const image = data?.user?.image;
+  const firstName = data?.user?.firstName;
+  const lastName = data?.user?.lastName;
+  const username = data?.user?.username;
 
   useEffect(() => {
     const path = profileSidebarData.find(
@@ -51,17 +59,42 @@ export const ProfileSidebar = ({ open }: Props) => {
     router.push(path);
   };
 
-  const onClose = () => {
-    // TODO: handle close sidebar
-  };
-
   const user = (
     <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-      <Avatar
-        alt="Remy Sharp"
-        src="/images/avatar.png"
-        sx={{ width: 64, height: 64 }}
-      />
+      <Box
+        sx={{
+          width: "64px",
+          height: "64px",
+          border: "1px solid #fff",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {image ? (
+          <Image
+            src={image}
+            alt={(firstName || username || " ")[0].toUpperCase()}
+            fill
+            sizes="100%"
+            style={{ objectFit: "cover" }}
+          />
+        ) : (
+          <Avatar
+            src="/"
+            alt={(firstName || username || " ")[0].toUpperCase()}
+            sx={{
+              width: 1,
+              height: 1,
+              bgcolor: "primary.main",
+              color: "#fff",
+            }}
+          />
+        )}
+      </Box>
       <Toolbar
         sx={{
           flexDirection: "column",
@@ -83,17 +116,13 @@ export const ProfileSidebar = ({ open }: Props) => {
         >
           Welcome
         </Typography>
-        <Typography
-          paragraph
-          sx={{
-            fontSize: "1rem",
-            fontWeight: 500,
-            margin: 0,
-            lineHeight: "18.77px",
-          }}
-        >
-          Jane Meldrum
-        </Typography>
+        {firstName && lastName && (
+          <Typography>
+            <Typography component="span">{firstName}</Typography>{" "}
+            <Typography component="span">{lastName}</Typography>
+          </Typography>
+        )}
+        {!(firstName && lastName) && <Typography>{username}</Typography>}
       </Toolbar>
     </Box>
   );
@@ -101,96 +130,124 @@ export const ProfileSidebar = ({ open }: Props) => {
   const Content = () => {
     return (
       <Box>
-        {!isMobile && (
-          <>
-            <Box
-              style={{
-                paddingLeft: "40px",
-                paddingTop: "37.6px",
-                paddingBottom: "32px",
-              }}
-            >
-              {user}
-            </Box>
-            <Divider />
-          </>
-        )}
-        <List
-          disablePadding
-          sx={{
-            paddingLeft: "40px",
-            paddingTop: "32px",
-            paddingRight: "40px",
-          }}
-        >
-          {isMobile && (
-            <Box
+        {isMobile && (
+          <Box
+            sx={{
+              width: "100%",
+              justifyContent: "flex-end",
+              display: "flex",
+              position: "absolute",
+              top: "16px",
+              right: "28px",
+            }}
+          >
+            <IconButton
+              onClick={onClose}
               sx={{
-                width: "100%",
-                justifyContent: "flex-end",
-                display: "flex",
-                marginBottom: "14px",
+                display: { md: "none" },
+                marginLeft: "auto",
+                marginRight: "0px",
               }}
             >
-              <IconButton
-                onClick={onClose}
-                sx={{
-                  display: { md: "none" },
-                  marginLeft: "auto",
-                  marginRight: "0px",
+              <Image
+                src={"/icons/cross.svg"}
+                alt="close"
+                width={20}
+                height={20}
+              />
+            </IconButton>
+          </Box>
+        )}
+        {data ? (
+          <>
+            <>
+              <Box
+                style={{
+                  paddingLeft: "40px",
+                  paddingTop: "37.6px",
+                  paddingBottom: "32px",
                 }}
               >
-                <Image
-                  src={"/icons/cross.svg"}
-                  alt="close"
-                  width={20}
-                  height={20}
-                />
-              </IconButton>
-            </Box>
-          )}
-          {profileSidebarData.map((sidebarItem, index) => (
-            <ListItem
-              key={sidebarItem.id}
+                {user}
+              </Box>
+              <Divider />
+            </>
+            <List
               disablePadding
-              sx={{ marginBottom: "36px" }}
-              onClick={sidebarItem.onClick}
+              sx={{
+                paddingLeft: "40px",
+                paddingTop: "32px",
+                paddingRight: "40px",
+              }}
             >
-              <ListItemButton
-                disableGutters
+              {profileSidebarData.map((sidebarItem, index) => (
+                <ListItem
+                  key={sidebarItem.id}
+                  disablePadding
+                  sx={{ marginBottom: "36px" }}
+                  onClick={sidebarItem.onClick}
+                >
+                  <ListItemButton
+                    disableGutters
+                    sx={{
+                      gap: "15px",
+                      color: "#000",
+                      transition: "all 0.3s",
+                      "&.Mui-selected": {
+                        color: "#FE645E",
+                      },
+                      "&:hover": {
+                        paddingLeft: "10px",
+                      },
+                    }}
+                    selected={index === selectedIndex}
+                    onClick={(e) => handleListItemClick(e, sidebarItem.path)}
+                  >
+                    <ListItemIcon sx={{ minWidth: 20 }}>
+                      <sidebarItem.icon
+                        size={20}
+                        color={index === selectedIndex ? "#FE645E" : "#6e7378"}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      disableTypography
+                      primary={sidebarItem.name}
+                      sx={{
+                        fontSize: "1rem",
+                        fontWeight: 500,
+                        lineHeight: "18.77px",
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </>
+        ) : (
+          <Box sx={{ marginTop: "100px", paddingX: "20px" }}>
+            <Link
+              href="/auth/sign-in"
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Button
                 sx={{
-                  gap: "15px",
-                  color: "#000",
-                  transition: "all 0.3s",
-                  "&.Mui-selected": {
-                    color: "#FE645E",
-                  },
-                  "&:hover": {
-                    paddingLeft: "10px",
+                  width: "100%",
+                  height: "48px",
+                  typography: {
+                    textTransform: "none",
+                    fontWeight: "700",
                   },
                 }}
-                selected={index === selectedIndex}
-                onClick={(e) => handleListItemClick(e, sidebarItem.path)}
+                variant="outlined"
+                color="primary"
               >
-                <ListItemIcon sx={{ minWidth: 20 }}>
-                  <sidebarItem.icon
-                    size={20}
-                    color={index === selectedIndex ? "#FE645E" : "#6e7378"}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  disableTypography
-                  primary={sidebarItem.name}
-                  sx={{
-                    fontSize: "1rem",
-                    fontWeight: 500,
-                    lineHeight: "18.77px",
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+                Sign in
+              </Button>
+            </Link>
+          </Box>
+        )}
       </Box>
     );
   };
@@ -199,8 +256,9 @@ export const ProfileSidebar = ({ open }: Props) => {
     <>
       <BaseSidebar
         isMobile={isMobile}
-        open={!isMobile}
+        open={open}
         containerStyle={{ padding: "24px 0px" }}
+        onClose={onClose}
       >
         <Content />
       </BaseSidebar>

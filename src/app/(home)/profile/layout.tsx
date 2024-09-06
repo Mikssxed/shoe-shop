@@ -1,4 +1,6 @@
+"use client";
 import { ProfileSidebar } from "@/components/common";
+import { useIsMobile } from "@/hooks";
 import { Container, Stack } from "@mui/material";
 
 export default function ProfileLayout({
@@ -6,14 +8,14 @@ export default function ProfileLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const isMobile = useIsMobile();
   return (
     <Stack
       direction="row"
       justifyContent="center"
       sx={{ maxWidth: 1850, marginX: "auto", paddingX: "20px" }}
     >
-      {/* TODO: handle toggling it */}
-      <ProfileSidebar open />
+      {!isMobile && <ProfileSidebar open />}
       <Container
         maxWidth="xl"
         sx={{

@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 //TODO: create middleware that will replace this hook
 const useRedirectIfAuth = () => {
