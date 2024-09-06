@@ -27,3 +27,7 @@ export interface ILogInResponse {
   user?: IUser;
   error?: string;
 }
+
+export interface IForgotPasswordRes {
+  ok: true;
+}

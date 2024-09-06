@@ -8,3 +8,7 @@ export interface ISignUpRequest {
   email: string;
   password: string;
 }
+
+export interface IForgotPasswordReq {
+  email: string;
+}

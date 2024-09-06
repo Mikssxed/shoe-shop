@@ -7,7 +7,6 @@ const useSignIn = () => {
     mutationFn: async (credentials: ILogInRequest) => {
       const result = await signIn("credentials", {
         redirect: false,
-        // TODO: implement redirecting to some page
         ...credentials,
       });
       if (result?.error) {

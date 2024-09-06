@@ -89,7 +89,7 @@ const SignInForm: React.FC = () => {
           />
           <Typography variant="body1" fontWeight={300}>
             <Link
-              href="/forgot-password"
+              href="/auth/forgot-password"
               style={{
                 textDecoration: "none",
                 color: theme.palette.primary.main,

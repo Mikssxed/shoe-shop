@@ -111,11 +111,7 @@ const SignUpForm: React.FC = () => {
         />
 
         {mutation.isError && (
-          <Box
-            sx={{
-              maxWidth: "436px",
-            }}
-          >
+          <Box sx={{ maxWidth: "436px" }}>
             <Alert
               severity={mutation.isSuccess ? "success" : "error"}
               sx={{

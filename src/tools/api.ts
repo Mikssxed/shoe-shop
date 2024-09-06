@@ -10,6 +10,9 @@ import {
   ISignUpRequest,
   ISignUpResponse,
   ILogInRequest,
+  IForgotPasswordReq,
+  IForgotPasswordRes,
+  IErrorResponse,
 } from "@/lib/types";
 import axiosInstance from "@/tools/axios";
 
@@ -106,6 +109,14 @@ export const logIn = async (user: ILogInRequest) => {
   return result;
 };
 
-export const signUp = async (user: ISignUpRequest): Promise<ISignUpResponse> => {
+export const signUp = async (
+  user: ISignUpRequest
+): Promise<ISignUpResponse> => {
   return postData<ISignUpResponse>("/auth/local/register", user);
+};
+
+export const forgotPassword = async (
+  data: IForgotPasswordReq
+): Promise<IForgotPasswordRes> => {
+  return postData<IForgotPasswordRes>("/auth/forgot-password", data);
 };

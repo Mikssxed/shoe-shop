@@ -29,7 +29,7 @@ export default function ForgotPassword() {
 
       <Typography variant="body1" sx={{ textAlign: "center" }}>
         <Link
-          href="/log-in"
+          href="/auth/sign-in"
           style={{
             textDecorationLine: "none",
             color: theme.palette.text.secondary,

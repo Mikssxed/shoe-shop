@@ -22,7 +22,7 @@ export const SignUpFormValidation = z
   });
 
 export const LogInFormValidation = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address (ex. johndoe@gmail.com)"),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -47,5 +47,5 @@ export const ResetPasswordValidation = z
   });
 
 export const ForgotPasswordValidation = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address (ex. johndoe@gmail.com)"),
 });
