@@ -200,6 +200,16 @@ theme = createTheme({
         }),
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: () => ({
+          height: "60px",
+          [theme.breakpoints.up("md")]: {
+            height: "120px",
+          },
+        }),
+      },
+    },
   },
 });
 

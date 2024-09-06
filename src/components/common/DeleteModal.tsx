@@ -9,7 +9,6 @@ import {
   useTheme,
 } from "@mui/material";
 import Modal from "../ui/Modal";
-import { SxProps } from "@mui/material";
 import Image from "next/image";
 import Cross from "/public/icons/cross.svg";
 
@@ -48,7 +47,7 @@ const DeleteModal = ({
         Are you sure you want to delete {name}?
         <Image
           src={Cross}
-          alt=""
+          alt="close"
           width={20}
           height={20}
           onClick={onClose}

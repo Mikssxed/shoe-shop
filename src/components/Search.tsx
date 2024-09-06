@@ -2,22 +2,21 @@
 import Image from "next/image";
 import { useTheme } from "@mui/material/styles";
 import {
-  Backdrop,
   Box,
   List,
   ListItemButton,
   ListItemText,
   Typography,
-  useMediaQuery,
 } from "@mui/material";
-import SearchInput from "./SearchInput";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
-import { useRef, useState } from "react";
+import SearchBar from "./SearchBar";
+import { useState } from "react";
+import { useIsMobile } from "@/hooks";
+import Cross from "/public/icons/cross.svg";
+import Modal from "./ui/Modal";
 
 type SearchProps = {
   open: boolean;
-  handleClose: () => void;
+  onClose: () => void;
 };
 
 /*TODO: Delete dummy data and fill in the list of proposed items with matching searches*/
@@ -29,52 +28,51 @@ const dummyData = [
   "Nike Air Force 1 '07 High",
 ];
 
-export default function Search({ open, handleClose }: SearchProps) {
-  const boxRef = useRef<any>(null);
-
+export default function Search({ open, onClose }: SearchProps) {
   const theme = useTheme();
-  const matchesXs = useMediaQuery(theme.breakpoints.up("xs"));
-  const matchesSm = useMediaQuery(theme.breakpoints.up("sm"));
-
+  const isMobile = useIsMobile();
   const [searchValue, setSearchValue] = useState("");
   const searchTerms = dummyData.filter((item) =>
     item.toLowerCase().includes(searchValue)
   );
 
-  const onClose = () => {
+  const handleClose = () => {
     setSearchValue("");
-    handleClose();
+    onClose();
   };
 
   return (
-    <Backdrop
-      sx={{
-        backgroundColor: "#F3F3F3",
-        color: "#fff",
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-      }}
+    <Modal
       open={open}
-      onClick={(e) => {
-        if (e.target !== boxRef.current && !boxRef.current.contains(e.target)) {
-          onClose();
-        }
+      onClose={handleClose}
+      keepMounted={true}
+      containerStyle={{
+        "& > *": {
+          alignItems: "flex-start",
+        },
+      }}
+      paperStyle={{
+        justifyContent: "start",
+        width: "100%",
+        maxWidth: "100%",
+        margin: 0,
+        padding: 0,
       }}
     >
       <Box
         sx={{
           alignSelf: "start",
-          padding: { xs: "20px 25px", sm: "40px 45px" },
+          padding: { xs: "20px 25px", sm: "30px 35px", md: "40px 45px" },
           width: "100%",
-          height: { xs: "200px", sm: "420px" },
+          height: { xs: "200px", sm: "300px", md: "420px" },
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: "#ffffff",
+          backgroundColor: theme.palette.background.default,
         }}
-        ref={boxRef}
       >
-        <Box display={{ xs: "none", sm: "block" }}>
+        {!isMobile && (
           <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
-        </Box>
+        )}
         <Box
           sx={{
             display: "flex",
@@ -83,7 +81,7 @@ export default function Search({ open, handleClose }: SearchProps) {
         >
           {open && (
             <>
-              <SearchInput
+              <SearchBar
                 width="clamp(250px, 70dvw, 1070px)"
                 height="80px"
                 value={searchValue}
@@ -98,11 +96,15 @@ export default function Search({ open, handleClose }: SearchProps) {
                   {searchTerms.length > 0 && (
                     <Typography
                       sx={{
-                        marginTop: { xs: "12px", sm: "32px" },
-                        marginInline: { xs: "0px 10px", sm: "40px" },
+                        marginTop: { xs: "12px", sm: "22px", md: "32px" },
+                        marginInline: {
+                          xs: "0px 10px",
+                          sm: "20px",
+                          md: "40px",
+                        },
                         paddingLeft: "8px",
-                        color: "#5C5C5C",
-                        fontSize: { xs: "14px", sm: "20px" },
+                        color: theme.palette.text.secondary,
+                        fontSize: { xs: "14px", sm: "17px", md: "20px" },
                       }}
                     >
                       Popular Search Terms
@@ -111,7 +113,7 @@ export default function Search({ open, handleClose }: SearchProps) {
                   <List
                     sx={{
                       padding: 0,
-                      marginInline: { xs: "0px 10px", sm: "40px" },
+                      marginInline: { xs: "0px 10px", sm: "20px", md: "40px" },
                       display: "flex",
                       flexDirection: "column",
                       overflow: "auto",
@@ -123,19 +125,18 @@ export default function Search({ open, handleClose }: SearchProps) {
                         key={index}
                         sx={{
                           paddingX: "8px",
-                          paddingY: { xs: "4px", sm: "8px" },
+                          paddingY: { xs: "4px", sm: "6px", md: "8px" },
                         }}
                       >
                         <ListItemText
                           primary={data}
                           primaryTypographyProps={{
-                            color: "#000",
-                            fontSize: { xs: "12px", sm: "22px" },
-                            fontWeight: "600",
+                            color: theme.palette.text.primary,
+                            fontSize: { xs: "14px", sm: "17px", md: "20px" },
                           }}
                           sx={{
                             paddingY: "4px",
-                            marginY: { xs: 0, sm: "4px" },
+                            marginY: { xs: 0, sm: "2px", md: "4px" },
                           }}
                         />
                       </ListItemButton>
@@ -146,20 +147,32 @@ export default function Search({ open, handleClose }: SearchProps) {
             </>
           )}
         </Box>
-        <IconButton
+        <Box
           sx={{
-            width: { xs: "20px", sm: "60px" },
-            marginTop: { xs: "4px", sm: "10px" },
-            height: { xs: "20px", sm: "60px" },
+            "& > img": {
+              width: { xs: "10px", sm: "20px", md: "27px" },
+              marginTop: { xs: "4px", sm: "7px", md: "10px" },
+              height: { xs: "10px", sm: "20px", md: "27px" },
+            },
           }}
-          onClick={onClose}
         >
-          {matchesXs && !matchesSm && (
-            <CloseIcon fontSize="small" color="disabled" />
-          )}
-          {matchesSm && <CloseIcon fontSize="large" color="disabled" />}
-        </IconButton>
+          <Image
+            src={Cross}
+            alt="close"
+            width={27}
+            height={27}
+            onClick={handleClose}
+            style={{
+              filter:
+                theme.palette.mode === "dark"
+                  ? "brightness(10)"
+                  : "brightness(1)",
+              alignSelf: "start",
+              cursor: "pointer",
+            }}
+          />
+        </Box>
       </Box>
-    </Backdrop>
+    </Modal>
   );
 }

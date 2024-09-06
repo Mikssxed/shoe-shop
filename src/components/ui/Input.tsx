@@ -58,7 +58,7 @@ const Input = ({
             : `1px solid ${theme.palette.grey[700]}`,
           "& .MuiInputBase-input": {
             [theme.breakpoints.down("sm")]: {
-              fontSize: "10px"
+              fontSize: "10px",
             },
           },
         }}
