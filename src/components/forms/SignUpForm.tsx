@@ -62,7 +62,8 @@ const SignUpForm: React.FC = () => {
           borderRadius: "8px",
         }}
       >
-        Success. Please, check your email inbox and confirm your registration
+        Success. Please, check your email inbox and confirm your registration.
+        You can close this tab
       </Alert>
     );
   }
