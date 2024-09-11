@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   Button,
@@ -7,7 +5,6 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
-  useTheme,
 } from "@mui/material";
 import Image from "next/image";
 import Modal from "../ui/Modal";
@@ -31,8 +28,6 @@ const DeleteModal = ({
   onSubmit,
   text = defaultText,
 }: DeleteModalProps) => {
-  const theme = useTheme();
-
   const Content = () => (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "25px" }}>
       <DialogTitle
@@ -53,10 +48,6 @@ const DeleteModal = ({
           height={20}
           onClick={onClose}
           style={{
-            filter:
-              theme.palette.mode === "dark"
-                ? "brightness(10)"
-                : "brightness(1)",
             alignSelf: "start",
             cursor: "pointer",
           }}
@@ -99,7 +90,7 @@ const DeleteModal = ({
         justifyContent: "space-between",
         gap: { xs: "24px", md: "56px" },
         boxSizing: "border-box",
-        borderRadius: theme.spacing(),
+        borderRadius: "20px",
         width: { xs: "320px", md: "656px" },
       }}
     >

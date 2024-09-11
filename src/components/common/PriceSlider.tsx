@@ -1,23 +1,12 @@
-import { useMaxPrice } from "@/tools";
 import { Slider } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const PriceSlider = () => {
+const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
   const [priceRange, setPriceRange] = useState([-1, -1]);
-  const [productMaxPrice, setProductMaxPrice] = useState(1000);
   const searchParams = useSearchParams();
-  const { data } = useMaxPrice();
   const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (data) {
-      const maxPrice = data.data[0].attributes.price;
-      setProductMaxPrice(maxPrice);
-      setPriceRange([0, maxPrice]);
-    }
-  }, [data]);
 
   useEffect(() => {
     const minPrice = searchParams.get("minPrice");
@@ -27,7 +16,7 @@ const PriceSlider = () => {
     } else {
       setPriceRange([0, productMaxPrice]);
     }
-  }, [productMaxPrice, searchParams]);
+  }, [searchParams, productMaxPrice]);
 
   const handlePriceSelected = () => {
     const params = new URLSearchParams(searchParams);

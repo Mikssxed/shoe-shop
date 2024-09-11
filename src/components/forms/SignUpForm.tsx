@@ -1,15 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button, Typography, useTheme } from "@mui/material";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { Alert, Box, Button, Typography } from "@mui/material";
+import { UseMutationResult, useMutation } from "@tanstack/react-query";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import ControlledInput from "@/components/common/ControlledInput";
+import { constants } from "@/lib/constants";
+import { IReactQueryError, ISignUpRequest, ISignUpResponse } from "@/lib/types";
 import { SignUpFormValidation } from "@/lib/validation";
-import { ISignUpResponse, IReactQueryError, ISignUpRequest } from "@/lib/types";
 import { signUp } from "@/tools";
 
 const defaultValues = {
@@ -34,8 +35,6 @@ const SignUpForm: React.FC = () => {
     resolver: zodResolver(SignUpFormValidation),
     defaultValues,
   });
-
-  const theme = useTheme();
 
   const onSubmit = (data: z.infer<typeof SignUpFormValidation>) => {
     try {
@@ -162,11 +161,14 @@ const SignUpForm: React.FC = () => {
         </Typography>
         <Link
           href="/auth/sign-in"
-          style={{ textDecoration: "none", color: theme.palette.primary.main }}
+          style={{
+            textDecoration: "none",
+            color: constants.palette.primary.main,
+          }}
         >
           <Typography
             variant="body1"
-            color={theme.palette.primary.main}
+            color={constants.palette.primary.main}
             sx={{
               "&:hover": {
                 textDecoration: "underline",

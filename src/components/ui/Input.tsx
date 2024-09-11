@@ -1,5 +1,5 @@
 "use client";
-import { inter } from "@/theme";
+import { inter } from "@/lib/constants";
 import {
   Box,
   InputBase,

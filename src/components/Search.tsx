@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
-import { useTheme } from "@mui/material/styles";
+import { useIsMobile } from "@/hooks";
+import { constants } from "@/lib/constants";
 import {
   Box,
   List,
@@ -8,12 +8,11 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import SearchBar from "./SearchBar";
+import Image from "next/image";
 import { useState } from "react";
-import { useIsMobile } from "@/hooks";
-import Cross from "/public/icons/cross.svg";
+import SearchBar from "./SearchBar";
 import Modal from "./ui/Modal";
-import { Block } from "@mui/icons-material";
+import Cross from "/public/icons/cross.svg";
 
 type SearchProps = {
   open: boolean;
@@ -30,7 +29,6 @@ const dummyData = [
 ];
 
 export default function Search({ open, onClose }: SearchProps) {
-  const theme = useTheme();
   const isMobile = useIsMobile();
   const [searchValue, setSearchValue] = useState("");
   const searchTerms = dummyData.filter((item) =>
@@ -69,7 +67,7 @@ export default function Search({ open, onClose }: SearchProps) {
           height: { xs: "200px", sm: "300px", md: "420px" },
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: constants.palette.background.default,
         }}
       >
         {!isMobile && (
@@ -105,7 +103,7 @@ export default function Search({ open, onClose }: SearchProps) {
                           md: "40px",
                         },
                         paddingLeft: "8px",
-                        color: theme.palette.text.secondary,
+                        color: constants.palette.text.secondary,
                         fontSize: { xs: "14px", sm: "17px", md: "20px" },
                       }}
                     >
@@ -133,7 +131,7 @@ export default function Search({ open, onClose }: SearchProps) {
                         <ListItemText
                           primary={data}
                           primaryTypographyProps={{
-                            color: theme.palette.text.primary,
+                            color: constants.palette.text.primary,
                             fontSize: { xs: "14px", sm: "17px", md: "20px" },
                           }}
                           sx={{
@@ -165,10 +163,6 @@ export default function Search({ open, onClose }: SearchProps) {
             height={27}
             onClick={handleClose}
             style={{
-              filter:
-                theme.palette.mode === "dark"
-                  ? "brightness(10)"
-                  : "brightness(1)",
               alignSelf: "start",
               cursor: "pointer",
             }}

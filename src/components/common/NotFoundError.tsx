@@ -1,17 +1,17 @@
 "use client";
 
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
-import Image from "next/image";
 import { useIsMobile } from "@/hooks";
-import BaseErrorPage from "./BaseErrorPage";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   desktopButtonsStyles,
   errorMessageStyles,
   errorTitleStyles,
   mobileButtonsStyles,
 } from "@/styles/errorPage/errorStyles";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import BaseErrorPage from "./BaseErrorPage";
 
 const NotFoundError = () => {
   const isMobile = useIsMobile();

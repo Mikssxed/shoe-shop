@@ -1,22 +1,16 @@
-import React, { useState } from "react"
-import Image from "next/image"
-import {
-  Typography,
-  Divider,
-  Box,
-  Button,
-  TextField,
-  useTheme,
-} from "@mui/material"
-import BagPricingList from "@/components/bag/BagPricingList"
+"use client";
+import BagPricingList from "@/components/bag/BagPricingList";
+import { constants } from "@/lib/constants";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import Image from "next/image";
+import React, { useState } from "react";
 
 interface BagSummaryProps {
-  subtotal: number
+  subtotal: number;
 }
 
 const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
-  const [showPromoInput, setShowPromoInput] = useState(false)
-  const theme = useTheme()
+  const [showPromoInput, setShowPromoInput] = useState(false);
   return (
     <Box
       sx={{
@@ -34,7 +28,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         fontWeight={500}
         lineHeight="53px"
         sx={{ marginBottom: "68px", display: { xs: "none", md: "block" } }}
-        color={theme.palette.text.primary}
+        color={constants.palette.text.primary}
       >
         Summary
       </Typography>
@@ -103,7 +97,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         Checkout
       </Button>
     </Box>
-  )
-}
+  );
+};
 
-export default BagSummary
+export default BagSummary;

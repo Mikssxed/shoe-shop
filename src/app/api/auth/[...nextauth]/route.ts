@@ -1,3 +1,4 @@
+import { ILogInResponse } from "@/lib/types";
 import axiosInstance from "@/tools/axios";
 import { AxiosResponse } from "axios";
 import NextAuth, { AuthOptions } from "next-auth";
@@ -16,16 +17,14 @@ export const authOptions: AuthOptions = {
       },
       authorize: async (credentials, req) => {
         try {
-          const { data }: AxiosResponse<any> = await axiosInstance.post(
-            "/auth/local",
-            {
+          const { data }: AxiosResponse<ILogInResponse> =
+            await axiosInstance.post("/auth/local", {
               identifier: credentials?.identifier,
               password: credentials?.password,
-            }
-          );
+            });
 
           const userInfo = await axiosInstance.get(
-            `/users/${data.user.id}?populate=avatar`,
+            `/users/${data.user?.id}?populate=avatar`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -34,8 +33,10 @@ export const authOptions: AuthOptions = {
             }
           );
           return {
-            ...data.user,
-            access_token: data.jwt,
+            id: String(data.user?.id),
+            username: data.user?.username,
+            email: data.user?.email,
+            accessToken: data.jwt,
             image: userInfo.data.avatar?.url,
           };
         } catch (error) {
@@ -50,7 +51,7 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, account, user, trigger, session }) {
       if (account) {
-        token.accessToken = user.access_token;
+        token.accessToken = user.accessToken;
         token.id = user.id;
         token.username = user.username;
         token.firstName = user.firstName || "";
@@ -81,6 +82,7 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/sign-in",
     newUser: "/auth/sign-up",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);

@@ -1,6 +1,7 @@
 "use client";
+import { constants } from "@/lib/constants";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box, InputLabel, MenuItem, Select, useTheme } from "@mui/material";
+import { Box, InputLabel, MenuItem, Select } from "@mui/material";
 import { SelectProps } from "@mui/material/Select/Select";
 import { useId } from "react";
 
@@ -17,7 +18,6 @@ const Dropdown = ({
   ...props
 }: DropdownProps) => {
   const id = useId();
-  const theme = useTheme();
   return (
     <Box sx={{ width: "100%", maxWidth: "436px" }}>
       {labelText && <InputLabel htmlFor={id}>{labelText}</InputLabel>}
@@ -27,8 +27,8 @@ const Dropdown = ({
           width: "100%",
           borderRadius: "8px",
           maxHeight: "48px",
-          color: theme.palette.text.primary,
-          border: `1px solid ${theme.palette.grey[700]}`,
+          color: constants.palette.text.primary,
+          border: `1px solid ${constants.palette.grey[700]}`,
         }}
         MenuProps={{ sx: { maxHeight: 400 } }}
         IconComponent={ExpandMoreIcon}
@@ -37,8 +37,8 @@ const Dropdown = ({
         {!withoutNone && (
           <MenuItem
             sx={{
-              fontSize: theme.typography.subtitle2,
-              color: theme.palette.text.primary,
+              fontSize: constants.typography.body2.fontSize,
+              color: constants.palette.text.primary,
             }}
             key="none"
             value={0}
@@ -49,8 +49,8 @@ const Dropdown = ({
         {options.map(({ value, name }) => (
           <MenuItem
             sx={{
-              fontSize: theme.typography.subtitle2,
-              color: theme.palette.text.primary,
+              fontSize: constants.typography.body2.fontSize,
+              color: constants.palette.text.primary,
             }}
             key={value}
             value={value}

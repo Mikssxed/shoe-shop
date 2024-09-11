@@ -6,7 +6,7 @@ import SignInForm from "@/components/forms/SignInForm";
 import { useRedirectIfAuth } from "@/hooks";
 
 export default function SignIn() {
-  useRedirectIfAuth();
+  useRedirectIfAuth(); // TODO: Delete after creating middleware
 
   return (
     <Box marginTop="40px">

@@ -1,10 +1,9 @@
-"use client"
-import BagItem from "@/components/bag/BagItem"
-import { Container, Typography, Divider, Box, Button } from "@mui/material"
-import { useTheme } from "@mui/material"
-import { Fragment, useMemo } from "react"
-import Image from "next/image"
-import BagSummary from "@/components/bag/BagSummary"
+import BagItem from "@/components/bag/BagItem";
+import BagSummary from "@/components/bag/BagSummary";
+import { constants } from "@/lib/constants";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import Image from "next/image";
+import { Fragment, useMemo } from "react";
 
 //DUMMY DATA NEEDS TO BE CHANGED IN FUTURE
 const cart = [
@@ -50,14 +49,13 @@ const cart = [
     price: 110,
     amount: 1,
   },
-]
+];
 
 const Bag = () => {
-  const theme = useTheme()
   const subtotal = useMemo(
     () => cart.reduce((acc, shoe) => acc + shoe.price * shoe.amount, 0),
-    [JSON.stringify(cart)]
-  )
+    []
+  );
 
   return (
     <>
@@ -70,7 +68,7 @@ const Bag = () => {
           fontWeight: 500,
           lineHeight: { xs: "35px", md: "53px" },
         }}
-        color={theme.palette.text.primary}
+        color={constants.palette.text.primary}
       >
         Cart
       </Typography>
@@ -106,7 +104,7 @@ const Bag = () => {
                 fontWeight: 500,
                 lineHeight: { xs: "35px", md: "53px" },
               }}
-              color={theme.palette.text.primary}
+              color={constants.palette.text.primary}
             >
               Cart
             </Typography>
@@ -152,7 +150,7 @@ const Bag = () => {
               fontWeight: 500,
               lineHeight: { xs: "35px", md: "53px" },
             }}
-            color={theme.palette.text.primary}
+            color={constants.palette.text.primary}
           >
             Cart
           </Typography>
@@ -192,9 +190,9 @@ const Bag = () => {
                 fontSize: { xs: "16px", md: "20px" },
                 lineHeight: { xs: "20px", md: "24px" },
               }}
-              color={theme.palette.text.primary}
+              color={constants.palette.text.primary}
             >
-              You don't have any products yet
+              You don&apos;t have any products yet
             </Typography>
             <Typography
               sx={{
@@ -231,7 +229,7 @@ const Bag = () => {
           fontWeight: 500,
           lineHeight: { xs: "35px", md: "53px" },
         }}
-        color={theme.palette.text.primary}
+        color={constants.palette.text.primary}
       >
         Summary
       </Typography>
@@ -278,7 +276,7 @@ const Bag = () => {
         </Button>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Bag
+export default Bag;

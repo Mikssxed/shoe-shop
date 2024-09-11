@@ -1,5 +1,3 @@
-"use client";
-
 import { IProfileInfoInputField } from "@/lib/types/update-profile-types";
 import {
   myProfileTitleStyles,

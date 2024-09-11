@@ -1,5 +1,7 @@
 "use client";
-
+import { useIsMobile } from "@/hooks";
+import { constants } from "@/lib/constants";
+import { ProductsResponse } from "@/lib/types";
 import { useProducts } from "@/tools";
 import { buildParams } from "@/utils";
 import {
@@ -9,7 +11,6 @@ import {
   Grid,
   Stack,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { BagCross1 } from "iconsax-react";
 import { useSearchParams } from "next/navigation";
@@ -18,17 +19,20 @@ import ProductCard from "./ProductCard";
 
 type Props = {
   fullWidth?: boolean;
+  initialProducts: ProductsResponse;
+  filters?: Record<string, string | number>;
 };
 
-const ProductList = ({ fullWidth }: Props) => {
-  const theme = useTheme();
+const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
+  const isMobile = useIsMobile();
+  const isFullWidth = fullWidth || isMobile;
   const searchParams = useSearchParams();
   const {
     data: products,
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useProducts(buildParams(searchParams));
+  } = useProducts(initialProducts, filters || buildParams(searchParams));
 
   const bottomElementRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +64,7 @@ const ProductList = ({ fullWidth }: Props) => {
     <Grid
       container
       spacing={{ xs: 2, sm: 5, lg: 6, xl: 8 }}
-      columns={{ xs: 12, md: 12, lg: 12, xl: fullWidth ? 8 : 12 }}
+      columns={{ xs: 12, md: 12, lg: 12, xl: isFullWidth ? 8 : 12 }}
       sx={{ position: "relative" }}
     >
       {isLoading && (
@@ -88,7 +92,7 @@ const ProductList = ({ fullWidth }: Props) => {
             >
               <BagCross1
                 size="20"
-                color={theme.palette.grey[500]}
+                color={constants.palette.grey[500]}
                 variant="Outline"
               />
             </Avatar>
@@ -107,9 +111,9 @@ const ProductList = ({ fullWidth }: Props) => {
             key={product.id}
             item
             xs={6}
-            md={fullWidth ? 4 : 6}
-            lg={fullWidth ? 3 : 4}
-            xl={fullWidth ? 2 : 3}
+            md={isFullWidth ? 4 : 6}
+            lg={isFullWidth ? 3 : 4}
+            xl={isFullWidth ? 2 : 3}
             sx={{
               display: "flex",
               justifyContent: "center",

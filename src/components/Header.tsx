@@ -1,10 +1,6 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Bag, HambergerMenu, SearchNormal1 } from "iconsax-react";
-import SearchBar from "./SearchBar";
-import Search from "./Search";
+import { useIsMobile } from "@/hooks";
+import { constants } from "@/lib/constants";
 import {
   AppBar,
   Avatar,
@@ -13,14 +9,17 @@ import {
   Divider,
   Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
-import { useIsMobile } from "@/hooks";
-import { ProfileSidebar } from "./common";
+import { Bag, HambergerMenu, SearchNormal1 } from "iconsax-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import Search from "./Search";
+import SearchBar from "./SearchBar";
+import { ProfileSidebar } from "./common";
 
 const Header = () => {
-  const theme = useTheme();
   const { status } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -41,7 +40,7 @@ const Header = () => {
           sx={{
             flexGrow: 1,
             paddingInline: { xs: "20px", md: "30px", lg: "40px 60px" },
-            backgroundcolor: theme.palette.background.default,
+            backgroundcolor: constants.palette.background.default,
             justifyItems: "end",
             gap: { xs: "20px", md: 0 },
           }}
@@ -54,7 +53,7 @@ const Header = () => {
                   align="center"
                   sx={{ marginInline: "44px", lineHeight: "30px" }}
                   variant="body1"
-                  color={theme.palette.text.primary}
+                  color={constants.palette.text.primary}
                 >
                   Products
                 </Typography>
@@ -90,7 +89,7 @@ const Header = () => {
             </Box>
           )}
           <Link href="/bag" style={{ width: "24px", height: "24px" }}>
-            <Bag size="24" color={theme.palette.grey[700]} />
+            <Bag size="24" color={constants.palette.grey[700]} />
           </Link>
           {isMobile && (
             <Box
@@ -99,7 +98,7 @@ const Header = () => {
             >
               <SearchNormal1
                 size="17"
-                color={theme.palette.grey[700]}
+                color={constants.palette.grey[700]}
                 style={{
                   cursor: "pointer",
                 }}
@@ -127,7 +126,7 @@ const Header = () => {
               {/*TODO: Add onclick to show sidebar */}
               <HambergerMenu
                 size="24"
-                color={theme.palette.grey[700]}
+                color={constants.palette.grey[700]}
                 onClick={() => setSidebarOpen(true)}
               />
             </Box>

@@ -1,12 +1,15 @@
-"use client";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ProductList } from "@/components/common";
-import { useIsMobile } from "@/hooks";
+import { getMyProducts } from "@/tools";
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { Session, User, getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function MyProducts() {
-  const isMobile = useIsMobile();
+export default async function MyProducts() {
+  const session = (await getServerSession(authOptions)) as Session;
+  const user = session.user as User;
+  const initialData = await getMyProducts(user);
   return (
     <>
       <Box
@@ -109,7 +112,10 @@ export default function MyProducts() {
             </Button>
           </Link>
         </Stack>
-        <ProductList fullWidth={!isMobile} />
+        <ProductList
+          initialProducts={initialData}
+          filters={Object.assign({ "filters[filters[userID]]": user.id })}
+        />
       </Box>
     </>
   );

@@ -1,14 +1,14 @@
-import { Button, Grid, Typography, useTheme } from "@mui/material";
-import BaseErrorPage from "./BaseErrorPage";
-import Link from "next/link";
-import Image from "next/image";
+import { useIsMobile } from "@/hooks";
 import {
   desktopButtonsStyles,
   errorMessageStyles,
   errorTitleStyles,
   mobileButtonsStyles,
 } from "@/styles/errorPage/errorStyles";
-import { useIsMobile } from "@/hooks";
+import { Button, Grid, Typography, useTheme } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
+import BaseErrorPage from "./BaseErrorPage";
 
 const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
   const isMobile = useIsMobile();

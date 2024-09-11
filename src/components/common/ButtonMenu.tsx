@@ -24,7 +24,7 @@ type ButtonMenuProps = MenuProps & {
   productid: number;
   onDeleteProduct: () => void;
   name: string;
-  onEditProduct: () => void;
+  onEditProduct?: () => void;
 };
 
 const ButtonMenu = ({

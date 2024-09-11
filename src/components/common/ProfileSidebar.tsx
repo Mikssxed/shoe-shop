@@ -25,9 +25,10 @@ import { BaseSidebar } from "../ui";
 type Props = {
   open: boolean;
   onClose?: () => void;
+  blockOnMobile?: boolean;
 };
 
-export const ProfileSidebar = ({ open, onClose }: Props) => {
+export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined
@@ -59,6 +60,9 @@ export const ProfileSidebar = ({ open, onClose }: Props) => {
     router.push(path);
   };
 
+  if (blockOnMobile && isMobile) {
+    return null;
+  }
   const user = (
     <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
       <Box

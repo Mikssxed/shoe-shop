@@ -1,9 +1,10 @@
-import { Typography, Box, useTheme } from "@mui/material"
+import { constants } from "@/lib/constants";
+import { Box, Typography } from "@mui/material";
 
 interface BagPricingListProps {
-  name: string
-  value: number
-  bold?: boolean
+  name: string;
+  value: number;
+  bold?: boolean;
 }
 
 const BagPricingList: React.FC<BagPricingListProps> = ({
@@ -11,7 +12,6 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
   value,
   bold,
 }) => {
-  const theme = useTheme()
   return (
     <Box
       sx={{
@@ -26,7 +26,7 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
           lineHeight: { xs: "24px", sm: "35px" },
         }}
         fontWeight={bold ? 600 : 400}
-        color={theme.palette.text.primary}
+        color={constants.palette.text.primary}
       >
         {name}
       </Typography>
@@ -36,12 +36,12 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
           lineHeight: { xs: "24px", sm: "35px" },
         }}
         fontWeight={bold ? 600 : 400}
-        color={theme.palette.text.primary}
+        color={constants.palette.text.primary}
       >
         ${value}
       </Typography>
     </Box>
-  )
-}
+  );
+};
 
-export default BagPricingList
+export default BagPricingList;

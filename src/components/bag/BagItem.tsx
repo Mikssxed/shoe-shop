@@ -1,24 +1,24 @@
-import Image from "next/image"
-import { Box, Button, Typography, useTheme } from "@mui/material"
+import { constants } from "@/lib/constants";
+import { Box, Button, Typography } from "@mui/material";
+import Image from "next/image";
 
 //UPDATE PROPS
 interface BagItemProps {
   data: {
-    name: string
+    name: string;
     images: {
-      data: string[]
-    }
-    description: string
-    number: number
-    teamName: string
-    gender: string
-    price: number
-    amount: number
-  }
+      data: string[];
+    };
+    description: string;
+    number: number;
+    teamName: string;
+    gender: string;
+    price: number;
+    amount: number;
+  };
 }
 
 const BagItem: React.FC<BagItemProps> = ({ data }) => {
-  const theme = useTheme()
   return (
     <Box
       sx={{
@@ -52,7 +52,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 fontSize: { xs: "12px", md: "20px", xl: "30px" },
                 lineHeight: { xs: "14px", md: "23px", xl: "35px" },
               }}
-              color={theme.palette.text.primary}
+              color={constants.palette.text.primary}
             >
               {data.teamName} {data.name}
             </Typography>
@@ -65,7 +65,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 lineHeight: { xs: "10px", md: "14px", xl: "23.5px" },
               }}
             >
-              {data.gender}'s Shoes
+              {data.gender}&apos;s Shoes
             </Typography>
             <Typography
               fontWeight={600}
@@ -84,7 +84,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 fontSize: { xs: 12, md: 20, xl: 30 },
                 lineHeight: { xs: "14px", md: "23px", xl: "35.2px" },
               }}
-              color={theme.palette.text.primary}
+              color={constants.palette.text.primary}
             >
               ${data.price}
             </Typography>
@@ -215,7 +215,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default BagItem
+export default BagItem;

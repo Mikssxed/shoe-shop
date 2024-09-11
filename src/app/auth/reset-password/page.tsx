@@ -1,13 +1,9 @@
-"use client";
-
-import Link from "next/link";
-import { Box, Typography, useTheme } from "@mui/material";
-
 import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
+import { constants } from "@/lib/constants";
+import { Box, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function ResetPassword() {
-  const theme = useTheme();
-
   return (
     <Box marginTop="40px">
       <Typography variant="h1" sx={{ lineHeight: "53px", fontSize: "45px" }}>
@@ -32,7 +28,7 @@ export default function ResetPassword() {
           href="/auth/sign-in"
           style={{
             textDecorationLine: "none",
-            color: theme.palette.text.secondary,
+            color: constants.palette.text.secondary,
           }}
         >
           Back to log in

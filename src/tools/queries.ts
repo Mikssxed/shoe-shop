@@ -1,7 +1,8 @@
+import { ProductsResponse } from "@/lib/types";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getFiltersData, getMaxPrice, getProduct, getProducts } from "./api";
+import { getFiltersData, getProduct, getProducts } from "./api";
 
-export const useProducts = (params?: {}) => {
+export const useProducts = (initialProducts: ProductsResponse, params?: {}) => {
   return useInfiniteQuery({
     queryKey: ["products", params],
     queryFn: ({ pageParam }) => getProducts(pageParam, params),
@@ -14,13 +15,10 @@ export const useProducts = (params?: {}) => {
     },
     select: (data) => data.pages.flatMap((page) => page.data),
     initialPageParam: 1,
-  });
-};
-
-export const useMaxPrice = () => {
-  return useQuery({
-    queryKey: ["maxPrice"],
-    queryFn: getMaxPrice,
+    initialData: {
+      pages: [initialProducts],
+      pageParams: [1],
+    },
   });
 };
 

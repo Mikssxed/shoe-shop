@@ -5,18 +5,18 @@ import {
   ApiResponseList,
   BaseWithName,
   BaseWithValue,
-  ProductResponse,
-  ProductsResponse,
-  ISignUpRequest,
-  ISignUpResponse,
-  ILogInRequest,
   IForgotPasswordReq,
   IForgotPasswordRes,
-  IErrorResponse,
+  ILogInRequest,
   IResetPasswordRequest,
   IResetPasswordResponse,
+  ISignUpRequest,
+  ISignUpResponse,
+  ProductResponse,
+  ProductsResponse,
 } from "@/lib/types";
 import axiosInstance from "@/tools/axios";
+import { User } from "next-auth";
 
 export const fetchData = async <T>(
   url: string,
@@ -54,6 +54,8 @@ export const getProducts = async (page: number, params?: {}) => {
       populate: "*",
       "pagination[page]": page,
       "pagination[pageSize]": 12,
+      sort: "createdAt:desc",
+      "filters[teamName]": "team-1",
       ...params,
     },
   });
@@ -123,6 +125,23 @@ export const forgotPassword = async (
   return postData<IForgotPasswordRes>("/auth/forgot-password", data);
 };
 
-export const resetPassword = async (data: IResetPasswordRequest): Promise<IResetPasswordResponse> => {
+export const resetPassword = async (
+  data: IResetPasswordRequest
+): Promise<IResetPasswordResponse> => {
   return postData<IResetPasswordResponse>("/auth/reset-password", data);
-}
+};
+
+export const getMyProducts = async (user: User) => {
+  return fetchData<ProductsResponse>("/products", {
+    params: {
+      "filters[userID]": user.id,
+      populate: "*",
+      "pagination[page]": 1,
+      "pagination[pageSize]": 12,
+      sort: "createdAt:desc",
+    },
+    headers: {
+      Authorization: `Bearer ${user?.accessToken}`,
+    },
+  });
+};

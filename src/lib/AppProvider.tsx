@@ -1,9 +1,8 @@
 "use client";
-
-import { SessionProvider } from "next-auth/react";
 import { queryClient } from "@/tools";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SessionProvider } from "next-auth/react";
 import { SnackbarProvider } from "notistack";
 import { PropsWithChildren } from "react";
 

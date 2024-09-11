@@ -1,15 +1,16 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Alert, Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button, Typography, useTheme } from "@mui/material";
 
-import ControlledInput from "@/components/common/ControlledInput";
 import ControlledCheckbox from "@/components/common/ControlledCheckbox";
-import { LogInFormValidation } from "@/lib/validation";
+import ControlledInput from "@/components/common/ControlledInput";
 import { useSignIn } from "@/hooks";
+import { constants } from "@/lib/constants";
+import { LogInFormValidation } from "@/lib/validation";
 
 const defaultValues = {
   email: "",
@@ -28,8 +29,6 @@ const SignInForm: React.FC = () => {
   // TODO: implement 'remember me' checkbox using
 
   const { mutate, isPending, isError } = useSignIn();
-
-  const theme = useTheme();
 
   const onSubmit = (data: z.infer<typeof LogInFormValidation>) => {
     try {
@@ -92,7 +91,7 @@ const SignInForm: React.FC = () => {
               href="/auth/forgot-password"
               style={{
                 textDecoration: "none",
-                color: theme.palette.primary.main,
+                color: constants.palette.primary.main,
               }}
             >
               Forgot password?
@@ -152,7 +151,7 @@ const SignInForm: React.FC = () => {
         </Typography>
         <Typography
           variant="body1"
-          color={theme.palette.primary.main}
+          color={constants.palette.primary.main}
           sx={{
             "&:hover": {
               textDecoration: "underline",
@@ -163,7 +162,7 @@ const SignInForm: React.FC = () => {
             href="/auth/sign-up"
             style={{
               textDecoration: "none",
-              color: theme.palette.primary.main,
+              color: constants.palette.primary.main,
             }}
           >
             Sign up

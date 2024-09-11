@@ -1,5 +1,6 @@
 import { useIsMobile } from "@/hooks";
-import { Box, InputBase, useTheme } from "@mui/material";
+import { constants } from "@/lib/constants";
+import { Box, InputBase } from "@mui/material";
 import { SearchNormal1 } from "iconsax-react";
 
 type SearchBarProps = {
@@ -17,7 +18,6 @@ const SearchBar = ({
   setValue,
   focused = false,
 }: SearchBarProps) => {
-  const theme = useTheme();
   const isMobile = useIsMobile();
 
   return (
@@ -41,12 +41,12 @@ const SearchBar = ({
         }}
       >
         {isMobile && (
-          <SearchNormal1 size="10" color={theme.palette.grey[700]} />
+          <SearchNormal1 size="10" color={constants.palette.grey[700]} />
         )}
         {!isMobile && (
           <SearchNormal1
             size={`calc(${height}/3)`}
-            color={theme.palette.grey[700]}
+            color={constants.palette.grey[700]}
           />
         )}
       </Box>
@@ -63,16 +63,16 @@ const SearchBar = ({
         sx={{
           paddingLeft: { xs: "25px", sm: "35px", md: `${height}` },
           paddingRight: { xs: "10px", md: `calc(${height}/3)` },
-          color: theme.palette.text.secondary,
+          color: constants.palette.text.secondary,
           width: "100%",
           height: { xs: "25px", sm: "40px", md: height },
-          border: `1px solid ${theme.palette.grey[700]}`,
+          border: `1px solid ${constants.palette.grey[700]}`,
           borderRadius: `calc(${height}/2)`,
           "& > input": {
             fontSize: { xs: "10px", sm: "18px", md: `calc(${height}/3)` },
           },
           "&::placeholder": {
-            color: theme.palette.text.secondary,
+            color: constants.palette.text.secondary,
             opacity: 0,
           },
         }}

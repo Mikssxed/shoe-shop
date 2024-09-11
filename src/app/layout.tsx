@@ -1,7 +1,7 @@
 import AppProvider from "@/lib/AppProvider";
 import theme from "@/theme";
-import { ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
 import "../styles/globals.css";
 

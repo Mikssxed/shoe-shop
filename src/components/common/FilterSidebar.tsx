@@ -1,13 +1,6 @@
 "use client";
 import { BaseWithName, BaseWithValue, FiltersData } from "@/lib/types";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { BaseSidebar } from "../ui";
@@ -21,6 +14,7 @@ type Props = {
   productsCount: number;
   filtersData: FiltersData;
   onClose: () => void;
+  maxPrice: number;
 };
 
 export const FilterSidebar = ({
@@ -30,8 +24,8 @@ export const FilterSidebar = ({
   productsCount,
   filtersData,
   onClose,
+  maxPrice,
 }: Props) => {
-  const theme = useTheme();
   const router = useRouter();
   const pathName = usePathname();
 
@@ -102,7 +96,7 @@ export const FilterSidebar = ({
           />
         ))}
         <Category name="Price">
-          <PriceSlider />
+          <PriceSlider maxPrice={maxPrice} />
         </Category>
       </>
     );

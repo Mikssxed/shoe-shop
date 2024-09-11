@@ -1,5 +1,3 @@
-"use client";
-
 import ProductInfoForm from "./ProductInfoForm";
 import Modal from "./ui/Modal";
 

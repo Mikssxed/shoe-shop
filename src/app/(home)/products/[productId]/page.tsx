@@ -1,9 +1,7 @@
-"use client";
-import { ImageSlider } from "@/components/common";
-import { useProduct } from "@/tools";
+import { ImageSlider, Sizes } from "@/components/common";
+import { getProduct } from "@/tools";
 import {
   Box,
-  Button,
   Container,
   Grid,
   Paper,
@@ -11,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import ActionButtons from "./ActionButtons";
 
 type Props = {
   params: { productId: string };
@@ -31,21 +29,10 @@ const styles: Record<string, SxProps> = {
     maxWidth: "100%",
     lineBreak: "anywhere",
   },
-  actionButton: {
-    flexBasis: "50%",
-    padding: {
-      xs: "10px 15px",
-      sm: "16px 20px",
-    },
-    borderRadius: "10px",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
 };
 
-const Product = ({ params: { productId } }: Props) => {
-  const [choosedSize, setChoosedSize] = useState(0);
-  const { data: product } = useProduct(productId);
+const Product = async ({ params: { productId } }: Props) => {
+  const product = await getProduct(productId);
 
   const {
     name,
@@ -60,18 +47,6 @@ const Product = ({ params: { productId } }: Props) => {
   const gender = genderData?.data?.attributes.name;
   const sizes = sizesData?.data || [];
   const images = imagesData?.data?.map((image) => image.attributes.url) || [];
-
-  const addToBag = () => {
-    //TODO: add to bag logic
-  };
-
-  const addToFav = () => {
-    //TODO: add to fav logic
-  };
-
-  const goToThatProduct = () => {
-    //TODO: go to that product logic
-  };
 
   return (
     <Container
@@ -165,35 +140,7 @@ const Product = ({ params: { productId } }: Props) => {
                 paddingTop: "14px",
               }}
             >
-              {sizes
-                .sort((a, b) => +a.attributes.value - +b.attributes.value)
-                .map(({ id, attributes: { value } }) => {
-                  const isChecked = id === choosedSize;
-                  return (
-                    <Grid key={id} xs={3} sm={2} md={3} lg={2} item>
-                      <Button
-                        sx={{
-                          width: "100%",
-                          fontWeight: "fontWeighRegular",
-                          fontSize: { xs: 10, sm: 15 },
-                          textTransform: "uppercase",
-                          borderColor: "grey.700",
-                          padding: { xs: "8px 15px", sm: "10px 20px" },
-                          "&:hover": {
-                            borderColor: "grey.700",
-                            backgroundColor: "grey.100",
-                          },
-                          borderRadius: "12px",
-                          color: isChecked ? "white" : "text.secondary",
-                        }}
-                        variant={isChecked ? "contained" : "outlined"}
-                        onClick={() => setChoosedSize(id)}
-                      >
-                        EU-{value}
-                      </Button>
-                    </Grid>
-                  );
-                })}
+              <Sizes sizes={sizes} />
             </Grid>
           </Box>
         )}
@@ -209,20 +156,7 @@ const Product = ({ params: { productId } }: Props) => {
             width: "100%",
           }}
         >
-          <Button
-            onClick={addToFav}
-            variant="outlined"
-            sx={styles.actionButton}
-          >
-            Favorite
-          </Button>
-          <Button
-            onClick={addToBag}
-            variant="contained"
-            sx={styles.actionButton}
-          >
-            Add to Bag
-          </Button>
+          <ActionButtons id={productId} />
         </Box>
         <Box
           sx={{
