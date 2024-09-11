@@ -2,7 +2,7 @@
 import { BaseWithName, BaseWithValue, FiltersData } from "@/lib/types";
 import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BaseSidebar } from "../ui";
 import { Category } from "./Category";
 import PriceSlider from "./PriceSlider";
@@ -28,11 +28,16 @@ export const FilterSidebar = ({
 }: Props) => {
   const router = useRouter();
   const pathName = usePathname();
+  const searchParams = useSearchParams();
 
   const { genders, colors, brands, categories, sizes } = filtersData;
 
   const handleClearFilters = () => {
-    router.push(pathName);
+    const params = new URLSearchParams(searchParams);
+    const searchParam = params.get("search")
+      ? "?search=" + params.get("search")
+      : "";
+    router.push(`${pathName}${searchParam}`);
   };
 
   const categoryData = [

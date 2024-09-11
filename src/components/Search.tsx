@@ -1,5 +1,4 @@
 "use client";
-import { useIsMobile } from "@/hooks";
 import { constants } from "@/lib/constants";
 import {
   Box,
@@ -11,33 +10,62 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
-import Modal from "./ui/Modal";
+import { useIsMobile, useDebounce } from "@/hooks";
 import Cross from "/public/icons/cross.svg";
+import Modal from "./ui/Modal";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useProductsNames } from "@/tools";
 
 type SearchProps = {
   open: boolean;
   onClose: () => void;
 };
 
-/*TODO: Delete dummy data and fill in the list of proposed items with matching searches*/
-const dummyData = [
-  "Nike Air Force 1 LV8",
-  "Nike Force 1",
-  "Nike Air Force 1 '07 High",
-  "Nike Air '07 High",
-  "Nike Air Force 1 '07 High",
-];
-
 export default function Search({ open, onClose }: SearchProps) {
   const isMobile = useIsMobile();
-  const [searchValue, setSearchValue] = useState("");
-  const searchTerms = dummyData.filter((item) =>
-    item.toLowerCase().includes(searchValue)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(
+    (searchParams.get("search") as string) ?? ""
   );
+  const debouncedSearch = useDebounce(searchQuery.trim(), 500);
+  const { data: productsNames } = useProductsNames(debouncedSearch);
+
+  //TODO: Maybe improve searching (right now it only searches based on products that contain search string)
+  const updateSearch = (query: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (!query) {
+      params.delete("search");
+      router.push(`/products?${params}`);
+      return;
+    }
+    params.set("search", query.trim());
+    router.push(`/products?${params}`);
+  };
+
+  const handleChange = (query: string) => {
+    setSearchQuery(query);
+  };
 
   const handleClose = () => {
-    setSearchValue("");
     onClose();
+  };
+
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (event.key === "Enter") handleSubmit(searchQuery);
+  };
+
+  const handleSubmit = (searchString: string) => {
+    updateSearch(searchString);
+    handleChange(searchString);
+    onClose();
+  };
+
+  const handleClear = () => {
+    if (searchParams.get("search")) updateSearch("");
+    handleChange("");
   };
 
   return (
@@ -84,32 +112,35 @@ export default function Search({ open, onClose }: SearchProps) {
               <SearchBar
                 width="clamp(250px, 70dvw, 1070px)"
                 height="80px"
-                value={searchValue}
-                setValue={(value) => {
-                  setSearchValue(value);
+                value={searchQuery}
+                onChange={(value) => {
+                  handleChange(value);
                 }}
+                onKeyPress={handleKeyPress}
+                onSearch={() => handleSubmit(searchQuery)}
+                onClear={handleClear}
                 focused={true}
               />
 
-              {searchValue && (
+              {debouncedSearch && productsNames && (
                 <>
-                  {searchTerms.length > 0 && (
-                    <Typography
-                      sx={{
-                        marginTop: { xs: "12px", sm: "22px", md: "32px" },
-                        marginInline: {
-                          xs: "0px 10px",
-                          sm: "20px",
-                          md: "40px",
-                        },
-                        paddingLeft: "8px",
-                        color: constants.palette.text.secondary,
-                        fontSize: { xs: "14px", sm: "17px", md: "20px" },
-                      }}
-                    >
-                      Popular Search Terms
-                    </Typography>
-                  )}
+                  <Typography
+                    sx={{
+                      marginTop: { xs: "12px", sm: "22px", md: "32px" },
+                      marginInline: {
+                        xs: "0px 10px",
+                        sm: "20px",
+                        md: "40px",
+                      },
+                      paddingLeft: "8px",
+                      color: constants.palette.text.secondary,
+                      fontSize: { xs: "14px", sm: "17px", md: "20px" },
+                    }}
+                  >
+                    {productsNames.length > 0
+                      ? "Popular Search Terms"
+                      : "0 search results"}
+                  </Typography>
                   <List
                     sx={{
                       padding: 0,
@@ -119,28 +150,38 @@ export default function Search({ open, onClose }: SearchProps) {
                       overflow: "auto",
                     }}
                   >
-                    {searchTerms.map((data, index) => (
-                      /*TODO: Add onClick to item to search the proposed item*/
-                      <ListItemButton
-                        key={index}
-                        sx={{
-                          paddingX: "8px",
-                          paddingY: { xs: "4px", sm: "6px", md: "8px" },
-                        }}
-                      >
-                        <ListItemText
-                          primary={data}
-                          primaryTypographyProps={{
-                            color: constants.palette.text.primary,
-                            fontSize: { xs: "14px", sm: "17px", md: "20px" },
-                          }}
+                    {productsNames
+                      .sort(
+                        (a, b) =>
+                          a.attributes.name
+                            .toLowerCase()
+                            .indexOf(debouncedSearch.toLowerCase()) -
+                          b.attributes.name
+                            .toLowerCase()
+                            .indexOf(debouncedSearch.toLowerCase())
+                      )
+                      .map((product) => (
+                        <ListItemButton
+                          key={product.id}
+                          onClick={() => handleSubmit(product.attributes.name)}
                           sx={{
-                            paddingY: "4px",
-                            marginY: { xs: 0, sm: "2px", md: "4px" },
+                            paddingX: "8px",
+                            paddingY: { xs: "4px", sm: "6px", md: "8px" },
                           }}
-                        />
-                      </ListItemButton>
-                    ))}
+                        >
+                          <ListItemText
+                            primary={product.attributes.name}
+                            primaryTypographyProps={{
+                              color: constants.palette.text.primary,
+                              fontSize: { xs: "14px", sm: "17px", md: "20px" },
+                            }}
+                            sx={{
+                              paddingY: "4px",
+                              marginY: { xs: 0, sm: "2px", md: "4px" },
+                            }}
+                          />
+                        </ListItemButton>
+                      ))}
                   </List>
                 </>
               )}

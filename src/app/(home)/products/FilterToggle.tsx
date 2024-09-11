@@ -6,6 +6,7 @@ import { FiltersData, ProductsResponse } from "@/lib/types";
 import { Box, IconButton, Typography } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   filtersData: FiltersData;
@@ -16,6 +17,7 @@ type Props = {
 function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
   const [showFilters, setShowFilters] = useState(false);
   const isMobile = useIsMobile();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (isMobile) {
@@ -53,7 +55,12 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
             width: "100%",
           }}
         >
-          <Typography variant="h1">Search Results</Typography>
+          <Typography variant="h1">
+            Search Results
+            {searchParams.has("search")
+              ? `: "${searchParams.get("search")}"`
+              : ""}
+          </Typography>
           <IconButton
             onClick={handleShowFilters}
             sx={{

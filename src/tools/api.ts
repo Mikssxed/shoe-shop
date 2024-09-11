@@ -80,6 +80,16 @@ export const getProduct = async (id: string) => {
   });
 };
 
+export const getProductsNames = async (searchString: string) => {
+  return fetchData<ProductsResponse>("/products", {
+    params: {
+      fields: "name",
+      "filters[name][$containsi]": searchString,
+      "filters[teamName]": "team-1",
+    },
+  });
+};
+
 export const getFiltersData = async () => {
   try {
     const [genders, colors, categories, brands, sizes] = await Promise.all([

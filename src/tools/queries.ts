@@ -1,6 +1,11 @@
 import { ProductsResponse } from "@/lib/types";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getFiltersData, getProduct, getProducts } from "./api";
+import {
+  getFiltersData,
+  getProduct,
+  getProducts,
+  getProductsNames,
+} from "./api";
 
 export const useProducts = (initialProducts: ProductsResponse, params?: {}) => {
   return useInfiniteQuery({
@@ -28,4 +33,12 @@ export const useFilters = () => {
 
 export const useProduct = (id: string) => {
   return useQuery({ queryKey: ["product", id], queryFn: () => getProduct(id) });
+};
+
+export const useProductsNames = (searchString: string) => {
+  return useQuery({
+    queryKey: ["names", searchString],
+    queryFn: () => getProductsNames(searchString),
+    select: (data) => data.data,
+  });
 };
