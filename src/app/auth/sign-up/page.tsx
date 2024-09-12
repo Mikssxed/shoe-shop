@@ -1,13 +1,7 @@
-"use client";
-
+import SignUpForm from "@/components/forms/SignUpForm";
 import { Box, Typography } from "@mui/material";
 
-import SignUpForm from "@/components/forms/SignUpForm";
-import { useRedirectIfAuth } from "@/hooks";
-
 export default function SignUp() {
-  useRedirectIfAuth(); // TODO: Delete after creating middleware
-
   return (
     <Box marginTop="40px">
       <Typography variant="h1" sx={{ lineHeight: "53px", fontSize: "45px" }}>

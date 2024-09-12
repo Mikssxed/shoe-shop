@@ -12,6 +12,7 @@ import { constants } from "@/lib/constants";
 import { IReactQueryError, ISignUpRequest, ISignUpResponse } from "@/lib/types";
 import { SignUpFormValidation } from "@/lib/validation";
 import { signUp } from "@/tools";
+import { useRouter } from "next/navigation";
 
 const defaultValues = {
   name: "",
@@ -21,6 +22,7 @@ const defaultValues = {
 };
 
 const SignUpForm: React.FC = () => {
+  const router = useRouter();
   const mutation: UseMutationResult<
     ISignUpResponse,
     IReactQueryError,

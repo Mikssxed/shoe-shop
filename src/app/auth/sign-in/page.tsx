@@ -1,13 +1,7 @@
-"use client";
-
+import SignInForm from "@/components/forms/SignInForm";
 import { Box, Typography } from "@mui/material";
 
-import SignInForm from "@/components/forms/SignInForm";
-import { useRedirectIfAuth } from "@/hooks";
-
 export default function SignIn() {
-  useRedirectIfAuth(); // TODO: Delete after creating middleware
-
   return (
     <Box marginTop="40px">
       <Typography variant="h1" sx={{ lineHeight: "53px", fontSize: "45px" }}>
