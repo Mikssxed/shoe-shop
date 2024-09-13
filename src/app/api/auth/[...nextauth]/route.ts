@@ -81,8 +81,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/auth/sign-in",
     newUser: "/auth/sign-up",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
+  }
 };
 
 const handler = NextAuth(authOptions);
