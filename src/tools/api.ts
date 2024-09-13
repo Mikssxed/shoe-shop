@@ -41,7 +41,7 @@ export const postData = async <T>(
   } catch (error) {
     console.error("Error posting data:", error);
     if (axios.isAxiosError(error)) {
-      throw error;
+      throw error.response?.data.error;
     } else {
       throw new Error("Unkhown error while request");
     }

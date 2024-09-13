@@ -1,25 +1,30 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Alert, Box, Button } from "@mui/material";
 import ControlledInput from "@/components/common/ControlledInput";
+import {
+  IReactQueryError,
+  IResetPasswordRequest,
+  IResetPasswordResponse,
+} from "@/lib/types";
 import { ResetPasswordValidation } from "@/lib/validation";
-import { IReactQueryError, IResetPasswordRequest, IResetPasswordResponse } from "@/lib/types";
 import { resetPassword } from "@/tools";
-import { useSearchParams } from 'next/navigation'
+import { Alert, Box, Button } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
 
 const defaultValues = {
   password: "",
-  passwordConfirmation: ""
+  passwordConfirmation: "",
 };
 
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
-  const code: string | null = searchParams.get('code');
+  const code: string | null = searchParams.get("code");
 
   const mutation: UseMutationResult<
     IResetPasswordResponse,
@@ -36,20 +41,24 @@ const ResetPasswordForm = () => {
     defaultValues,
   });
 
-  // TODO: Inform user with notification in case of an error 
-  const onSubmit = (data: z.infer<typeof ResetPasswordValidation>) => {
+  // TODO: Inform user with notification in case of an error
+  const onSubmit = async (data: z.infer<typeof ResetPasswordValidation>) => {
     try {
-      mutation.mutateAsync({
+      await mutation.mutateAsync({
         ...data,
-        code: code
+        code: code,
       });
     } catch (error) {
       console.error(error);
+      enqueueSnackbar("Something went wrong!", {
+        variant: "error",
+        autoHideDuration: 10000,
+      });
     }
   };
 
   // TODO: Replace this with a success and redirecting... notification
-  if(mutation.isSuccess) {
+  if (mutation.isSuccess) {
     return (
       <Alert
         severity="success"
@@ -99,22 +108,6 @@ const ResetPasswordForm = () => {
           placeholder="at least 8 characters"
           type="password"
         />
-        {/* TODO: Replace this with error notification */}
-        {mutation.isError && (
-          <Box sx={{ maxWidth: "436px" }}>
-            <Alert
-              severity={mutation.isSuccess ? "success" : "error"}
-              sx={{
-                paddingY: "14px",
-                fontSize: "16px",
-                borderRadius: "8px",
-              }}
-            >
-              {mutation.error?.response?.data?.error?.message ||
-                "Unknown error"}
-            </Alert>
-          </Box>
-        )}
       </Box>
 
       <Button

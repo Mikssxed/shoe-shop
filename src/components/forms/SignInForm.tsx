@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,15 +28,15 @@ const SignInForm: React.FC = () => {
 
   // TODO: implement 'remember me' checkbox using
 
-  const { mutate, isPending, isError } = useSignIn();
+  const { isPending, isError, mutateAsync, error } = useSignIn();
 
-  const onSubmit = (data: z.infer<typeof LogInFormValidation>) => {
+  const onSubmit = async (data: z.infer<typeof LogInFormValidation>) => {
     try {
-      mutate({
+      await mutateAsync({
         identifier: data.email,
         password: data.password,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
     }
   };
@@ -98,33 +98,11 @@ const SignInForm: React.FC = () => {
             </Link>
           </Typography>
         </Box>
-
-        {isError && (
-          <Box
-            sx={{
-              maxWidth: "436px",
-            }}
-          >
-            <Alert
-              severity="error"
-              sx={{
-                marginTop: "24px",
-                paddingY: "14px",
-                fontSize: "16px",
-                borderRadius: "8px",
-              }}
-            >
-              {/* TODO: show error message */}
-              {"Error"}
-            </Alert>
-          </Box>
-        )}
-
         <Button
           variant="contained"
           type="submit"
           sx={{
-            marginTop: isError ? "24px" : "56px",
+            marginTop: "56px",
             maxWidth: "436px",
             paddingY: "14px",
             fontSize: "16px",

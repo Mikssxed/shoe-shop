@@ -24,6 +24,7 @@ export const useProducts = (initialProducts: ProductsResponse, params?: {}) => {
       pages: [initialProducts],
       pageParams: [1],
     },
+    staleTime: 0,
   });
 };
 

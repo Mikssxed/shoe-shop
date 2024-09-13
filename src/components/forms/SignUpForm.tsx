@@ -13,6 +13,7 @@ import { IReactQueryError, ISignUpRequest, ISignUpResponse } from "@/lib/types";
 import { SignUpFormValidation } from "@/lib/validation";
 import { signUp } from "@/tools";
 import { useRouter } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
 
 const defaultValues = {
   name: "",
@@ -38,16 +39,19 @@ const SignUpForm: React.FC = () => {
     defaultValues,
   });
 
-  const onSubmit = (data: z.infer<typeof SignUpFormValidation>) => {
+  const onSubmit = async (data: z.infer<typeof SignUpFormValidation>) => {
     try {
-      mutation.mutateAsync({
+      await mutation.mutateAsync({
         username: data.name,
         email: data.email,
         password: data.password,
       });
       reset();
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      enqueueSnackbar(error.message, {
+        variant: "error",
+        autoHideDuration: 10000,
+      });
     }
   };
 
@@ -111,29 +115,12 @@ const SignUpForm: React.FC = () => {
           placeholder="at least 8 characters"
           type="password"
         />
-
-        {mutation.isError && (
-          <Box sx={{ maxWidth: "436px" }}>
-            <Alert
-              severity={mutation.isSuccess ? "success" : "error"}
-              sx={{
-                paddingY: "14px",
-                fontSize: "16px",
-                borderRadius: "8px",
-              }}
-            >
-              {mutation.error?.response?.data?.error?.message ||
-                "Unknown error"}
-            </Alert>
-          </Box>
-        )}
-
         <Button
           variant={"contained"}
           type="submit"
           disabled={mutation.isPending}
           sx={{
-            marginTop: mutation.isError ? "0px" : "66px",
+            marginTop: "66px",
             maxWidth: "436px",
             paddingY: "14px",
             fontSize: "16px",
