@@ -3,7 +3,6 @@ import { useIsMobile } from "@/hooks";
 import { constants } from "@/lib/constants";
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
   Divider,
@@ -15,6 +14,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import ProfilePicture from "./ProfilePicture";
 import Search from "./Search";
 import SearchBar from "./SearchBar";
 import { ProfileSidebar } from "./common";
@@ -111,13 +111,20 @@ const Header = () => {
                 marginLeft: { md: "16px" },
               }}
             >
-              {/*TODO: Change to user picture and add onclick to route to user profile or menu*/}
-              <Link href="/profile/my-products">
-                <Avatar
-                  alt="User avatar"
-                  src="/images/avatar.png"
-                  sx={{ width: 24, height: 24 }}
-                />
+              <Link
+                href="/profile/my-products"
+                style={{
+                  width: 24,
+                  height: 24,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textDecoration: "none",
+                  borderRadius: "50%",
+                  position: "relative"
+                }}
+              >
+                <ProfilePicture />
               </Link>
             </Box>
           )}

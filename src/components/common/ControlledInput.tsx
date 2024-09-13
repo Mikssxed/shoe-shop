@@ -1,5 +1,6 @@
 import { Controller } from "react-hook-form";
 import { Input } from "../ui";
+import { SxProps, Theme } from "@mui/material";
 
 interface IControlledInputProps {
   name: string;
@@ -7,6 +8,7 @@ interface IControlledInputProps {
   label: string;
   required: boolean;
   placeholder: string;
+  inputStyle?: SxProps<Theme>,
   type?: "password";
 }
 
@@ -16,6 +18,7 @@ const ControlledInput = ({
   label,
   required,
   placeholder,
+  inputStyle,
   type,
 }: IControlledInputProps) => {
   return (
@@ -29,6 +32,7 @@ const ControlledInput = ({
             label={label}
             inputProps={{ value, onChange, placeholder, type }}
             errorMessage={error ? error?.message : undefined}
+            inputStyle={inputStyle}
           />
         </>
       )}

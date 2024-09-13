@@ -1,6 +1,8 @@
 export interface IProfileInfoInputField {
   id: string;
+  name: string;
   label: string;
   required: boolean;
-  htmlFor: string
+  disabled: boolean;
+  placeholder: string;
 }

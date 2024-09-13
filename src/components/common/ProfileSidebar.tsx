@@ -2,7 +2,6 @@
 import { useIsMobile } from "@/hooks";
 import { profileSidebarData } from "@/lib/config/profile-sidebar";
 import {
-  Avatar,
   Box,
   Button,
   Divider,
@@ -21,6 +20,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BaseSidebar } from "../ui";
+import { capitalizeFirstLetter } from "@/utils/helperFunctions";
+import { textOverflowEllipsis } from "@/styles/commonStyles";
+import ProfilePicture from "../ProfilePicture";
 
 type Props = {
   open: boolean;
@@ -36,7 +38,6 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const currentPath = usePathname();
   const isMobile = useIsMobile();
   const { data } = useSession();
-  const image = data?.user?.image;
   const firstName = data?.user?.firstName;
   const lastName = data?.user?.lastName;
   const username = data?.user?.username;
@@ -78,26 +79,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
           overflow: "hidden",
         }}
       >
-        {image ? (
-          <Image
-            src={image}
-            alt={(firstName || username || " ")[0].toUpperCase()}
-            fill
-            sizes="100%"
-            style={{ objectFit: "cover" }}
-          />
-        ) : (
-          <Avatar
-            src="/"
-            alt={(firstName || username || " ")[0].toUpperCase()}
-            sx={{
-              width: 1,
-              height: 1,
-              bgcolor: "primary.main",
-              color: "#fff",
-            }}
-          />
-        )}
+        <ProfilePicture />
       </Box>
       <Toolbar
         sx={{
@@ -120,13 +102,22 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         >
           Welcome
         </Typography>
-        {firstName && lastName && (
-          <Typography>
-            <Typography component="span">{firstName}</Typography>{" "}
-            <Typography component="span">{lastName}</Typography>
-          </Typography>
-        )}
-        {!(firstName && lastName) && <Typography>{username}</Typography>}
+        <Typography
+          sx={{
+            ...textOverflowEllipsis,
+            maxWidth: { xs: "140px", md: "200px" },
+          }}
+          title={(firstName && lastName) 
+            ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}` 
+            : username
+          }
+        >
+          {
+            (firstName && lastName) 
+            ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}`
+            : username
+          }
+        </Typography>
       </Toolbar>
     </Box>
   );

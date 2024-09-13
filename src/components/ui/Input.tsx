@@ -5,6 +5,8 @@ import {
   InputBase,
   InputBaseProps,
   InputLabel,
+  SxProps,
+  Theme,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -16,6 +18,7 @@ type InputProps = InputBaseProps & {
   required?: boolean;
   labelProps?: ComponentProps<typeof InputLabel>;
   containerProps?: ComponentProps<typeof Box>;
+  inputStyle?: SxProps<Theme>,
   errorMessage?: string;
 };
 
@@ -25,6 +28,7 @@ const Input = ({
   containerProps,
   labelProps,
   errorMessage,
+  inputStyle,
   ...props
 }: InputProps) => {
   const id = useId();
@@ -56,11 +60,12 @@ const Input = ({
           border: !!errorMessage
             ? `1px solid ${theme.palette.error.main}`
             : `1px solid ${theme.palette.grey[700]}`,
-          "& .MuiInputBase-input": {
-            [theme.breakpoints.down("sm")]: {
-              fontSize: "10px",
+            "& .MuiInputBase-input": {
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "10px",
             },
           },
+          ...inputStyle,
         }}
         {...props}
         id={id}

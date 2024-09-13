@@ -49,3 +49,13 @@ export const ResetPasswordValidation = z
 export const ForgotPasswordValidation = z.object({
   email: z.string().email("Invalid email address (ex. johndoe@gmail.com)"),
 });
+
+export const UpdateProfileValidation = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  // TODO: make this a proper phone number validation
+  phoneNumber: z
+    .string()
+    .min(10, { message: 'Must be a valid mobile number' })
+    .max(14, { message: 'Must be a valid mobile number' }),
+});

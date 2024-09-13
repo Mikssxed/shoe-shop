@@ -1,14 +1,20 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ProductList } from "@/components/common";
-import { getMyProducts } from "@/tools";
+import ProfilePicture from "@/components/ProfilePicture";
+import { textOverflowEllipsis } from "@/styles/commonStyles";
+import { capitalizeFirstLetter } from "@/utils/helperFunctions";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { Session, User, getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { getMyProducts } from "@/tools";
+import { Session, User, getServerSession } from "next-auth";
 
 export default async function MyProducts() {
   const session = (await getServerSession(authOptions)) as Session;
   const user = session.user as User;
+  const username = user.username;
+  const firstName = user.firstName;
+  const lastName = user.lastName;
   const initialData = await getMyProducts(user);
   return (
     <>
@@ -65,23 +71,27 @@ export default async function MyProducts() {
               borderRadius: "50%",
             }}
           >
-            <Image
-              src="/images/avatar.png"
-              alt="jane meldrum"
-              fill
-              sizes="100%"
-              style={{ objectFit: "cover" }}
-            />
+            <ProfilePicture avatarStyle={{fontSize: { sm: "28px", md: "48px" }}} />
           </Box>
           <Typography
             sx={{
-              marginLeft: { xs: 2, sm: 3 },
+              marginLeft: { xs: 1, sm: 3 },
+              ...textOverflowEllipsis,
+              maxWidth: { xs: "160px", sm: "220px" },
             }}
             variant="h4"
             fontSize={14}
+            title={(firstName && lastName) 
+              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}` 
+              : username
+            }
           >
-            Jane Meldrum
-          </Typography>
+            {
+              (firstName && lastName) 
+              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}`
+              : username
+            }
+          </Typography> 
         </Stack>
       </Box>
       <Box

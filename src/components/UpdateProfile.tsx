@@ -1,101 +1,136 @@
+"use client";
+
 import { IProfileInfoInputField } from "@/lib/types/update-profile-types";
-import {
-  myProfileTitleStyles,
-  updateProfileAvatarStyles,
-  updateProfileButtonContainerStyles,
-  updateProfileButtonStyles,
-  updateProfileDescStyles,
-  updateProfileInfoBoxStyles,
-  updateProfileInputContainer,
-  updateProfileLabelStyles,
-  updateProfileTextFieldStyles,
-} from "@/styles/profile/updateProfileStyles";
-import {
-  Avatar,
-  Box,
-  Button,
-  InputLabel,
-  OutlinedInput,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { Work_Sans } from "next/font/google";
+import { updateProfileButtonStyles } from "@/styles/profile/updateProfileStyles";
+import { Box, Button } from "@mui/material";
+import { Input } from "./ui";
+import theme from "@/theme";
+import ControlledInput from "./common/ControlledInput";
+import { useForm } from "react-hook-form";
+import { UpdateProfileValidation } from "@/lib/validation";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-// TODO: get the fonts from the general theme
-const workSans = Work_Sans({ style: ["normal", "italic"], subsets: ["latin"] });
-
-// TODO: remove this data when the original data fetched and rendered on the page
 const profileInfoFormData: IProfileInfoInputField[] = [
   {
     id: "PIIFD-1",
+    name: "firstName",
     label: "Name",
-    required: true,
-    htmlFor: "name",
+    required: false,
+    disabled: false,
+    placeholder: "John"
   },
   {
     id: "PIIFD-2",
+    name: "lastName",
     label: "Surname",
     required: false,
-    htmlFor: "surname",
+    disabled: false,
+    placeholder: "Doe"
   },
   {
     id: "PIIFD-3",
+    name: "email",
     label: "Email",
     required: false,
-    htmlFor: "email",
+    disabled: true,
+    placeholder: "example@example.com"
   },
   {
     id: "PIIFD-4",
+    name: "phoneNumber",
     label: "Phone number",
     required: false,
-    htmlFor: "phone-number",
+    disabled: false,
+    // TODO: update this placeholder according to proper phone number validation
+    placeholder: "555 555 555"
   },
 ];
 
-// TODO: All inputs should be replace in future with reusable component
-const ProfileInfoInputField = ({
-  input,
-}: {
-  input: IProfileInfoInputField;
-}) => {
-  // TODO: add error line and style to the inputs when handling validation
-  return (
-    <Toolbar sx={updateProfileInputContainer} disableGutters variant="dense">
-      <InputLabel
-        htmlFor={`profile-input-${input.htmlFor}`}
-        sx={updateProfileLabelStyles}
-        className={workSans.className}
-      >
-        {input.label}{" "}
-        {input.required && <span style={{ color: "#FE645E" }}>*</span>}
-      </InputLabel>
-      <OutlinedInput
-        id={`profile-input-${input.htmlFor}`}
-        required={input.required}
-        fullWidth
-        sx={updateProfileTextFieldStyles}
-        inputProps={{ style: { padding: 0 } }}
-      />
-    </Toolbar>
-  );
+const defaultValues = {
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
 };
 
-const ProfileInfoForm = () => {
+export const UpdateProfile = () => {
+  const { data } = useSession();
+  const firstName: string | undefined = data?.user?.firstName;
+  const lastName: string | undefined = data?.user?.lastName;
+  const phoneNumber: string | undefined = data?.user?.phoneNumber
+  const email: string | undefined = data?.user?.email;
+
+  const { handleSubmit, reset, control } = useForm<
+    z.infer<typeof UpdateProfileValidation>
+  >({
+    resolver: zodResolver(UpdateProfileValidation),
+    defaultValues,
+  });
+
+  useEffect(() => {
+    if (firstName || lastName || phoneNumber) {
+      reset({
+        firstName: firstName || "",
+        lastName: lastName || "",
+        phoneNumber: phoneNumber || "",
+      });
+    }
+  }, [firstName, lastName, phoneNumber, reset]);
+
   return (
     <Box
       component="form"
       autoComplete="on"
-      sx={{ display: "flex", flexDirection: "column", maxWidth: "436px" }}
+      sx={{ display: "flex", flexDirection: "column", maxWidth: "436px", gap: "24px" }}
     >
-      {profileInfoFormData.map((input) => (
-        <ProfileInfoInputField key={input.id} input={input} />
-      ))}
+      {profileInfoFormData.map((input) => {
+        return (
+          input.disabled ?
+            <Input
+              key={input.id}
+              name={input.name}
+              label={input.label}
+              fullWidth
+              disabled={input.disabled}
+              placeholder={input.placeholder}
+              // TODO: find a proper value if an error occures while fetching data
+              value={email || ""}
+              inputStyle={{
+                padding: { xs: "10.34px 11.74px 10.74px", md: "15px 16px" },
+                height: { xs: "33.08px", md: "48px" },
+                fontWeight: theme.typography.fontWeightLight,
+                color: theme.palette.text.secondary,
+                "&.Mui-disabled": {
+                  opacity: "0.5",
+                  cursor: "not-allowed"
+                },
+              }}
+              inputProps={{style: {
+                cursor: "not-allowed"
+              }}}
+            /> :
+            <ControlledInput
+              key={input.id}
+              name={input.name}
+              control={control}
+              label={input.label}
+              required={input.required}
+              placeholder={input.placeholder}
+              inputStyle={{
+                padding: { xs: "10.34px 11.74px 10.74px", md: "15px 16px" },
+                height: { xs: "33.08px", md: "48px" },
+                fontWeight: theme.typography.fontWeightLight,
+                color: theme.palette.text.secondary,
+              }}
+            />
+        )
+      })}
       {/* TODO: replace the button component below with the reusable Button component */}
       <Button
         variant="contained"
-        // TODO: change the color when theme colors updated
         color="error"
-        className={workSans.className}
         sx={{
           ...updateProfileButtonStyles,
           marginTop: "32px",
@@ -107,57 +142,3 @@ const ProfileInfoForm = () => {
     </Box>
   );
 };
-
-export default function UpdateProfile() {
-  return (
-    <Box>
-      <Typography
-        variant="h1"
-        className={workSans.className}
-        sx={myProfileTitleStyles}
-      >
-        My Profile
-      </Typography>
-      <Box sx={updateProfileInfoBoxStyles}>
-        <Avatar
-          alt="Remy Sharp"
-          src="/images/avatar.png"
-          sx={updateProfileAvatarStyles}
-        />
-        {/* TODO: Replace the buttons below with reusable Button component */}
-        <Toolbar
-          sx={updateProfileButtonContainerStyles}
-          disableGutters
-          variant="dense"
-        >
-          <Button
-            variant="outlined"
-            // TODO: change the color when theme colors updated
-            color="error"
-            className={workSans.className}
-            sx={updateProfileButtonStyles}
-          >
-            Change Photo
-          </Button>
-          <Button
-            variant="contained"
-            // TODO: change the color when theme colors updated
-            color="error"
-            className={workSans.className}
-            sx={updateProfileButtonStyles}
-          >
-            Delete
-          </Button>
-        </Toolbar>
-      </Box>
-      <Typography
-        paragraph
-        className={workSans.className}
-        sx={updateProfileDescStyles}
-      >
-        Welcome back! Please enter your details to log into your account.
-      </Typography>
-      <ProfileInfoForm />
-    </Box>
-  );
-}
