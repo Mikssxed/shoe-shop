@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Avatar,
@@ -7,17 +7,17 @@ import {
   Grid,
   Stack,
   Typography,
-} from "@mui/material";
-import { BagCross1 } from "iconsax-react";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+} from '@mui/material';
+import {BagCross1} from 'iconsax-react';
+import {useSearchParams} from 'next/navigation';
+import {useEffect, useRef} from 'react';
 
-import { useIsMobile } from "@/hooks";
-import { ProductsResponse } from "@/lib/types";
-import { useProducts } from "@/tools";
-import { buildParams } from "@/utils";
-import ProductCard from "./ProductCard";
-import { stylingConstants } from "@/lib/constants/themeConstants";
+import {useIsMobile} from '@/hooks';
+import {ProductsResponse} from '@/lib/types';
+import {useProducts} from '@/tools';
+import {buildParams} from '@/utils';
+import ProductCard from './ProductCard';
+import {stylingConstants} from '@/lib/constants/themeConstants';
 
 type Props = {
   fullWidth?: boolean;
@@ -25,7 +25,7 @@ type Props = {
   filters?: Record<string, string | number>;
 };
 
-const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
+const ProductList = ({fullWidth, initialProducts, filters}: Props) => {
   const isMobile = useIsMobile();
   const isFullWidth = fullWidth || isMobile;
   const searchParams = useSearchParams();
@@ -40,14 +40,14 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting && hasNextPage) {
             fetchNextPage();
           }
         });
       },
-      { threshold: 1 }
+      {threshold: 1},
     );
 
     const bottomElement = bottomElementRef.current;
@@ -65,17 +65,17 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
   return (
     <Grid
       container
-      spacing={{ xs: 2, sm: 5, lg: 6, xl: 8 }}
-      columns={{ xs: 12, md: 12, lg: 12, xl: isFullWidth ? 8 : 12 }}
-      sx={{ position: "relative" }}
+      spacing={{xs: 2, sm: 5, lg: 6, xl: 8}}
+      columns={{xs: 12, md: 12, lg: 12, xl: isFullWidth ? 8 : 12}}
+      sx={{position: 'relative'}}
     >
       {isLoading && (
         <Box
           sx={{
-            position: "absolute",
-            top: "0%",
-            left: "50%",
-            transform: "translate(-50%, 0%)",
+            position: 'absolute',
+            top: '0%',
+            left: '50%',
+            transform: 'translate(-50%, 0%)',
             zIndex: 10,
           }}
         >
@@ -89,7 +89,7 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
               sx={{
                 width: 72,
                 height: 72,
-                mx: "auto",
+                mx: 'auto',
               }}
             >
               <BagCross1
@@ -117,14 +117,14 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
             lg={isFullWidth ? 3 : 4}
             xl={isFullWidth ? 2 : 3}
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              transition: "all 0.3s ease-in-out",
+              display: 'flex',
+              justifyContent: 'center',
+              transition: 'all 0.3s ease-in-out',
             }}
           >
             <ProductCard
               imagePriority={index === 0}
-              product={{ ...product.attributes, id: product.id }}
+              product={{...product.attributes, id: product.id}}
             />
           </Grid>
         ))}

@@ -1,6 +1,6 @@
-import { stylingConstants } from "@/lib/constants/themeConstants";
-import { Box, Checkbox, InputLabel } from "@mui/material";
-import { ChangeEvent, useId } from "react";
+import {stylingConstants} from '@/lib/constants/themeConstants';
+import {Box, Checkbox, InputLabel} from '@mui/material';
+import {ChangeEvent, useId} from 'react';
 
 type OptionProps = {
   value: string | number;
@@ -25,11 +25,11 @@ export const Option = ({
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
         color: stylingConstants.palette.text.primary,
-        "& .MuiCheckbox-root, & .MuiInputLabel-root": {
-          color: "inherit",
+        '& .MuiCheckbox-root, & .MuiInputLabel-root': {
+          color: 'inherit',
         },
       }}
     >
@@ -39,14 +39,14 @@ export const Option = ({
         id={id}
         sx={{
           ml: -1,
-          "&:hover": {
-            backgroundColor: "transparent",
+          '&:hover': {
+            backgroundColor: 'transparent',
           },
         }}
         checked={checked}
         onChange={handleChange}
       />
-      <InputLabel htmlFor={id} sx={{ mb: 0 }}>
+      <InputLabel htmlFor={id} sx={{mb: 0}}>
         {value}
       </InputLabel>
     </Box>

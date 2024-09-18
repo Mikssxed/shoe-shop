@@ -1,6 +1,6 @@
-import { Controller } from "react-hook-form";
+import {Controller} from 'react-hook-form';
 
-import { Input } from "./ui";
+import {Input} from './ui';
 
 interface IControlledInputProps {
   name: string;
@@ -8,7 +8,7 @@ interface IControlledInputProps {
   label: string;
   required: boolean;
   placeholder: string;
-  type?: "password";
+  type?: 'password';
 }
 
 const ControlledInput = ({
@@ -23,12 +23,12 @@ const ControlledInput = ({
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({field: {onChange, value}, fieldState: {error}}) => (
         <>
           <Input
             required={required}
             label={label}
-            inputProps={{ value, onChange, placeholder, type }}
+            inputProps={{value, onChange, placeholder, type}}
             errorMessage={error ? error?.message : undefined}
           />
         </>
@@ -37,4 +37,4 @@ const ControlledInput = ({
   );
 };
 
-export default ControlledInput
+export default ControlledInput;

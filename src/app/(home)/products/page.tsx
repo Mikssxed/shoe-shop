@@ -1,7 +1,7 @@
-import { Stack } from "@mui/material";
+import {Stack} from '@mui/material';
 
-import { getFiltersData, getMaxPrice, getProducts } from "@/tools";
-import FilterToggle from "./FilterToggle";
+import {getFiltersData, getMaxPrice, getProducts} from '@/tools';
+import FilterToggle from './FilterToggle';
 
 const Products = async () => {
   const filters = await getFiltersData();
@@ -11,7 +11,7 @@ const Products = async () => {
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{ maxWidth: 1850, mx: "auto", px: "20px" }}
+      sx={{maxWidth: 1850, mx: 'auto', px: '20px'}}
     >
       <FilterToggle
         maxPrice={maxPrice.data[0].attributes.price}

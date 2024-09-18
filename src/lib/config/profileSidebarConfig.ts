@@ -1,26 +1,26 @@
-import { signOut } from "next-auth/react";
-import { BagTick, Logout, Setting2 } from "iconsax-react";
+import {signOut} from 'next-auth/react';
+import {BagTick, Logout, Setting2} from 'iconsax-react';
 
-import { ProfileSidebar } from "../types/profile-sidebar-types";
+import {ProfileSidebar} from '../types/profile-sidebar-types';
 
 export const profileSidebarData: ProfileSidebar[] = [
   {
-    id: "ps-1",
-    name: "My Products",
+    id: 'ps-1',
+    name: 'My Products',
     icon: BagTick,
-    path: "/profile/my-products",
+    path: '/profile/my-products',
   },
   {
-    id: "ps-2",
-    name: "Settings",
+    id: 'ps-2',
+    name: 'Settings',
     icon: Setting2,
-    path: "/profile/settings",
+    path: '/profile/settings',
   },
   {
-    id: "ps-3",
-    name: "Log out",
+    id: 'ps-3',
+    name: 'Log out',
     icon: Logout,
-    path: "",
+    path: '',
     onClick: () => signOut(),
   },
 ];

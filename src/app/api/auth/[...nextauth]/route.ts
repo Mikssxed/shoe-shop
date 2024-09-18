@@ -1,25 +1,25 @@
-import NextAuth, { AuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { AxiosResponse } from "axios";
+import NextAuth, {AuthOptions} from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import {AxiosResponse} from 'axios';
 
-import { ILogInResponse } from "@/lib/types";
-import axiosInstance from "@/tools/axios";
+import {ILogInResponse} from '@/lib/types';
+import axiosInstance from '@/tools/axios';
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
+      id: 'credentials',
+      name: 'Credentials',
       credentials: {
-        identifier: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-        rememberMe: { label: "Remember Me", type: "checkbox" },
+        identifier: {label: 'Username', type: 'text', placeholder: 'jsmith'},
+        password: {label: 'Password', type: 'password'},
+        rememberMe: {label: 'Remember Me', type: 'checkbox'},
       },
       authorize: async (credentials, req) => {
         try {
-          const { data }: AxiosResponse<ILogInResponse> =
-            await axiosInstance.post("/auth/local", {
+          const {data}: AxiosResponse<ILogInResponse> =
+            await axiosInstance.post('/auth/local', {
               identifier: credentials?.identifier,
               password: credentials?.password,
             });
@@ -28,10 +28,10 @@ export const authOptions: AuthOptions = {
             `/users/${data.user?.id}?populate=avatar`,
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${data.jwt}`,
               },
-            }
+            },
           );
           return {
             id: String(data.user?.id),
@@ -47,28 +47,28 @@ export const authOptions: AuthOptions = {
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   callbacks: {
-    async jwt({ token, account, user, trigger, session }) {
+    async jwt({token, account, user, trigger, session}) {
       if (account) {
         token.accessToken = user.accessToken;
         token.id = user.id;
         token.username = user.username;
-        token.firstName = user.firstName || "";
-        token.lastName = user.lastName || "";
+        token.firstName = user.firstName || '';
+        token.lastName = user.lastName || '';
         token.image = user.image;
       }
 
-      if (trigger === "update") {
-        token.firstName = session.user.firstName || "";
-        token.lastName = session.user.lastName || "";
+      if (trigger === 'update') {
+        token.firstName = session.user.firstName || '';
+        token.lastName = session.user.lastName || '';
         token.image = session.user.image || null;
       }
 
       return token;
     },
-    async session({ session, token }) {
+    async session({session, token}) {
       session.user.id = token.id;
       session.user.username = token.username;
       session.user.name = null;
@@ -80,11 +80,11 @@ export const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/auth/sign-in",
-    newUser: "/auth/sign-up",
-  }
+    signIn: '/auth/sign-in',
+    newUser: '/auth/sign-up',
+  },
 };
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export {handler as GET, handler as POST};

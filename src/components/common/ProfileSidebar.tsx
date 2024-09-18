@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -12,19 +12,19 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+} from '@mui/material';
+import {useSession} from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import {usePathname, useRouter} from 'next/navigation';
+import {useEffect, useState} from 'react';
 
-import { useIsMobile } from "@/hooks";
-import { profileSidebarData } from "@/lib/config/profileSidebarConfig";
-import { BaseSidebar } from "../ui";
-import { capitalizeFirstLetter } from "@/utils/helperFunctions";
-import { textOverflowEllipsis } from "@/styles/commonStyles";
-import ProfilePicture from "../ProfilePicture";
+import {useIsMobile} from '@/hooks';
+import {profileSidebarData} from '@/lib/config/profileSidebarConfig';
+import {BaseSidebar} from '../ui';
+import {capitalizeFirstLetter} from '@/utils/helperFunctions';
+import {textOverflowEllipsis} from '@/styles/commonStyles';
+import ProfilePicture from '../ProfilePicture';
 
 type Props = {
   open: boolean;
@@ -32,21 +32,21 @@ type Props = {
   blockOnMobile?: boolean;
 };
 
-export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
+export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
-    undefined
+    undefined,
   );
   const currentPath = usePathname();
   const isMobile = useIsMobile();
-  const { data } = useSession();
+  const {data} = useSession();
   const firstName = data?.user?.firstName;
   const lastName = data?.user?.lastName;
   const username = data?.user?.username;
 
   useEffect(() => {
     const path = profileSidebarData.find(
-      (sidebarItem) => sidebarItem.path === currentPath
+      sidebarItem => sidebarItem.path === currentPath,
     );
     if (path) {
       setSelectedIndex(profileSidebarData.indexOf(path));
@@ -57,7 +57,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
 
   const handleListItemClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    path: string
+    path: string,
   ) => {
     e.preventDefault();
     router.push(path);
@@ -67,27 +67,27 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
     return null;
   }
   const user = (
-    <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+    <Box sx={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
       <Box
         sx={{
-          width: "64px",
-          height: "64px",
-          border: "1px solid #fff",
-          borderRadius: "50%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          overflow: "hidden",
+          width: '64px',
+          height: '64px',
+          border: '1px solid #fff',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <ProfilePicture />
       </Box>
       <Toolbar
         sx={{
-          flexDirection: "column",
-          alignItems: "flex-start",
-          minHeight: "36px",
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          minHeight: '36px',
         }}
         disableGutters
         variant="dense"
@@ -95,11 +95,11 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         <Typography
           paragraph
           sx={{
-            fontSize: "0.75rem",
+            fontSize: '0.75rem',
             fontWeight: 500,
             m: 0,
-            lineHeight: "18px",
-            color: "#98A2B3",
+            lineHeight: '18px',
+            color: '#98A2B3',
           }}
         >
           Welcome
@@ -107,19 +107,19 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         <Typography
           sx={{
             ...textOverflowEllipsis,
-            maxWidth: { xs: "140px", md: "200px" },
+            maxWidth: {xs: '140px', md: '200px'},
           }}
           title={
             firstName && lastName
               ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-                  lastName
+                  lastName,
                 )}`
               : username
           }
         >
           {firstName && lastName
             ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-                lastName
+                lastName,
               )}`
             : username}
         </Typography>
@@ -133,24 +133,24 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         {isMobile && (
           <Box
             sx={{
-              width: "100%",
-              justifyContent: "flex-end",
-              display: "flex",
-              position: "absolute",
-              top: "16px",
-              right: "28px",
+              width: '100%',
+              justifyContent: 'flex-end',
+              display: 'flex',
+              position: 'absolute',
+              top: '16px',
+              right: '28px',
             }}
           >
             <IconButton
               onClick={onClose}
               sx={{
-                display: { md: "none" },
-                ml: "auto",
-                mr: "0px",
+                display: {md: 'none'},
+                ml: 'auto',
+                mr: '0px',
               }}
             >
               <Image
-                src={"/icons/cross.svg"}
+                src={'/icons/cross.svg'}
                 alt="close"
                 width={20}
                 height={20}
@@ -163,9 +163,9 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             <>
               <Box
                 sx={{
-                  pl: "40px",
-                  pt: "37.6px",
-                  pb: "32px",
+                  pl: '40px',
+                  pt: '37.6px',
+                  pb: '32px',
                 }}
               >
                 {user}
@@ -175,47 +175,47 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             <List
               disablePadding
               sx={{
-                pl: "40px",
-                pt: "32px",
-                pr: "40px",
+                pl: '40px',
+                pt: '32px',
+                pr: '40px',
               }}
             >
               {profileSidebarData.map((sidebarItem, index) => (
                 <ListItem
                   key={sidebarItem.id}
                   disablePadding
-                  sx={{ mb: "36px" }}
+                  sx={{mb: '36px'}}
                   onClick={sidebarItem.onClick}
                 >
                   <ListItemButton
                     disableGutters
                     sx={{
-                      gap: "15px",
-                      color: "#000",
-                      transition: "all 0.3s",
-                      "&.Mui-selected": {
-                        color: "#FE645E",
+                      gap: '15px',
+                      color: '#000',
+                      transition: 'all 0.3s',
+                      '&.Mui-selected': {
+                        color: '#FE645E',
                       },
-                      "&:hover": {
-                        pl: "10px",
+                      '&:hover': {
+                        pl: '10px',
                       },
                     }}
                     selected={index === selectedIndex}
-                    onClick={(e) => handleListItemClick(e, sidebarItem.path)}
+                    onClick={e => handleListItemClick(e, sidebarItem.path)}
                   >
-                    <ListItemIcon sx={{ minWidth: 20 }}>
+                    <ListItemIcon sx={{minWidth: 20}}>
                       <sidebarItem.icon
                         size={20}
-                        color={index === selectedIndex ? "#FE645E" : "#6e7378"}
+                        color={index === selectedIndex ? '#FE645E' : '#6e7378'}
                       />
                     </ListItemIcon>
                     <ListItemText
                       disableTypography
                       primary={sidebarItem.name}
                       sx={{
-                        fontSize: "1rem",
+                        fontSize: '1rem',
                         fontWeight: 500,
-                        lineHeight: "18.77px",
+                        lineHeight: '18.77px',
                       }}
                     />
                   </ListItemButton>
@@ -224,20 +224,20 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             </List>
           </>
         ) : (
-          <Box sx={{ mt: "100px", px: "20px" }}>
+          <Box sx={{mt: '100px', px: '20px'}}>
             <Link
               href="/auth/sign-in"
               style={{
-                textDecoration: "none",
+                textDecoration: 'none',
               }}
             >
               <Button
                 sx={{
-                  width: "100%",
-                  height: "48px",
+                  width: '100%',
+                  height: '48px',
                   typography: {
-                    textTransform: "none",
-                    fontWeight: "700",
+                    textTransform: 'none',
+                    fontWeight: '700',
                   },
                 }}
                 variant="outlined"
@@ -257,7 +257,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
       <BaseSidebar
         isMobile={isMobile}
         open={open}
-        containerStyle={{ p: "24px 0px" }}
+        containerStyle={{p: '24px 0px'}}
         onClose={onClose}
       >
         <Content />

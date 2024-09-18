@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Box, IconButton, Typography } from "@mui/material";
-import { FilterRemove, FilterSearch } from "iconsax-react";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {Box, IconButton, Typography} from '@mui/material';
+import {FilterRemove, FilterSearch} from 'iconsax-react';
+import {useSearchParams} from 'next/navigation';
+import {useEffect, useState} from 'react';
 
-import { FilterSidebar, ProductList } from "@/components/common";
-import { useIsMobile } from "@/hooks";
-import { stylingConstants } from "@/lib/constants/themeConstants";
-import { FiltersData, ProductsResponse } from "@/lib/types";
+import {FilterSidebar, ProductList} from '@/components/common';
+import {useIsMobile} from '@/hooks';
+import {stylingConstants} from '@/lib/constants/themeConstants';
+import {FiltersData, ProductsResponse} from '@/lib/types';
 
 type Props = {
   filtersData: FiltersData;
@@ -16,7 +16,7 @@ type Props = {
   maxPrice: number;
 };
 
-function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
+function FilterToggle({filtersData, initialProducts, maxPrice}: Props) {
   const [showFilters, setShowFilters] = useState(false);
   const isMobile = useIsMobile();
   const searchParams = useSearchParams();
@@ -39,44 +39,44 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
           onClose={() => setShowFilters(false)}
           isMobile={isMobile}
           open={showFilters}
-          searchingString={""}
+          searchingString={''}
           productsCount={0}
           filtersData={filtersData}
           maxPrice={maxPrice}
         />
       )}
-      <Box sx={{ p: { xs: "0 24px", md: 0 }, mt: 3, width: "100%" }}>
+      <Box sx={{p: {xs: '0 24px', md: 0}, mt: 3, width: '100%'}}>
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             mb: 3,
-            width: "100%",
+            width: '100%',
           }}
         >
           <Typography variant="h1">
             Search Results
-            {searchParams.has("search")
-              ? `: "${searchParams.get("search")}"`
-              : ""}
+            {searchParams.has('search')
+              ? `: "${searchParams.get('search')}"`
+              : ''}
           </Typography>
           <IconButton
             onClick={handleShowFilters}
             sx={{
               fontSize: {
-                xs: "15px",
-                md: "24px",
-                position: "relative",
+                xs: '15px',
+                md: '24px',
+                position: 'relative',
                 zIndex: 1,
               },
             }}
           >
             {isMobile
-              ? "Filters"
+              ? 'Filters'
               : showFilters
-                ? "Hide Filters"
-                : "Show Filters"}
+                ? 'Hide Filters'
+                : 'Show Filters'}
             {showFilters ? (
               <FilterRemove color={stylingConstants.palette.text.secondary} />
             ) : (

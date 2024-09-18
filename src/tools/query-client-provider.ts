@@ -1,4 +1,4 @@
-import * as ReactQuery from "@tanstack/react-query";
+import * as ReactQuery from '@tanstack/react-query';
 
 const queryClient = new ReactQuery.QueryClient({
   defaultOptions: {

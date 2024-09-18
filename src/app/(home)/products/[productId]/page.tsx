@@ -1,38 +1,31 @@
-import Image from "next/image";
-import {
-  Box,
-  Container,
-  Grid,
-  Paper,
-  SxProps,
-  Typography,
-} from "@mui/material";
+import Image from 'next/image';
+import {Box, Container, Grid, Paper, SxProps, Typography} from '@mui/material';
 
-import { ImageSlider, Sizes } from "@/components/common";
-import { getProduct } from "@/tools";
-import ActionButtons from "./ActionButtons";
+import {ImageSlider, Sizes} from '@/components/common';
+import {getProduct} from '@/tools';
+import ActionButtons from './ActionButtons';
 
 type Props = {
-  params: { productId: string };
+  params: {productId: string};
 };
 
 const styles: Record<string, SxProps> = {
   productContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
   },
   productLabel: {
-    textAlign: "left",
-    fontSize: "16px",
+    textAlign: 'left',
+    fontSize: '16px',
     fontWeight: 300,
-    maxWidth: "100%",
-    lineBreak: "anywhere",
+    maxWidth: '100%',
+    lineBreak: 'anywhere',
   },
 };
 
-const Product = async ({ params: { productId } }: Props) => {
+const Product = async ({params: {productId}}: Props) => {
   const product = await getProduct(productId);
 
   const {
@@ -47,24 +40,24 @@ const Product = async ({ params: { productId } }: Props) => {
 
   const gender = genderData?.data?.attributes.name;
   const sizes = sizesData?.data || [];
-  const images = imagesData?.data?.map((image) => image.attributes.url) || [];
+  const images = imagesData?.data?.map(image => image.attributes.url) || [];
 
   return (
     <Container
       maxWidth={false}
       sx={{
-        maxWidth: "1300px",
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        gap: "100px",
-        mt: "100px",
-        pb: "100px",
+        maxWidth: '1300px',
+        display: 'flex',
+        flexDirection: {xs: 'column', md: 'row'},
+        gap: '100px',
+        mt: '100px',
+        pb: '100px',
       }}
     >
       <Box
         sx={{
           ...styles.productContainer,
-          alignItems: { xs: "center", md: "flex-start" },
+          alignItems: {xs: 'center', md: 'flex-start'},
         }}
       >
         {images.length > 0 ? (
@@ -72,13 +65,13 @@ const Product = async ({ params: { productId } }: Props) => {
         ) : (
           <Paper
             sx={{
-              textAlign: "center",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              height: "100%",
-              position: "relative",
+              textAlign: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
+              position: 'relative',
             }}
           >
             <Image fill src="/icons/galleryIcon.svg" alt="no image" />
@@ -88,18 +81,18 @@ const Product = async ({ params: { productId } }: Props) => {
       <Box sx={styles.productContainer}>
         <Box
           sx={{
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-            display: "flex",
-            gap: "24px",
+            width: '100%',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            display: 'flex',
+            gap: '24px',
           }}
         >
           <Typography variant="h1">{name}</Typography>
           <Typography
             variant="h2"
             sx={{
-              fontSize: "18px",
+              fontSize: '18px',
             }}
           >
             ${price}
@@ -107,10 +100,10 @@ const Product = async ({ params: { productId } }: Props) => {
         </Box>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            gap: "10px",
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            gap: '10px',
           }}
         >
           {gender && (
@@ -127,8 +120,8 @@ const Product = async ({ params: { productId } }: Props) => {
         {sizes && sizes.length !== 0 && (
           <Box
             sx={{
-              mt: "10px",
-              width: "100%",
+              mt: '10px',
+              width: '100%',
             }}
           >
             <Typography variant="h4" sx={styles.productLabel}>
@@ -138,7 +131,7 @@ const Product = async ({ params: { productId } }: Props) => {
               container
               spacing={2}
               sx={{
-                pt: "14px",
+                pt: '14px',
               }}
             >
               <Sizes sizes={sizes} />
@@ -147,24 +140,24 @@ const Product = async ({ params: { productId } }: Props) => {
         )}
         <Box
           sx={{
-            mt: "10px",
-            display: "flex",
+            mt: '10px',
+            display: 'flex',
             flexDirection: {
-              xs: "column",
-              sm: "row",
+              xs: 'column',
+              sm: 'row',
             },
-            gap: "10px",
-            width: "100%",
+            gap: '10px',
+            width: '100%',
           }}
         >
           <ActionButtons id={productId} />
         </Box>
         <Box
           sx={{
-            mt: "40px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "30px",
+            mt: '40px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '30px',
           }}
         >
           <Typography variant="h4">Description</Typography>

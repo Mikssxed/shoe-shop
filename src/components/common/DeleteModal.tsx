@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 import {
   Box,
   Button,
@@ -6,10 +6,10 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
-} from "@mui/material";
+} from '@mui/material';
 
-import Modal from "../ui/Modal";
-import Cross from "/public/icons/cross.svg";
+import Modal from '../ui/Modal';
+import Cross from '/public/icons/cross.svg';
 
 type DeleteModalProps = {
   name: string;
@@ -20,7 +20,7 @@ type DeleteModalProps = {
 };
 
 const defaultText =
-  "Lorem ipsum dolor sit amet cosectetur. Sed imerdient tempor facilisi massa aliquet sit habitant. Lorem ipsum dolor amet consectetur.";
+  'Lorem ipsum dolor sit amet cosectetur. Sed imerdient tempor facilisi massa aliquet sit habitant. Lorem ipsum dolor amet consectetur.';
 
 const DeleteModal = ({
   name,
@@ -30,15 +30,15 @@ const DeleteModal = ({
   text = defaultText,
 }: DeleteModalProps) => {
   const Content = () => (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "25px" }}>
+    <Box sx={{display: 'flex', flexDirection: 'column', gap: '25px'}}>
       <DialogTitle
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "16px",
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '16px',
           p: 0,
-          fontSize: { xs: "30px", md: "45px" },
-          lineHeight: { xs: "35px", md: "53px" },
+          fontSize: {xs: '30px', md: '45px'},
+          lineHeight: {xs: '35px', md: '53px'},
         }}
       >
         Are you sure you want to delete {name}?
@@ -49,20 +49,20 @@ const DeleteModal = ({
           height={20}
           onClick={onClose}
           style={{
-            alignSelf: "start",
-            cursor: "pointer",
+            alignSelf: 'start',
+            cursor: 'pointer',
           }}
         />
       </DialogTitle>
-      <DialogContentText variant="body1" sx={{ fontWeight: 300, p: 0 }}>
+      <DialogContentText variant="body1" sx={{fontWeight: 300, p: 0}}>
         {text}
       </DialogContentText>
       <Divider />
       <DialogActions
         sx={{
-          display: "flex",
+          display: 'flex',
           p: 0,
-          "& > *": { flexGrow: "1", height: { xs: "40px", md: "61px" } },
+          '& > *': {flexGrow: '1', height: {xs: '40px', md: '61px'}},
         }}
       >
         <Button variant="outlined" color="primary" onClick={onClose}>
@@ -87,12 +87,12 @@ const DeleteModal = ({
       open={open}
       onClose={onClose}
       paperStyle={{
-        display: "flex",
-        justifyContent: "space-between",
-        gap: { xs: "24px", md: "56px" },
-        boxSizing: "border-box",
-        borderRadius: "20px",
-        width: { xs: "320px", md: "656px" },
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: {xs: '24px', md: '56px'},
+        boxSizing: 'border-box',
+        borderRadius: '20px',
+        width: {xs: '320px', md: '656px'},
       }}
     >
       <Content />

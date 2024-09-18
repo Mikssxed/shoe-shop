@@ -1,6 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import {Box, Typography} from '@mui/material';
 
-import { stylingConstants } from "@/lib/constants/themeConstants";
+import {stylingConstants} from '@/lib/constants/themeConstants';
 
 interface BagPricingListProps {
   name: string;
@@ -8,23 +8,19 @@ interface BagPricingListProps {
   bold?: boolean;
 }
 
-const BagPricingList: React.FC<BagPricingListProps> = ({
-  name,
-  value,
-  bold,
-}) => {
+const BagPricingList: React.FC<BagPricingListProps> = ({name, value, bold}) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
       }}
     >
       <Typography
         sx={{
-          fontSize: { xs: "20px", sm: "20px" },
-          lineHeight: { xs: "24px", sm: "35px" },
+          fontSize: {xs: '20px', sm: '20px'},
+          lineHeight: {xs: '24px', sm: '35px'},
         }}
         fontWeight={bold ? 600 : 400}
         color={stylingConstants.palette.text.primary}
@@ -33,8 +29,8 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
       </Typography>
       <Typography
         sx={{
-          fontSize: { xs: "20px", sm: "20px" },
-          lineHeight: { xs: "24px", sm: "35px" },
+          fontSize: {xs: '20px', sm: '20px'},
+          lineHeight: {xs: '24px', sm: '35px'},
         }}
         fontWeight={bold ? 600 : 400}
         color={stylingConstants.palette.text.primary}

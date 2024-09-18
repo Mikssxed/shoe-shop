@@ -1,5 +1,5 @@
-import { Dialog, SxProps, useTheme } from "@mui/material";
-import { PropsWithChildren, useRef } from "react";
+import {Dialog, SxProps, useTheme} from '@mui/material';
+import {PropsWithChildren, useRef} from 'react';
 
 type ModalProps = PropsWithChildren & {
   open: boolean;
@@ -24,7 +24,7 @@ const Modal = ({
       open={open}
       onClose={onClose}
       keepMounted
-      onClick={(e) => {
+      onClick={e => {
         if (
           e.target !== paperRef.current &&
           !paperRef.current.contains(e.target)
@@ -33,11 +33,11 @@ const Modal = ({
         }
       }}
       sx={{
-        "& > .MuiBackdrop-root": {
-          backgroundColor: "backdrop.main",
+        '& > .MuiBackdrop-root': {
+          backgroundColor: 'backdrop.main',
         },
-        justifyContent: "center",
-        display: "flex",
+        justifyContent: 'center',
+        display: 'flex',
         ...containerStyle,
       }}
       PaperProps={{
@@ -45,7 +45,7 @@ const Modal = ({
           p: theme.spacing(4),
           m: theme.spacing(),
           backgroundColor: theme.palette.background.default,
-          boxShadow: "none",
+          boxShadow: 'none',
           ...paperStyle,
         },
       }}

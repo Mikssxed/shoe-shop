@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -9,23 +9,23 @@ import {
   Paper,
   Stack,
   Typography,
-} from "@mui/material";
-import { MoreHoriz } from "@mui/icons-material";
-import { BagTick } from "iconsax-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { MouseEvent, useState } from "react";
+} from '@mui/material';
+import {MoreHoriz} from '@mui/icons-material';
+import {BagTick} from 'iconsax-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import {usePathname} from 'next/navigation';
+import {MouseEvent, useState} from 'react';
 
-import { ProductAttributes } from "@/lib/types";
-import ButtonMenu from "./ButtonMenu";
+import {ProductAttributes} from '@/lib/types';
+import ButtonMenu from './ButtonMenu';
 
 type Props = {
   product: ProductAttributes;
   imagePriority: boolean;
 };
 
-const ProductCard = ({ product, imagePriority }: Props) => {
+const ProductCard = ({product, imagePriority}: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -33,49 +33,49 @@ const ProductCard = ({ product, imagePriority }: Props) => {
   };
 
   const pathName = usePathname();
-  const isProfile = pathName.includes("/profile/my-products");
+  const isProfile = pathName.includes('/profile/my-products');
 
   const deleteProduct = (id: number) => {
     // TODO: implement delete product
   };
 
   return (
-    <Box sx={{ position: "relative", width: "100%" }}>
-      <Link href={`/products/${product.id}`} style={{ textDecoration: "none" }}>
+    <Box sx={{position: 'relative', width: '100%'}}>
+      <Link href={`/products/${product.id}`} style={{textDecoration: 'none'}}>
         <Card
           sx={{
             width: 1,
             borderRadius: 0,
-            boxShadow: "none",
-            display: "flex",
-            flexDirection: "column",
+            boxShadow: 'none',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          <Box sx={{ position: "relative", aspectRatio: 320 / 380 }}>
+          <Box sx={{position: 'relative', aspectRatio: 320 / 380}}>
             {!isProfile && (
               <Box
                 sx={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  opacity: "0%",
-                  transition: "opacity 0.3s ease-in-out",
-                  ":hover": { opacity: "100%" },
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  opacity: '0%',
+                  transition: 'opacity 0.3s ease-in-out',
+                  ':hover': {opacity: '100%'},
                   zIndex: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
                 <IconButton
                   sx={{
-                    backgroundColor: "rgba(255,255,255, 0.70)",
-                    borderRadius: "50%",
-                    flexDirection: "column",
-                    fontSize: "14px",
-                    width: "100px",
-                    height: "100px",
-                    boxShadow: "0px 4px 10px 0px #00000026",
+                    backgroundColor: 'rgba(255,255,255, 0.70)',
+                    borderRadius: '50%',
+                    flexDirection: 'column',
+                    fontSize: '14px',
+                    width: '100px',
+                    height: '100px',
+                    boxShadow: '0px 4px 10px 0px #00000026',
                   }}
                   onClick={addToCart}
                 >
@@ -89,7 +89,7 @@ const ProductCard = ({ product, imagePriority }: Props) => {
                 src={product.images.data[0].attributes.url}
                 alt={product.name!}
                 fill
-                style={{ objectFit: "cover" }}
+                style={{objectFit: 'cover'}}
                 priority={imagePriority}
                 sizes="100%"
               />
@@ -97,7 +97,7 @@ const ProductCard = ({ product, imagePriority }: Props) => {
               <Paper
                 sx={{
                   height: 1,
-                  backgroundColor: "grey.A100",
+                  backgroundColor: 'grey.A100',
                   borderRadius: 0,
                 }}
               >
@@ -108,19 +108,19 @@ const ProductCard = ({ product, imagePriority }: Props) => {
           <CardActionArea
             LinkComponent={Link}
             sx={{
-              "&:hover .MuiCardActionArea-focusHighlight": {
+              '&:hover .MuiCardActionArea-focusHighlight': {
                 opacity: 0,
               },
-              backgroundColor: "background.paper",
+              backgroundColor: 'background.paper',
               flex: 1,
             }}
           >
-            <CardContent sx={{ pl: 0, pr: 0 }}>
+            <CardContent sx={{pl: 0, pr: 0}}>
               <Stack
                 direction="row"
                 sx={{
-                  justifyContent: "space-between",
-                  gap: "1rem",
+                  justifyContent: 'space-between',
+                  gap: '1rem',
                   p: 0,
                 }}
               >
@@ -152,13 +152,13 @@ const ProductCard = ({ product, imagePriority }: Props) => {
           <IconButton
             aria-label="settings"
             sx={{
-              position: "absolute",
-              zIndex: "1",
-              p: "10px",
+              position: 'absolute',
+              zIndex: '1',
+              p: '10px',
               top: 5,
               right: 5,
             }}
-            onClick={(e) => setAnchorEl(e.currentTarget)}
+            onClick={e => setAnchorEl(e.currentTarget)}
           >
             <MoreHoriz />
           </IconButton>
@@ -167,8 +167,8 @@ const ProductCard = ({ product, imagePriority }: Props) => {
             productid={product.id!}
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             onClose={() => setAnchorEl(null)}
             onDeleteProduct={() => deleteProduct(product.id)}
           />

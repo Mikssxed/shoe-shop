@@ -1,3 +1,3 @@
-import buildParams from "./buildParams";
+import buildParams from './buildParams';
 
-export { buildParams };
+export {buildParams};

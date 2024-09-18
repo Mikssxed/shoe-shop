@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button, Typography } from "@mui/material";
-import { UseMutationResult, useMutation } from "@tanstack/react-query";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { enqueueSnackbar } from "notistack";
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Alert, Box, Button, Typography} from '@mui/material';
+import {UseMutationResult, useMutation} from '@tanstack/react-query';
+import Link from 'next/link';
+import {useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {useRouter} from 'next/navigation';
+import {enqueueSnackbar} from 'notistack';
 
-import ControlledInput from "@/components/common/ControlledInput";
-import { IReactQueryError, ISignUpRequest, ISignUpResponse } from "@/lib/types";
-import { SignUpFormValidation } from "@/lib/validation";
-import { signUp } from "@/tools";
-import { stylingConstants } from "@/lib/constants/themeConstants";
+import ControlledInput from '@/components/common/ControlledInput';
+import {IReactQueryError, ISignUpRequest, ISignUpResponse} from '@/lib/types';
+import {SignUpFormValidation} from '@/lib/validation';
+import {signUp} from '@/tools';
+import {stylingConstants} from '@/lib/constants/themeConstants';
 
 const defaultValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const SignUpForm: React.FC = () => {
@@ -32,7 +32,7 @@ const SignUpForm: React.FC = () => {
     mutationFn: signUp,
   });
 
-  const { handleSubmit, reset, control } = useForm<
+  const {handleSubmit, reset, control} = useForm<
     z.infer<typeof SignUpFormValidation>
   >({
     resolver: zodResolver(SignUpFormValidation),
@@ -49,7 +49,7 @@ const SignUpForm: React.FC = () => {
       reset();
     } catch (error: any) {
       enqueueSnackbar(error.message, {
-        variant: "error",
+        variant: 'error',
         autoHideDuration: 10000,
       });
     }
@@ -60,11 +60,11 @@ const SignUpForm: React.FC = () => {
       <Alert
         severity="success"
         sx={{
-          maxWidth: "436px",
-          py: "14px",
-          my: "14px",
-          fontSize: "16px",
-          borderRadius: "8px",
+          maxWidth: '436px',
+          py: '14px',
+          my: '14px',
+          fontSize: '16px',
+          borderRadius: '8px',
         }}
       >
         Success. Please, check your email inbox and confirm your registration.
@@ -78,10 +78,10 @@ const SignUpForm: React.FC = () => {
       <Box
         component="form"
         sx={{
-          m: "40px 0 16px 0",
-          display: "flex",
-          flexDirection: "column",
-          gap: "24px",
+          m: '40px 0 16px 0',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -116,34 +116,34 @@ const SignUpForm: React.FC = () => {
           type="password"
         />
         <Button
-          variant={"contained"}
+          variant={'contained'}
           type="submit"
           disabled={mutation.isPending}
           sx={{
-            mt: "66px",
-            maxWidth: "436px",
-            py: "14px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            "&.Mui-disabled": {
-              border: "0",
+            mt: '66px',
+            maxWidth: '436px',
+            py: '14px',
+            fontSize: '16px',
+            borderRadius: '8px',
+            '&.Mui-disabled': {
+              border: '0',
             },
           }}
         >
-          {mutation.isPending ? "Loading..." : "Sign Up"}
+          {mutation.isPending ? 'Loading...' : 'Sign Up'}
         </Button>
       </Box>
       <Box
         component="div"
-        sx={{ display: "flex", justifyContent: "center", gap: "6px" }}
+        sx={{display: 'flex', justifyContent: 'center', gap: '6px'}}
       >
         <Typography
           variant="body1"
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "6px",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
           }}
         >
           Already have an account?
@@ -151,7 +151,7 @@ const SignUpForm: React.FC = () => {
         <Link
           href="/auth/sign-in"
           style={{
-            textDecoration: "none",
+            textDecoration: 'none',
             color: stylingConstants.palette.primary.main,
           }}
         >
@@ -159,8 +159,8 @@ const SignUpForm: React.FC = () => {
             variant="body1"
             color={stylingConstants.palette.primary.main}
             sx={{
-              "&:hover": {
-                textDecoration: "underline",
+              '&:hover': {
+                textDecoration: 'underline',
               },
             }}
           >

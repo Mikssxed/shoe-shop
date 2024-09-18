@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { SessionProvider } from "next-auth/react";
-import { SnackbarProvider } from "notistack";
-import { PropsWithChildren } from "react";
+import {QueryClientProvider} from '@tanstack/react-query';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import {SessionProvider} from 'next-auth/react';
+import {SnackbarProvider} from 'notistack';
+import {PropsWithChildren} from 'react';
 
-import { queryClient } from "@/tools";
+import {queryClient} from '@/tools';
 
-export default function AppProvider({ children }: PropsWithChildren) {
+export default function AppProvider({children}: PropsWithChildren) {
   return (
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
@@ -16,7 +16,7 @@ export default function AppProvider({ children }: PropsWithChildren) {
           preventDuplicate
           dense
           autoHideDuration={3000}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          anchorOrigin={{vertical: 'top', horizontal: 'center'}}
         >
           {children} <ReactQueryDevtools />
         </SnackbarProvider>

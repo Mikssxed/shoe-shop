@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import { Button, SxProps } from "@mui/material";
+import {Button, SxProps} from '@mui/material';
 
 const styles: Record<string, SxProps> = {
   productContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
   },
   productLabel: {
-    textAlign: "left",
-    fontSize: "16px",
+    textAlign: 'left',
+    fontSize: '16px',
     fontWeight: 300,
-    maxWidth: "100%",
-    lineBreak: "anywhere",
+    maxWidth: '100%',
+    lineBreak: 'anywhere',
   },
   actionButton: {
-    flexBasis: "50%",
+    flexBasis: '50%',
     p: {
-      xs: "10px 15px",
-      sm: "16px 20px",
+      xs: '10px 15px',
+      sm: '16px 20px',
     },
-    borderRadius: "10px",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
+    borderRadius: '10px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
   },
 };
 
-export default function ActionButtons({ id }: { id: string }) {
+export default function ActionButtons({id}: {id: string}) {
   const addToBag = () => {
     //TODO: add to bag logic
   };

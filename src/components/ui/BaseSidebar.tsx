@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { SxProps } from "@mui/material";
-import Drawer from "@mui/material/Drawer";
-import { PropsWithChildren, useEffect, useLayoutEffect, useState } from "react";
+import {SxProps} from '@mui/material';
+import Drawer from '@mui/material/Drawer';
+import {PropsWithChildren, useEffect, useLayoutEffect, useState} from 'react';
 
 type Props = PropsWithChildren & {
   open: boolean;
@@ -25,9 +25,9 @@ export default function BaseSidebar({
     function updateSize() {
       setWidth(window.innerWidth);
     }
-    window.addEventListener("resize", updateSize);
+    window.addEventListener('resize', updateSize);
     updateSize();
-    return () => window.removeEventListener("resize", updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export default function BaseSidebar({
 
   return (
     <Drawer
-      variant={isMobile ? "temporary" : "persistent"}
-      anchor={isMobile ? "right" : "left"}
+      variant={isMobile ? 'temporary' : 'persistent'}
+      anchor={isMobile ? 'right' : 'left'}
       open={open}
       onClose={onClose}
       ModalProps={{
@@ -45,13 +45,13 @@ export default function BaseSidebar({
       }}
       sx={{
         width: open ? sidebarWidth : 0,
-        "& .MuiDrawer-paper": {
-          boxSizing: "border-box",
+        '& .MuiDrawer-paper': {
+          boxSizing: 'border-box',
           width: sidebarWidth,
-          height: { xs: "100%", md: "calc(100vh - 120px)" }, // 120px is the height of the header TODO: change to theme value
-          top: { xs: 0, md: "120px" }, // 120px is the height of the header TODO: change to theme value
-          border: "none",
-          overflowX: "hidden",
+          height: {xs: '100%', md: 'calc(100vh - 120px)'}, // 120px is the height of the header TODO: change to theme value
+          top: {xs: 0, md: '120px'}, // 120px is the height of the header TODO: change to theme value
+          border: 'none',
+          overflowX: 'hidden',
         },
         ...containerStyle,
       }}

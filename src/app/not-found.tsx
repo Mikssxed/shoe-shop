@@ -1,4 +1,4 @@
-import NotFoundError from "@/components/common/NotFoundError";
+import NotFoundError from '@/components/common/NotFoundError';
 
 const NotFound = async () => {
   return <NotFoundError />;

@@ -1,5 +1,5 @@
-import AddProductForm from "@/components/AddProductForm";
+import AddProductForm from '@/components/AddProductForm';
 
 export default function AddProduct() {
-  return <AddProductForm />
+  return <AddProductForm />;
 }

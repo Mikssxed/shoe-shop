@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { alpha, createTheme, responsiveFontSizes } from "@mui/material/styles";
+import {alpha, createTheme, responsiveFontSizes} from '@mui/material/styles';
 
-import { stylingConstants } from "./lib/constants/themeConstants";
+import {stylingConstants} from './lib/constants/themeConstants';
 
 let theme = createTheme();
 
@@ -11,29 +11,29 @@ theme = createTheme({
   components: {
     MuiIconButton: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          borderRadius: "12px",
-          "&:hover": { backgroundColor: theme.palette.grey[100] },
+        root: ({theme}) => ({
+          borderRadius: '12px',
+          '&:hover': {backgroundColor: theme.palette.grey[100]},
         }),
       },
     },
     MuiCssBaseline: {
-      styleOverrides: (theme) => ({
+      styleOverrides: theme => ({
         body: {
-          scrollbarWidth: "thin",
+          scrollbarWidth: 'thin',
           scrollbarColor: theme.palette.grey[300],
-          "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-            backgroundColor: "transparent",
+          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+            backgroundColor: 'transparent',
             width: 11,
           },
-          "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
             backgroundColor: theme.palette.grey[300],
-            border: "2px solid transparent",
-            backgroundClip: "padding-box",
+            border: '2px solid transparent',
+            backgroundClip: 'padding-box',
             borderRadius: 10,
-            transition: "background-color 0.3s ease-in-out",
+            transition: 'background-color 0.3s ease-in-out',
           },
-          "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
+          '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
             {
               backgroundColor: theme.palette.grey[400],
             },
@@ -42,9 +42,9 @@ theme = createTheme({
     },
     MuiInputBase: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({theme}) => ({
           borderRadius: theme.spacing(),
-          padding: ["7px", "16px"].join(" "),
+          padding: ['7px', '16px'].join(' '),
         }),
 
         input: () => ({
@@ -57,33 +57,33 @@ theme = createTheme({
       styleOverrides: {
         root: () => ({
           fontSize: 15,
-          color: "text.secondary",
-          mb: "5px",
+          color: 'text.secondary',
+          mb: '5px',
         }),
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          boxShadow: "none",
+          textTransform: 'none',
+          whiteSpace: 'nowrap',
+          boxShadow: 'none',
           borderRadius: theme.spacing(),
-          "&:hover": {
-            boxShadow: "none",
+          '&:hover': {
+            boxShadow: 'none',
           },
         },
-        contained: ({ theme }) => ({
+        contained: ({theme}) => ({
           color: theme.palette.common.white,
           border: `1px solid ${theme.palette.primary.main}`,
-          "&:hover": {
+          '&:hover': {
             color: theme.palette.primary.main,
-            backgroundColor: "transparent",
+            backgroundColor: 'transparent',
           },
         }),
-        outlined: ({ theme }) => ({
+        outlined: ({theme}) => ({
           border: `1px solid ${theme.palette.primary.main}`,
-          "&:hover": {
+          '&:hover': {
             color: theme.palette.common.white,
             backgroundColor: theme.palette.primary.main,
           },
@@ -92,7 +92,7 @@ theme = createTheme({
     },
     MuiDivider: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({theme}) => ({
           borderWidth: 1,
           borderColor: theme.palette.grey[100],
         }),
@@ -100,7 +100,7 @@ theme = createTheme({
     },
     MuiCheckbox: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({theme}) => ({
           borderWidth: 1,
           borderRadius: 2,
           borderColor: theme.palette.grey[700],
@@ -111,18 +111,18 @@ theme = createTheme({
       styleOverrides: {
         root: () => ({
           padding: 0,
-          border: "none",
+          border: 'none',
 
-          "&.Mui-focused": {
+          '&.Mui-focused': {
             borderColor: `${theme.palette.grey[700]}`,
           },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            border: "none",
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            border: 'none',
 
             borderColor: `${theme.palette.grey[700]}`,
           },
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            border: "none",
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            border: 'none',
           },
         }),
       },
@@ -137,9 +137,9 @@ theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: () => ({
-          height: "60px",
-          [theme.breakpoints.up("md")]: {
-            height: "120px",
+          height: '60px',
+          [theme.breakpoints.up('md')]: {
+            height: '120px',
           },
         }),
       },
@@ -151,9 +151,9 @@ theme = createTheme(theme, {
   palette: {
     backdrop: theme.palette.augmentColor({
       color: {
-        main: alpha("#F3F3F3", 0.9),
+        main: alpha('#F3F3F3', 0.9),
       },
-      name: "backdrop",
+      name: 'backdrop',
     }),
   },
 });

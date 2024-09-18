@@ -1,15 +1,9 @@
-"use client";
+'use client';
 
-import {
-  Box,
-  InputBase,
-  InputLabel,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { InputBaseProps } from "@mui/material/InputBase/InputBase";
-import Image from "next/image";
-import { useId } from "react";
+import {Box, InputBase, InputLabel, Typography, useTheme} from '@mui/material';
+import {InputBaseProps} from '@mui/material/InputBase/InputBase';
+import Image from 'next/image';
+import {useId} from 'react';
 
 type TextareaProps = InputBaseProps & {
   labelText: string;
@@ -34,7 +28,7 @@ const Textarea = ({
         {required && (
           <Typography
             component="span"
-            sx={{ color: theme.palette.error.main, ml: "5px" }}
+            sx={{color: theme.palette.error.main, ml: '5px'}}
           >
             *
           </Typography>
@@ -42,24 +36,24 @@ const Textarea = ({
       </InputLabel>
       <InputBase
         sx={{
-          borderRadius: "8px",
-          borderColor: "grey.A400",
-          p: "8px 15px",
-          "& .MuiInputBase-input": {
+          borderRadius: '8px',
+          borderColor: 'grey.A400',
+          p: '8px 15px',
+          '& .MuiInputBase-input': {
             color: theme.palette.text.primary,
-            [theme.breakpoints.up("lg")]: {
-              minHeight: "276px",
-              p: "16px",
+            [theme.breakpoints.up('lg')]: {
+              minHeight: '276px',
+              p: '16px',
             },
           },
           border: !!errorMessage
             ? `2px solid ${theme.palette.error.main}`
-            : `1px solid ${theme.palette.grey["700"]}`,
+            : `1px solid ${theme.palette.grey['700']}`,
         }}
         id={id}
         fullWidth
         multiline
-        inputProps={{ style: { overflowX: "hidden" } }}
+        inputProps={{style: {overflowX: 'hidden'}}}
         {...props}
         error={!!errorMessage}
       />
@@ -67,14 +61,14 @@ const Textarea = ({
         <Box
           sx={{
             color: theme.palette.error.main,
-            display: "flex",
-            alignItems: "center",
-            gap: "4px",
-            mt: "8px",
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            mt: '8px',
           }}
         >
           <Image
-            src={"/icons/warningIcon.svg"}
+            src={'/icons/warningIcon.svg'}
             alt="warning"
             width={15}
             height={13}

@@ -5,14 +5,14 @@ import {
   BaseWithValue,
   Data,
   RequestData,
-} from "./data.type";
+} from './data.type';
 
 export type Product = {
   id: number;
   name: string;
   description: string;
   price: number;
-  teamName: "team-1" | "team-2" | "team-3";
+  teamName: 'team-1' | 'team-2' | 'team-3';
 };
 
 type Image = {

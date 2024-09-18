@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {ReactNode} from 'react';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionDetails,
@@ -10,10 +10,10 @@ import {
   Box,
   Divider,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { Option } from "./Option";
-import { stylingConstants } from "@/lib/constants/themeConstants"; 
+import {Option} from './Option';
+import {stylingConstants} from '@/lib/constants/themeConstants';
 
 type CategoryProps = {
   name: string;
@@ -24,24 +24,24 @@ type CategoryProps = {
   }[];
 };
 
-export const Category = ({ name, children, options }: CategoryProps) => {
+export const Category = ({name, children, options}: CategoryProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const updateFilter = (option: string | number, action: "add" | "remove") => {
+  const updateFilter = (option: string | number, action: 'add' | 'remove') => {
     const params = new URLSearchParams(searchParams);
-    if (action === "add") params.append(name.toLowerCase(), String(option));
-    if (action === "remove") params.delete(name.toLowerCase(), String(option));
+    if (action === 'add') params.append(name.toLowerCase(), String(option));
+    if (action === 'remove') params.delete(name.toLowerCase(), String(option));
     router.push(`${pathname}?${params}`);
   };
 
   const handleAddFilter = (option: string | number) => {
-    updateFilter(option, "add");
+    updateFilter(option, 'add');
   };
 
   const handleRemoveFilter = (option: string | number) => {
-    updateFilter(option, "remove");
+    updateFilter(option, 'remove');
   };
 
   return (
@@ -52,26 +52,26 @@ export const Category = ({ name, children, options }: CategoryProps) => {
         disableGutters
         sx={{
           p: {
-            xs: "15px 10px 15px 40px",
-            md: "15px 10px 15px 15px",
+            xs: '15px 10px 15px 40px',
+            md: '15px 10px 15px 15px',
           },
-          backgroundImage: "none",
-          boxShadow: "none",
-          "&:before": {
-            display: "none",
+          backgroundImage: 'none',
+          boxShadow: 'none',
+          '&:before': {
+            display: 'none',
           },
-          "& .MuiAccordionSummary-expandIconWrapper": {
+          '& .MuiAccordionSummary-expandIconWrapper': {
             color: stylingConstants.palette.text.primary,
           },
         }}
       >
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ pl: 0 }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{pl: 0}}>
           <Typography>{name}</Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ pl: 0 }}>
+        <AccordionDetails sx={{pl: 0}}>
           {children}
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            {options?.map(({ id, value }) => (
+          <Box sx={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+            {options?.map(({id, value}) => (
               <Option
                 key={id}
                 value={value}

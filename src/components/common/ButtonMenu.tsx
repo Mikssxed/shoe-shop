@@ -5,18 +5,18 @@ import {
   MenuProps,
   SxProps,
   Typography,
-} from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+} from '@mui/material';
+import {useRouter} from 'next/navigation';
+import {useState} from 'react';
 
-import EditProductModal from "../EditProductModal";
-import DeleteModal from "./DeleteModal";
+import EditProductModal from '../EditProductModal';
+import DeleteModal from './DeleteModal';
 
 const styles: Record<string, SxProps> = {
   menuItem: {
-    p: "0.5rem 1rem",
-    "&:hover": {
-      backgroundColor: "grey.A100",
+    p: '0.5rem 1rem',
+    '&:hover': {
+      backgroundColor: 'grey.A100',
     },
   },
 };
@@ -46,7 +46,7 @@ const ButtonMenu = ({
         <MenuList
           sx={{
             p: 0,
-            width: "7rem",
+            width: '7rem',
           }}
         >
           <MenuItem
@@ -59,18 +59,18 @@ const ButtonMenu = ({
           <MenuItem
             divider
             sx={styles.menuItem}
-            onClick={(e) => {
+            onClick={e => {
               setOpenEdit(true);
-              props.onClose?.(e, "backdropClick");
+              props.onClose?.(e, 'backdropClick');
             }}
           >
             <Typography fontWeight={300}>Edit</Typography>
           </MenuItem>
           <MenuItem
             sx={styles.menuItem}
-            onClick={(e) => {
+            onClick={e => {
               setOpenDeleteModal(true);
-              props.onClose?.(e, "backdropClick");
+              props.onClose?.(e, 'backdropClick');
             }}
           >
             <Typography fontWeight={300}>Delete</Typography>

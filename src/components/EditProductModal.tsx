@@ -1,7 +1,7 @@
-import ProductInfoForm from "./ProductInfoForm";
-import Modal from "./ui/Modal";
+import ProductInfoForm from './ProductInfoForm';
+import Modal from './ui/Modal';
 
-const title = "Edit product";
+const title = 'Edit product';
 const description = `Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print,
   graphic or web designs. The passage is attributed to an unknown typesetter in the 15th
   century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum
@@ -19,12 +19,12 @@ const EditProductModal = ({
       open={open}
       onClose={onClose}
       containerStyle={{
-        display: "flex",
-        boxSizing: "border-box",
-        minWidth: { lg: "1150px", xl: "1487px" },
-        justifyContent: "center",
+        display: 'flex',
+        boxSizing: 'border-box',
+        minWidth: {lg: '1150px', xl: '1487px'},
+        justifyContent: 'center',
       }}
-      paperStyle={{ maxWidth: "100%" }}
+      paperStyle={{maxWidth: '100%'}}
     >
       <ProductInfoForm title={title} desc={description} isEdit={true} />
     </Modal>
