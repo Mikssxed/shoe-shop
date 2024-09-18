@@ -7,48 +7,12 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { IProfileInfoInputField } from "@/lib/types/update-profile-types";
+import { profileInfoFormData } from "@/lib/config/profileFormConfig";
 import { UpdateProfileValidation } from "@/lib/validation";
 import { updateProfileButtonStyles } from "@/styles/profile/updateProfileStyles";
 import theme from "@/theme";
 import ControlledInput from "./common/ControlledInput";
 import { Input } from "./ui";
-
-const profileInfoFormData: IProfileInfoInputField[] = [
-  {
-    id: "PIIFD-1",
-    name: "firstName",
-    label: "Name",
-    required: false,
-    disabled: false,
-    placeholder: "John",
-  },
-  {
-    id: "PIIFD-2",
-    name: "lastName",
-    label: "Surname",
-    required: false,
-    disabled: false,
-    placeholder: "Doe",
-  },
-  {
-    id: "PIIFD-3",
-    name: "email",
-    label: "Email",
-    required: false,
-    disabled: true,
-    placeholder: "example@example.com",
-  },
-  {
-    id: "PIIFD-4",
-    name: "phoneNumber",
-    label: "Phone number",
-    required: false,
-    disabled: false,
-    // TODO: update this placeholder according to proper phone number validation
-    placeholder: "555 555 555",
-  },
-];
 
 const defaultValues = {
   firstName: "",

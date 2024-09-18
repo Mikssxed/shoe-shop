@@ -1,7 +1,5 @@
 "use client";
 
-import { textOverflowEllipsis } from "@/styles/commonStyles";
-import { capitalizeFirstLetter } from "@/utils/helperFunctions";
 import {
   Box,
   Button,
@@ -22,9 +20,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useIsMobile } from "@/hooks";
-import { profileSidebarData } from "@/lib/config/profile-sidebar";
-import ProfilePicture from "../ProfilePicture";
+import { profileSidebarData } from "@/lib/config/profileSidebarConfig";
 import { BaseSidebar } from "../ui";
+import { capitalizeFirstLetter } from "@/utils/helperFunctions";
+import { textOverflowEllipsis } from "@/styles/commonStyles";
+import ProfilePicture from "../ProfilePicture";
 
 type Props = {
   open: boolean;
