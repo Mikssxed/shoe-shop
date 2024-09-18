@@ -1,8 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+
 import SideImageLayout from "@/components/common/SideImageLayout";
-import { IMAGE_SRCS } from "@/lib/constants";
+import { IMAGE_SRCS } from "@/lib/constants/imagePaths";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

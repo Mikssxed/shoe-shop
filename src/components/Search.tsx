@@ -12,11 +12,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import SearchBar from "./SearchBar";
-import { constants } from "@/lib/constants";
 import { useIsMobile, useDebounce } from "@/hooks";
 import Cross from "/public/icons/cross.svg";
 import Modal from "./ui/Modal";
 import { useProductsNames } from "@/tools";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 type SearchProps = {
   open: boolean;
@@ -97,7 +97,7 @@ export default function Search({ open, onClose }: SearchProps) {
           height: { xs: "200px", sm: "300px", md: "420px" },
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: constants.palette.background.default,
+          backgroundColor: stylingConstants.palette.background.default,
         }}
       >
         {!isMobile && (
@@ -135,7 +135,7 @@ export default function Search({ open, onClose }: SearchProps) {
                         md: "40px",
                       },
                       paddingLeft: "8px",
-                      color: constants.palette.text.secondary,
+                      color: stylingConstants.palette.text.secondary,
                       fontSize: { xs: "14px", sm: "17px", md: "20px" },
                     }}
                   >
@@ -174,7 +174,7 @@ export default function Search({ open, onClose }: SearchProps) {
                           <ListItemText
                             primary={product.attributes.name}
                             primaryTypographyProps={{
-                              color: constants.palette.text.primary,
+                              color: stylingConstants.palette.text.primary,
                               fontSize: { xs: "14px", sm: "17px", md: "20px" },
                             }}
                             sx={{

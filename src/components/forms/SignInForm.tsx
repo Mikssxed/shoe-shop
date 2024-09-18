@@ -9,8 +9,8 @@ import { z } from "zod";
 import ControlledCheckbox from "@/components/common/ControlledCheckbox";
 import ControlledInput from "@/components/common/ControlledInput";
 import { useSignIn } from "@/hooks";
-import { constants } from "@/lib/constants";
 import { LogInFormValidation } from "@/lib/validation";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 const defaultValues = {
   email: "",
@@ -91,7 +91,7 @@ const SignInForm: React.FC = () => {
               href="/auth/forgot-password"
               style={{
                 textDecoration: "none",
-                color: constants.palette.primary.main,
+                color: stylingConstants.palette.primary.main,
               }}
             >
               Forgot password?
@@ -129,7 +129,7 @@ const SignInForm: React.FC = () => {
         </Typography>
         <Typography
           variant="body1"
-          color={constants.palette.primary.main}
+          color={stylingConstants.palette.primary.main}
           sx={{
             "&:hover": {
               textDecoration: "underline",
@@ -140,7 +140,7 @@ const SignInForm: React.FC = () => {
             href="/auth/sign-up"
             style={{
               textDecoration: "none",
-              color: constants.palette.primary.main,
+              color: stylingConstants.palette.primary.main,
             }}
           >
             Sign up

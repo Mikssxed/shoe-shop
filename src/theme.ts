@@ -2,12 +2,12 @@
 
 import { alpha, createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "./lib/constants/themeConstants";
 
 let theme = createTheme();
 
 theme = createTheme({
-  ...constants,
+  ...stylingConstants,
   components: {
     MuiIconButton: {
       styleOverrides: {

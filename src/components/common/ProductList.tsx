@@ -13,11 +13,11 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 import { useIsMobile } from "@/hooks";
-import { constants } from "@/lib/constants";
 import { ProductsResponse } from "@/lib/types";
 import { useProducts } from "@/tools";
 import { buildParams } from "@/utils";
 import ProductCard from "./ProductCard";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 type Props = {
   fullWidth?: boolean;
@@ -94,15 +94,15 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
             >
               <BagCross1
                 size="20"
-                color={constants.palette.grey[500]}
+                color={stylingConstants.palette.grey[500]}
                 variant="Outline"
               />
             </Avatar>
             <Typography variant="h4" textAlign="center">
-              {"We couldn't find any products"}
+              We couldn't find any products
             </Typography>
             <Typography fontWeight={300} textAlign="center">
-              {"Try adjusting your search or filter to find what you want"}
+              Try adjusting your search or filter to find what you want
             </Typography>
           </Stack>
         </Grid>

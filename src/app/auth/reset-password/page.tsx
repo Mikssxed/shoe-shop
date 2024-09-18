@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Box, Typography } from "@mui/material";
 
 import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 export default function ResetPassword() {
   return (
@@ -29,7 +29,7 @@ export default function ResetPassword() {
           href="/auth/sign-in"
           style={{
             textDecorationLine: "none",
-            color: constants.palette.text.secondary,
+            color: stylingConstants.palette.text.secondary,
           }}
         >
           Back to log in

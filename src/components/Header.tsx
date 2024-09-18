@@ -15,11 +15,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { useIsMobile } from "@/hooks";
-import { constants } from "@/lib/constants";
 import ProfilePicture from "./ProfilePicture";
 import Search from "./Search";
 import SearchBar from "./SearchBar";
 import { ProfileSidebar } from "./common";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 const Header = () => {
   const { status } = useSession();
@@ -42,7 +42,7 @@ const Header = () => {
           sx={{
             flexGrow: 1,
             paddingInline: { xs: "20px", md: "30px", lg: "40px 60px" },
-            backgroundcolor: constants.palette.background.default,
+            backgroundcolor: stylingConstants.palette.background.default,
             justifyItems: "end",
             gap: { xs: "20px", md: 0 },
           }}
@@ -55,7 +55,7 @@ const Header = () => {
                   align="center"
                   sx={{ marginInline: "44px", lineHeight: "30px" }}
                   variant="body1"
-                  color={constants.palette.text.primary}
+                  color={stylingConstants.palette.text.primary}
                 >
                   Products
                 </Typography>
@@ -91,7 +91,7 @@ const Header = () => {
             </Box>
           )}
           <Link href="/bag" style={{ width: "24px", height: "24px" }}>
-            <Bag size="24" color={constants.palette.grey[700]} />
+            <Bag size="24" color={stylingConstants.palette.grey[700]} />
           </Link>
           {isMobile && (
             <Box
@@ -100,7 +100,7 @@ const Header = () => {
             >
               <SearchNormal1
                 size="17"
-                color={constants.palette.grey[700]}
+                color={stylingConstants.palette.grey[700]}
                 style={{
                   cursor: "pointer",
                 }}
@@ -135,7 +135,7 @@ const Header = () => {
               {/*TODO: Add onclick to show sidebar */}
               <HambergerMenu
                 size="24"
-                color={constants.palette.grey[700]}
+                color={stylingConstants.palette.grey[700]}
                 onClick={() => setSidebarOpen(true)}
               />
             </Box>

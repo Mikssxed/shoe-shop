@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 
 import { Option } from "./Option";
+import { stylingConstants } from "@/lib/constants/themeConstants"; 
 
 type CategoryProps = {
   name: string;
@@ -60,7 +61,7 @@ export const Category = ({ name, children, options }: CategoryProps) => {
             display: "none",
           },
           "& .MuiAccordionSummary-expandIconWrapper": {
-            color: "text.primary",
+            color: stylingConstants.palette.text.primary,
           },
         }}
       >

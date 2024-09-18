@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 interface BagPricingListProps {
   name: string;
@@ -27,7 +27,7 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
           lineHeight: { xs: "24px", sm: "35px" },
         }}
         fontWeight={bold ? 600 : 400}
-        color={constants.palette.text.primary}
+        color={stylingConstants.palette.text.primary}
       >
         {name}
       </Typography>
@@ -37,7 +37,7 @@ const BagPricingList: React.FC<BagPricingListProps> = ({
           lineHeight: { xs: "24px", sm: "35px" },
         }}
         fontWeight={bold ? 600 : 400}
-        color={constants.palette.text.primary}
+        color={stylingConstants.palette.text.primary}
       >
         ${value}
       </Typography>

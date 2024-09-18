@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 interface ISideImageLayoutProps {
   children: React.ReactNode;
@@ -51,7 +51,7 @@ export default function SideImageLayout({
             justifyContent: "center",
             minHeight: "calc(100% - 130px)",
             borderTop: {
-              xs: `1px solid ${constants.palette.grey[100]}`,
+              xs: `1px solid ${stylingConstants.palette.grey[100]}`,
               lg: "none",
             },
             padding: "0 20px",

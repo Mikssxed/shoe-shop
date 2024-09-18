@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import { ComponentProps, useId } from "react";
 
-import { inter } from "@/lib/constants";
+import { inter } from "@/lib/constants/themeConstants";
 
 type InputProps = InputBaseProps & {
   label: string;

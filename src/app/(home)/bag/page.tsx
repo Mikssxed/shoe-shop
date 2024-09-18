@@ -4,7 +4,7 @@ import { Box, Button, Container, Divider, Typography } from "@mui/material";
 
 import BagItem from "@/components/bag/BagItem";
 import BagSummary from "@/components/bag/BagSummary";
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 //DUMMY DATA NEEDS TO BE CHANGED IN FUTURE
 const cart = [
@@ -69,7 +69,7 @@ const Bag = () => {
           fontWeight: 500,
           lineHeight: { xs: "35px", md: "53px" },
         }}
-        color={constants.palette.text.primary}
+        color={stylingConstants.palette.text.primary}
       >
         Cart
       </Typography>
@@ -105,7 +105,7 @@ const Bag = () => {
                 fontWeight: 500,
                 lineHeight: { xs: "35px", md: "53px" },
               }}
-              color={constants.palette.text.primary}
+              color={stylingConstants.palette.text.primary}
             >
               Cart
             </Typography>
@@ -151,7 +151,7 @@ const Bag = () => {
               fontWeight: 500,
               lineHeight: { xs: "35px", md: "53px" },
             }}
-            color={constants.palette.text.primary}
+            color={stylingConstants.palette.text.primary}
           >
             Cart
           </Typography>
@@ -191,7 +191,7 @@ const Bag = () => {
                 fontSize: { xs: "16px", md: "20px" },
                 lineHeight: { xs: "20px", md: "24px" },
               }}
-              color={constants.palette.text.primary}
+              color={stylingConstants.palette.text.primary}
             >
               You don&apos;t have any products yet
             </Typography>
@@ -230,7 +230,7 @@ const Bag = () => {
           fontWeight: 500,
           lineHeight: { xs: "35px", md: "53px" },
         }}
-        color={constants.palette.text.primary}
+        color={stylingConstants.palette.text.primary}
       >
         Summary
       </Typography>

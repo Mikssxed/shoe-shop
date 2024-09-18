@@ -1,10 +1,3 @@
-export const IMAGE_SRCS = {
-  SIGN_UP_SIDE: "/images/sneakers_side_decor_1.png",
-  SIGN_IN_SIDE: "/images/sneakers_side_decor_2.png",
-  FORGOT_PASSWORD_SIDE: "/images/sneakers_side_decor_3.png",
-  RESET_PASSWORD_SIDE: "/images/sneakers_side_decor_3.png",
-};
-
 import { Inter, Work_Sans } from "next/font/google";
 
 const workSans = Work_Sans({
@@ -23,7 +16,7 @@ export const inter = Inter({
   fallback: ["system-ui", "arial"],
 });
 
-export const constants = {
+export const stylingConstants = {
   typography: {
     fontFamily: workSans.style.fontFamily,
     fontWeightLight: 300,

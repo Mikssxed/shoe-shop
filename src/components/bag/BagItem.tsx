@@ -1,7 +1,7 @@
 import Image from "next/image";
-
 import { Box, Button, Typography } from "@mui/material";
-import { constants } from "@/lib/constants";
+
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 //UPDATE PROPS
 interface BagItemProps {
@@ -53,7 +53,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 fontSize: { xs: "12px", md: "20px", xl: "30px" },
                 lineHeight: { xs: "14px", md: "23px", xl: "35px" },
               }}
-              color={constants.palette.text.primary}
+              color={stylingConstants.palette.text.primary}
             >
               {data.teamName} {data.name}
             </Typography>
@@ -85,7 +85,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
                 fontSize: { xs: 12, md: 20, xl: 30 },
                 lineHeight: { xs: "14px", md: "23px", xl: "35.2px" },
               }}
-              color={constants.palette.text.primary}
+              color={stylingConstants.palette.text.primary}
             >
               ${data.price}
             </Typography>

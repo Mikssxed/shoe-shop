@@ -1,3 +1,4 @@
+import { stylingConstants } from "@/lib/constants/themeConstants";
 import { Box, Checkbox, InputLabel } from "@mui/material";
 import { ChangeEvent, useId } from "react";
 
@@ -26,7 +27,7 @@ export const Option = ({
       sx={{
         display: "flex",
         alignItems: "center",
-        color: "text.primary",
+        color: stylingConstants.palette.text.primary,
         "& .MuiCheckbox-root, & .MuiInputLabel-root": {
           color: "inherit",
         },

@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 
 import ControlledInput from "@/components/common/ControlledInput";
-import { constants } from "@/lib/constants";
 import { IReactQueryError, ISignUpRequest, ISignUpResponse } from "@/lib/types";
 import { SignUpFormValidation } from "@/lib/validation";
 import { signUp } from "@/tools";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 const defaultValues = {
   name: "",
@@ -152,12 +152,12 @@ const SignUpForm: React.FC = () => {
           href="/auth/sign-in"
           style={{
             textDecoration: "none",
-            color: constants.palette.primary.main,
+            color: stylingConstants.palette.primary.main,
           }}
         >
           <Typography
             variant="body1"
-            color={constants.palette.primary.main}
+            color={stylingConstants.palette.primary.main}
             sx={{
               "&:hover": {
                 textDecoration: "underline",

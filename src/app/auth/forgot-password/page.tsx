@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Box, Typography } from "@mui/material";
 
 import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm";
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 export default function ForgotPassword() {
   return (
@@ -19,7 +19,7 @@ export default function ForgotPassword() {
           marginTop: "16px",
         }}
       >
-        Don’t worry, we’ll send you reset instructions.
+        Don&apos;t worry, we&apos;ll send you reset instructions.
       </Typography>
 
       <ForgotPasswordForm />
@@ -29,7 +29,7 @@ export default function ForgotPassword() {
           href="/auth/sign-in"
           style={{
             textDecorationLine: "none",
-            color: constants.palette.text.secondary,
+            color: stylingConstants.palette.text.secondary,
           }}
         >
           Back to log in

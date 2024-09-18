@@ -7,8 +7,8 @@ import { FilterRemove, FilterSearch } from "iconsax-react";
 
 import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
-import { constants } from "@/lib/constants";
 import { FiltersData, ProductsResponse } from "@/lib/types";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 type Props = {
   filtersData: FiltersData;
@@ -80,9 +80,9 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
               ? "Hide Filters"
               : "Show Filters"}
             {showFilters ? (
-              <FilterRemove color={constants.palette.text.secondary} />
+              <FilterRemove color={stylingConstants.palette.text.secondary} />
             ) : (
-              <FilterSearch color={constants.palette.text.secondary} />
+              <FilterSearch color={stylingConstants.palette.text.secondary} />
             )}
           </IconButton>
         </Box>

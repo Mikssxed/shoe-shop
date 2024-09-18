@@ -5,7 +5,7 @@ import { Box, InputLabel, MenuItem, Select } from "@mui/material";
 import { SelectProps } from "@mui/material/Select/Select";
 import { useId } from "react";
 
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 type DropdownProps = SelectProps & {
   labelText?: string;
@@ -29,8 +29,8 @@ const Dropdown = ({
           width: "100%",
           borderRadius: "8px",
           maxHeight: "48px",
-          color: constants.palette.text.primary,
-          border: `1px solid ${constants.palette.grey[700]}`,
+          color: stylingConstants.palette.text.primary,
+          border: `1px solid ${stylingConstants.palette.grey[700]}`,
         }}
         MenuProps={{ sx: { maxHeight: 400 } }}
         IconComponent={ExpandMoreIcon}
@@ -39,8 +39,8 @@ const Dropdown = ({
         {!withoutNone && (
           <MenuItem
             sx={{
-              fontSize: constants.typography.body2.fontSize,
-              color: constants.palette.text.primary,
+              fontSize: stylingConstants.typography.body2.fontSize,
+              color: stylingConstants.palette.text.primary,
             }}
             key="none"
             value={0}
@@ -51,8 +51,8 @@ const Dropdown = ({
         {options.map(({ value, name }) => (
           <MenuItem
             sx={{
-              fontSize: constants.typography.body2.fontSize,
-              color: constants.palette.text.primary,
+              fontSize: stylingConstants.typography.body2.fontSize,
+              color: stylingConstants.palette.text.primary,
             }}
             key={value}
             value={value}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 
 import BagPricingList from "@/components/bag/BagPricingList";
-import { constants } from "@/lib/constants";
+import { stylingConstants } from "@/lib/constants/themeConstants";
 
 interface BagSummaryProps {
   subtotal: number;
@@ -30,7 +30,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         fontWeight={500}
         lineHeight="53px"
         sx={{ marginBottom: "68px", display: { xs: "none", md: "block" } }}
-        color={constants.palette.text.primary}
+        color={stylingConstants.palette.text.primary}
       >
         Summary
       </Typography>
