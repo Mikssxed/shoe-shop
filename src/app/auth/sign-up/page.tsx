@@ -14,7 +14,7 @@ export default function SignUp() {
           fontWeight: "300",
           fontSize: "15px",
           lineHeight: "18px",
-          marginTop: "16px",
+          mt: "16px",
         }}
       >
         Create an account to get an easy access to your dream shopping

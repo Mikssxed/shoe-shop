@@ -42,8 +42,8 @@ const Modal = ({
       }}
       PaperProps={{
         sx: {
-          padding: theme.spacing(4),
-          margin: theme.spacing(),
+          p: theme.spacing(4),
+          m: theme.spacing(),
           backgroundColor: theme.palette.background.default,
           boxShadow: "none",
           ...paperStyle,

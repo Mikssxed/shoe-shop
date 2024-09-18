@@ -36,7 +36,7 @@ const DeleteModal = ({
           display: "flex",
           justifyContent: "space-between",
           gap: "16px",
-          padding: 0,
+          p: 0,
           fontSize: { xs: "30px", md: "45px" },
           lineHeight: { xs: "35px", md: "53px" },
         }}
@@ -54,14 +54,14 @@ const DeleteModal = ({
           }}
         />
       </DialogTitle>
-      <DialogContentText variant="body1" sx={{ fontWeight: 300, padding: 0 }}>
+      <DialogContentText variant="body1" sx={{ fontWeight: 300, p: 0 }}>
         {text}
       </DialogContentText>
       <Divider />
       <DialogActions
         sx={{
           display: "flex",
-          padding: 0,
+          p: 0,
           "& > *": { flexGrow: "1", height: { xs: "40px", md: "61px" } },
         }}
       >

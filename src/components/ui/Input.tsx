@@ -43,7 +43,7 @@ const Input = ({
         {required && (
           <Typography
             sx={{
-              marginLeft: "5px",
+              ml: "5px",
             }}
             component="span"
             color={theme.palette.error.main}
@@ -57,14 +57,14 @@ const Input = ({
           width: "100%",
           maxWidth: "436px",
           borderRadius: "8px",
-          padding: "8px 15px",
-          marginY: "3px",
+          p: "8px 15px",
+          my: "3px",
           border: !!errorMessage
             ? `1px solid ${theme.palette.error.main}`
             : `1px solid ${theme.palette.grey[700]}`,
-            "& .MuiInputBase-input": {
-              [theme.breakpoints.down("sm")]: {
-                fontSize: "10px",
+          "& .MuiInputBase-input": {
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "10px",
             },
           },
           ...inputStyle,
@@ -91,7 +91,7 @@ const Input = ({
             component="p"
             color={theme.palette.error.main}
             sx={{
-              margin: 0,
+              m: 0,
               fontSize: theme.typography.body2,
               fontFamily: inter.style.fontFamily,
             }}

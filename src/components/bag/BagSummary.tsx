@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import Image from "next/image";
+import React, { useState } from "react";
 
 import BagPricingList from "@/components/bag/BagPricingList";
 import { stylingConstants } from "@/lib/constants/themeConstants";
@@ -29,7 +29,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         fontSize={53}
         fontWeight={500}
         lineHeight="53px"
-        sx={{ marginBottom: "68px", display: { xs: "none", md: "block" } }}
+        sx={{ mb: "68px", display: { xs: "none", md: "block" } }}
         color={stylingConstants.palette.text.primary}
       >
         Summary
@@ -38,7 +38,7 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
         onClick={() => setShowPromoInput((prev) => !prev)}
         sx={{
           alignSelf: "flex-start",
-          padding: "0",
+          p: "0",
           fontSize: { xs: "16px", sm: "20px" },
           lineHeight: { xs: "17px", sm: "23.5px" },
           fontWeight: "400",
@@ -57,18 +57,14 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
       </Button>
       {/* UPDATE THIS INPUT */}
       {showPromoInput && (
-        <TextField
-          sx={{ marginTop: "20px" }}
-          label="Promo code"
-          variant="filled"
-        />
+        <TextField sx={{ mt: "20px" }} label="Promo code" variant="filled" />
       )}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           gap: "20px",
-          marginTop: "38px",
+          mt: "38px",
         }}
       >
         <BagPricingList name="Subtotal" value={subtotal} />
@@ -77,19 +73,17 @@ const BagSummary: React.FC<BagSummaryProps> = ({ subtotal }) => {
       </Box>
       <Divider
         sx={{
-          marginBottom: "22px",
-          marginTop: { xs: "28px", md: "40px", xl: "56px" },
+          mb: "22px",
+          mt: { xs: "28px", md: "40px", xl: "56px" },
         }}
       />
       <BagPricingList name="Total" value={subtotal ? subtotal + 20 : 0} bold />
-      <Divider
-        sx={{ marginTop: "22px", marginBottom: { xs: "113px", md: "0px" } }}
-      />
+      <Divider sx={{ mt: "22px", mb: { xs: "113px", md: "0px" } }} />
       {/* UPDATE THIS BUTTON */}
       <Button
         sx={{
           display: { xs: "none", md: "block" },
-          marginTop: { md: "70px", xl: "113px" },
+          mt: { md: "70px", xl: "113px" },
           textTransform: "none",
           bgcolor: "#FE645E",
           fontSize: "16px",

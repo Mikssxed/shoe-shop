@@ -1,5 +1,7 @@
 "use client";
 
+import { textOverflowEllipsis } from "@/styles/commonStyles";
+import { capitalizeFirstLetter } from "@/utils/helperFunctions";
 import {
   Box,
   Button,
@@ -21,10 +23,8 @@ import { useEffect, useState } from "react";
 
 import { useIsMobile } from "@/hooks";
 import { profileSidebarData } from "@/lib/config/profile-sidebar";
-import { BaseSidebar } from "../ui";
-import { capitalizeFirstLetter } from "@/utils/helperFunctions";
-import { textOverflowEllipsis } from "@/styles/commonStyles";
 import ProfilePicture from "../ProfilePicture";
+import { BaseSidebar } from "../ui";
 
 type Props = {
   open: boolean;
@@ -97,7 +97,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
           sx={{
             fontSize: "0.75rem",
             fontWeight: 500,
-            margin: 0,
+            m: 0,
             lineHeight: "18px",
             color: "#98A2B3",
           }}
@@ -109,16 +109,19 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             ...textOverflowEllipsis,
             maxWidth: { xs: "140px", md: "200px" },
           }}
-          title={(firstName && lastName) 
-            ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}` 
-            : username
+          title={
+            firstName && lastName
+              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+                  lastName
+                )}`
+              : username
           }
         >
-          {
-            (firstName && lastName) 
-            ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}`
-            : username
-          }
+          {firstName && lastName
+            ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+                lastName
+              )}`
+            : username}
         </Typography>
       </Toolbar>
     </Box>
@@ -142,8 +145,8 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
               onClick={onClose}
               sx={{
                 display: { md: "none" },
-                marginLeft: "auto",
-                marginRight: "0px",
+                ml: "auto",
+                mr: "0px",
               }}
             >
               <Image
@@ -159,10 +162,10 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
           <>
             <>
               <Box
-                style={{
-                  paddingLeft: "40px",
-                  paddingTop: "37.6px",
-                  paddingBottom: "32px",
+                sx={{
+                  pl: "40px",
+                  pt: "37.6px",
+                  pb: "32px",
                 }}
               >
                 {user}
@@ -172,16 +175,16 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             <List
               disablePadding
               sx={{
-                paddingLeft: "40px",
-                paddingTop: "32px",
-                paddingRight: "40px",
+                pl: "40px",
+                pt: "32px",
+                pr: "40px",
               }}
             >
               {profileSidebarData.map((sidebarItem, index) => (
                 <ListItem
                   key={sidebarItem.id}
                   disablePadding
-                  sx={{ marginBottom: "36px" }}
+                  sx={{ mb: "36px" }}
                   onClick={sidebarItem.onClick}
                 >
                   <ListItemButton
@@ -194,7 +197,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
                         color: "#FE645E",
                       },
                       "&:hover": {
-                        paddingLeft: "10px",
+                        pl: "10px",
                       },
                     }}
                     selected={index === selectedIndex}
@@ -221,7 +224,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             </List>
           </>
         ) : (
-          <Box sx={{ marginTop: "100px", paddingX: "20px" }}>
+          <Box sx={{ mt: "100px", px: "20px" }}>
             <Link
               href="/auth/sign-in"
               style={{
@@ -254,7 +257,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
       <BaseSidebar
         isMobile={isMobile}
         open={open}
-        containerStyle={{ padding: "24px 0px" }}
+        containerStyle={{ p: "24px 0px" }}
         onClose={onClose}
       >
         <Content />

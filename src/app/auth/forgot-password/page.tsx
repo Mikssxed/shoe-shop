@@ -16,7 +16,7 @@ export default function ForgotPassword() {
           fontWeight: "300",
           fontSize: "15px",
           lineHeight: "18px",
-          marginTop: "16px",
+          mt: "16px",
         }}
       >
         Don&apos;t worry, we&apos;ll send you reset instructions.

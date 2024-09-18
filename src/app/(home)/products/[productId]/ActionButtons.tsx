@@ -18,7 +18,7 @@ const styles: Record<string, SxProps> = {
   },
   actionButton: {
     flexBasis: "50%",
-    padding: {
+    p: {
       xs: "10px 15px",
       sm: "16px 20px",
     },

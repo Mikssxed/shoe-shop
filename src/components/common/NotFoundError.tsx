@@ -42,7 +42,7 @@ const NotFoundError = () => {
           justifyContent: "center",
           width: "100%",
           height: { xs: "100%", md: "calc(100% - 120px)" }, //TODO: replace 120px with theme value
-          marginBottom: { xs: "44px", md: 0 },
+          mb: { xs: "44px", md: 0 },
         }}
       >
         <Box
@@ -75,7 +75,7 @@ const NotFoundError = () => {
           </Typography>
           <Typography
             variant="body2"
-            sx={{ paddingBottom: "18px", ...errorMessageStyles }}
+            sx={{ pb: "18px", ...errorMessageStyles }}
           >
             Lorem Ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
             nonummy nibh euismod tincidunt ut laoreet dolore magna
@@ -91,7 +91,7 @@ const NotFoundError = () => {
           xs={1}
           sx={{
             position: "relative",
-            marginTop: { xs: "-24px", md: 0 },
+            mt: { xs: "-24px", md: 0 },
             minHeight: "400px",
             "& > img": {
               borderRadius: { xs: "0 0 39px 39px", md: 0 },

@@ -1,18 +1,18 @@
 "use client";
 //TODO: make it SSG
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Alert, Box, Button } from "@mui/material";
+import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { Alert, Box, Button } from "@mui/material";
 
 import ControlledInput from "@/components/common/ControlledInput";
-import { ForgotPasswordValidation } from "@/lib/validation";
 import {
   IForgotPasswordReq,
   IForgotPasswordRes,
   IReactQueryError,
 } from "@/lib/types";
+import { ForgotPasswordValidation } from "@/lib/validation";
 import { forgotPassword } from "@/tools";
 
 const defaultValues = {
@@ -51,8 +51,8 @@ const ForgotPasswordForm = () => {
         severity="success"
         sx={{
           maxWidth: "436px",
-          paddingY: "14px",
-          marginY: "14px",
+          py: "14px",
+          my: "14px",
           fontSize: "16px",
           borderRadius: "8px",
         }}
@@ -66,7 +66,7 @@ const ForgotPasswordForm = () => {
     <Box
       component="form"
       sx={{
-        margin: "40px 0 16px 0",
+        m: "40px 0 16px 0",
         display: "flex",
         flexDirection: "column",
       }}
@@ -81,11 +81,11 @@ const ForgotPasswordForm = () => {
       />
 
       {mutation.isError && (
-        <Box sx={{ maxWidth: "436px", marginTop: "14px" }}>
+        <Box sx={{ maxWidth: "436px", mt: "14px" }}>
           <Alert
             severity={mutation.isSuccess ? "success" : "error"}
             sx={{
-              paddingY: "14px",
+              py: "14px",
               fontSize: "16px",
               borderRadius: "8px",
             }}
@@ -99,9 +99,9 @@ const ForgotPasswordForm = () => {
         variant="contained"
         type="submit"
         sx={{
-          marginTop: "20px",
+          mt: "20px",
           maxWidth: "436px",
-          paddingY: "14px",
+          py: "14px",
           fontSize: "16px",
           borderRadius: "8px",
         }}

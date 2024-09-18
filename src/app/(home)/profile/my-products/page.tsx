@@ -1,14 +1,14 @@
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { Session, User, getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { Session, User, getServerSession } from "next-auth";
-import { Box, Button, Stack, Typography } from "@mui/material";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ProductList } from "@/components/common";
 import ProfilePicture from "@/components/ProfilePicture";
+import { ProductList } from "@/components/common";
 import { textOverflowEllipsis } from "@/styles/commonStyles";
-import { capitalizeFirstLetter } from "@/utils/helperFunctions";
 import { getMyProducts } from "@/tools";
+import { capitalizeFirstLetter } from "@/utils/helperFunctions";
 
 export default async function MyProducts() {
   const session = (await getServerSession(authOptions)) as Session;
@@ -30,7 +30,7 @@ export default async function MyProducts() {
             lg: 1480 / 450,
             xl: 1480 / 360,
           },
-          marginBottom: { xs: 3, sm: 5 },
+          mb: { xs: 3, sm: 5 },
         }}
       >
         <Box
@@ -72,32 +72,37 @@ export default async function MyProducts() {
               borderRadius: "50%",
             }}
           >
-            <ProfilePicture avatarStyle={{fontSize: { sm: "28px", md: "48px" }}} />
+            <ProfilePicture
+              avatarStyle={{ fontSize: { sm: "28px", md: "48px" } }}
+            />
           </Box>
           <Typography
             sx={{
-              marginLeft: { xs: 1, sm: 3 },
+              ml: { xs: 1, sm: 3 },
               ...textOverflowEllipsis,
               maxWidth: { xs: "160px", sm: "220px" },
             }}
             variant="h4"
             fontSize={14}
-            title={(firstName && lastName) 
-              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}` 
-              : username
+            title={
+              firstName && lastName
+                ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+                    lastName
+                  )}`
+                : username
             }
           >
-            {
-              (firstName && lastName) 
-              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}`
-              : username
-            }
-          </Typography> 
+            {firstName && lastName
+              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+                  lastName
+                )}`
+              : username}
+          </Typography>
         </Stack>
       </Box>
       <Box
         sx={{
-          padding: { xs: "0 24px", md: 0 },
+          p: { xs: "0 24px", md: 0 },
         }}
       >
         <Stack
@@ -105,7 +110,7 @@ export default async function MyProducts() {
           sx={{
             alignItems: "center",
             justifyContent: "space-between",
-            marginBottom: 5,
+            mb: 5,
           }}
         >
           <Typography variant="h1">My Products</Typography>
@@ -114,7 +119,7 @@ export default async function MyProducts() {
               variant="contained"
               sx={{
                 textTransform: "none",
-                padding: "8px 24px",
+                p: "8px 24px",
                 position: "relative",
                 zIndex: 1,
               }}

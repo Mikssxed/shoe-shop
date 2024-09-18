@@ -16,7 +16,7 @@ export default function ResetPassword() {
           fontWeight: "300",
           fontSize: "15px",
           lineHeight: "18px",
-          marginTop: "16px",
+          mt: "16px",
         }}
       >
         Please create new password here

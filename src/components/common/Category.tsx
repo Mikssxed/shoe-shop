@@ -51,7 +51,7 @@ export const Category = ({ name, children, options }: CategoryProps) => {
         defaultExpanded
         disableGutters
         sx={{
-          padding: {
+          p: {
             xs: "15px 10px 15px 40px",
             md: "15px 10px 15px 15px",
           },
@@ -65,13 +65,10 @@ export const Category = ({ name, children, options }: CategoryProps) => {
           },
         }}
       >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          sx={{ paddingLeft: 0 }}
-        >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ pl: 0 }}>
           <Typography>{name}</Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ paddingLeft: 0 }}>
+        <AccordionDetails sx={{ pl: 0 }}>
           {children}
           <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {options?.map(({ id, value }) => (

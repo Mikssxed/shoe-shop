@@ -61,7 +61,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               fontWeight={500}
               color="#5C5C5C"
               sx={{
-                marginTop: "4px",
+                mt: "4px",
                 fontSize: { xs: "8px", md: "12px", xl: "20px" },
                 lineHeight: { xs: "10px", md: "14px", xl: "23.5px" },
               }}
@@ -73,7 +73,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               fontSize={25}
               lineHeight="29.3px"
               color="#FE645E"
-              sx={{ marginTop: "12px", display: { xs: "none", xl: "block" } }}
+              sx={{ mt: "12px", display: { xs: "none", xl: "block" } }}
             >
               In Stock
             </Typography>
@@ -170,7 +170,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
               fontWeight={400}
               color="#494949"
               sx={{
-                marginX: { xs: "4px", md: "6px", xl: "8px" },
+                mx: { xs: "4px", md: "6px", xl: "8px" },
                 fontSize: { xs: 12, md: 18, xl: 24 },
                 lineHeight: { xs: "14px", md: "20px", xl: "28px" },
               }}
@@ -190,7 +190,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
             sx={{
               fontSize: { xs: "12px", md: "18px", xl: "24px" },
               lineHeight: { xs: "14px", md: "20px", xl: "28px" },
-              padding: 0,
+              p: 0,
               fontWeight: "400",
               textTransform: "none",
               color: "#6E7278",
@@ -199,7 +199,7 @@ const BagItem: React.FC<BagItemProps> = ({ data }) => {
             <Box
               sx={{
                 position: "relative",
-                marginRight: "4px",
+                mr: "4px",
                 height: { xs: "14px", xl: "24px" },
                 width: { xs: "14px", xl: "24px" },
               }}

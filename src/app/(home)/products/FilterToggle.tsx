@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { Box, IconButton, Typography } from "@mui/material";
 import { FilterRemove, FilterSearch } from "iconsax-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
-import { FiltersData, ProductsResponse } from "@/lib/types";
 import { stylingConstants } from "@/lib/constants/themeConstants";
+import { FiltersData, ProductsResponse } from "@/lib/types";
 
 type Props = {
   filtersData: FiltersData;
@@ -45,15 +45,13 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
           maxPrice={maxPrice}
         />
       )}
-      <Box
-        sx={{ padding: { xs: "0 24px", md: 0 }, marginTop: 3, width: "100%" }}
-      >
+      <Box sx={{ p: { xs: "0 24px", md: 0 }, mt: 3, width: "100%" }}>
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginBottom: 3,
+            mb: 3,
             width: "100%",
           }}
         >
@@ -77,8 +75,8 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
             {isMobile
               ? "Filters"
               : showFilters
-              ? "Hide Filters"
-              : "Show Filters"}
+                ? "Hide Filters"
+                : "Show Filters"}
             {showFilters ? (
               <FilterRemove color={stylingConstants.palette.text.secondary} />
             ) : (

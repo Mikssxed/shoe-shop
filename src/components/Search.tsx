@@ -1,5 +1,7 @@
 "use client";
+import { useDebounce, useIsMobile } from "@/hooks";
 
+import { useProductsNames } from "@/tools";
 import {
   Box,
   List,
@@ -8,15 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import SearchBar from "./SearchBar";
-import { useIsMobile, useDebounce } from "@/hooks";
-import Cross from "/public/icons/cross.svg";
-import Modal from "./ui/Modal";
-import { useProductsNames } from "@/tools";
 import { stylingConstants } from "@/lib/constants/themeConstants";
+import SearchBar from "./SearchBar";
+import Modal from "./ui/Modal";
+import Cross from "/public/icons/cross.svg";
 
 type SearchProps = {
   open: boolean;
@@ -85,14 +85,14 @@ export default function Search({ open, onClose }: SearchProps) {
         justifyContent: "start",
         width: "100%",
         maxWidth: "100%",
-        margin: 0,
-        padding: 0,
+        m: 0,
+        p: 0,
       }}
     >
       <Box
         sx={{
           alignSelf: "start",
-          padding: { xs: "20px 25px", sm: "30px 35px", md: "40px 45px" },
+          p: { xs: "20px 25px", sm: "30px 35px", md: "40px 45px" },
           width: "100%",
           height: { xs: "200px", sm: "300px", md: "420px" },
           display: "flex",
@@ -128,13 +128,13 @@ export default function Search({ open, onClose }: SearchProps) {
                 <>
                   <Typography
                     sx={{
-                      marginTop: { xs: "12px", sm: "22px", md: "32px" },
+                      mt: { xs: "12px", sm: "22px", md: "32px" },
                       marginInline: {
                         xs: "0px 10px",
                         sm: "20px",
                         md: "40px",
                       },
-                      paddingLeft: "8px",
+                      pl: "8px",
                       color: stylingConstants.palette.text.secondary,
                       fontSize: { xs: "14px", sm: "17px", md: "20px" },
                     }}
@@ -145,7 +145,7 @@ export default function Search({ open, onClose }: SearchProps) {
                   </Typography>
                   <List
                     sx={{
-                      padding: 0,
+                      p: 0,
                       marginInline: { xs: "0px 10px", sm: "20px", md: "40px" },
                       display: "flex",
                       flexDirection: "column",
@@ -167,8 +167,8 @@ export default function Search({ open, onClose }: SearchProps) {
                           key={product.id}
                           onClick={() => handleSubmit(product.attributes.name)}
                           sx={{
-                            paddingX: "8px",
-                            paddingY: { xs: "4px", sm: "6px", md: "8px" },
+                            px: "8px",
+                            py: { xs: "4px", sm: "6px", md: "8px" },
                           }}
                         >
                           <ListItemText
@@ -178,8 +178,8 @@ export default function Search({ open, onClose }: SearchProps) {
                               fontSize: { xs: "14px", sm: "17px", md: "20px" },
                             }}
                             sx={{
-                              paddingY: "4px",
-                              marginY: { xs: 0, sm: "2px", md: "4px" },
+                              py: "4px",
+                              my: { xs: 0, sm: "2px", md: "4px" },
                             }}
                           />
                         </ListItemButton>
@@ -194,7 +194,7 @@ export default function Search({ open, onClose }: SearchProps) {
           sx={{
             "& > img": {
               width: { xs: "10px", sm: "20px", md: "27px" },
-              marginTop: { xs: "4px", sm: "7px", md: "10px" },
+              mt: { xs: "4px", sm: "7px", md: "10px" },
               height: { xs: "10px", sm: "20px", md: "27px" },
             },
           }}

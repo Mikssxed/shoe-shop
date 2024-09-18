@@ -11,13 +11,13 @@ export default function ProfileLayout({
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{ maxWidth: 1850, marginX: "auto", paddingX: "20px" }}
+      sx={{ maxWidth: 1850, mx: "auto", px: "20px" }}
     >
       <ProfileSidebar open blockOnMobile />
       <Container
         maxWidth="xl"
         sx={{
-          padding: { xs: 0, md: "32px" },
+          p: { xs: 0, md: "32px" },
         }}
       >
         {children}

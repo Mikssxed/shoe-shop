@@ -61,8 +61,8 @@ const SignUpForm: React.FC = () => {
         severity="success"
         sx={{
           maxWidth: "436px",
-          paddingY: "14px",
-          marginY: "14px",
+          py: "14px",
+          my: "14px",
           fontSize: "16px",
           borderRadius: "8px",
         }}
@@ -78,7 +78,7 @@ const SignUpForm: React.FC = () => {
       <Box
         component="form"
         sx={{
-          margin: "40px 0 16px 0",
+          m: "40px 0 16px 0",
           display: "flex",
           flexDirection: "column",
           gap: "24px",
@@ -120,9 +120,9 @@ const SignUpForm: React.FC = () => {
           type="submit"
           disabled={mutation.isPending}
           sx={{
-            marginTop: "66px",
+            mt: "66px",
             maxWidth: "436px",
-            paddingY: "14px",
+            py: "14px",
             fontSize: "16px",
             borderRadius: "8px",
             "&.Mui-disabled": {

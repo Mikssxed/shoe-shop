@@ -1,4 +1,4 @@
-import { Box, InputBase, Button } from "@mui/material";
+import { Box, Button, InputBase } from "@mui/material";
 import { SearchNormal1 } from "iconsax-react";
 
 import { useIsMobile } from "@/hooks";
@@ -43,7 +43,7 @@ const SearchBar = ({
     >
       <Box
         sx={{
-          paddingLeft: { xs: "10px", sm: "18px", md: `calc(${height}/3)` },
+          pl: { xs: "10px", sm: "18px", md: `calc(${height}/3)` },
           height: "100%",
           position: "absolute",
           pointerEvents: "none",
@@ -77,8 +77,8 @@ const SearchBar = ({
         }}
         sx={{
           flexGrow: 1,
-          paddingLeft: { xs: "25px", sm: "35px", md: `${height}` },
-          paddingRight: { xs: "10px", md: `calc(${height}/3)` },
+          pl: { xs: "25px", sm: "35px", md: `${height}` },
+          pr: { xs: "10px", md: `calc(${height}/3)` },
           color: stylingConstants.palette.text.secondary,
           height: { xs: "25px", sm: "40px", md: height },
           "& > input": {
@@ -97,7 +97,7 @@ const SearchBar = ({
           onClick={onSearch}
           sx={{
             alignSelf: "center",
-            marginRight: "4px",
+            mr: "4px",
             fontSize: { xs: "10px", sm: "14px", md: "18px" },
             height: "60%",
             width: { xs: "5%", sm: "10%", md: "12%" },
@@ -113,7 +113,7 @@ const SearchBar = ({
           onClick={onClear}
           sx={{
             alignSelf: "center",
-            marginRight: { xs: "10px", sm: "18px", md: `calc(${height}/3)` },
+            mr: { xs: "10px", sm: "18px", md: `calc(${height}/3)` },
             fontSize: { xs: "10px", sm: "14px", md: "18px" },
             height: "60%",
             width: { xs: "5%", sm: "10%", md: "12%" },

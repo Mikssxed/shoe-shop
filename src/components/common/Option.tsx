@@ -38,7 +38,7 @@ export const Option = ({
         color="primary"
         id={id}
         sx={{
-          marginLeft: -1,
+          ml: -1,
           "&:hover": {
             backgroundColor: "transparent",
           },
@@ -46,7 +46,7 @@ export const Option = ({
         checked={checked}
         onChange={handleChange}
       />
-      <InputLabel htmlFor={id} sx={{ marginBottom: 0 }}>
+      <InputLabel htmlFor={id} sx={{ mb: 0 }}>
         {value}
       </InputLabel>
     </Box>

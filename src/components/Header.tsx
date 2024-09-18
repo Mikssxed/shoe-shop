@@ -110,7 +110,7 @@ const Header = () => {
           {status === "authenticated" && !isMobile && (
             <Box
               sx={{
-                marginLeft: { md: "16px" },
+                ml: { md: "16px" },
               }}
             >
               <Link
@@ -123,7 +123,7 @@ const Header = () => {
                   alignItems: "center",
                   textDecoration: "none",
                   borderRadius: "50%",
-                  position: "relative"
+                  position: "relative",
                 }}
               >
                 <ProfilePicture />

@@ -36,7 +36,7 @@ const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
       getAriaLabel={() => "Price range"}
       getAriaValueText={() => [priceRange[0], priceRange[1]].toString()}
       sx={{
-        marginTop: "25px",
+        mt: "25px",
         "& .MuiSlider-track": {
           border: "none",
         },
@@ -56,7 +56,7 @@ const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
           lineHeight: 1.2,
           fontSize: 12,
           background: "unset",
-          padding: 0,
+          p: 0,
           width: 40,
           height: 40,
           borderRadius: "50% 50% 50% 0",

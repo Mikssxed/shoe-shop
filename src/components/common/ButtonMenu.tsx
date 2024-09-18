@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Menu,
   MenuItem,
@@ -8,13 +6,15 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import EditProductModal from "../EditProductModal";
 import DeleteModal from "./DeleteModal";
 
 const styles: Record<string, SxProps> = {
   menuItem: {
-    padding: "0.5rem 1rem",
+    p: "0.5rem 1rem",
     "&:hover": {
       backgroundColor: "grey.A100",
     },
@@ -47,7 +47,6 @@ const ButtonMenu = ({
           sx={{
             p: 0,
             width: "7rem",
-            padding: 0,
           }}
         >
           <MenuItem

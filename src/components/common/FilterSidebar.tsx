@@ -59,7 +59,7 @@ export const FilterSidebar = ({
             justifyContent: "space-between",
             gap: 3,
             backgroundColor: "background.paper",
-            padding: "15px",
+            p: "15px",
           }}
         >
           {isMobile ? (
@@ -114,7 +114,7 @@ export const FilterSidebar = ({
       <BaseSidebar
         isMobile={isMobile}
         open={open}
-        containerStyle={{ padding: "24px 0px" }}
+        containerStyle={{ p: "24px 0px" }}
         onClose={onClose}
       >
         <Content />

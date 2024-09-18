@@ -89,7 +89,7 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
               sx={{
                 width: 72,
                 height: 72,
-                marginX: "auto",
+                mx: "auto",
               }}
             >
               <BagCross1

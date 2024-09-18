@@ -1,7 +1,7 @@
 import theme from "@/theme";
 
 export const errorTitleStyles = {
-  paddingTop: "36px",
+  pt: "36px",
   color: theme.palette.text.primary,
   textAlign: { xs: "center", md: "left" },
   fontSize: { xs: "30px", md: "45px" },
@@ -27,7 +27,7 @@ export const mobileButtonsStyles = {
   gap: theme.spacing(2),
   minHeight: theme.spacing(5),
   width: "100%",
-  margin: "36px 0 44px",
-  paddingX: "20px",
+  m: "36px 0 44px",
+  px: "20px",
   "& > *": { flexGrow: 1, width: "152px" },
 };

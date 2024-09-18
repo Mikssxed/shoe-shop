@@ -50,7 +50,7 @@ const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
             zIndex: 2,
             justifyContent: { xs: "center", md: "start" },
             width: { md: "35%" },
-            marginLeft: { md: "15%" },
+            ml: { md: "15%" },
             gap: "20px",
           }}
         >
@@ -65,7 +65,7 @@ const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
                   ...errorMessageStyles,
                   maxHeight: "180px",
                   overflow: "auto",
-                  paddingRight: theme.spacing(),
+                  pr: theme.spacing(),
                 }}
               >
                 {error.message}
@@ -125,7 +125,7 @@ const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
                 ...errorMessageStyles,
                 position: { xs: "absolute" },
                 bottom: theme.spacing(2),
-                marginX: theme.spacing(4),
+                mx: theme.spacing(4),
                 color: "#fff",
               }}
             >

@@ -46,7 +46,7 @@ const SignInForm: React.FC = () => {
       <Box
         component="form"
         sx={{
-          margin: "40px 0 16px 0",
+          m: "40px 0 16px 0",
           display: "flex",
           flexDirection: "column",
         }}
@@ -75,7 +75,7 @@ const SignInForm: React.FC = () => {
         <Box
           component="div"
           sx={{
-            marginTop: "12px",
+            mt: "12px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -102,9 +102,9 @@ const SignInForm: React.FC = () => {
           variant="contained"
           type="submit"
           sx={{
-            marginTop: "56px",
+            mt: "56px",
             maxWidth: "436px",
-            paddingY: "14px",
+            py: "14px",
             fontSize: "16px",
             borderRadius: "8px",
           }}

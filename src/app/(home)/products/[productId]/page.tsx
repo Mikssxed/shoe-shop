@@ -57,8 +57,8 @@ const Product = async ({ params: { productId } }: Props) => {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         gap: "100px",
-        marginTop: "100px",
-        paddingBottom: "100px",
+        mt: "100px",
+        pb: "100px",
       }}
     >
       <Box
@@ -127,7 +127,7 @@ const Product = async ({ params: { productId } }: Props) => {
         {sizes && sizes.length !== 0 && (
           <Box
             sx={{
-              marginTop: "10px",
+              mt: "10px",
               width: "100%",
             }}
           >
@@ -138,7 +138,7 @@ const Product = async ({ params: { productId } }: Props) => {
               container
               spacing={2}
               sx={{
-                paddingTop: "14px",
+                pt: "14px",
               }}
             >
               <Sizes sizes={sizes} />
@@ -147,7 +147,7 @@ const Product = async ({ params: { productId } }: Props) => {
         )}
         <Box
           sx={{
-            marginTop: "10px",
+            mt: "10px",
             display: "flex",
             flexDirection: {
               xs: "column",
@@ -161,7 +161,7 @@ const Product = async ({ params: { productId } }: Props) => {
         </Box>
         <Box
           sx={{
-            marginTop: "40px",
+            mt: "40px",
             display: "flex",
             flexDirection: "column",
             gap: "30px",

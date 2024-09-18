@@ -34,7 +34,7 @@ const Textarea = ({
         {required && (
           <Typography
             component="span"
-            sx={{ color: theme.palette.error.main, marginLeft: "5px" }}
+            sx={{ color: theme.palette.error.main, ml: "5px" }}
           >
             *
           </Typography>
@@ -44,12 +44,12 @@ const Textarea = ({
         sx={{
           borderRadius: "8px",
           borderColor: "grey.A400",
-          padding: "8px 15px",
+          p: "8px 15px",
           "& .MuiInputBase-input": {
             color: theme.palette.text.primary,
             [theme.breakpoints.up("lg")]: {
               minHeight: "276px",
-              padding: "16px",
+              p: "16px",
             },
           },
           border: !!errorMessage
@@ -70,7 +70,7 @@ const Textarea = ({
             display: "flex",
             alignItems: "center",
             gap: "4px",
-            marginTop: "8px",
+            mt: "8px",
           }}
         >
           <Image

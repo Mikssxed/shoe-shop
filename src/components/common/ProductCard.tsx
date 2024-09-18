@@ -115,13 +115,13 @@ const ProductCard = ({ product, imagePriority }: Props) => {
               flex: 1,
             }}
           >
-            <CardContent sx={{ paddingLeft: 0, paddingRight: 0 }}>
+            <CardContent sx={{ pl: 0, pr: 0 }}>
               <Stack
                 direction="row"
                 sx={{
                   justifyContent: "space-between",
                   gap: "1rem",
-                  padding: 0,
+                  p: 0,
                 }}
               >
                 <Box>
@@ -154,7 +154,7 @@ const ProductCard = ({ product, imagePriority }: Props) => {
             sx={{
               position: "absolute",
               zIndex: "1",
-              padding: "10px",
+              p: "10px",
               top: 5,
               right: 5,
             }}

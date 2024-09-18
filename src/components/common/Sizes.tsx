@@ -21,7 +21,7 @@ export default function Sizes({ sizes }: { sizes: Data<BaseWithValue>[] }) {
               fontSize: { xs: 10, sm: 15 },
               textTransform: "uppercase",
               borderColor: "grey.700",
-              padding: { xs: "8px 15px", sm: "10px 20px" },
+              p: { xs: "8px 15px", sm: "10px 20px" },
               "&:hover": {
                 borderColor: "grey.700",
                 backgroundColor: "grey.100",

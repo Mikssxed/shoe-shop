@@ -25,7 +25,7 @@ export default function SideImageLayout({
       <Box
         component="section"
         sx={{
-          padding: { xs: "0 0 60px 0", lg: "50px 40px" },
+          p: { xs: "0 0 60px 0", lg: "50px 40px" },
           flex: 1,
           minWidth: "50vw",
         }}
@@ -34,7 +34,7 @@ export default function SideImageLayout({
           component="picture"
           sx={{
             display: "block",
-            margin: {
+            m: {
               xs: "18px 20px 14px 20px",
               lg: "0",
             },
@@ -54,7 +54,7 @@ export default function SideImageLayout({
               xs: `1px solid ${stylingConstants.palette.grey[100]}`,
               lg: "none",
             },
-            padding: "0 20px",
+            p: "0 20px",
           }}
         >
           {children}

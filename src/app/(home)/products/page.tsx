@@ -11,7 +11,7 @@ const Products = async () => {
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{ maxWidth: 1850, marginX: "auto", paddingX: "20px" }}
+      sx={{ maxWidth: 1850, mx: "auto", px: "20px" }}
     >
       <FilterToggle
         maxPrice={maxPrice.data[0].attributes.price}

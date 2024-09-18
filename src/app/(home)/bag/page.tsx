@@ -62,8 +62,8 @@ const Bag = () => {
     <>
       <Typography
         sx={{
-          padding: "14px 14px 0px 14px",
-          marginBottom: { xs: "12px" },
+          p: "14px 14px 0px 14px",
+          mb: { xs: "12px" },
           display: { xs: "block", md: "none" },
           fontSize: { xs: "30px", md: "53px" },
           fontWeight: 500,
@@ -73,16 +73,14 @@ const Bag = () => {
       >
         Cart
       </Typography>
-      <Divider
-        sx={{ display: { xs: "block", md: "none" }, marginBottom: "17px" }}
-      />
+      <Divider sx={{ display: { xs: "block", md: "none" }, mb: "17px" }} />
       {cart.length ? (
         <Container
           component={"main"}
           maxWidth="xl"
           sx={{
-            paddingTop: { xs: "14px", md: "80px" },
-            paddingBottom: { xs: "0px", md: "60px" },
+            pt: { xs: "14px", md: "80px" },
+            pb: { xs: "0px", md: "60px" },
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             gap: "40px",
@@ -100,7 +98,7 @@ const Bag = () => {
             <Typography
               sx={{
                 display: { xs: "none", md: "block" },
-                marginBottom: { xs: "12px", md: "57px" },
+                mb: { xs: "12px", md: "57px" },
                 fontSize: { xs: "30px", md: "53px" },
                 fontWeight: 500,
                 lineHeight: { xs: "35px", md: "53px" },
@@ -115,7 +113,7 @@ const Bag = () => {
                 {index < cart.length - 1 && (
                   <Divider
                     sx={{
-                      marginY: { xs: "15px", md: "60px" },
+                      my: { xs: "15px", md: "60px" },
                       borderColor: { xs: "white", md: "rgba(0, 0, 0, 0.12)" },
                     }}
                   />
@@ -139,14 +137,14 @@ const Bag = () => {
           maxWidth="xl"
           sx={{
             height: "100%",
-            paddingTop: "80px",
+            pt: "80px",
             display: "flex",
             flexDirection: "column",
           }}
         >
           <Typography
             sx={{
-              marginBottom: "57px",
+              mb: "57px",
               fontSize: { xs: "30px", md: "53px" },
               fontWeight: 500,
               lineHeight: { xs: "35px", md: "53px" },
@@ -173,7 +171,7 @@ const Bag = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginBottom: "10px",
+                mb: "10px",
               }}
             >
               <Image
@@ -185,7 +183,7 @@ const Bag = () => {
             </Box>
             <Typography
               sx={{
-                marginBottom: "10px",
+                mb: "10px",
                 textAlign: "center",
                 fontWeight: 500,
                 fontSize: { xs: "16px", md: "20px" },
@@ -206,7 +204,7 @@ const Bag = () => {
             </Typography>
             <Button
               sx={{
-                marginTop: "41px",
+                mt: "41px",
                 borderRadius: "8px",
                 textTransform: "none",
                 width: "148px",
@@ -218,13 +216,11 @@ const Bag = () => {
           </Box>
         </Container>
       )}
-      <Divider
-        sx={{ display: { xs: "block", md: "none" }, marginTop: "17px" }}
-      />
+      <Divider sx={{ display: { xs: "block", md: "none" }, mt: "17px" }} />
       <Typography
         sx={{
-          padding: "14px 14px 0px 14px",
-          marginBottom: { xs: "12px" },
+          p: "14px 14px 0px 14px",
+          mb: { xs: "12px" },
           display: { xs: "block", md: "none" },
           fontSize: { xs: "30px", md: "53px" },
           fontWeight: 500,
@@ -234,14 +230,12 @@ const Bag = () => {
       >
         Summary
       </Typography>
-      <Divider
-        sx={{ display: { xs: "block", md: "none" }, marginBottom: "17px" }}
-      />
+      <Divider sx={{ display: { xs: "block", md: "none" }, mb: "17px" }} />
       <Container
         component={"main"}
         maxWidth="xl"
         sx={{
-          paddingTop: "25px",
+          pt: "25px",
           display: { xs: "flex", md: "none" },
           flexDirection: "row",
           justifyContent: "center",
@@ -251,7 +245,7 @@ const Bag = () => {
       </Container>
       <Box
         sx={{
-          padding: "10px",
+          p: "10px",
           borderTop: "thin solid rgba(0, 0, 0, 0.12)",
           display: { xs: "flex", md: "none" },
           position: "fixed",

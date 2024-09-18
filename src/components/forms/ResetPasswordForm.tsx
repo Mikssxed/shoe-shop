@@ -64,8 +64,8 @@ const ResetPasswordForm = () => {
         severity="success"
         sx={{
           maxWidth: "436px",
-          paddingY: "14px",
-          marginY: "14px",
+          py: "14px",
+          my: "14px",
           fontSize: "16px",
           borderRadius: "8px",
         }}
@@ -79,7 +79,7 @@ const ResetPasswordForm = () => {
     <Box
       component="form"
       sx={{
-        margin: "40px 0 16px 0",
+        m: "40px 0 16px 0",
         display: "flex",
         flexDirection: "column",
       }}
@@ -115,9 +115,9 @@ const ResetPasswordForm = () => {
         type="submit"
         disabled={mutation.isPending}
         sx={{
-          marginTop: "20px",
+          mt: "20px",
           maxWidth: "436px",
-          paddingY: "14px",
+          py: "14px",
           fontSize: "16px",
           borderRadius: "8px",
           "&.Mui-disabled": {

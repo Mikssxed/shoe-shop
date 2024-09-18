@@ -1,4 +1,4 @@
-import theme from "@/theme"
+import theme from "@/theme";
 
 export const productInfoFormContainer = {
   display: "flex",
@@ -6,33 +6,33 @@ export const productInfoFormContainer = {
   rowGap: "1rem",
   maxWidth: "1480px",
   justifyContent: { md: "space-between" },
-  position: "relative"
-}
+  position: "relative",
+};
 
 export const productInfoTitle = {
   fontWeight: theme.typography.fontWeightLight,
   fontSize: { xs: "12px", sm: "15px" },
   lineHeight: { xs: "14.08px", sm: "17.6px" },
-  margin: { xs: "12px 0 23.13px 0", md: "35.4px 0 40px 0" },
-  padding: "0 4.8px 0 0.28px",
+  m: { xs: "12px 0 23.13px 0", md: "35.4px 0 40px 0" },
+  p: "0 4.8px 0 0.28px",
   maxWidth: "890px",
-  letterSpacing: "-0.1px"
-}
+  letterSpacing: "-0.1px",
+};
 
 export const formAndImagesContainer = {
   display: "flex",
   flexDirection: { xs: "column", lg: "row" },
   rowGap: "24px",
   columnGap: { xs: "24px", lg: "138px" },
-  maxWidth: "1480px"
-}
+  maxWidth: "1480px",
+};
 
 export const inputContainer = {
   display: "flex",
   flexDirection: "column",
   maxWidth: "436px",
-  gap: { xs: "5px", sm: "8px" }
-}
+  gap: { xs: "5px", sm: "8px" },
+};
 // TODO: Create a reusable Button component and apply a common style for all of them, update these button styles afterwards
 export const productSizeButton = {
   width: "100%",
@@ -40,7 +40,7 @@ export const productSizeButton = {
   fontSize: { xs: 10, sm: 15 },
   borderColor: theme.palette.grey[700],
   backgroundColor: "transparent",
-  padding: { xs: "8px 15px", sm: "10px 20px", xl: "10px 26px" },
+  p: { xs: "8px 15px", sm: "10px 20px", xl: "10px 26px" },
   "&:hover": {
     borderColor: theme.palette.grey[700],
     backgroundColor: theme.palette.grey[100],
@@ -48,14 +48,14 @@ export const productSizeButton = {
   },
   borderRadius: "12px",
   color: theme.palette.text.secondary,
-}
+};
 
 export const productImageContainer = {
   position: "relative",
   aspectRatio: 320 / 380,
   maxWidth: "320px",
-  maxHeight: "380px"
-}
+  maxHeight: "380px",
+};
 // TODO: Some of these styles are the same with products page's image card styles. Create common styles for them
 export const imageCoverOnHover = {
   position: "absolute",
@@ -68,7 +68,7 @@ export const imageCoverOnHover = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-}
+};
 
 export const trashIconContainer = {
   backgroundColor: "rgba(255,255,255, 0.70)",
@@ -78,7 +78,7 @@ export const trashIconContainer = {
   width: "80px",
   height: "80px",
   boxShadow: "0px 4px 10px 0px #00000026",
-}
+};
 
 export const imageUploadBox = {
   display: "flex",
@@ -87,20 +87,21 @@ export const imageUploadBox = {
   gap: "12px",
   p: { xs: "74px 37px", lg: "147px 72px" },
   border: `1px dashed ${theme.palette.text.secondary}`,
-  textAlign: 'center',
-  cursor: 'pointer',
-  maxWidth: {sm: "320px"}, maxHeight: {sm: "380px"},
-  '&:hover': {
-    borderColor: '#aaa',
-  }
-}
+  textAlign: "center",
+  cursor: "pointer",
+  maxWidth: { sm: "320px" },
+  maxHeight: { sm: "380px" },
+  "&:hover": {
+    borderColor: "#aaa",
+  },
+};
 
 export const imageUploadText = {
   fontWeight: theme.typography.fontWeightLight,
   fontSize: "15px",
   lineHeight: "17.6px",
   color: theme.palette.text.secondary,
-}
+};
 
 export const saveButtonContainer = {
   maxWidth: { xs: "436px", lg: "none" },
@@ -108,8 +109,8 @@ export const saveButtonContainer = {
   mt: { lg: "6px" },
   position: { lg: "absolute" },
   top: 0,
-  right: 0
-}
+  right: 0,
+};
 // TODO: Create a reusable Button component and apply a common style for all of them, update these button styles afterwards
 export const formSaveButton = {
   backgroundColor: theme.palette.primary.main,
@@ -119,8 +120,8 @@ export const formSaveButton = {
   lineHeight: { xs: "14.45px", md: "18.77px" },
   fontWeight: 500,
   textTransform: "capitalize",
-  padding: 0,
+  p: 0,
   borderRadius: { xs: "6.16px", md: "8px" },
   flexShrink: 0,
-  alignSelf: { xs: "flex-end", lg: "flex-start" }
-}
+  alignSelf: { xs: "flex-end", lg: "flex-start" },
+};

@@ -58,7 +58,7 @@ theme = createTheme({
         root: () => ({
           fontSize: 15,
           color: "text.secondary",
-          marginBottom: "5px",
+          mb: "5px",
         }),
       },
     },
