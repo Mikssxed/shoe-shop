@@ -28,7 +28,7 @@ export default function Search({open, onClose}: SearchProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(
-    (searchParams.get('search') as string) ?? '',
+    searchParams.get('search') ?? '',
   );
   const debouncedSearch = useDebounce(searchQuery.trim(), 500);
   const {data: productsNames} = useProductsNames(debouncedSearch);

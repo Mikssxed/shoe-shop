@@ -1,6 +1,6 @@
+import {AxiosResponse} from 'axios';
 import NextAuth, {AuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {AxiosResponse} from 'axios';
 
 import {ILogInResponse} from '@/lib/types';
 import axiosInstance from '@/tools/axios';
@@ -69,6 +69,10 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({session, token}) {
+      if (!session.user) {
+        return session;
+      }
+
       session.user.id = token.id;
       session.user.username = token.username;
       session.user.name = null;

@@ -22,10 +22,7 @@ const defaultValues = {
 
 export const UpdateProfile = () => {
   const {data} = useSession();
-  const firstName: string | undefined = data?.user?.firstName;
-  const lastName: string | undefined = data?.user?.lastName;
-  const phoneNumber: string | undefined = data?.user?.phoneNumber;
-  const email: string | undefined = data?.user?.email;
+  const {firstName, lastName, phoneNumber, email} = data?.user || {};
 
   const {handleSubmit, reset, control} = useForm<
     z.infer<typeof UpdateProfileValidation>

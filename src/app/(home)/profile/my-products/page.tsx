@@ -1,5 +1,5 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
-import {Session, User, getServerSession} from 'next-auth';
+import {getServerSession} from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,12 +11,15 @@ import {getMyProducts} from '@/tools';
 import {capitalizeFirstLetter} from '@/utils/helperFunctions';
 
 export default async function MyProducts() {
-  const session = (await getServerSession(authOptions)) as Session;
-  const user = session.user as User;
-  const username = user.username;
-  const firstName = user.firstName;
-  const lastName = user.lastName;
+  const session = await getServerSession(authOptions);
+
+  const user = session?.user;
+  if (!user) {
+    return null;
+  }
+  const {username, firstName, lastName} = user;
   const initialData = await getMyProducts(user);
+  const gotFullNames = firstName && lastName;
   return (
     <>
       <Box
@@ -85,14 +88,14 @@ export default async function MyProducts() {
             variant="h4"
             fontSize={14}
             title={
-              firstName && lastName
+              gotFullNames
                 ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
                     lastName,
                   )}`
                 : username
             }
           >
-            {firstName && lastName
+            {gotFullNames
               ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
                   lastName,
                 )}`

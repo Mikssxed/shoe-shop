@@ -3,7 +3,6 @@
 import {Avatar, SxProps, Theme} from '@mui/material';
 import {useSession} from 'next-auth/react';
 import Image from 'next/image';
-import React from 'react';
 
 import {userAvatar} from '@/styles/profile/updateProfileStyles';
 
@@ -13,16 +12,15 @@ interface IProfilePictureProps {
 
 const ProfilePicture = ({avatarStyle}: IProfilePictureProps) => {
   const {data} = useSession();
-  const avatar: string | undefined = data?.user?.image;
-  const firstName: string | undefined = data?.user?.firstName;
-  const username: string = data?.user.username;
+  const {image: avatar, firstName, username} = data?.user || {};
+  const alt = (firstName || username || ' ')[0].toUpperCase();
   return (
     <>
       {avatar ? (
         <Image
           src={avatar}
           // TODO: change alt text when avatar stored correctly
-          alt={(firstName || username || ' ')[0].toUpperCase()}
+          alt={alt}
           fill
           sizes="100%"
           style={{objectFit: 'cover'}}
@@ -30,7 +28,7 @@ const ProfilePicture = ({avatarStyle}: IProfilePictureProps) => {
       ) : (
         <Avatar
           src="/"
-          alt={(firstName || username || ' ')[0].toUpperCase()}
+          alt={alt}
           sx={{
             ...userAvatar,
             ...avatarStyle,

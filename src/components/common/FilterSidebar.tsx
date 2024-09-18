@@ -1,8 +1,8 @@
 'use client';
 
+import {Box, Button, IconButton, Stack, Typography} from '@mui/material';
 import Image from 'next/image';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {Box, Button, IconButton, Stack, Typography} from '@mui/material';
 
 import {BaseWithName, BaseWithValue, FiltersData} from '@/lib/types';
 import {BaseSidebar} from '../ui';

@@ -21,10 +21,10 @@ import {useEffect, useState} from 'react';
 
 import {useIsMobile} from '@/hooks';
 import {profileSidebarData} from '@/lib/config/profileSidebarConfig';
-import {BaseSidebar} from '../ui';
-import {capitalizeFirstLetter} from '@/utils/helperFunctions';
 import {textOverflowEllipsis} from '@/styles/commonStyles';
+import {capitalizeFirstLetter} from '@/utils/helperFunctions';
 import ProfilePicture from '../ProfilePicture';
+import {BaseSidebar} from '../ui';
 
 type Props = {
   open: boolean;
@@ -40,9 +40,8 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
   const currentPath = usePathname();
   const isMobile = useIsMobile();
   const {data} = useSession();
-  const firstName = data?.user?.firstName;
-  const lastName = data?.user?.lastName;
-  const username = data?.user?.username;
+  const {firstName, lastName, username} = data?.user || {};
+  const gotFullNames = firstName && lastName;
 
   useEffect(() => {
     const path = profileSidebarData.find(
@@ -110,14 +109,14 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
             maxWidth: {xs: '140px', md: '200px'},
           }}
           title={
-            firstName && lastName
+            gotFullNames
               ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
                   lastName,
                 )}`
               : username
           }
         >
-          {firstName && lastName
+          {gotFullNames
             ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
                 lastName,
               )}`
