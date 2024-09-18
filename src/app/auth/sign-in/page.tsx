@@ -1,5 +1,6 @@
-import SignInForm from "@/components/forms/SignInForm";
 import { Box, Typography } from "@mui/material";
+
+import SignInForm from "@/components/forms/SignInForm";
 
 export default function SignIn() {
   return (

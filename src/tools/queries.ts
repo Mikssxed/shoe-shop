@@ -1,5 +1,6 @@
-import { ProductsResponse } from "@/lib/types";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+
+import { ProductsResponse } from "@/lib/types";
 import {
   getFiltersData,
   getProduct,

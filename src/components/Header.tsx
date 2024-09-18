@@ -1,6 +1,5 @@
 "use client";
-import { useIsMobile } from "@/hooks";
-import { constants } from "@/lib/constants";
+
 import {
   AppBar,
   Box,
@@ -14,6 +13,9 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+
+import { useIsMobile } from "@/hooks";
+import { constants } from "@/lib/constants";
 import ProfilePicture from "./ProfilePicture";
 import Search from "./Search";
 import SearchBar from "./SearchBar";

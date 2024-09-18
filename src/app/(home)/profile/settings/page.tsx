@@ -1,3 +1,5 @@
+import { Box, Button, Toolbar, Typography } from "@mui/material";
+
 import ProfilePicture from "@/components/ProfilePicture";
 import { UpdateProfile } from "@/components/UpdateProfile";
 import {
@@ -8,7 +10,6 @@ import {
   updateProfileDescStyles,
   updateProfileInfoBoxStyles
 } from "@/styles/profile/updateProfileStyles";
-import { Box, Button, Toolbar, Typography } from "@mui/material";
 
 export default function ProfileSettings() {
   return (

@@ -1,6 +1,19 @@
 "use client";
 
 import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  InputLabel,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { Gallery } from "iconsax-react";
+import Image from "next/image";
+import { useState } from "react";
+
+import {
   formAndImagesContainer,
   formSaveButton,
   imageCoverOnHover,
@@ -15,18 +28,6 @@ import {
   trashIconContainer,
 } from "@/styles/products/productInfoFormStyles";
 import theme from "@/theme";
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  InputLabel,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { Gallery } from "iconsax-react";
-import Image from "next/image";
-import { useState } from "react";
 import DeleteModal from "./common/DeleteModal";
 import { Dropdown, Input, TextArea } from "./ui";
 

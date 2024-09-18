@@ -1,17 +1,18 @@
 "use client";
 
-import { IProfileInfoInputField } from "@/lib/types/update-profile-types";
-import { updateProfileButtonStyles } from "@/styles/profile/updateProfileStyles";
 import { Box, Button } from "@mui/material";
-import { Input } from "./ui";
-import theme from "@/theme";
-import ControlledInput from "./common/ControlledInput";
 import { useForm } from "react-hook-form";
-import { UpdateProfileValidation } from "@/lib/validation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+
+import { UpdateProfileValidation } from "@/lib/validation";
+import { IProfileInfoInputField } from "@/lib/types/update-profile-types";
+import { updateProfileButtonStyles } from "@/styles/profile/updateProfileStyles";
+import { Input } from "./ui";
+import theme from "@/theme";
+import ControlledInput from "./common/ControlledInput";
 
 const profileInfoFormData: IProfileInfoInputField[] = [
   {

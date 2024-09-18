@@ -1,6 +1,7 @@
-import { constants } from "@/lib/constants";
 import { Box } from "@mui/material";
 import Image from "next/image";
+
+import { constants } from "@/lib/constants";
 
 interface ISideImageLayoutProps {
   children: React.ReactNode;

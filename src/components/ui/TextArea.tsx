@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   InputBase,
@@ -9,7 +10,6 @@ import {
 import { InputBaseProps } from "@mui/material/InputBase/InputBase";
 import Image from "next/image";
 import { useId } from "react";
-import warningIcon from "/public/icons/warningIcon.svg";
 
 type TextareaProps = InputBaseProps & {
   labelText: string;

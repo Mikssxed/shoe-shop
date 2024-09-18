@@ -1,7 +1,8 @@
-import { useIsMobile } from "@/hooks";
-import { constants } from "@/lib/constants";
 import { Box, InputBase, Button } from "@mui/material";
 import { SearchNormal1 } from "iconsax-react";
+
+import { useIsMobile } from "@/hooks";
+import { constants } from "@/lib/constants";
 
 type SearchBarProps = {
   width: string;

@@ -1,12 +1,14 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Box, IconButton, Typography } from "@mui/material";
+import { FilterRemove, FilterSearch } from "iconsax-react";
+
 import { FilterSidebar, ProductList } from "@/components/common";
 import { useIsMobile } from "@/hooks";
 import { constants } from "@/lib/constants";
 import { FiltersData, ProductsResponse } from "@/lib/types";
-import { Box, IconButton, Typography } from "@mui/material";
-import { FilterRemove, FilterSearch } from "iconsax-react";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 type Props = {
   filtersData: FiltersData;

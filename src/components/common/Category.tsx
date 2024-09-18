@@ -1,4 +1,7 @@
 "use client";
+
+import { ReactNode } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -8,8 +11,7 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ReactNode } from "react";
+
 import { Option } from "./Option";
 
 type CategoryProps = {

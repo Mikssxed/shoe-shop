@@ -1,6 +1,9 @@
 "use client";
-import { constants } from "@/lib/constants";
+
 import { alpha, createTheme, responsiveFontSizes } from "@mui/material/styles";
+
+import { constants } from "@/lib/constants";
+
 let theme = createTheme();
 
 theme = createTheme({

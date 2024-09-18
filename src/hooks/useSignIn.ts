@@ -1,9 +1,10 @@
-import { ILogInRequest, ILogInResponse, IReactQueryError } from "@/lib/types";
-import axiosInstance from "@/tools/axios";
 import { useMutation } from "@tanstack/react-query";
 import { SignInResponse, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
+
+import { ILogInRequest, ILogInResponse, IReactQueryError } from "@/lib/types";
+import axiosInstance from "@/tools/axios";
 
 const useSignIn = () => {
   const router = useRouter();

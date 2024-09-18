@@ -1,6 +1,7 @@
 import { Controller } from "react-hook-form";
-import { Input } from "../ui";
 import { SxProps, Theme } from "@mui/material";
+
+import { Input } from "../ui";
 
 interface IControlledInputProps {
   name: string;
@@ -8,7 +9,7 @@ interface IControlledInputProps {
   label: string;
   required: boolean;
   placeholder: string;
-  inputStyle?: SxProps<Theme>,
+  inputStyle?: SxProps<Theme>;
   type?: "password";
 }
 

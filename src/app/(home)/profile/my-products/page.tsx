@@ -1,13 +1,14 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Session, User, getServerSession } from "next-auth";
+import { Box, Button, Stack, Typography } from "@mui/material";
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ProductList } from "@/components/common";
 import ProfilePicture from "@/components/ProfilePicture";
 import { textOverflowEllipsis } from "@/styles/commonStyles";
 import { capitalizeFirstLetter } from "@/utils/helperFunctions";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import Image from "next/image";
-import Link from "next/link";
 import { getMyProducts } from "@/tools";
-import { Session, User, getServerSession } from "next-auth";
 
 export default async function MyProducts() {
   const session = (await getServerSession(authOptions)) as Session;

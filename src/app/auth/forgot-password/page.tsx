@@ -1,7 +1,8 @@
+import Link from "next/link";
+import { Box, Typography } from "@mui/material";
+
 import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm";
 import { constants } from "@/lib/constants";
-import { Box, Typography } from "@mui/material";
-import Link from "next/link";
 
 export default function ForgotPassword() {
   return (

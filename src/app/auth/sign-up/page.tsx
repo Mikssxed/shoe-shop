@@ -1,5 +1,6 @@
-import SignUpForm from "@/components/forms/SignUpForm";
 import { Box, Typography } from "@mui/material";
+
+import SignUpForm from "@/components/forms/SignUpForm";
 
 export default function SignUp() {
   return (

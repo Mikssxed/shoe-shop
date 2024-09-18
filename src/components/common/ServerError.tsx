@@ -1,3 +1,7 @@
+import { Button, Grid, Typography, useTheme } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
+
 import { useIsMobile } from "@/hooks";
 import {
   desktopButtonsStyles,
@@ -5,9 +9,6 @@ import {
   errorTitleStyles,
   mobileButtonsStyles,
 } from "@/styles/errorPage/errorStyles";
-import { Button, Grid, Typography, useTheme } from "@mui/material";
-import Image from "next/image";
-import Link from "next/link";
 import BaseErrorPage from "./BaseErrorPage";
 
 const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {

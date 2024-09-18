@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Box,
   Button,
@@ -6,7 +7,7 @@ import {
   DialogTitle,
   Divider,
 } from "@mui/material";
-import Image from "next/image";
+
 import Modal from "../ui/Modal";
 import Cross from "/public/icons/cross.svg";
 

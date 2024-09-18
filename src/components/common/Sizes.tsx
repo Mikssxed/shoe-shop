@@ -1,7 +1,9 @@
 "use client";
-import { BaseWithValue, Data } from "@/lib/types";
+
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
+
+import { BaseWithValue, Data } from "@/lib/types";
 
 export default function Sizes({ sizes }: { sizes: Data<BaseWithValue>[] }) {
   const [choosedSize, setChoosedSize] = useState(0);

@@ -1,5 +1,4 @@
-import { ImageSlider, Sizes } from "@/components/common";
-import { getProduct } from "@/tools";
+import Image from "next/image";
 import {
   Box,
   Container,
@@ -8,7 +7,9 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
+
+import { ImageSlider, Sizes } from "@/components/common";
+import { getProduct } from "@/tools";
 import ActionButtons from "./ActionButtons";
 
 type Props = {

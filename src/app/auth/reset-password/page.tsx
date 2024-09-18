@@ -1,7 +1,8 @@
+import Link from "next/link";
+import { Box, Typography } from "@mui/material";
+
 import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
 import { constants } from "@/lib/constants";
-import { Box, Typography } from "@mui/material";
-import Link from "next/link";
 
 export default function ResetPassword() {
   return (

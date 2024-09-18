@@ -1,5 +1,6 @@
-import { constants } from "@/lib/constants";
 import { Box, Typography } from "@mui/material";
+
+import { constants } from "@/lib/constants";
 
 interface BagPricingListProps {
   name: string;

@@ -1,5 +1,5 @@
 "use client";
-import { inter } from "@/lib/constants";
+
 import {
   Box,
   InputBase,
@@ -13,12 +13,14 @@ import {
 import Image from "next/image";
 import { ComponentProps, useId } from "react";
 
+import { inter } from "@/lib/constants";
+
 type InputProps = InputBaseProps & {
   label: string;
   required?: boolean;
   labelProps?: ComponentProps<typeof InputLabel>;
   containerProps?: ComponentProps<typeof Box>;
-  inputStyle?: SxProps<Theme>,
+  inputStyle?: SxProps<Theme>;
   errorMessage?: string;
 };
 

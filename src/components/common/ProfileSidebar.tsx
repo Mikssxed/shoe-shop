@@ -1,6 +1,5 @@
 "use client";
-import { useIsMobile } from "@/hooks";
-import { profileSidebarData } from "@/lib/config/profile-sidebar";
+
 import {
   Box,
   Button,
@@ -19,6 +18,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { useIsMobile } from "@/hooks";
+import { profileSidebarData } from "@/lib/config/profile-sidebar";
 import { BaseSidebar } from "../ui";
 import { capitalizeFirstLetter } from "@/utils/helperFunctions";
 import { textOverflowEllipsis } from "@/styles/commonStyles";

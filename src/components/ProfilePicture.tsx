@@ -1,10 +1,11 @@
 "use client";
 
-import { userAvatar } from '@/styles/profile/updateProfileStyles';
 import { Avatar, SxProps, Theme } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image'
 import React from 'react'
+
+import { userAvatar } from '@/styles/profile/updateProfileStyles';
 
 interface IProfilePictureProps {
   avatarStyle?: SxProps<Theme>

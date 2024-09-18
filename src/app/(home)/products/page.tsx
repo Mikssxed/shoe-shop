@@ -1,5 +1,6 @@
-import { getFiltersData, getMaxPrice, getProducts } from "@/tools";
 import { Stack } from "@mui/material";
+
+import { getFiltersData, getMaxPrice, getProducts } from "@/tools";
 import FilterToggle from "./FilterToggle";
 
 const Products = async () => {

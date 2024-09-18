@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Alert, Box, Button } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
 
 import ControlledInput from "@/components/common/ControlledInput";
 import {
@@ -13,9 +16,6 @@ import {
 } from "@/lib/types";
 import { ResetPasswordValidation } from "@/lib/validation";
 import { resetPassword } from "@/tools";
-import { Alert, Box, Button } from "@mui/material";
-import { useSearchParams } from "next/navigation";
-import { enqueueSnackbar } from "notistack";
 
 const defaultValues = {
   password: "",

@@ -1,5 +1,6 @@
-import { ProfileSidebar } from "@/components/common";
 import { Container, Stack } from "@mui/material";
+
+import { ProfileSidebar } from "@/components/common";
 
 export default function ProfileLayout({
   children,

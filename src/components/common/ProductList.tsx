@@ -1,9 +1,5 @@
 "use client";
-import { useIsMobile } from "@/hooks";
-import { constants } from "@/lib/constants";
-import { ProductsResponse } from "@/lib/types";
-import { useProducts } from "@/tools";
-import { buildParams } from "@/utils";
+
 import {
   Avatar,
   Box,
@@ -15,6 +11,12 @@ import {
 import { BagCross1 } from "iconsax-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
+
+import { useIsMobile } from "@/hooks";
+import { constants } from "@/lib/constants";
+import { ProductsResponse } from "@/lib/types";
+import { useProducts } from "@/tools";
+import { buildParams } from "@/utils";
 import ProductCard from "./ProductCard";
 
 type Props = {

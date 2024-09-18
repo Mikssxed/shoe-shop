@@ -1,6 +1,5 @@
 "use client";
-import { ProductAttributes } from "@/lib/types";
-import { MoreHoriz } from "@mui/icons-material";
+
 import {
   Box,
   Card,
@@ -11,11 +10,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { MoreHoriz } from "@mui/icons-material";
 import { BagTick } from "iconsax-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MouseEvent, useState } from "react";
+
+import { ProductAttributes } from "@/lib/types";
 import ButtonMenu from "./ButtonMenu";
 
 type Props = {

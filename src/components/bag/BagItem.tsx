@@ -1,6 +1,7 @@
-import { constants } from "@/lib/constants";
-import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
+
+import { Box, Button, Typography } from "@mui/material";
+import { constants } from "@/lib/constants";
 
 //UPDATE PROPS
 interface BagItemProps {

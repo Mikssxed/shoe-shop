@@ -1,9 +1,11 @@
 "use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+
 import BagPricingList from "@/components/bag/BagPricingList";
 import { constants } from "@/lib/constants";
-import { Box, Button, Divider, TextField, Typography } from "@mui/material";
-import Image from "next/image";
-import React, { useState } from "react";
 
 interface BagSummaryProps {
   subtotal: number;

@@ -1,5 +1,5 @@
 "use client";
-import { constants } from "@/lib/constants";
+
 import {
   Box,
   List,
@@ -8,12 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
+
 import SearchBar from "./SearchBar";
+import { constants } from "@/lib/constants";
 import { useIsMobile, useDebounce } from "@/hooks";
 import Cross from "/public/icons/cross.svg";
 import Modal from "./ui/Modal";
-import { useSearchParams, useRouter } from "next/navigation";
 import { useProductsNames } from "@/tools";
 
 type SearchProps = {

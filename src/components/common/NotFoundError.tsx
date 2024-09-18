@@ -1,5 +1,10 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Box, Button, Grid, Typography } from "@mui/material";
+
 import { useIsMobile } from "@/hooks";
 import {
   desktopButtonsStyles,
@@ -7,10 +12,6 @@ import {
   errorTitleStyles,
   mobileButtonsStyles,
 } from "@/styles/errorPage/errorStyles";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import BaseErrorPage from "./BaseErrorPage";
 
 const NotFoundError = () => {

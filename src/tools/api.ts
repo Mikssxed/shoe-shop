@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { signIn } from "next-auth/react";
+import { User } from "next-auth";
 
 import {
   ApiResponseList,
@@ -16,7 +17,6 @@ import {
   ProductsResponse,
 } from "@/lib/types";
 import axiosInstance from "@/tools/axios";
-import { User } from "next-auth";
 
 export const fetchData = async <T>(
   url: string,

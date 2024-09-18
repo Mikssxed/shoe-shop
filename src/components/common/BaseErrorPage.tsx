@@ -1,6 +1,7 @@
+import { Box } from "@mui/material";
+
 import { useIsMobile } from "@/hooks";
 import Header from "../Header";
-import { Box } from "@mui/material";
 
 const BaseErrorPage = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();

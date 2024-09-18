@@ -6,14 +6,14 @@ import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
 
 import ControlledInput from "@/components/common/ControlledInput";
 import { constants } from "@/lib/constants";
 import { IReactQueryError, ISignUpRequest, ISignUpResponse } from "@/lib/types";
 import { SignUpFormValidation } from "@/lib/validation";
 import { signUp } from "@/tools";
-import { useRouter } from "next/navigation";
-import { enqueueSnackbar } from "notistack";
 
 const defaultValues = {
   name: "",

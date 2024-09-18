@@ -1,9 +1,10 @@
+import { Fragment, useMemo } from "react";
+import Image from "next/image";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
+
 import BagItem from "@/components/bag/BagItem";
 import BagSummary from "@/components/bag/BagSummary";
 import { constants } from "@/lib/constants";
-import { Box, Button, Container, Divider, Typography } from "@mui/material";
-import Image from "next/image";
-import { Fragment, useMemo } from "react";
 
 //DUMMY DATA NEEDS TO BE CHANGED IN FUTURE
 const cart = [

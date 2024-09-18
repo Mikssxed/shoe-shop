@@ -1,9 +1,11 @@
 "use client";
-import { useIsMobile } from "@/hooks";
+
+import { useState } from "react";
+import Image from "next/image";
 import { Box, IconButton, Stack, SxProps } from "@mui/material";
 import { ArrowLeft2, ArrowRight2 } from "iconsax-react";
-import Image from "next/image";
-import { useState } from "react";
+
+import { useIsMobile } from "@/hooks";
 
 type ImageSliderProps = {
   images: string[];

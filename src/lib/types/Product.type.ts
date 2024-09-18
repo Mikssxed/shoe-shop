@@ -5,7 +5,6 @@ import {
   BaseWithValue,
   Data,
   RequestData,
-  ResponseData
 } from "./data.type";
 
 export type Product = {
