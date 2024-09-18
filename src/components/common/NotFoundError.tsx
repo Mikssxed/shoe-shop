@@ -1,9 +1,8 @@
 'use client';
 
+import {Box, Grid, Typography} from '@mui/material';
 import Image from 'next/image';
-import Link from 'next/link';
 import {useRouter} from 'next/navigation';
-import {Box, Button, Grid, Typography} from '@mui/material';
 
 import {useIsMobile} from '@/hooks';
 import {
@@ -13,24 +12,14 @@ import {
   mobileButtonsStyles,
 } from '@/styles/errorPage/errorStyles';
 import BaseErrorPage from './BaseErrorPage';
+import ErrorButtons from './ErrorButtons';
 
 const NotFoundError = () => {
   const isMobile = useIsMobile();
   const router = useRouter();
 
-  const Buttons = () => {
-    return (
-      <>
-        <Button variant="outlined" onClick={() => router.back()}>
-          Go back
-        </Button>
-        <Link href="/">
-          <Button sx={{width: '100%'}} variant="contained">
-            Home
-          </Button>
-        </Link>
-      </>
-    );
+  const goBack = () => {
+    router.back();
   };
 
   return (
@@ -79,7 +68,7 @@ const NotFoundError = () => {
           </Typography>
           {!isMobile && (
             <Grid item sx={desktopButtonsStyles}>
-              <Buttons />
+              <ErrorButtons onClick={goBack} cancelButtonText="Go back" />
             </Grid>
           )}
         </Grid>
@@ -110,7 +99,7 @@ const NotFoundError = () => {
         </Grid>
         {isMobile && (
           <Grid item sx={mobileButtonsStyles}>
-            <Buttons />
+            <ErrorButtons onClick={goBack} cancelButtonText="Go back" />
           </Grid>
         )}
       </Grid>

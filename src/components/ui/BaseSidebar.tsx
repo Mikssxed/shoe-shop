@@ -2,7 +2,7 @@
 
 import {SxProps} from '@mui/material';
 import Drawer from '@mui/material/Drawer';
-import {PropsWithChildren, useEffect, useLayoutEffect, useState} from 'react';
+import {PropsWithChildren, useLayoutEffect, useState} from 'react';
 
 type Props = PropsWithChildren & {
   open: boolean;
@@ -18,21 +18,19 @@ export default function BaseSidebar({
   isMobile = false,
   onClose,
 }: Props) {
-  const [width, setWidth] = useState(0);
   const [sidebarWidth, setSidebarWidth] = useState(320);
 
   useLayoutEffect(() => {
     function updateSize() {
-      setWidth(window.innerWidth);
+      const width = window.innerWidth;
+      setSidebarWidth(width < 700 ? 260 : 320);
     }
+
     window.addEventListener('resize', updateSize);
     updateSize();
+
     return () => window.removeEventListener('resize', updateSize);
   }, []);
-
-  useEffect(() => {
-    setSidebarWidth(width < 700 ? 260 : 320);
-  }, [width]);
 
   return (
     <Drawer

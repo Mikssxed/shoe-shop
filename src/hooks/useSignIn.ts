@@ -22,7 +22,6 @@ const useSignIn = () => {
         redirect: false,
       }).then((value: SignInResponse | undefined) => {
         if (value?.ok) {
-          localStorage.setItem('signInJustNow', JSON.stringify(true));
           router.push('/products');
         } else {
           enqueueSnackbar('Something went wrong!', {variant: 'error'});

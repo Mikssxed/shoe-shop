@@ -1,3 +1,4 @@
 import buildParams from './buildParams';
+import sortSizes from './sortSizes';
 
-export {buildParams};
+export {buildParams, sortSizes};
