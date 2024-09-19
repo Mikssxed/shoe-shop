@@ -54,7 +54,7 @@ const ButtonMenu = ({
             sx={styles.menuItem}
             onClick={() => router.push(`/products/${productid}`)}
           >
-            <Typography fontWeight={300}>View</Typography>
+            <Typography variant="menu">View</Typography>
           </MenuItem>
           <MenuItem
             divider
@@ -64,7 +64,7 @@ const ButtonMenu = ({
               props.onClose?.(e, 'backdropClick');
             }}
           >
-            <Typography fontWeight={300}>Edit</Typography>
+            <Typography variant="menu">Edit</Typography>
           </MenuItem>
           <MenuItem
             sx={styles.menuItem}
@@ -73,7 +73,7 @@ const ButtonMenu = ({
               props.onClose?.(e, 'backdropClick');
             }}
           >
-            <Typography fontWeight={300}>Delete</Typography>
+            <Typography variant="menu">Delete</Typography>
           </MenuItem>
         </MenuList>
       </Menu>

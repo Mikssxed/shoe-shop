@@ -7,9 +7,7 @@ import {stylingConstants} from '@/lib/constants/themeConstants';
 export default function ForgotPassword() {
   return (
     <Box marginTop="40px">
-      <Typography variant="h1" sx={{lineHeight: '53px', fontSize: '45px'}}>
-        Forgot password?
-      </Typography>
+      <Typography variant="h1">Forgot password?</Typography>
       <Typography
         variant="body1"
         sx={{

@@ -84,7 +84,7 @@ const SignInForm: React.FC = () => {
             control={control}
             name="rememberMe"
           />
-          <Typography variant="body1" fontWeight={300}>
+          <Typography variant="body2">
             <Link
               href="/auth/forgot-password"
               style={{

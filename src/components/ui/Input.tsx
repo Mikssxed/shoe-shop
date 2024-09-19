@@ -63,7 +63,7 @@ const Input = ({
             ? `1px solid ${theme.palette.error.main}`
             : `1px solid ${theme.palette.grey[700]}`,
           '& .MuiInputBase-input': {
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
               fontSize: '10px',
             },
           },

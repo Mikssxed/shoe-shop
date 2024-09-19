@@ -66,7 +66,7 @@ export const Category = ({name, children, options}: CategoryProps) => {
         }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{pl: 0}}>
-          <Typography>{name}</Typography>
+          <Typography variant="category">{name}</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{pl: 0}}>
           {children}

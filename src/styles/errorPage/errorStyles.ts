@@ -4,7 +4,6 @@ export const errorTitleStyles = {
   pt: '36px',
   color: theme.palette.text.primary,
   textAlign: {xs: 'center', md: 'left'},
-  fontSize: {xs: '30px', md: '45px'},
 };
 
 export const errorMessageStyles = {

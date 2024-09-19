@@ -5,9 +5,7 @@ import SignInForm from '@/components/forms/SignInForm';
 export default function SignIn() {
   return (
     <Box marginTop="40px">
-      <Typography variant="h1" sx={{lineHeight: '53px', fontSize: '45px'}}>
-        Welcome back
-      </Typography>
+      <Typography variant="h1">Welcome back</Typography>
       <Typography
         variant="body1"
         sx={{

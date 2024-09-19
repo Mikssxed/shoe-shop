@@ -86,7 +86,6 @@ export default async function MyProducts() {
               maxWidth: {xs: '160px', sm: '220px'},
             }}
             variant="h4"
-            fontSize={14}
             title={
               gotFullNames
                 ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(

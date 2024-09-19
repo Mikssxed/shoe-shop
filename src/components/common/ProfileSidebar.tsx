@@ -25,6 +25,8 @@ import {textOverflowEllipsis} from '@/styles/commonStyles';
 import {capitalizeFirstLetter} from '@/utils/helperFunctions';
 import ProfilePicture from '../ProfilePicture';
 import {BaseSidebar} from '../ui';
+import {stylingConstants} from '@/lib/constants/themeConstants';
+import theme from '@/theme';
 
 type Props = {
   open: boolean;
@@ -95,10 +97,10 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
           paragraph
           sx={{
             fontSize: '0.75rem',
-            fontWeight: 500,
+            fontWeight: stylingConstants.typography.fontWeightBold,
             m: 0,
             lineHeight: '18px',
-            color: '#98A2B3',
+            color: stylingConstants.palette.grey[200],
           }}
         >
           Welcome
@@ -107,6 +109,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
           sx={{
             ...textOverflowEllipsis,
             maxWidth: {xs: '140px', md: '200px'},
+            color: stylingConstants.palette.text.primary,
           }}
           title={
             gotFullNames
@@ -213,7 +216,9 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
                       primary={sidebarItem.name}
                       sx={{
                         fontSize: '1rem',
-                        fontWeight: 500,
+                        fontWeight:
+                          stylingConstants.typography.fontWeightRegular,
+                        fontFamily: theme.typography.fontFamily,
                         lineHeight: '18.77px',
                       }}
                     />

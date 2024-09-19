@@ -84,10 +84,6 @@ const SearchBar = ({
           '& > input': {
             fontSize: {xs: '10px', sm: '18px', md: `calc(${height}/3)`},
           },
-          '&::placeholder': {
-            color: stylingConstants.palette.text.secondary,
-            opacity: 0,
-          },
         }}
         autoFocus={focused}
       />

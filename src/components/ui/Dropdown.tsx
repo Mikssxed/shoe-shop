@@ -6,6 +6,7 @@ import {SelectProps} from '@mui/material/Select/Select';
 import {useId} from 'react';
 
 import {stylingConstants} from '@/lib/constants/themeConstants';
+import theme from '@/theme';
 
 type DropdownProps = SelectProps & {
   labelText?: string;
@@ -39,7 +40,7 @@ const Dropdown = ({
         {!withoutNone && (
           <MenuItem
             sx={{
-              fontSize: stylingConstants.typography.body2.fontSize,
+              fontSize: theme.typography.body2.fontSize,
               color: stylingConstants.palette.text.primary,
             }}
             key="none"
@@ -51,7 +52,7 @@ const Dropdown = ({
         {options.map(({value, name}) => (
           <MenuItem
             sx={{
-              fontSize: stylingConstants.typography.body2.fontSize,
+              fontSize: theme.typography.body2.fontSize,
               color: stylingConstants.palette.text.primary,
             }}
             key={value}

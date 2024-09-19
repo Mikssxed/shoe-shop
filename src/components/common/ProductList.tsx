@@ -99,9 +99,9 @@ const ProductList = ({fullWidth, initialProducts, filters}: Props) => {
               />
             </Avatar>
             <Typography variant="h4" textAlign="center">
-              We couldn't find any products
+              We couldn&apos;t find any products
             </Typography>
-            <Typography fontWeight={300} textAlign="center">
+            <Typography variant="body2" textAlign="center">
               Try adjusting your search or filter to find what you want
             </Typography>
           </Stack>

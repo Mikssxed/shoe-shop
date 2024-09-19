@@ -5,9 +5,7 @@ import SignUpForm from '@/components/forms/SignUpForm';
 export default function SignUp() {
   return (
     <Box marginTop="40px">
-      <Typography variant="h1" sx={{lineHeight: '53px', fontSize: '45px'}}>
-        Create an account
-      </Typography>
+      <Typography variant="h1">Create an account</Typography>
       <Typography
         variant="body1"
         sx={{

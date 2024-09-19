@@ -4,6 +4,7 @@ import {Box, Container, Grid, Paper, SxProps, Typography} from '@mui/material';
 import {ImageSlider, Sizes} from '@/components/common';
 import {getProduct} from '@/tools';
 import ActionButtons from './ActionButtons';
+import {stylingConstants} from '@/lib/constants/themeConstants';
 
 type Props = {
   params: {productId: string};
@@ -18,8 +19,7 @@ const styles: Record<string, SxProps> = {
   },
   productLabel: {
     textAlign: 'left',
-    fontSize: '16px',
-    fontWeight: 300,
+    color: stylingConstants.palette.grey[700],
     maxWidth: '100%',
     lineBreak: 'anywhere',
   },
@@ -89,14 +89,7 @@ const Product = async ({params: {productId}}: Props) => {
           }}
         >
           <Typography variant="h1">{name}</Typography>
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: '18px',
-            }}
-          >
-            ${price}
-          </Typography>
+          <Typography variant="h3">${price}</Typography>
         </Box>
         <Box
           sx={{
@@ -107,7 +100,7 @@ const Product = async ({params: {productId}}: Props) => {
           }}
         >
           {gender && (
-            <Typography variant="h4" sx={styles.productGender}>
+            <Typography variant="h4" sx={styles.productLabel}>
               {gender}&apos;s Shoes
             </Typography>
           )}
@@ -160,8 +153,12 @@ const Product = async ({params: {productId}}: Props) => {
             gap: '30px',
           }}
         >
-          <Typography variant="h4">Description</Typography>
-          <Typography sx={styles.productLabel}>{description}</Typography>
+          <Typography variant="h4" sx={styles.productLabel}>
+            Description
+          </Typography>
+          <Typography variant="body3" sx={styles.productLabel}>
+            {description}
+          </Typography>
         </Box>
       </Box>
     </Container>

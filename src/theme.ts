@@ -1,13 +1,111 @@
 'use client';
 
-import {alpha, createTheme, responsiveFontSizes} from '@mui/material/styles';
+import {alpha, createTheme} from '@mui/material/styles';
+import {Work_Sans} from 'next/font/google';
 
 import {stylingConstants} from './lib/constants/themeConstants';
+
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    body3: React.CSSProperties;
+    menu: React.CSSProperties;
+    category: React.CSSProperties;
+  }
+
+  interface TypographyVariantsOptions {
+    body3?: React.CSSProperties;
+    menu?: React.CSSProperties;
+    category?: React.CSSProperties;
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    body3: true;
+    menu: true;
+    category: true;
+  }
+}
+
+const workSans = Work_Sans({
+  weight: ['300', '400', '500', '600'],
+  style: 'normal',
+  display: 'swap',
+  subsets: ['latin'],
+  fallback: ['system-ui', 'arial'],
+});
 
 let theme = createTheme();
 
 theme = createTheme({
   ...stylingConstants,
+
+  typography: {
+    allVariants: {
+      fontWeight: 500,
+    },
+    fontFamily: workSans.style.fontFamily,
+    h1: {
+      fontSize: 45,
+      lineHeight: '53px',
+      [theme.breakpoints.down('md')]: {
+        fontSize: 30,
+        lineHeight: '35px',
+      },
+    },
+    h2: {
+      fontSize: 25,
+      [theme.breakpoints.down('md')]: {
+        fontSize: 20,
+      },
+    },
+    h3: {
+      fontSize: 22,
+    },
+    h4: {
+      fontSize: 20,
+    },
+    h5: {
+      fontSize: 18,
+    },
+
+    body1: {
+      fontSize: 15,
+      color: '#5c5c5c',
+      [theme.breakpoints.down('md')]: {
+        fontSize: 12,
+      },
+    },
+    body2: {
+      fontSize: 15,
+      color: '#5c5c5c',
+      fontWeight: 300,
+      [theme.breakpoints.down('md')]: {
+        fontSize: 12,
+      },
+    },
+    body3: {
+      fontFamily: workSans.style.fontFamily,
+      fontSize: 16,
+      color: '#494949',
+      fontWeight: 300,
+      [theme.breakpoints.down('md')]: {
+        fontSize: 12,
+      },
+    },
+    menu: {
+      fontFamily: workSans.style.fontFamily,
+      fontSize: 15,
+      color: '#000',
+      fontWeight: 300,
+    },
+    category: {
+      fontFamily: workSans.style.fontFamily,
+      fontSize: 16,
+      color: '#000',
+      fontWeight: 500,
+    },
+  },
   components: {
     MuiIconButton: {
       styleOverrides: {
@@ -157,7 +255,5 @@ theme = createTheme(theme, {
     }),
   },
 });
-
-theme = responsiveFontSizes(theme);
 
 export default theme;

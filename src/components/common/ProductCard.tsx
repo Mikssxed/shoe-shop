@@ -125,13 +125,10 @@ const ProductCard = ({product, imagePriority}: Props) => {
                 }}
               >
                 <Box>
-                  <Typography variant="h3" fontSize={14}>
-                    {product.name}
-                  </Typography>
+                  <Typography variant="h3">{product.name}</Typography>
                   {product.gender?.data?.attributes.name && (
                     <Typography
                       variant="h5"
-                      fontSize={14}
                       textTransform="capitalize"
                       color="text.secondary"
                     >
@@ -139,9 +136,7 @@ const ProductCard = ({product, imagePriority}: Props) => {
                     </Typography>
                   )}
                 </Box>
-                <Typography variant="h3" fontSize={14}>
-                  ${product.price}
-                </Typography>
+                <Typography variant="h3">${product.price}</Typography>
               </Stack>
             </CardContent>
           </CardActionArea>

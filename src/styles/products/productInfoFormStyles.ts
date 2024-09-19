@@ -11,7 +11,6 @@ export const productInfoFormContainer = {
 
 export const productInfoTitle = {
   fontWeight: theme.typography.fontWeightLight,
-  fontSize: {xs: '12px', sm: '15px'},
   lineHeight: {xs: '14.08px', sm: '17.6px'},
   m: {xs: '12px 0 23.13px 0', md: '35.4px 0 40px 0'},
   p: '0 4.8px 0 0.28px',
@@ -98,7 +97,6 @@ export const imageUploadBox = {
 
 export const imageUploadText = {
   fontWeight: theme.typography.fontWeightLight,
-  fontSize: '15px',
   lineHeight: '17.6px',
   color: theme.palette.text.secondary,
 };

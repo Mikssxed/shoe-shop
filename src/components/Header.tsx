@@ -46,7 +46,7 @@ const Header = () => {
               <Link style={{textDecoration: 'none'}} href="/products">
                 <Typography
                   align="center"
-                  sx={{marginInline: '44px', lineHeight: '30px'}}
+                  sx={{marginInline: '44px'}}
                   variant="body1"
                   color={stylingConstants.palette.text.primary}
                 >
