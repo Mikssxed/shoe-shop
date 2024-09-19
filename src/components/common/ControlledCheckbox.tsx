@@ -1,0 +1,32 @@
+import {Controller} from 'react-hook-form';
+import {Checkbox, FormControlLabel} from '@mui/material';
+
+interface IControlledInputProps {
+  name: string;
+  control: any;
+  label: string;
+}
+
+const ControlledCheckbox = ({name, control, label}: IControlledInputProps) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({field: {onChange, value}}) => (
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={{'& .MuiSvgIcon-root': {fontSize: 16}}}
+              value={value}
+              onChange={onChange}
+            />
+          }
+          label={label}
+          sx={{fontSize: '15px'}}
+        />
+      )}
+    />
+  );
+};
+
+export default ControlledCheckbox;
