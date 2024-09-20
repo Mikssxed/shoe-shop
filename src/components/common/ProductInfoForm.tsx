@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
 import {
   Box,
   Button,
+  Typography,
   Grid,
-  IconButton,
   InputLabel,
   Paper,
-  Typography,
-} from '@mui/material';
-import {Gallery} from 'iconsax-react';
-import Image from 'next/image';
-import {useState} from 'react';
-
+  IconButton,
+} from "@mui/material";
+import React, { useState } from "react";
+import { Dropdown, Input, TextArea } from "../ui";
+import theme from "@/theme";
+import { Gallery } from "iconsax-react";
+import Image from "next/image";
 import {
   formAndImagesContainer,
   formSaveButton,
@@ -26,31 +27,29 @@ import {
   productSizeButton,
   saveButtonContainer,
   trashIconContainer,
-} from '@/styles/products/productInfoFormStyles';
-import theme from '@/theme';
-import DeleteModal from './common/DeleteModal';
-import {Dropdown, Input, TextArea} from './ui';
+} from "@/styles/products/productInfoFormStyles";
+import DeleteModal from "./DeleteModal";
 
 // TODO: use real sizes from backend
 const sizes = {
   data: [
-    {id: 1, attributes: {value: 36}},
-    {id: 2, attributes: {value: 37}},
-    {id: 3, attributes: {value: 38}},
-    {id: 4, attributes: {value: 39}},
-    {id: 5, attributes: {value: 40}},
-    {id: 6, attributes: {value: 41}},
-    {id: 7, attributes: {value: 42}},
-    {id: 8, attributes: {value: 43}},
-    {id: 9, attributes: {value: 44}},
-    {id: 10, attributes: {value: 45}},
+    { id: 1, attributes: { value: 36 } },
+    { id: 2, attributes: { value: 37 } },
+    { id: 3, attributes: { value: 38 } },
+    { id: 4, attributes: { value: 39 } },
+    { id: 5, attributes: { value: 40 } },
+    { id: 6, attributes: { value: 41 } },
+    { id: 7, attributes: { value: 42 } },
+    { id: 8, attributes: { value: 43 } },
+    { id: 9, attributes: { value: 44 } },
+    { id: 10, attributes: { value: 45 } },
   ],
 };
 
-const FormTitleAndDesc = ({title, desc}: {title: string; desc: string}) => {
+const FormTitleAndDesc = ({ title, desc }: { title: string; desc: string }) => {
   return (
     <Box component="div">
-      <Typography variant="h1" sx={{pl: '0.28px'}}>
+      <Typography variant="h1" sx={{ pl: "0.28px" }}>
         {title}
       </Typography>
       <Typography variant="body1" sx={productInfoTitle}>
@@ -69,10 +68,10 @@ const ListProductSizes = () => {
         {/* TODO: Depending on edit or add product, some sizes should be rendered as selected */}
         {sizes.data
           .sort((a, b) => a.attributes.value - b.attributes.value)
-          .map(({id, attributes: {value}}) => {
+          .map(({ id, attributes: { value } }) => {
             return (
               // TODO: Discuss the size of the size buttons, fix them if it's needed
-              <Grid key={id} xs={4} sm={3} xl={'auto'} item>
+              <Grid key={id} xs={4} sm={3} xl={"auto"} item>
                 <Button sx={productSizeButton} variant="outlined">
                   EU-{value}
                 </Button>
@@ -84,20 +83,20 @@ const ListProductSizes = () => {
   );
 };
 
-const ListProductImages = ({productImages}: {productImages: number[]}) => {
+const ListProductImages = ({ productImages }: { productImages: number[] }) => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
   return (
     <Box
       component="div"
-      sx={{...inputContainer, maxWidth: {xs: '436px', lg: 'none'}}}
+      sx={{ ...inputContainer, maxWidth: { xs: "436px", lg: "none" } }}
     >
       <InputLabel>Product Images</InputLabel>
       <Grid
         container
-        spacing={{xs: 2, sm: 5, lg: 2}}
-        sx={{minWidth: {xl: '692px'}}}
+        spacing={{ xs: 2, sm: 5, lg: 2 }}
+        sx={{ minWidth: { xl: "692px" } }}
       >
-        {productImages.map(item => {
+        {productImages.map((item) => {
           return (
             <Grid key={item} item xs={6} lg={12} xl={6}>
               <Box sx={productImageContainer}>
@@ -109,16 +108,16 @@ const ListProductImages = ({productImages}: {productImages: number[]}) => {
                     <Image
                       width={20}
                       height={20}
-                      src={'/icons/trash.svg'}
+                      src={"/icons/trash.svg"}
                       alt="trash"
                     />
                   </IconButton>
                 </Box>
                 <Image
-                  src={'/images/sneakers_side_decor_1.png'}
-                  alt={'Product Image'}
+                  src={"/images/sneakers_side_decor_1.png"}
+                  alt={"Product Image"}
                   fill
-                  style={{objectFit: 'contain'}}
+                  style={{ objectFit: "contain" }}
                   priority={true}
                   sizes="100%"
                 />
@@ -128,7 +127,7 @@ const ListProductImages = ({productImages}: {productImages: number[]}) => {
                 open={isDelete}
                 name="selected image"
                 onClose={() => setIsDelete(false)}
-                onSubmit={() => console.log('Item deleted')}
+                onSubmit={() => console.log("Item deleted")}
               />
             </Grid>
           );
@@ -145,12 +144,12 @@ const ListProductImages = ({productImages}: {productImages: number[]}) => {
             <Gallery
               size="38"
               color={theme.palette.grey[500]}
-              style={{flexShrink: 0}}
+              style={{ flexShrink: 0 }}
             />
             <Typography variant="body1" sx={imageUploadText}>
               Drop your image here, <br />
-              or select{' '}
-              <span style={{color: '#151e7a', textDecoration: 'underline'}}>
+              or select{" "}
+              <span style={{ color: "#151e7a", textDecoration: "underline" }}>
                 click to browse
               </span>
             </Typography>
@@ -168,7 +167,7 @@ interface IProductInfoFormProps {
   isEdit: boolean; // TODO: update the values of inputs with the edited product's values depending on this boolean
 }
 
-const ProductInfoForm = ({title, desc, isEdit}: IProductInfoFormProps) => {
+const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
   // TODO: Create form states and assign values to inputs. Get onSubmit as props, assign it to save button.
   // TODO: replace this state with the actual data
   const [productImages, setProductImages] = useState([1, 2, 3]);
@@ -178,14 +177,14 @@ const ProductInfoForm = ({title, desc, isEdit}: IProductInfoFormProps) => {
       <Box component="div" sx={formAndImagesContainer}>
         <Box
           component="div"
-          sx={{display: 'flex', flexDirection: 'column', gap: '23px'}}
+          sx={{ display: "flex", flexDirection: "column", gap: "23px" }}
         >
           <Input label="Product name" placeholder="Nike Air Max 90" />
           <Input label="Price" placeholder="$160" />
           <Dropdown labelText="Color" />
           <Box
             component="div"
-            sx={{display: 'flex', maxWidth: '436px', gap: '16px'}}
+            sx={{ display: "flex", maxWidth: "436px", gap: "16px" }}
           >
             {/* TODO: Add options props from the database */}
             {/* TODO: handle data from backend (genders, sizes and colors...) */}
@@ -195,7 +194,7 @@ const ProductInfoForm = ({title, desc, isEdit}: IProductInfoFormProps) => {
           <TextArea
             labelText="Description"
             name="product-description"
-            style={{maxWidth: '436px'}}
+            style={{ maxWidth: "436px" }}
             placeholder="Do not exceed 300 characters."
           />
           <ListProductSizes />

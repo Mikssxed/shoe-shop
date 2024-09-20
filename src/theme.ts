@@ -1,9 +1,9 @@
 'use client';
 
-import {alpha, createTheme} from '@mui/material/styles';
-import {Work_Sans} from 'next/font/google';
+import { alpha, createTheme } from '@mui/material/styles';
+import { Work_Sans } from 'next/font/google';
 
-import {stylingConstants} from './lib/constants/themeConstants';
+import { stylingConstants } from './lib/constants/themeConstants';
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
@@ -109,9 +109,9 @@ theme = createTheme({
   components: {
     MuiIconButton: {
       styleOverrides: {
-        root: ({theme}) => ({
+        root: ({ theme }) => ({
           borderRadius: '12px',
-          '&:hover': {backgroundColor: theme.palette.grey[100]},
+          '&:hover': { backgroundColor: theme.palette.grey[100] },
         }),
       },
     },
@@ -140,7 +140,7 @@ theme = createTheme({
     },
     MuiInputBase: {
       styleOverrides: {
-        root: ({theme}) => ({
+        root: ({ theme }) => ({
           borderRadius: theme.spacing(),
           padding: ['7px', '16px'].join(' '),
         }),
@@ -171,7 +171,7 @@ theme = createTheme({
             boxShadow: 'none',
           },
         },
-        contained: ({theme}) => ({
+        contained: ({ theme }) => ({
           color: theme.palette.common.white,
           border: `1px solid ${theme.palette.primary.main}`,
           '&:hover': {
@@ -179,7 +179,7 @@ theme = createTheme({
             backgroundColor: 'transparent',
           },
         }),
-        outlined: ({theme}) => ({
+        outlined: ({ theme }) => ({
           border: `1px solid ${theme.palette.primary.main}`,
           '&:hover': {
             color: theme.palette.common.white,
@@ -190,7 +190,7 @@ theme = createTheme({
     },
     MuiDivider: {
       styleOverrides: {
-        root: ({theme}) => ({
+        root: ({ theme }) => ({
           borderWidth: 1,
           borderColor: theme.palette.grey[100],
         }),
@@ -198,7 +198,7 @@ theme = createTheme({
     },
     MuiCheckbox: {
       styleOverrides: {
-        root: ({theme}) => ({
+        root: ({ theme }) => ({
           borderWidth: 1,
           borderRadius: 2,
           borderColor: theme.palette.grey[700],

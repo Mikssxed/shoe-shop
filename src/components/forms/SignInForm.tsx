@@ -1,16 +1,16 @@
 'use client';
 
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Box, Button, Typography} from '@mui/material';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
-import {useForm} from 'react-hook-form';
-import {z} from 'zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import ControlledCheckbox from '@/components/common/ControlledCheckbox';
 import ControlledInput from '@/components/common/ControlledInput';
-import {useSignIn} from '@/hooks';
-import {LogInFormValidation} from '@/lib/validation';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { useSignIn } from '@/hooks';
+import { LogInFormValidation } from '@/lib/validation';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 const defaultValues = {
   email: '',
@@ -19,14 +19,16 @@ const defaultValues = {
 };
 
 const SignInForm: React.FC = () => {
-  const {handleSubmit, control} = useForm<z.infer<typeof LogInFormValidation>>({
+  const { handleSubmit, control } = useForm<
+    z.infer<typeof LogInFormValidation>
+  >({
     resolver: zodResolver(LogInFormValidation),
     defaultValues,
   });
 
   // TODO: implement 'remember me' checkbox using
 
-  const {isPending, isError, mutateAsync, error} = useSignIn();
+  const { isPending, isError, mutateAsync, error } = useSignIn();
 
   const onSubmit = async (data: z.infer<typeof LogInFormValidation>) => {
     try {
@@ -52,7 +54,7 @@ const SignInForm: React.FC = () => {
       >
         <Box
           component="div"
-          sx={{display: 'flex', flexDirection: 'column', gap: '24px'}}
+          sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
         >
           <ControlledInput
             name="email"
@@ -112,7 +114,7 @@ const SignInForm: React.FC = () => {
       </Box>
       <Box
         component="div"
-        sx={{display: 'flex', justifyContent: 'center', gap: '6px'}}
+        sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}
       >
         <Typography
           variant="body1"

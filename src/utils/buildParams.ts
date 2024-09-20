@@ -1,4 +1,4 @@
-import {ReadonlyURLSearchParams} from 'next/navigation';
+import { ReadonlyURLSearchParams } from 'next/navigation';
 
 /**
  * Builds query parameters for an API request based on URL search parameters and additional parameters.

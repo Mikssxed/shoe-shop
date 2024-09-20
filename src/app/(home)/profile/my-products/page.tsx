@@ -1,14 +1,14 @@
-import {Box, Button, Stack, Typography} from '@mui/material';
-import {getServerSession} from 'next-auth';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {authOptions} from '@/app/api/auth/[...nextauth]/route';
-import ProfilePicture from '@/components/ProfilePicture';
-import {ProductList} from '@/components/common';
-import {textOverflowEllipsis} from '@/styles/commonStyles';
-import {getMyProducts} from '@/tools';
-import {capitalizeFirstLetter} from '@/utils/helperFunctions';
+import { ProductList } from '@/components/common';
+import ProfilePicture from '@/components/common/ProfilePicture';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
+import { capitalizeFirstLetter } from '@/utils/helperFunctions';
+import { getMyProducts } from '@/tools';
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 export default async function MyProducts() {
   const session = await getServerSession(authOptions);
@@ -17,7 +17,7 @@ export default async function MyProducts() {
   if (!user) {
     return null;
   }
-  const {username, firstName, lastName} = user;
+  const { username, firstName, lastName } = user;
   const initialData = await getMyProducts(user);
   const gotFullNames = firstName && lastName;
   return (
@@ -33,7 +33,7 @@ export default async function MyProducts() {
             lg: 1480 / 450,
             xl: 1480 / 360,
           },
-          mb: {xs: 3, sm: 5},
+          mb: { xs: 3, sm: 5 },
         }}
       >
         <Box
@@ -53,14 +53,14 @@ export default async function MyProducts() {
             priority
             quality={100}
             sizes="100vw"
-            style={{objectFit: 'cover'}}
+            style={{ objectFit: 'cover' }}
           />
         </Box>
         <Stack
           sx={{
             position: 'absolute',
             bottom: 0,
-            left: {xs: 20, md: 40, xl: 60},
+            left: { xs: 20, md: 40, xl: 60 },
             alignItems: 'center',
           }}
           direction="row"
@@ -69,21 +69,21 @@ export default async function MyProducts() {
             sx={{
               position: 'relative',
               overflow: 'hidden',
-              width: {xs: 64, sm: 90, md: 120},
-              height: {xs: 64, sm: 90, md: 120},
+              width: { xs: 64, sm: 90, md: 120 },
+              height: { xs: 64, sm: 90, md: 120 },
               border: '4px solid #fff',
               borderRadius: '50%',
             }}
           >
             <ProfilePicture
-              avatarStyle={{fontSize: {sm: '28px', md: '48px'}}}
+              avatarStyle={{ fontSize: { sm: '28px', md: '48px' } }}
             />
           </Box>
           <Typography
             sx={{
-              ml: {xs: 1, sm: 3},
+              ml: { xs: 1, sm: 3 },
               ...textOverflowEllipsis,
-              maxWidth: {xs: '160px', sm: '220px'},
+              maxWidth: { xs: '160px', sm: '220px' },
             }}
             variant="h4"
             title={
@@ -104,7 +104,7 @@ export default async function MyProducts() {
       </Box>
       <Box
         sx={{
-          p: {xs: '0 24px', md: 0},
+          p: { xs: '0 24px', md: 0 },
         }}
       >
         <Stack
@@ -132,7 +132,7 @@ export default async function MyProducts() {
         </Stack>
         <ProductList
           initialProducts={initialData}
-          filters={Object.assign({'filters[filters[userID]]': user.id})}
+          filters={Object.assign({ 'filters[filters[userID]]': user.id })}
         />
       </Box>
     </>

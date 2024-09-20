@@ -1,8 +1,8 @@
-import {Box, Button, InputBase} from '@mui/material';
-import {SearchNormal1} from 'iconsax-react';
+import { Box, Button, InputBase } from '@mui/material';
+import { SearchNormal1 } from 'iconsax-react';
 
-import {useIsMobile} from '@/hooks';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { useIsMobile } from '@/hooks';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 type SearchBarProps = {
   width: string;
@@ -34,16 +34,16 @@ const SearchBar = ({
       sx={{
         position: 'relative',
         display: 'flex',
-        marginInline: {xs: '0px 10px', sm: '20px', md: '40px'},
+        marginInline: { xs: '0px 10px', sm: '20px', md: '40px' },
         width,
-        height: {xs: '25px', sm: '40px', md: height},
+        height: { xs: '25px', sm: '40px', md: height },
         border: `1px solid ${stylingConstants.palette.grey[700]}`,
         borderRadius: `calc(${height}/2)`,
       }}
     >
       <Box
         sx={{
-          pl: {xs: '10px', sm: '18px', md: `calc(${height}/3)`},
+          pl: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
           height: '100%',
           position: 'absolute',
           pointerEvents: 'none',
@@ -67,7 +67,7 @@ const SearchBar = ({
           if (!focused) e.target.blur();
         }}
         placeholder="Search"
-        inputProps={{'aria-label': 'search'}}
+        inputProps={{ 'aria-label': 'search' }}
         value={value}
         onChange={e => {
           if (onChange) onChange(e.target.value);
@@ -77,12 +77,12 @@ const SearchBar = ({
         }}
         sx={{
           flexGrow: 1,
-          pl: {xs: '25px', sm: '35px', md: `${height}`},
-          pr: {xs: '10px', md: `calc(${height}/3)`},
+          pl: { xs: '25px', sm: '35px', md: `${height}` },
+          pr: { xs: '10px', md: `calc(${height}/3)` },
           color: stylingConstants.palette.text.secondary,
-          height: {xs: '25px', sm: '40px', md: height},
+          height: { xs: '25px', sm: '40px', md: height },
           '& > input': {
-            fontSize: {xs: '10px', sm: '18px', md: `calc(${height}/3)`},
+            fontSize: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
           },
         }}
         autoFocus={focused}
@@ -94,10 +94,10 @@ const SearchBar = ({
           sx={{
             alignSelf: 'center',
             mr: '4px',
-            fontSize: {xs: '10px', sm: '14px', md: '18px'},
+            fontSize: { xs: '10px', sm: '14px', md: '18px' },
             height: '60%',
-            width: {xs: '5%', sm: '10%', md: '12%'},
-            minWidth: {xs: '40px', sm: '60px'},
+            width: { xs: '5%', sm: '10%', md: '12%' },
+            minWidth: { xs: '40px', sm: '60px' },
           }}
         >
           Search
@@ -109,11 +109,11 @@ const SearchBar = ({
           onClick={onClear}
           sx={{
             alignSelf: 'center',
-            mr: {xs: '10px', sm: '18px', md: `calc(${height}/3)`},
-            fontSize: {xs: '10px', sm: '14px', md: '18px'},
+            mr: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
+            fontSize: { xs: '10px', sm: '14px', md: '18px' },
             height: '60%',
-            width: {xs: '5%', sm: '10%', md: '12%'},
-            minWidth: {xs: '40px', sm: '60px'},
+            width: { xs: '5%', sm: '10%', md: '12%' },
+            minWidth: { xs: '40px', sm: '60px' },
           }}
         >
           Clear

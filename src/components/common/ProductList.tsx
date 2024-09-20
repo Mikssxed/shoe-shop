@@ -8,16 +8,16 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import {BagCross1} from 'iconsax-react';
-import {useSearchParams} from 'next/navigation';
-import {useEffect, useRef} from 'react';
+import { BagCross1 } from 'iconsax-react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 
-import {useIsMobile} from '@/hooks';
-import {ProductsResponse} from '@/lib/types';
-import {useProducts} from '@/tools';
-import {buildParams} from '@/utils';
+import { useIsMobile } from '@/hooks';
+import { ProductsResponse } from '@/lib/types';
+import { useProducts } from '@/tools';
+import { buildParams } from '@/utils';
 import ProductCard from './ProductCard';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 type Props = {
   fullWidth?: boolean;
@@ -25,7 +25,7 @@ type Props = {
   filters?: Record<string, string | number>;
 };
 
-const ProductList = ({fullWidth, initialProducts, filters}: Props) => {
+const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
   const isMobile = useIsMobile();
   const isFullWidth = fullWidth || isMobile;
   const searchParams = useSearchParams();
@@ -47,7 +47,7 @@ const ProductList = ({fullWidth, initialProducts, filters}: Props) => {
           }
         });
       },
-      {threshold: 1},
+      { threshold: 1 },
     );
 
     const bottomElement = bottomElementRef.current;
@@ -65,9 +65,9 @@ const ProductList = ({fullWidth, initialProducts, filters}: Props) => {
   return (
     <Grid
       container
-      spacing={{xs: 2, sm: 5, lg: 6, xl: 8}}
-      columns={{xs: 12, md: 12, lg: 12, xl: isFullWidth ? 8 : 12}}
-      sx={{position: 'relative'}}
+      spacing={{ xs: 2, sm: 5, lg: 6, xl: 8 }}
+      columns={{ xs: 12, md: 12, lg: 12, xl: isFullWidth ? 8 : 12 }}
+      sx={{ position: 'relative' }}
     >
       {isLoading && (
         <Box
@@ -124,7 +124,7 @@ const ProductList = ({fullWidth, initialProducts, filters}: Props) => {
           >
             <ProductCard
               imagePriority={index === 0}
-              product={{...product.attributes, id: product.id}}
+              product={{ ...product.attributes, id: product.id }}
             />
           </Grid>
         ))}

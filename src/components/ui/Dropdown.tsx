@@ -1,16 +1,16 @@
 'use client';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {Box, InputLabel, MenuItem, Select} from '@mui/material';
-import {SelectProps} from '@mui/material/Select/Select';
-import {useId} from 'react';
+import { Box, InputLabel, MenuItem, Select } from '@mui/material';
+import { SelectProps } from '@mui/material/Select/Select';
+import { useId } from 'react';
 
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 import theme from '@/theme';
 
 type DropdownProps = SelectProps & {
   labelText?: string;
-  options?: {value: number | string; name: string}[];
+  options?: { value: number | string; name: string }[];
   withoutNone?: boolean;
 };
 
@@ -22,7 +22,7 @@ const Dropdown = ({
 }: DropdownProps) => {
   const id = useId();
   return (
-    <Box sx={{width: '100%', maxWidth: '436px'}}>
+    <Box sx={{ width: '100%', maxWidth: '436px' }}>
       {labelText && <InputLabel htmlFor={id}>{labelText}</InputLabel>}
       <Select
         id={id}
@@ -33,7 +33,7 @@ const Dropdown = ({
           color: stylingConstants.palette.text.primary,
           border: `1px solid ${stylingConstants.palette.grey[700]}`,
         }}
-        MenuProps={{sx: {maxHeight: 400}}}
+        MenuProps={{ sx: { maxHeight: 400 } }}
         IconComponent={ExpandMoreIcon}
         {...props}
       >
@@ -49,7 +49,7 @@ const Dropdown = ({
             None
           </MenuItem>
         )}
-        {options.map(({value, name}) => (
+        {options.map(({ value, name }) => (
           <MenuItem
             sx={{
               fontSize: theme.typography.body2.fontSize,

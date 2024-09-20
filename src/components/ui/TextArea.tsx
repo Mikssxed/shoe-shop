@@ -1,9 +1,15 @@
 'use client';
 
-import {Box, InputBase, InputLabel, Typography, useTheme} from '@mui/material';
-import {InputBaseProps} from '@mui/material/InputBase/InputBase';
+import {
+  Box,
+  InputBase,
+  InputLabel,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import { InputBaseProps } from '@mui/material/InputBase/InputBase';
 import Image from 'next/image';
-import {useId} from 'react';
+import { useId } from 'react';
 
 type TextareaProps = InputBaseProps & {
   labelText: string;
@@ -28,7 +34,7 @@ const Textarea = ({
         {required && (
           <Typography
             component="span"
-            sx={{color: theme.palette.error.main, ml: '5px'}}
+            sx={{ color: theme.palette.error.main, ml: '5px' }}
           >
             *
           </Typography>
@@ -53,7 +59,7 @@ const Textarea = ({
         id={id}
         fullWidth
         multiline
-        inputProps={{style: {overflowX: 'hidden'}}}
+        inputProps={{ style: { overflowX: 'hidden' } }}
         {...props}
         error={!!errorMessage}
       />

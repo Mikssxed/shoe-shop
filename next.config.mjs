@@ -9,7 +9,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
-      {protocol: 'https', hostname: 'img.freepik.com'},
+      { protocol: 'https', hostname: 'img.freepik.com' },
     ],
   },
 };

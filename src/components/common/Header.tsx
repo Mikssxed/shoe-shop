@@ -1,24 +1,33 @@
 'use client';
 
-import {AppBar, Box, Button, Divider, Toolbar, Typography} from '@mui/material';
-import {Bag, HambergerMenu, SearchNormal1} from 'iconsax-react';
-import {useSession} from 'next-auth/react';
+import {
+  AppBar,
+  Box,
+  Button,
+  Divider,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import { Bag, HambergerMenu, SearchNormal1 } from 'iconsax-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useState} from 'react';
+import { useState } from 'react';
 
-import {useIsMobile} from '@/hooks';
+import { useIsMobile } from '@/hooks';
 import ProfilePicture from './ProfilePicture';
 import Search from './Search';
 import SearchBar from './SearchBar';
-import {ProfileSidebar} from './common';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { ProfileSidebar } from '.';
+import { stylingConstants } from '@/lib/constants/themeConstants';
+import { useQueryCartItems } from '@/tools';
 
 const Header = () => {
-  const {status} = useSession();
+  const { status } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useIsMobile();
   const [openSearch, setOpenSearch] = useState(false);
+  const { data: cartItems = [] } = useQueryCartItems();
 
   return (
     <>
@@ -34,19 +43,19 @@ const Header = () => {
         <Toolbar
           sx={{
             flexGrow: 1,
-            paddingInline: {xs: '20px', md: '30px', lg: '40px 60px'},
+            paddingInline: { xs: '20px', md: '30px', lg: '40px 60px' },
             backgroundcolor: stylingConstants.palette.background.default,
             justifyItems: 'end',
-            gap: {xs: '20px', md: 0},
+            gap: { xs: '20px', md: 0 },
           }}
         >
-          <Box sx={{display: 'flex', flexGrow: 1}}>
+          <Box sx={{ display: 'flex', flexGrow: 1 }}>
             <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
             {!isMobile && (
-              <Link style={{textDecoration: 'none'}} href="/products">
+              <Link style={{ textDecoration: 'none' }} href="/products">
                 <Typography
                   align="center"
-                  sx={{marginInline: '44px'}}
+                  sx={{ marginInline: '44px', lineHeight: '30px' }}
                   variant="body1"
                   color={stylingConstants.palette.text.primary}
                 >
@@ -83,12 +92,46 @@ const Header = () => {
               <SearchBar width="min(320px, 25vw)" height="48px" />
             </Box>
           )}
-          <Link href="/bag" style={{width: '24px', height: '24px'}}>
-            <Bag size="24" color={stylingConstants.palette.grey[700]} />
+          <Link
+            href="/bag"
+            style={{
+              width: '24px',
+              height: '24px',
+              position: 'relative',
+              marginRight: cartItems.length > 0 ? '10px' : undefined,
+            }}
+          >
+            <Bag
+              size="24"
+              color={
+                cartItems.length > 0
+                  ? stylingConstants.palette.primary.main
+                  : stylingConstants.palette.grey[700]
+              }
+            />
+            {cartItems.length > 0 && (
+              <Box
+                component="span"
+                sx={{
+                  position: 'absolute',
+                  backgroundColor: stylingConstants.palette.primary.main,
+                  minWidth: '26px',
+                  textAlign: 'center',
+                  borderRadius: '16px',
+                  padding: '4px 8px',
+                  color: 'white',
+                  transform: 'translate(-10px, -10px)',
+                }}
+              >
+                {cartItems.reduce((prev, curr) => {
+                  return prev + curr.amount;
+                }, 0)}
+              </Box>
+            )}
           </Link>
           {isMobile && (
             <Box
-              sx={{width: 17, height: 17}}
+              sx={{ width: 17, height: 17 }}
               onClick={() => setOpenSearch(true)}
             >
               <SearchNormal1
@@ -103,7 +146,7 @@ const Header = () => {
           {status === 'authenticated' && !isMobile && (
             <Box
               sx={{
-                ml: {md: '16px'},
+                ml: { md: '16px' },
               }}
             >
               <Link
@@ -124,7 +167,7 @@ const Header = () => {
             </Box>
           )}
           {isMobile && (
-            <Box sx={{width: 24, height: 24}}>
+            <Box sx={{ width: 24, height: 24 }}>
               {/*TODO: Add onclick to show sidebar */}
               <HambergerMenu
                 size="24"

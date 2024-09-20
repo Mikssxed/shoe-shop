@@ -1,7 +1,8 @@
 'use client';
-import {useDebounce, useIsMobile} from '@/hooks';
 
-import {useProductsNames} from '@/tools';
+import { useState } from 'react';
+import Image from 'next/image';
+import { useSearchParams, useRouter } from 'next/navigation';
 import {
   Box,
   List,
@@ -9,21 +10,19 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
-import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
 
-import {stylingConstants} from '@/lib/constants/themeConstants';
-import SearchBar from './SearchBar';
-import Modal from './ui/Modal';
-import Cross from '/public/icons/cross.svg';
+import { useProductsNames } from '@/tools';
+import { useIsMobile, useDebounce } from '@/hooks';
+import { stylingConstants } from '@/lib/constants/themeConstants';
+import Modal from '@/components/ui/Modal';
+import SearchBar from '@/components/common/SearchBar';
 
 type SearchProps = {
   open: boolean;
   onClose: () => void;
 };
 
-export default function Search({open, onClose}: SearchProps) {
+export default function Search({ open, onClose }: SearchProps) {
   const isMobile = useIsMobile();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,7 +30,7 @@ export default function Search({open, onClose}: SearchProps) {
     searchParams.get('search') ?? '',
   );
   const debouncedSearch = useDebounce(searchQuery.trim(), 500);
-  const {data: productsNames} = useProductsNames(debouncedSearch);
+  const { data: productsNames } = useProductsNames(debouncedSearch);
 
   //TODO: Maybe improve searching (right now it only searches based on products that contain search string)
   const updateSearch = (query: string) => {
@@ -92,9 +91,9 @@ export default function Search({open, onClose}: SearchProps) {
       <Box
         sx={{
           alignSelf: 'start',
-          p: {xs: '20px 25px', sm: '30px 35px', md: '40px 45px'},
+          p: { xs: '20px 25px', sm: '30px 35px', md: '40px 45px' },
           width: '100%',
-          height: {xs: '200px', sm: '300px', md: '420px'},
+          height: { xs: '200px', sm: '300px', md: '420px' },
           display: 'flex',
           justifyContent: 'space-between',
           backgroundColor: stylingConstants.palette.background.default,
@@ -128,7 +127,7 @@ export default function Search({open, onClose}: SearchProps) {
                 <>
                   <Typography
                     sx={{
-                      mt: {xs: '12px', sm: '22px', md: '32px'},
+                      mt: { xs: '12px', sm: '22px', md: '32px' },
                       marginInline: {
                         xs: '0px 10px',
                         sm: '20px',
@@ -136,7 +135,7 @@ export default function Search({open, onClose}: SearchProps) {
                       },
                       pl: '8px',
                       color: stylingConstants.palette.text.secondary,
-                      fontSize: {xs: '14px', sm: '17px', md: '20px'},
+                      fontSize: { xs: '14px', sm: '17px', md: '20px' },
                     }}
                   >
                     {productsNames.length > 0
@@ -146,7 +145,7 @@ export default function Search({open, onClose}: SearchProps) {
                   <List
                     sx={{
                       p: 0,
-                      marginInline: {xs: '0px 10px', sm: '20px', md: '40px'},
+                      marginInline: { xs: '0px 10px', sm: '20px', md: '40px' },
                       display: 'flex',
                       flexDirection: 'column',
                       overflow: 'auto',
@@ -168,18 +167,18 @@ export default function Search({open, onClose}: SearchProps) {
                           onClick={() => handleSubmit(product.attributes.name)}
                           sx={{
                             px: '8px',
-                            py: {xs: '4px', sm: '6px', md: '8px'},
+                            py: { xs: '4px', sm: '6px', md: '8px' },
                           }}
                         >
                           <ListItemText
                             primary={product.attributes.name}
                             primaryTypographyProps={{
                               color: stylingConstants.palette.text.primary,
-                              fontSize: {xs: '14px', sm: '17px', md: '20px'},
+                              fontSize: { xs: '14px', sm: '17px', md: '20px' },
                             }}
                             sx={{
                               py: '4px',
-                              my: {xs: 0, sm: '2px', md: '4px'},
+                              my: { xs: 0, sm: '2px', md: '4px' },
                             }}
                           />
                         </ListItemButton>
@@ -193,14 +192,14 @@ export default function Search({open, onClose}: SearchProps) {
         <Box
           sx={{
             '& > img': {
-              width: {xs: '10px', sm: '20px', md: '27px'},
-              mt: {xs: '4px', sm: '7px', md: '10px'},
-              height: {xs: '10px', sm: '20px', md: '27px'},
+              width: { xs: '10px', sm: '20px', md: '27px' },
+              mt: { xs: '4px', sm: '7px', md: '10px' },
+              height: { xs: '10px', sm: '20px', md: '27px' },
             },
           }}
         >
           <Image
-            src={Cross}
+            src={'/icons/cross.svg'}
             alt="close"
             width={27}
             height={27}

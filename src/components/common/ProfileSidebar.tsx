@@ -13,19 +13,19 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import {useSession} from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {usePathname, useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import {useIsMobile} from '@/hooks';
-import {profileSidebarData} from '@/lib/config/profileSidebarConfig';
-import {textOverflowEllipsis} from '@/styles/commonStyles';
-import {capitalizeFirstLetter} from '@/utils/helperFunctions';
-import ProfilePicture from '../ProfilePicture';
-import {BaseSidebar} from '../ui';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { useIsMobile } from '@/hooks';
+import { profileSidebarData } from '@/lib/config/profileSidebarConfig';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
+import { capitalizeFirstLetter } from '@/utils/helperFunctions';
+import ProfilePicture from '@/components/common/ProfilePicture';
+import { BaseSidebar } from '@/components/ui';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 import theme from '@/theme';
 
 type Props = {
@@ -34,15 +34,15 @@ type Props = {
   blockOnMobile?: boolean;
 };
 
-export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
+export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined,
   );
   const currentPath = usePathname();
   const isMobile = useIsMobile();
-  const {data} = useSession();
-  const {firstName, lastName, username} = data?.user || {};
+  const { data } = useSession();
+  const { firstName, lastName, username } = data?.user || {};
   const gotFullNames = firstName && lastName;
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
     return null;
   }
   const user = (
-    <Box sx={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
       <Box
         sx={{
           width: '64px',
@@ -108,7 +108,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
         <Typography
           sx={{
             ...textOverflowEllipsis,
-            maxWidth: {xs: '140px', md: '200px'},
+            maxWidth: { xs: '140px', md: '200px' },
             color: stylingConstants.palette.text.primary,
           }}
           title={
@@ -146,7 +146,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
             <IconButton
               onClick={onClose}
               sx={{
-                display: {md: 'none'},
+                display: { md: 'none' },
                 ml: 'auto',
                 mr: '0px',
               }}
@@ -186,7 +186,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
                 <ListItem
                   key={sidebarItem.id}
                   disablePadding
-                  sx={{mb: '36px'}}
+                  sx={{ mb: '36px' }}
                   onClick={sidebarItem.onClick}
                 >
                   <ListItemButton
@@ -205,7 +205,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
                     selected={index === selectedIndex}
                     onClick={e => handleListItemClick(e, sidebarItem.path)}
                   >
-                    <ListItemIcon sx={{minWidth: 20}}>
+                    <ListItemIcon sx={{ minWidth: 20 }}>
                       <sidebarItem.icon
                         size={20}
                         color={index === selectedIndex ? '#FE645E' : '#6e7378'}
@@ -216,8 +216,6 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
                       primary={sidebarItem.name}
                       sx={{
                         fontSize: '1rem',
-                        fontWeight:
-                          stylingConstants.typography.fontWeightRegular,
                         fontFamily: theme.typography.fontFamily,
                         lineHeight: '18.77px',
                       }}
@@ -228,7 +226,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
             </List>
           </>
         ) : (
-          <Box sx={{mt: '100px', px: '20px'}}>
+          <Box sx={{ mt: '100px', px: '20px' }}>
             <Link
               href="/auth/sign-in"
               style={{
@@ -261,7 +259,7 @@ export const ProfileSidebar = ({open, onClose, blockOnMobile}: Props) => {
       <BaseSidebar
         isMobile={isMobile}
         open={open}
-        containerStyle={{p: '24px 0px'}}
+        containerStyle={{ p: '24px 0px' }}
         onClose={onClose}
       >
         <Content />

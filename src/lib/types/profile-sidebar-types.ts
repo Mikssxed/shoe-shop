@@ -1,4 +1,4 @@
-import {Icon} from 'iconsax-react';
+import { Icon } from 'iconsax-react';
 
 export interface ProfileSidebar {
   id: string;

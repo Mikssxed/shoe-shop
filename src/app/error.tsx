@@ -2,7 +2,7 @@
 
 import ServerError from '@/components/common/ServerError';
 
-const Error = (props: {error: Error; reset: () => void}) => {
+const Error = (props: { error: Error; reset: () => void }) => {
   return <ServerError {...props} />;
 };
 

@@ -1,19 +1,19 @@
 'use client';
 
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Alert, Box, Button, Typography} from '@mui/material';
-import {UseMutationResult, useMutation} from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Alert, Box, Button, Typography } from '@mui/material';
+import { UseMutationResult, useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
-import {useForm} from 'react-hook-form';
-import {z} from 'zod';
-import {useRouter} from 'next/navigation';
-import {enqueueSnackbar} from 'notistack';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
 import ControlledInput from '@/components/common/ControlledInput';
-import {IReactQueryError, ISignUpRequest, ISignUpResponse} from '@/lib/types';
-import {SignUpFormValidation} from '@/lib/validation';
-import {signUp} from '@/tools';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { IReactQueryError, ISignUpRequest, ISignUpResponse } from '@/lib/types';
+import { SignUpFormValidation } from '@/lib/validation';
+import { signUp } from '@/tools';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 const defaultValues = {
   name: '',
@@ -23,7 +23,6 @@ const defaultValues = {
 };
 
 const SignUpForm: React.FC = () => {
-  const router = useRouter();
   const mutation: UseMutationResult<
     ISignUpResponse,
     IReactQueryError,
@@ -32,7 +31,7 @@ const SignUpForm: React.FC = () => {
     mutationFn: signUp,
   });
 
-  const {handleSubmit, reset, control} = useForm<
+  const { handleSubmit, reset, control } = useForm<
     z.infer<typeof SignUpFormValidation>
   >({
     resolver: zodResolver(SignUpFormValidation),
@@ -135,7 +134,7 @@ const SignUpForm: React.FC = () => {
       </Box>
       <Box
         component="div"
-        sx={{display: 'flex', justifyContent: 'center', gap: '6px'}}
+        sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}
       >
         <Typography
           variant="body1"

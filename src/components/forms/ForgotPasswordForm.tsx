@@ -1,10 +1,10 @@
 'use client';
 //TODO: make it SSG
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Alert, Box, Button} from '@mui/material';
-import {UseMutationResult, useMutation} from '@tanstack/react-query';
-import {useForm} from 'react-hook-form';
-import {z} from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Alert, Box, Button } from '@mui/material';
+import { UseMutationResult, useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import ControlledInput from '@/components/common/ControlledInput';
 import {
@@ -12,15 +12,15 @@ import {
   IForgotPasswordRes,
   IReactQueryError,
 } from '@/lib/types';
-import {ForgotPasswordValidation} from '@/lib/validation';
-import {forgotPassword} from '@/tools';
+import { ForgotPasswordValidation } from '@/lib/validation';
+import { forgotPassword } from '@/tools';
 
 const defaultValues = {
   email: '',
 };
 
 const ForgotPasswordForm = () => {
-  const {handleSubmit, control} = useForm<
+  const { handleSubmit, control } = useForm<
     z.infer<typeof ForgotPasswordValidation>
   >({
     resolver: zodResolver(ForgotPasswordValidation),
@@ -81,7 +81,7 @@ const ForgotPasswordForm = () => {
       />
 
       {mutation.isError && (
-        <Box sx={{maxWidth: '436px', mt: '14px'}}>
+        <Box sx={{ maxWidth: '436px', mt: '14px' }}>
           <Alert
             severity={mutation.isSuccess ? 'success' : 'error'}
             sx={{

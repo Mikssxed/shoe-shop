@@ -11,9 +11,9 @@ import {
   useTheme,
 } from '@mui/material';
 import Image from 'next/image';
-import {ComponentProps, useId} from 'react';
+import { ComponentProps, useId } from 'react';
 
-import {inter} from '@/lib/constants/themeConstants';
+import { inter } from '@/lib/constants/themeConstants';
 
 type InputProps = InputBaseProps & {
   label: string;
@@ -42,9 +42,7 @@ const Input = ({
         {label}
         {required && (
           <Typography
-            sx={{
-              ml: '5px',
-            }}
+            ml="5px"
             component="span"
             color={theme.palette.error.main}
           >

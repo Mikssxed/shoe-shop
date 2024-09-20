@@ -30,15 +30,15 @@ const DeleteModal = ({
   text = defaultText,
 }: DeleteModalProps) => {
   const Content = () => (
-    <Box sx={{display: 'flex', flexDirection: 'column', gap: '25px'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
       <DialogTitle
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           gap: '16px',
           p: 0,
-          fontSize: {xs: '30px', md: '45px'},
-          lineHeight: {xs: '35px', md: '53px'},
+          fontSize: { xs: '30px', md: '45px' },
+          lineHeight: { xs: '35px', md: '53px' },
         }}
       >
         Are you sure you want to delete {name}?
@@ -54,7 +54,7 @@ const DeleteModal = ({
           }}
         />
       </DialogTitle>
-      <DialogContentText variant="body1" sx={{fontWeight: 300, p: 0}}>
+      <DialogContentText variant="body1" sx={{ fontWeight: 300, p: 0 }}>
         {text}
       </DialogContentText>
       <Divider />
@@ -62,7 +62,7 @@ const DeleteModal = ({
         sx={{
           display: 'flex',
           p: 0,
-          '& > *': {flexGrow: '1', height: {xs: '40px', md: '61px'}},
+          '& > *': { flexGrow: '1', height: { xs: '40px', md: '61px' } },
         }}
       >
         <Button variant="outlined" color="primary" onClick={onClose}>
@@ -89,10 +89,10 @@ const DeleteModal = ({
       paperStyle={{
         display: 'flex',
         justifyContent: 'space-between',
-        gap: {xs: '24px', md: '56px'},
+        gap: { xs: '24px', md: '56px' },
         boxSizing: 'border-box',
         borderRadius: '20px',
-        width: {xs: '320px', md: '656px'},
+        width: { xs: '320px', md: '656px' },
       }}
     >
       <Content />

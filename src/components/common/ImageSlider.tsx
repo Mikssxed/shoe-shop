@@ -1,11 +1,11 @@
 'use client';
 
-import {useState} from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import {Box, IconButton, Stack, SxProps} from '@mui/material';
-import {ArrowLeft2, ArrowRight2} from 'iconsax-react';
+import { Box, IconButton, Stack, SxProps } from '@mui/material';
+import { ArrowLeft2, ArrowRight2 } from 'iconsax-react';
 
-import {useIsMobile} from '@/hooks';
+import { useIsMobile } from '@/hooks';
 
 type ImageSliderProps = {
   images: string[];
@@ -18,7 +18,7 @@ const styles: Record<string, SxProps> = {
   },
 };
 
-const ImageSlider = ({images}: ImageSliderProps) => {
+const ImageSlider = ({ images }: ImageSliderProps) => {
   const isMobile = useIsMobile();
   const [currentImage, setCurrentImage] = useState<number>(0);
 
@@ -37,8 +37,8 @@ const ImageSlider = ({images}: ImageSliderProps) => {
       direction={isMobile ? 'column-reverse' : 'row'}
       spacing={2}
       sx={{
-        width: {xs: '100%', sm: 550, md: 500, lg: 600},
-        height: {xs: '100%', sm: 650, md: 480, xl: 500},
+        width: { xs: '100%', sm: 550, md: 500, lg: 600 },
+        height: { xs: '100%', sm: 650, md: 480, xl: 500 },
       }}
     >
       <Stack
@@ -109,7 +109,7 @@ const ImageSlider = ({images}: ImageSliderProps) => {
         <Image
           src={images[currentImage]}
           alt={`Image ${currentImage + 1}`}
-          style={{objectFit: 'cover'}}
+          style={{ objectFit: 'cover' }}
           fill
           sizes="100%"
           quality={100}

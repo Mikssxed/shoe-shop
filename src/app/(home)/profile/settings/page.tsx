@@ -1,7 +1,7 @@
-import {Box, Button, Toolbar, Typography} from '@mui/material';
+import { Box, Toolbar, Typography, Button } from '@mui/material';
 
-import ProfilePicture from '@/components/ProfilePicture';
-import {UpdateProfile} from '@/components/UpdateProfile';
+import ProfilePicture from '@/components/common/ProfilePicture';
+import { UpdateProfile } from '@/components/common/UpdateProfile';
 import {
   updateProfileAvatarContainer,
   updateProfileButtonContainerStyles,
@@ -15,7 +15,9 @@ export default function ProfileSettings() {
       <Typography variant="h1">My Profile</Typography>
       <Box sx={updateProfileInfoBoxStyles}>
         <Box component="div" sx={updateProfileAvatarContainer}>
-          <ProfilePicture avatarStyle={{fontSize: {sm: '28px', md: '48px'}}} />
+          <ProfilePicture
+            avatarStyle={{ fontSize: { sm: '28px', md: '48px' } }}
+          />
         </Box>
         {/* TODO: Replace the buttons below with reusable Button component */}
         <Toolbar

@@ -1,6 +1,6 @@
-import {stylingConstants} from '@/lib/constants/themeConstants';
-import {Box, Checkbox, InputLabel} from '@mui/material';
-import {ChangeEvent, useId} from 'react';
+import { stylingConstants } from '@/lib/constants/themeConstants';
+import { Box, Checkbox, InputLabel } from '@mui/material';
+import { ChangeEvent, useId } from 'react';
 
 type OptionProps = {
   value: string | number;
@@ -46,7 +46,7 @@ export const Option = ({
         checked={checked}
         onChange={handleChange}
       />
-      <InputLabel htmlFor={id} sx={{mb: 0}}>
+      <InputLabel htmlFor={id} sx={{ mb: 0 }}>
         {value}
       </InputLabel>
     </Box>

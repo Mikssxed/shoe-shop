@@ -1,4 +1,4 @@
-import {Inter} from 'next/font/google';
+import { Inter } from 'next/font/google';
 
 export const inter = Inter({
   weight: ['400', '500'],
@@ -14,8 +14,8 @@ export const stylingConstants = {
     fontWeightBold: 600,
   },
   palette: {
-    primary: {main: '#fe645e'},
-    error: {main: '#fe645e'},
+    primary: { main: '#fe645e' },
+    error: { main: '#fe645e' },
     text: {
       primary: '#000',
       secondary: '#5c5c5c',

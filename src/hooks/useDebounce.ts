@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * A custom hook that debounces a value by a specified delay.

@@ -1,4 +1,4 @@
-import theme from '@/theme';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 export const productInfoFormContainer = {
   display: 'flex',
@@ -10,7 +10,7 @@ export const productInfoFormContainer = {
 };
 
 export const productInfoTitle = {
-  fontWeight: theme.typography.fontWeightLight,
+  fontWeight: stylingConstants.typography.fontWeightLight,
   lineHeight: {xs: '14.08px', sm: '17.6px'},
   m: {xs: '12px 0 23.13px 0', md: '35.4px 0 40px 0'},
   p: '0 4.8px 0 0.28px',
@@ -35,18 +35,18 @@ export const inputContainer = {
 // TODO: Create a reusable Button component and apply a common style for all of them, update these button styles afterwards
 export const productSizeButton = {
   width: '100%',
-  fontWeight: theme.typography.fontWeightLight,
+  fontWeight: stylingConstants.typography.fontWeightLight,
   fontSize: {xs: 10, sm: 15},
-  borderColor: theme.palette.grey[700],
+  borderColor: stylingConstants.palette.grey[700],
   backgroundColor: 'transparent',
   p: {xs: '8px 15px', sm: '10px 20px', xl: '10px 26px'},
   '&:hover': {
-    borderColor: theme.palette.grey[700],
-    backgroundColor: theme.palette.grey[100],
-    color: theme.palette.grey[700],
+    borderColor: stylingConstants.palette.grey[700],
+    backgroundColor: stylingConstants.palette.grey[100],
+    color: stylingConstants.palette.grey[700],
   },
   borderRadius: '12px',
-  color: theme.palette.text.secondary,
+  color: stylingConstants.palette.text.secondary,
 };
 
 export const productImageContainer = {
@@ -85,7 +85,7 @@ export const imageUploadBox = {
   alignItems: 'center',
   gap: '12px',
   p: {xs: '74px 37px', lg: '147px 72px'},
-  border: `1px dashed ${theme.palette.text.secondary}`,
+  border: `1px dashed ${stylingConstants.palette.text.secondary}`,
   textAlign: 'center',
   cursor: 'pointer',
   maxWidth: {sm: '320px'},
@@ -96,9 +96,9 @@ export const imageUploadBox = {
 };
 
 export const imageUploadText = {
-  fontWeight: theme.typography.fontWeightLight,
+  fontWeight: stylingConstants.typography.fontWeightLight,
   lineHeight: '17.6px',
-  color: theme.palette.text.secondary,
+  color: stylingConstants.palette.text.secondary,
 };
 
 export const saveButtonContainer = {
@@ -111,7 +111,7 @@ export const saveButtonContainer = {
 };
 // TODO: Create a reusable Button component and apply a common style for all of them, update these button styles afterwards
 export const formSaveButton = {
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: stylingConstants.palette.primary.main,
   width: {xs: 117, md: 152},
   height: {xs: 30.79, md: 40},
   fontSize: {xs: '12.32px', md: '1rem'},

@@ -6,10 +6,10 @@ import {
   SxProps,
   Typography,
 } from '@mui/material';
-import {useRouter} from 'next/navigation';
-import {useState} from 'react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import EditProductModal from '../EditProductModal';
+import EditProductModal from './EditProductModal';
 import DeleteModal from './DeleteModal';
 
 const styles: Record<string, SxProps> = {

@@ -1,9 +1,9 @@
-import {useMutation} from '@tanstack/react-query';
-import {SignInResponse, signIn} from 'next-auth/react';
-import {useRouter} from 'next/navigation';
-import {enqueueSnackbar} from 'notistack';
+import { useMutation } from '@tanstack/react-query';
+import { SignInResponse, signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
-import {ILogInRequest, ILogInResponse, IReactQueryError} from '@/lib/types';
+import { ILogInRequest, ILogInResponse, IReactQueryError } from '@/lib/types';
 import axiosInstance from '@/tools/axios';
 
 /**
@@ -57,7 +57,7 @@ const useSignIn = () => {
         if (value?.ok) {
           router.push('/products');
         } else {
-          enqueueSnackbar('Something went wrong!', {variant: 'error'});
+          enqueueSnackbar('Something went wrong!', { variant: 'error' });
         }
       });
     },

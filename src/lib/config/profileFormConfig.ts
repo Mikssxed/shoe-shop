@@ -1,4 +1,4 @@
-import {IProfileInfoInputField} from '../types/update-profile-types';
+import { IProfileInfoInputField } from '../types/update-profile-types';
 
 export const profileInfoFormData: IProfileInfoInputField[] = [
   {

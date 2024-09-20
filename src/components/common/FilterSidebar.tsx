@@ -1,12 +1,12 @@
 'use client';
 
-import {Box, Button, IconButton, Stack, Typography} from '@mui/material';
 import Image from 'next/image';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 
-import {BaseWithName, BaseWithValue, FiltersData} from '@/lib/types';
-import {BaseSidebar} from '../ui';
-import {Category} from './Category';
+import { BaseWithName, BaseWithValue, FiltersData } from '@/lib/types';
+import { BaseSidebar } from '../ui';
+import { Category } from './Category';
 import PriceSlider from './PriceSlider';
 
 type Props = {
@@ -32,7 +32,7 @@ export const FilterSidebar = ({
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const {genders, colors, brands, categories, sizes} = filtersData;
+  const { genders, colors, brands, categories, sizes } = filtersData;
 
   const handleClearFilters = () => {
     const params = new URLSearchParams(searchParams);
@@ -43,11 +43,11 @@ export const FilterSidebar = ({
   };
 
   const categoryData = [
-    {name: 'Gender', options: genders},
-    {name: 'Color', options: colors},
-    {name: 'Brand', options: brands},
-    {name: 'Categories', options: categories},
-    {name: 'Sizes', options: sizes},
+    { name: 'Gender', options: genders },
+    { name: 'Color', options: colors },
+    { name: 'Brand', options: brands },
+    { name: 'Categories', options: categories },
+    { name: 'Sizes', options: sizes },
   ];
 
   const Content = () => {
@@ -55,7 +55,7 @@ export const FilterSidebar = ({
       <>
         <Stack
           sx={{
-            flexDirection: {xs: 'row-reverse', md: 'column'},
+            flexDirection: { xs: 'row-reverse', md: 'column' },
             justifyContent: 'space-between',
             gap: 3,
             backgroundColor: 'background.paper',
@@ -63,7 +63,7 @@ export const FilterSidebar = ({
           }}
         >
           {isMobile ? (
-            <IconButton onClick={onClose} sx={{display: {md: 'none'}}}>
+            <IconButton onClick={onClose} sx={{ display: { md: 'none' } }}>
               <Image
                 src={'/icons/cross.svg'}
                 alt="close"
@@ -89,7 +89,7 @@ export const FilterSidebar = ({
         </Stack>
 
         {/* Categories */}
-        {categoryData.map(({name, options}) => (
+        {categoryData.map(({ name, options }) => (
           <Category
             key={name}
             name={name}
@@ -114,7 +114,7 @@ export const FilterSidebar = ({
       <BaseSidebar
         isMobile={isMobile}
         open={open}
-        containerStyle={{p: '24px 0px'}}
+        containerStyle={{ p: '24px 0px' }}
         onClose={onClose}
       >
         <Content />

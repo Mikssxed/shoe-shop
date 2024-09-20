@@ -1,5 +1,5 @@
-import {Dialog, SxProps, useTheme} from '@mui/material';
-import {PropsWithChildren, useRef} from 'react';
+import { Dialog, SxProps, useTheme } from '@mui/material';
+import { PropsWithChildren, useRef } from 'react';
 
 type ModalProps = PropsWithChildren & {
   open: boolean;

@@ -1,7 +1,7 @@
-import {Box} from '@mui/material';
+import { Box } from '@mui/material';
 import Image from 'next/image';
 
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 interface ISideImageLayoutProps {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export default function SideImageLayout({
       <Box
         component="section"
         sx={{
-          p: {xs: '0 0 60px 0', lg: '50px 40px'},
+          p: { xs: '0 0 60px 0', lg: '50px 40px' },
           flex: 1,
           minWidth: '50vw',
         }}
@@ -64,7 +64,7 @@ export default function SideImageLayout({
         component="aside"
         sx={{
           position: 'relative',
-          display: {xs: 'none', lg: 'flex'},
+          display: { xs: 'none', lg: 'flex' },
         }}
       >
         <Image

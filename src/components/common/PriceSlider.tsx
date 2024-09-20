@@ -1,8 +1,8 @@
-import {Slider} from '@mui/material';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import { Slider } from '@mui/material';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-const PriceSlider = ({maxPrice: productMaxPrice}: {maxPrice: number}) => {
+const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
   const [priceRange, setPriceRange] = useState([-1, -1]);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -63,7 +63,7 @@ const PriceSlider = ({maxPrice: productMaxPrice}: {maxPrice: number}) => {
           backgroundColor: 'primary.main',
           transformOrigin: 'bottom left',
           transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-          '&:before': {display: 'none'},
+          '&:before': { display: 'none' },
           '&.MuiSlider-valueLabelOpen': {
             transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
           },

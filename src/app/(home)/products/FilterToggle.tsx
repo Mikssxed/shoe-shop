@@ -1,14 +1,14 @@
 'use client';
 
-import {Box, IconButton, Typography} from '@mui/material';
-import {FilterRemove, FilterSearch} from 'iconsax-react';
-import {useSearchParams} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import { Box, IconButton, Typography } from '@mui/material';
+import { FilterRemove, FilterSearch } from 'iconsax-react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import {FilterSidebar, ProductList} from '@/components/common';
-import {useIsMobile} from '@/hooks';
-import {stylingConstants} from '@/lib/constants/themeConstants';
-import {FiltersData, ProductsResponse} from '@/lib/types';
+import { FilterSidebar, ProductList } from '@/components/common';
+import { useIsMobile } from '@/hooks';
+import { stylingConstants } from '@/lib/constants/themeConstants';
+import { FiltersData, ProductsResponse } from '@/lib/types';
 
 type Props = {
   filtersData: FiltersData;
@@ -16,7 +16,7 @@ type Props = {
   maxPrice: number;
 };
 
-function FilterToggle({filtersData, initialProducts, maxPrice}: Props) {
+function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
   const [showFilters, setShowFilters] = useState(false);
   const isMobile = useIsMobile();
   const searchParams = useSearchParams();
@@ -45,7 +45,7 @@ function FilterToggle({filtersData, initialProducts, maxPrice}: Props) {
           maxPrice={maxPrice}
         />
       )}
-      <Box sx={{p: {xs: '0 24px', md: 0}, mt: 3, width: '100%'}}>
+      <Box sx={{ p: { xs: '0 24px', md: 0 }, mt: 3, width: '100%' }}>
         <Box
           sx={{
             display: 'flex',

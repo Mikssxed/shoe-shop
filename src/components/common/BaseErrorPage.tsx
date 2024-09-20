@@ -1,13 +1,13 @@
-import {Box} from '@mui/material';
+import { Box } from '@mui/material';
 
-import {useIsMobile} from '@/hooks';
-import Header from '../Header';
+import { useIsMobile } from '@/hooks';
+import Header from './Header';
 
-const BaseErrorPage = ({children}: {children: React.ReactNode}) => {
+const BaseErrorPage = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
 
   return (
-    <Box sx={{height: '100dvh'}}>
+    <Box sx={{ height: '100dvh' }}>
       {!isMobile && <Header />}
       {children}
     </Box>

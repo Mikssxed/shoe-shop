@@ -1,31 +1,16 @@
 import Image from 'next/image';
-import {Box, Container, Grid, Paper, SxProps, Typography} from '@mui/material';
+import { Box, Container, Paper, Typography } from '@mui/material';
 
-import {ImageSlider, Sizes} from '@/components/common';
-import {getProduct} from '@/tools';
+import { getProduct } from '@/tools';
+import { ImageSlider } from '@/components/common';
 import ActionButtons from './ActionButtons';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { productIdStyles as styles } from '@/styles/product/product.style';
 
 type Props = {
-  params: {productId: string};
+  params: { productId: string };
 };
 
-const styles: Record<string, SxProps> = {
-  productContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  },
-  productLabel: {
-    textAlign: 'left',
-    color: stylingConstants.palette.grey[700],
-    maxWidth: '100%',
-    lineBreak: 'anywhere',
-  },
-};
-
-const Product = async ({params: {productId}}: Props) => {
+const Product = async ({ params: { productId } }: Props) => {
   const product = await getProduct(productId);
 
   const {
@@ -43,62 +28,27 @@ const Product = async ({params: {productId}}: Props) => {
   const images = imagesData?.data?.map(image => image.attributes.url) || [];
 
   return (
-    <Container
-      maxWidth={false}
-      sx={{
-        maxWidth: '1300px',
-        display: 'flex',
-        flexDirection: {xs: 'column', md: 'row'},
-        gap: '100px',
-        mt: '100px',
-        pb: '100px',
-      }}
-    >
+    <Container maxWidth={false} sx={styles.root}>
       <Box
         sx={{
           ...styles.productContainer,
-          alignItems: {xs: 'center', md: 'flex-start'},
+          alignItems: { xs: 'center', md: 'flex-start' },
         }}
       >
         {images.length > 0 ? (
           <ImageSlider images={images} />
         ) : (
-          <Paper
-            sx={{
-              textAlign: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              height: '100%',
-              position: 'relative',
-            }}
-          >
+          <Paper sx={styles.noImagePaper}>
             <Image fill src="/icons/galleryIcon.svg" alt="no image" />
           </Paper>
         )}
       </Box>
       <Box sx={styles.productContainer}>
-        <Box
-          sx={{
-            width: '100%',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            display: 'flex',
-            gap: '24px',
-          }}
-        >
+        <Box sx={styles.productName}>
           <Typography variant="h1">{name}</Typography>
           <Typography variant="h3">${price}</Typography>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            gap: '10px',
-          }}
-        >
+        <Box sx={styles.genderAndColor}>
           {gender && (
             <Typography variant="h4" sx={styles.productLabel}>
               {gender}&apos;s Shoes
@@ -110,49 +60,11 @@ const Product = async ({params: {productId}}: Props) => {
             </Typography>
           )}
         </Box>
-        {sizes && sizes.length !== 0 && (
-          <Box
-            sx={{
-              mt: '10px',
-              width: '100%',
-            }}
-          >
-            <Typography variant="h4" sx={styles.productLabel}>
-              Select Size
-            </Typography>
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                pt: '14px',
-              }}
-            >
-              <Sizes sizes={sizes} />
-            </Grid>
-          </Box>
-        )}
-        <Box
-          sx={{
-            mt: '10px',
-            display: 'flex',
-            flexDirection: {
-              xs: 'column',
-              sm: 'row',
-            },
-            gap: '10px',
-            width: '100%',
-          }}
-        >
-          <ActionButtons id={productId} />
-        </Box>
-        <Box
-          sx={{
-            mt: '40px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '30px',
-          }}
-        >
+        <ActionButtons
+          sizes={sizes}
+          product={{ ...product?.data.attributes, id: Number(productId) }}
+        />
+        <Box sx={styles.descriptionContainer}>
           <Typography variant="h4" sx={styles.productLabel}>
             Description
           </Typography>

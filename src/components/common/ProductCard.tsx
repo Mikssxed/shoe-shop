@@ -1,5 +1,9 @@
 'use client';
 
+import { MouseEvent, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   Box,
   Card,
@@ -10,26 +14,31 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import {MoreHoriz} from '@mui/icons-material';
-import {BagTick} from 'iconsax-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
-import {MouseEvent, useState} from 'react';
+import { MoreHoriz } from '@mui/icons-material';
+import { BagTick } from 'iconsax-react';
+import { enqueueSnackbar } from 'notistack';
 
-import {ProductAttributes} from '@/lib/types';
-import ButtonMenu from './ButtonMenu';
+import { ProductAttributes } from '@/lib/types';
+import ButtonMenu from '@/components/common/ButtonMenu';
+import { addToCartQuery } from '@/tools';
 
 type Props = {
   product: ProductAttributes;
   imagePriority: boolean;
 };
 
-const ProductCard = ({product, imagePriority}: Props) => {
+const ProductCard = ({ product, imagePriority }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    //TODO: implement add to cart
+
+    addToCartQuery(product);
+
+    enqueueSnackbar('Succesfully added to cart', {
+      variant: 'success',
+      autoHideDuration: 2000,
+    });
   };
 
   const pathName = usePathname();
@@ -40,8 +49,8 @@ const ProductCard = ({product, imagePriority}: Props) => {
   };
 
   return (
-    <Box sx={{position: 'relative', width: '100%'}}>
-      <Link href={`/products/${product.id}`} style={{textDecoration: 'none'}}>
+    <Box sx={{ position: 'relative', width: '100%' }}>
+      <Link href={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
         <Card
           sx={{
             width: 1,
@@ -51,7 +60,7 @@ const ProductCard = ({product, imagePriority}: Props) => {
             flexDirection: 'column',
           }}
         >
-          <Box sx={{position: 'relative', aspectRatio: 320 / 380}}>
+          <Box sx={{ position: 'relative', aspectRatio: 320 / 380 }}>
             {!isProfile && (
               <Box
                 sx={{
@@ -60,7 +69,7 @@ const ProductCard = ({product, imagePriority}: Props) => {
                   height: '100%',
                   opacity: '0%',
                   transition: 'opacity 0.3s ease-in-out',
-                  ':hover': {opacity: '100%'},
+                  ':hover': { opacity: '100%' },
                   zIndex: 1,
                   display: 'flex',
                   justifyContent: 'center',
@@ -89,7 +98,7 @@ const ProductCard = ({product, imagePriority}: Props) => {
                 src={product.images.data[0].attributes.url}
                 alt={product.name!}
                 fill
-                style={{objectFit: 'cover'}}
+                style={{ objectFit: 'cover' }}
                 priority={imagePriority}
                 sizes="100%"
               />
@@ -115,7 +124,7 @@ const ProductCard = ({product, imagePriority}: Props) => {
               flex: 1,
             }}
           >
-            <CardContent sx={{pl: 0, pr: 0}}>
+            <CardContent sx={{ pl: 0, pr: 0 }}>
               <Stack
                 direction="row"
                 sx={{
@@ -162,8 +171,8 @@ const ProductCard = ({product, imagePriority}: Props) => {
             productid={product.id!}
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
-            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-            transformOrigin={{vertical: 'top', horizontal: 'right'}}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             onClose={() => setAnchorEl(null)}
             onDeleteProduct={() => deleteProduct(product.id)}
           />

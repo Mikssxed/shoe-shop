@@ -1,6 +1,6 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {User} from 'next-auth';
-import {signIn} from 'next-auth/react';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { signIn } from 'next-auth/react';
+import { User } from 'next-auth';
 
 import {
   ApiResponseList,

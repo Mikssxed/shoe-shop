@@ -1,14 +1,14 @@
-import {Box, Typography} from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
-interface BagPricingListProps {
-  name: string;
-  value: number;
-  bold?: boolean;
-}
+import { IBagPricingListProps } from '@/lib/types';
 
-const BagPricingList: React.FC<BagPricingListProps> = ({name, value, bold}) => {
+const BagPricingList: React.FC<IBagPricingListProps> = ({
+  name,
+  value,
+  bold,
+}) => {
   return (
     <Box
       sx={{
@@ -17,26 +17,8 @@ const BagPricingList: React.FC<BagPricingListProps> = ({name, value, bold}) => {
         justifyContent: 'space-between',
       }}
     >
-      <Typography
-        sx={{
-          fontSize: {xs: '20px', sm: '20px'},
-          lineHeight: {xs: '24px', sm: '35px'},
-        }}
-        fontWeight={bold ? 600 : 400}
-        color={stylingConstants.palette.text.primary}
-      >
-        {name}
-      </Typography>
-      <Typography
-        sx={{
-          fontSize: {xs: '20px', sm: '20px'},
-          lineHeight: {xs: '24px', sm: '35px'},
-        }}
-        fontWeight={bold ? 600 : 400}
-        color={stylingConstants.palette.text.primary}
-      >
-        ${value}
-      </Typography>
+      <Typography variant="h4">{name}</Typography>
+      <Typography variant="h4">${value}</Typography>
     </Box>
   );
 };

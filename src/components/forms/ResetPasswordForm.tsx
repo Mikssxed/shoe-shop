@@ -1,12 +1,12 @@
 'use client';
 
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useMutation, UseMutationResult} from '@tanstack/react-query';
-import {useForm} from 'react-hook-form';
-import {z} from 'zod';
-import {Alert, Box, Button} from '@mui/material';
-import {useSearchParams} from 'next/navigation';
-import {enqueueSnackbar} from 'notistack';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Alert, Box, Button } from '@mui/material';
+import { useSearchParams } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
 import ControlledInput from '@/components/common/ControlledInput';
 import {
@@ -14,8 +14,8 @@ import {
   IResetPasswordRequest,
   IResetPasswordResponse,
 } from '@/lib/types';
-import {ResetPasswordValidation} from '@/lib/validation';
-import {resetPassword} from '@/tools';
+import { ResetPasswordValidation } from '@/lib/validation';
+import { resetPassword } from '@/tools';
 
 const defaultValues = {
   password: '',
@@ -34,7 +34,7 @@ const ResetPasswordForm = () => {
     mutationFn: resetPassword,
   });
 
-  const {handleSubmit, control} = useForm<
+  const { handleSubmit, control } = useForm<
     z.infer<typeof ResetPasswordValidation>
   >({
     resolver: zodResolver(ResetPasswordValidation),

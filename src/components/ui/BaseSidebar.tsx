@@ -1,8 +1,8 @@
 'use client';
 
-import {SxProps} from '@mui/material';
+import { SxProps } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
-import {PropsWithChildren, useLayoutEffect, useState} from 'react';
+import { PropsWithChildren, useLayoutEffect, useState } from 'react';
 
 type Props = PropsWithChildren & {
   open: boolean;
@@ -46,8 +46,8 @@ export default function BaseSidebar({
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
           width: sidebarWidth,
-          height: {xs: '100%', md: 'calc(100vh - 120px)'}, // 120px is the height of the header TODO: change to theme value
-          top: {xs: 0, md: '120px'}, // 120px is the height of the header TODO: change to theme value
+          height: { xs: '100%', md: 'calc(100vh - 120px)' }, // 120px is the height of the header TODO: change to theme value
+          top: { xs: 0, md: '120px' }, // 120px is the height of the header TODO: change to theme value
           border: 'none',
           overflowX: 'hidden',
         },

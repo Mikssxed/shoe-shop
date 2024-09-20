@@ -1,7 +1,7 @@
 'use client';
 
-import {ReactNode} from 'react';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import { ReactNode } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -12,8 +12,8 @@ import {
   Typography,
 } from '@mui/material';
 
-import {Option} from './Option';
-import {stylingConstants} from '@/lib/constants/themeConstants';
+import { Option } from './Option';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 type CategoryProps = {
   name: string;
@@ -24,7 +24,7 @@ type CategoryProps = {
   }[];
 };
 
-export const Category = ({name, children, options}: CategoryProps) => {
+export const Category = ({ name, children, options }: CategoryProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -65,13 +65,13 @@ export const Category = ({name, children, options}: CategoryProps) => {
           },
         }}
       >
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{pl: 0}}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ pl: 0 }}>
           <Typography variant="category">{name}</Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{pl: 0}}>
+        <AccordionDetails sx={{ pl: 0 }}>
           {children}
-          <Box sx={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-            {options?.map(({id, value}) => (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {options?.map(({ id, value }) => (
               <Option
                 key={id}
                 value={value}
