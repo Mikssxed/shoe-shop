@@ -1,5 +1,7 @@
 'use client';
 
+import { textOverflowEllipsis } from '@/styles/commonStyles';
+import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 import {
   Box,
   Button,
@@ -13,20 +15,20 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { useIsMobile } from '@/hooks';
-import { profileSidebarData } from '@/lib/config/profileSidebarConfig';
-import { textOverflowEllipsis } from '@/styles/commonStyles';
-import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 import ProfilePicture from '@/components/common/ProfilePicture';
 import { BaseSidebar } from '@/components/ui';
+import { useIsMobile } from '@/hooks';
+import { profileSidebarData } from '@/lib/config/profileSidebarConfig';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import theme from '@/theme';
+import { enqueueSnackbar } from 'notistack';
+import LogOutModal from './LogOutModal';
 
 type Props = {
   open: boolean;
@@ -44,6 +46,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const { data } = useSession();
   const { firstName, lastName, username } = data?.user || {};
   const gotFullNames = firstName && lastName;
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const path = profileSidebarData.find(
@@ -62,6 +65,14 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   ) => {
     e.preventDefault();
     router.push(path);
+  };
+
+  const handleLogOut = async () => {
+    setModalOpen(false);
+    enqueueSnackbar('You have been logged out', { variant: 'success' });
+    setTimeout(() => {
+      signOut();
+    }, 500);
   };
 
   if (blockOnMobile && isMobile) {
@@ -187,7 +198,11 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
                   key={sidebarItem.id}
                   disablePadding
                   sx={{ mb: '36px' }}
-                  onClick={sidebarItem.onClick}
+                  onClick={() => {
+                    sidebarItem.onClick
+                      ? sidebarItem.onClick(setModalOpen)
+                      : null;
+                  }}
                 >
                   <ListItemButton
                     disableGutters
@@ -263,6 +278,11 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         onClose={onClose}
       >
         <Content />
+        <LogOutModal
+          onSubmit={handleLogOut}
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+        />
       </BaseSidebar>
     </>
   );
