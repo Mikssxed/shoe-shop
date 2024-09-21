@@ -1,9 +1,10 @@
-import { BaseWithValue, Data } from "./data.type";
-import { ICartItem, ProductAttributes } from "./Product.type";
+import { BaseWithValue, Data } from './data.type';
+import { ICartItem, ProductAttributes } from './Product.type';
 
 export interface IActionButtonsProps {
   sizes: Data<BaseWithValue>[];
   product: ProductAttributes;
+  id: string;
 }
 
 export interface IProductIdProps {

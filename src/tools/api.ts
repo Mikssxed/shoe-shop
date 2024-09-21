@@ -243,3 +243,23 @@ export const getMyProducts = async (
     },
   });
 };
+
+export const getLastViewed = async (ids: string[]) => {
+  if (!ids.length) {
+    return { data: [] };
+  }
+  const response = await fetchData<ProductsResponse>("/products", {
+    params: {
+      "pagination[page]": 1,
+      "pagination[pageSize]": 4,
+      "filters[id][$in]": ids,
+      populate: "*",
+    },
+  });
+
+  const sortedData = response.data.sort(
+    (a, b) => ids.indexOf(a.id.toString()) - ids.indexOf(b.id.toString())
+  );
+
+  return { ...response, data: sortedData };
+};

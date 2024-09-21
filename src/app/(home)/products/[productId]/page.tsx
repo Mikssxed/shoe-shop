@@ -1,10 +1,10 @@
-import Image from 'next/image';
 import { Box, Container, Paper, Typography } from '@mui/material';
+import Image from 'next/image';
 
-import { getProduct } from '@/tools';
 import { ImageSlider } from '@/components/common';
-import ActionButtons from './ActionButtons';
 import { productIdStyles as styles } from '@/styles/product/product.style';
+import { getProduct } from '@/tools';
+import ActionButtons from './ActionButtons';
 
 type Props = {
   params: { productId: string };
@@ -63,6 +63,7 @@ const Product = async ({ params: { productId } }: Props) => {
         <ActionButtons
           sizes={sizes}
           product={{ ...product?.data.attributes, id: Number(productId) }}
+          id={productId}
         />
         <Box sx={styles.descriptionContainer}>
           <Typography variant="h4" sx={styles.productLabel}>

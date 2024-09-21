@@ -1,14 +1,19 @@
 'use client';
 
-import { useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 
-import { addToCartQuery } from '@/tools';
-import { actionButtonsStyles as styles } from '@/styles/product/product.style';
 import { IActionButtonsProps } from '@/lib/types/props.type';
+import { actionButtonsStyles as styles } from '@/styles/product/product.style';
+import { addToCartQuery } from '@/tools';
+import { addLastViewedProductId } from '@/utils';
 
-export default function ActionButtons({ sizes, product }: IActionButtonsProps) {
+export default function ActionButtons({
+  sizes,
+  product,
+  id,
+}: IActionButtonsProps) {
   const [selectedSize, setSelectedSize] = useState<number | undefined>();
 
   const onSelectSize = (value: number) => setSelectedSize(value);
@@ -20,10 +25,9 @@ export default function ActionButtons({ sizes, product }: IActionButtonsProps) {
       autoHideDuration: 2000,
     });
   };
-
-  const addToFav = () => {
-    //TODO: add to fav logic
-  };
+  useEffect(() => {
+    addLastViewedProductId(id);
+  }, [id]);
 
   return (
     <>
@@ -56,9 +60,6 @@ export default function ActionButtons({ sizes, product }: IActionButtonsProps) {
         </Box>
       )}
       <Box sx={styles.addButtons}>
-        <Button onClick={addToFav} variant="outlined" sx={styles.actionButton}>
-          Favorite
-        </Button>
         <Button onClick={addToBag} variant="contained" sx={styles.actionButton}>
           Add to Bag
         </Button>

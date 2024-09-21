@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { FilterSidebar, ProductList } from '@/components/common';
+import LastViewedProducts from '@/components/common/LastViewedProducts';
 import { useIsMobile } from '@/hooks';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import { FiltersData, ProductsResponse } from '@/lib/types';
@@ -46,6 +47,7 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
         />
       )}
       <Box sx={{ p: { xs: '0 24px', md: 0 }, mt: 3, width: '100%' }}>
+        <LastViewedProducts isFullWidth={!showFilters} />
         <Box
           sx={{
             display: 'flex',
@@ -56,10 +58,9 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
           }}
         >
           <Typography variant="h1">
-            Search Results
             {searchParams.has('search')
-              ? `: "${searchParams.get('search')}"`
-              : ''}
+              ? `Search Results: "${searchParams.get('search')}"`
+              : 'Available products'}
           </Typography>
           <IconButton
             onClick={handleShowFilters}

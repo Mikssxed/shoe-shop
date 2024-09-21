@@ -5,6 +5,7 @@ import { User } from 'next-auth';
 import { queryClient } from '.';
 import {
   getFiltersData,
+  getLastViewed,
   getMyProducts,
   getProduct,
   getProducts,
@@ -213,5 +214,13 @@ export const changeSelectedSize = (shoe: ICartItem, newSize: number) => {
         ? { ...item, selectedSize: newSize }
         : item,
     );
+  });
+};
+
+export const useLastViewed = (ids: string[]) => {
+  return useQuery({
+    queryKey: ['lastViewed', ids],
+    queryFn: () => getLastViewed(ids),
+    select: data => data.data,
   });
 };
