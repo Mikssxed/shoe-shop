@@ -125,6 +125,7 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
             <ProductCard
               imagePriority={index === 0}
               product={{ ...product.attributes, id: product.id }}
+              user={user}
             />
           </Grid>
         ))}

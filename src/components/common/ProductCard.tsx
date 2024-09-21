@@ -17,17 +17,20 @@ import {
 import { MoreHoriz } from '@mui/icons-material';
 import { BagTick } from 'iconsax-react';
 import { enqueueSnackbar } from 'notistack';
+import { User } from 'next-auth';
 
 import { ProductAttributes } from '@/lib/types';
 import ButtonMenu from '@/components/common/ButtonMenu';
 import { addToCartQuery } from '@/tools';
+import useDeleteProduct from '@/hooks/useDeleteProduct';
 
 type Props = {
   product: ProductAttributes;
   imagePriority: boolean;
+  user?: User;
 };
 
-const ProductCard = ({ product, imagePriority }: Props) => {
+const ProductCard = ({ product, imagePriority, user }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
@@ -43,9 +46,14 @@ const ProductCard = ({ product, imagePriority }: Props) => {
 
   const pathName = usePathname();
   const isProfile = pathName.includes('/profile/my-products');
+  const mutation = useDeleteProduct(product.name);
 
   const deleteProduct = (id: number) => {
-    // TODO: implement delete product
+    try {
+      if (user) mutation.mutateAsync({ user, id });
+    } catch (error: any) {
+      throw new Error('Something went wrong...');
+    }
   };
 
   return (

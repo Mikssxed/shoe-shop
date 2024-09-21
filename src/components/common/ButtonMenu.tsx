@@ -83,8 +83,8 @@ const ButtonMenu = ({
         open={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}
         onSubmit={() => {
-          onDeleteProduct();
           setOpenDeleteModal(false);
+          onDeleteProduct();
         }}
       />
     </>
