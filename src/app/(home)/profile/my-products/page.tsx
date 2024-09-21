@@ -3,12 +3,12 @@ import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { ProductList } from '@/components/common';
 import ProfilePicture from '@/components/common/ProfilePicture';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
-import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 import { getMyProducts } from '@/tools';
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 
 export default async function MyProducts() {
   const session = await getServerSession(authOptions);
@@ -18,7 +18,7 @@ export default async function MyProducts() {
     return null;
   }
   const { username, firstName, lastName } = user;
-  const initialData = await getMyProducts(user);
+  const initialData = await getMyProducts(user, 1);
   const gotFullNames = firstName && lastName;
   return (
     <>
@@ -130,10 +130,7 @@ export default async function MyProducts() {
             </Button>
           </Link>
         </Stack>
-        <ProductList
-          initialProducts={initialData}
-          filters={Object.assign({ 'filters[filters[userID]]': user.id })}
-        />
+        <ProductList initialProducts={initialData} user={user} />
       </Box>
     </>
   );

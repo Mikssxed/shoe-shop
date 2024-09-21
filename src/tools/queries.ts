@@ -1,13 +1,15 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
+import { ICartItem, ProductAttributes, ProductsResponse } from '@/lib/types';
+import { User } from 'next-auth';
+import { queryClient } from '.';
 import {
   getFiltersData,
+  getMyProducts,
   getProduct,
   getProducts,
   getProductsNames,
 } from './api';
-import { ICartItem, ProductAttributes, ProductsResponse } from '@/lib/types';
-import { queryClient } from '.';
 
 /**
  * Custom hook to fetch paginated products using infinite scrolling.
@@ -17,10 +19,15 @@ import { queryClient } from '.';
  * @param {Object} [params={}] - Optional query parameters to filter or sort products.
  * @returns {Object} - The result of the infinite query, including data, fetching status, and pagination.
  */
-export const useProducts = (initialProducts: ProductsResponse, params?: {}) => {
+export const useProducts = (
+  initialProducts: ProductsResponse,
+  params?: {},
+  user?: User,
+) => {
   return useInfiniteQuery({
-    queryKey: ['products', params],
-    queryFn: ({ pageParam }) => getProducts(pageParam, params),
+    queryKey: ['products', JSON.stringify(params)],
+    queryFn: ({ pageParam }) =>
+      user ? getMyProducts(user, pageParam) : getProducts(pageParam, params),
     getNextPageParam: lastPage => {
       if (!lastPage) return undefined;
       const hasNextPage =
@@ -30,9 +37,9 @@ export const useProducts = (initialProducts: ProductsResponse, params?: {}) => {
     },
     select: data => data.pages.flatMap(page => page.data),
     initialPageParam: 1,
-    initialData: {
-      pages: [initialProducts],
-      pageParams: [1],
+    placeholderData: (_, prevQuery) => {
+      if (prevQuery || !initialProducts) return;
+      return { pages: [initialProducts], pageParams: [1] };
     },
     staleTime: 0,
   });

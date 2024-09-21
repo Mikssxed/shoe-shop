@@ -1,6 +1,7 @@
 export interface ILogInRequest {
   identifier: string;
   password: string;
+  rememberMe: boolean;
 }
 
 export interface ISignUpRequest {

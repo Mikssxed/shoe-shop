@@ -26,8 +26,6 @@ const SignInForm: React.FC = () => {
     defaultValues,
   });
 
-  // TODO: implement 'remember me' checkbox using
-
   const { isPending, isError, mutateAsync, error } = useSignIn();
 
   const onSubmit = async (data: z.infer<typeof LogInFormValidation>) => {
@@ -35,6 +33,7 @@ const SignInForm: React.FC = () => {
       await mutateAsync({
         identifier: data.email,
         password: data.password,
+        rememberMe: data.rememberMe,
       });
     } catch (error: any) {
       console.error(error);

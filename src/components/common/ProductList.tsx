@@ -9,23 +9,24 @@ import {
   Typography,
 } from '@mui/material';
 import { BagCross1 } from 'iconsax-react';
+import { User } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 import { useIsMobile } from '@/hooks';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 import { ProductsResponse } from '@/lib/types';
 import { useProducts } from '@/tools';
 import { buildParams } from '@/utils';
 import ProductCard from './ProductCard';
-import { stylingConstants } from '@/lib/constants/themeConstants';
 
 type Props = {
   fullWidth?: boolean;
   initialProducts: ProductsResponse;
-  filters?: Record<string, string | number>;
+  user?: User;
 };
 
-const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
+const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
   const isMobile = useIsMobile();
   const isFullWidth = fullWidth || isMobile;
   const searchParams = useSearchParams();
@@ -34,8 +35,7 @@ const ProductList = ({ fullWidth, initialProducts, filters }: Props) => {
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useProducts(initialProducts, filters || buildParams(searchParams));
-
+  } = useProducts(initialProducts, buildParams(searchParams), user);
   const bottomElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

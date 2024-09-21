@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { signIn } from 'next-auth/react';
 import { User } from 'next-auth';
+import { signIn } from 'next-auth/react';
 
 import {
   ApiResponseList,
@@ -32,7 +32,7 @@ export const fetchData = async <T>(
   options: AxiosRequestConfig = {},
 ): Promise<T> => {
   try {
-    const response: AxiosResponse<T> = await axiosInstance(url, options);
+    const response: AxiosResponse<T> = await axiosInstance.get(url, options);
     return response.data;
   } catch (error) {
     console.error('Error retrieving data:', error);
@@ -77,7 +77,7 @@ export const getProducts = async (
   page: number,
   params?: {},
 ): Promise<ProductsResponse> => {
-  return fetchData<ProductsResponse>('/products', {
+  return await fetchData<ProductsResponse>('/products', {
     params: {
       populate: '*',
       'pagination[page]': page,
@@ -225,13 +225,17 @@ export const resetPassword = async (
  * @param {User} user - The authenticated user object.
  * @returns {Promise<ProductsResponse>} - The response containing the user's products.
  */
-export const getMyProducts = async (user: User): Promise<ProductsResponse> => {
+export const getMyProducts = async (
+  user: User,
+  page: number,
+): Promise<ProductsResponse> => {
   return fetchData<ProductsResponse>('/products', {
     params: {
       'filters[userID]': user.id,
       populate: '*',
-      'pagination[page]': 1,
+      'pagination[page]': page,
       'pagination[pageSize]': 12,
+      'filters[teamName]': 'team-1',
       sort: 'createdAt:desc',
     },
     headers: {

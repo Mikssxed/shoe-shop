@@ -52,6 +52,7 @@ const useSignIn = () => {
       signIn('credentials', {
         identifier: userData.identifier,
         password: userData.password,
+        rememberMe: userData.rememberMe,
         redirect: false,
       }).then((value: SignInResponse | undefined) => {
         if (value?.ok) {
