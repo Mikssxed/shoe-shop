@@ -53,6 +53,8 @@ export const authOptions: AuthOptions = {
             email: data.user?.email,
             accessToken: data.jwt,
             image: userInfo.data.avatar?.url,
+            firstName: userInfo.data.firstName,
+            lastName: userInfo.data.lastName,
           };
         } catch (error) {
           return null;

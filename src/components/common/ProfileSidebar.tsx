@@ -1,10 +1,7 @@
 'use client';
 
-import { textOverflowEllipsis } from '@/styles/commonStyles';
-import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 import {
   Box,
-  Button,
   Divider,
   IconButton,
   List,
@@ -17,7 +14,6 @@ import {
 } from '@mui/material';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -29,6 +25,9 @@ import { stylingConstants } from '@/lib/constants/themeConstants';
 import theme from '@/theme';
 import { enqueueSnackbar } from 'notistack';
 import LogOutModal from './LogOutModal';
+import { capitalizeFirstLetter } from '@/utils/helperFunctions';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
+import UserAvatarSkeleton from '../ui/loading-skeletons/UserAvatarSkeleton';
 
 type Props = {
   open: boolean;
@@ -43,10 +42,12 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   );
   const currentPath = usePathname();
   const isMobile = useIsMobile();
-  const { data } = useSession();
+  const { data, status } = useSession();
   const { firstName, lastName, username } = data?.user || {};
   const gotFullNames = firstName && lastName;
   const [modalOpen, setModalOpen] = useState(false);
+
+  console.log(data);
 
   useEffect(() => {
     const path = profileSidebarData.find(
@@ -171,100 +172,75 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             </IconButton>
           </Box>
         )}
-        {data ? (
+
+        <>
           <>
-            <>
-              <Box
-                sx={{
-                  pl: '40px',
-                  pt: '37.6px',
-                  pb: '32px',
-                }}
-              >
-                {user}
-              </Box>
-              <Divider />
-            </>
-            <List
-              disablePadding
+            <Box
               sx={{
                 pl: '40px',
-                pt: '32px',
-                pr: '40px',
+                pt: '37.6px',
+                pb: '32px',
               }}
             >
-              {profileSidebarData.map((sidebarItem, index) => (
-                <ListItem
-                  key={sidebarItem.id}
-                  disablePadding
-                  sx={{ mb: '36px' }}
-                  onClick={() => {
-                    sidebarItem.onClick
-                      ? sidebarItem.onClick(setModalOpen)
-                      : null;
-                  }}
-                >
-                  <ListItemButton
-                    disableGutters
-                    sx={{
-                      gap: '15px',
-                      color: '#000',
-                      transition: 'all 0.3s',
-                      '&.Mui-selected': {
-                        color: '#FE645E',
-                      },
-                      '&:hover': {
-                        pl: '10px',
-                      },
-                    }}
-                    selected={index === selectedIndex}
-                    onClick={e => handleListItemClick(e, sidebarItem.path)}
-                  >
-                    <ListItemIcon sx={{ minWidth: 20 }}>
-                      <sidebarItem.icon
-                        size={20}
-                        color={index === selectedIndex ? '#FE645E' : '#6e7378'}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={sidebarItem.name}
-                      sx={{
-                        fontSize: '1rem',
-                        fontFamily: theme.typography.fontFamily,
-                        lineHeight: '18.77px',
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
+              {status === 'loading' ? <UserAvatarSkeleton /> : user}
+            </Box>
+            <Divider />
           </>
-        ) : (
-          <Box sx={{ mt: '100px', px: '20px' }}>
-            <Link
-              href="/auth/sign-in"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              <Button
-                sx={{
-                  width: '100%',
-                  height: '48px',
-                  typography: {
-                    textTransform: 'none',
-                    fontWeight: '700',
-                  },
+          <List
+            disablePadding
+            sx={{
+              pl: '40px',
+              pt: '32px',
+              pr: '40px',
+            }}
+          >
+            {profileSidebarData.map((sidebarItem, index) => (
+              <ListItem
+                key={sidebarItem.id}
+                disablePadding
+                sx={{ mb: '36px' }}
+                onClick={() => {
+                  sidebarItem.onClick
+                    ? sidebarItem.onClick(setModalOpen)
+                    : null;
                 }}
-                variant="outlined"
-                color="primary"
               >
-                Sign in
-              </Button>
-            </Link>
-          </Box>
-        )}
+                <ListItemButton
+                  disableGutters
+                  sx={{
+                    gap: '15px',
+                    color: '#000',
+                    transition: 'all 0.3s',
+                    '&.Mui-selected': {
+                      color: '#FE645E',
+                    },
+                    '&:hover': {
+                      pl: '10px',
+                    },
+                  }}
+                  selected={index === selectedIndex}
+                  onClick={e => handleListItemClick(e, sidebarItem.path)}
+                >
+                  <ListItemIcon sx={{ minWidth: 20 }}>
+                    <sidebarItem.icon
+                      size={20}
+                      color={index === selectedIndex ? '#FE645E' : '#6e7378'}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    primary={sidebarItem.name}
+                    sx={{
+                      fontSize: '1rem',
+                      fontFamily: theme.typography.fontFamily,
+                      lineHeight: '18.77px',
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </>
       </Box>
     );
   };
