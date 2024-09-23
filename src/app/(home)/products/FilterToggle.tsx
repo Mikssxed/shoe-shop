@@ -27,7 +27,6 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
       setShowFilters(false);
       return;
     }
-    setShowFilters(true);
   }, [isMobile]);
 
   const handleShowFilters = () => {
@@ -47,7 +46,9 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
         />
       )}
       <Box sx={{ p: { xs: '0 24px', md: 0 }, mt: 3, width: '100%' }}>
-        <LastViewedProducts isFullWidth={!showFilters} />
+        {!searchParams.has('search') && (
+          <LastViewedProducts isFullWidth={!showFilters} />
+        )}
         <Box
           sx={{
             display: 'flex',

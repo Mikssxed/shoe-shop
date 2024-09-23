@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  Avatar,
-  Box,
-  CircularProgress,
-  Grid,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Avatar, Grid, Stack, Typography } from '@mui/material';
 import { BagCross1 } from 'iconsax-react';
 import { User } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
@@ -19,6 +12,7 @@ import { ProductsResponse } from '@/lib/types';
 import { useProducts } from '@/tools';
 import { buildParams } from '@/utils';
 import ProductCard from './ProductCard';
+import ProductCardSkeleton from './ProductCardSkeleton';
 
 type Props = {
   fullWidth?: boolean;
@@ -30,6 +24,7 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
   const isMobile = useIsMobile();
   const isFullWidth = fullWidth || isMobile;
   const searchParams = useSearchParams();
+
   const {
     data: products,
     isLoading,
@@ -69,19 +64,24 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
       columns={{ xs: 12, md: 12, lg: 12, xl: isFullWidth ? 8 : 12 }}
       sx={{ position: 'relative' }}
     >
-      {isLoading && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '0%',
-            left: '50%',
-            transform: 'translate(-50%, 0%)',
-            zIndex: 10,
-          }}
-        >
-          <CircularProgress size={100} />
-        </Box>
-      )}
+      {isLoading &&
+        new Array(8).fill(0).map((_, index) => (
+          <Grid
+            key={index}
+            item
+            xs={6}
+            md={isFullWidth ? 4 : 6}
+            lg={isFullWidth ? 3 : 4}
+            xl={isFullWidth ? 2 : 3}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              transition: 'all 0.3s ease-in-out',
+            }}
+          >
+            <ProductCardSkeleton />
+          </Grid>
+        ))}
       {products && products?.length <= 0 && (
         <Grid item xs={12} display="flex" justifyContent="center" marginY={5}>
           <Stack gap={1} marginY={2}>

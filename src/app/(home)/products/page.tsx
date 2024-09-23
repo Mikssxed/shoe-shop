@@ -1,11 +1,16 @@
 import { Stack } from '@mui/material';
 
 import { getFiltersData, getMaxPrice, getProducts } from '@/tools';
+import { buildParams } from '@/utils';
 import FilterToggle from './FilterToggle';
 
-const Products = async () => {
+type Props = {
+  searchParams: URLSearchParams;
+};
+
+const Products = async ({ searchParams }: Props) => {
   const filters = await getFiltersData();
-  const initialProducts = await getProducts(1);
+  const initialProducts = await getProducts(1, buildParams(searchParams));
   const maxPrice = await getMaxPrice();
   return (
     <Stack

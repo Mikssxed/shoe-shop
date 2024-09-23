@@ -1,9 +1,6 @@
 'use client';
 
-import { MouseEvent, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
+import { MoreHoriz } from '@mui/icons-material';
 import {
   Box,
   Card,
@@ -14,15 +11,18 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { MoreHoriz } from '@mui/icons-material';
 import { BagTick } from 'iconsax-react';
-import { enqueueSnackbar } from 'notistack';
 import { User } from 'next-auth';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
+import { MouseEvent, useState } from 'react';
 
-import { ProductAttributes } from '@/lib/types';
 import ButtonMenu from '@/components/common/ButtonMenu';
-import { addToCartQuery } from '@/tools';
 import useDeleteProduct from '@/hooks/useDeleteProduct';
+import { ProductAttributes } from '@/lib/types';
+import { addToCartQuery } from '@/tools';
 
 type Props = {
   product: ProductAttributes;
@@ -142,7 +142,9 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
                 }}
               >
                 <Box>
-                  <Typography variant="h3">{product.name}</Typography>
+                  <Typography sx={{ lineBreak: 'anywhere' }} variant="h3">
+                    {product.name}
+                  </Typography>
                   {product.gender?.data?.attributes.name && (
                     <Typography
                       variant="h5"
