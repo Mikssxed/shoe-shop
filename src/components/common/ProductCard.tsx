@@ -9,6 +9,7 @@ import {
   IconButton,
   Paper,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { BagTick } from 'iconsax-react';
@@ -19,6 +20,7 @@ import { usePathname } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 import { MouseEvent, useState } from 'react';
 
+import { textOverflowEllipsis } from '@/styles/commonStyles';
 import ButtonMenu from '@/components/common/ButtonMenu';
 import useDeleteProduct from '@/hooks/useDeleteProduct';
 import { ProductAttributes } from '@/lib/types';
@@ -146,20 +148,36 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
                 }}
               >
                 <Box>
-                  <Typography sx={{ lineBreak: 'anywhere' }} variant="h3">
-                    {product.name}
-                  </Typography>
+                  <Tooltip title={product.name} placement="top-end">
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        ...textOverflowEllipsis.multiLine,
+                        fontSize: { xs: '10px', sm: '22px' },
+                      }}
+                    >
+                      {product.name}
+                    </Typography>
+                  </Tooltip>
                   {product.gender?.data?.attributes.name && (
                     <Typography
                       variant="h5"
                       textTransform="capitalize"
                       color="text.secondary"
+                      sx={{
+                        fontSize: { xs: '9px', sm: '18px' },
+                      }}
                     >
                       {`${product.gender?.data?.attributes.name}'s Shoes`}
                     </Typography>
                   )}
                 </Box>
-                <Typography variant="h3">${product.price}</Typography>
+                <Typography
+                  variant="h3"
+                  sx={{ fontSize: { xs: '10px', sm: '22px' } }}
+                >
+                  ${product.price}
+                </Typography>
               </Stack>
             </CardContent>
           </CardActionArea>

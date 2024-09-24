@@ -11,6 +11,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import Cross from '/public/icons/cross.svg';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { useProductsNames } from '@/tools';
 import { useIsMobile, useDebounce } from '@/hooks';
 import { stylingConstants } from '@/lib/constants/themeConstants';
@@ -106,6 +108,7 @@ export default function Search({ open, onClose }: SearchProps) {
           sx={{
             display: 'flex',
             flexDirection: 'column',
+            width: { xs: '100%', md: '90%' },
           }}
         >
           {open && (
@@ -149,6 +152,7 @@ export default function Search({ open, onClose }: SearchProps) {
                       display: 'flex',
                       flexDirection: 'column',
                       overflow: 'auto',
+                      width: '100%',
                     }}
                   >
                     {productsNames
@@ -166,17 +170,23 @@ export default function Search({ open, onClose }: SearchProps) {
                           key={product.id}
                           onClick={() => handleSubmit(product.attributes.name)}
                           sx={{
+                            width: { xs: '90%', sm: '80%' },
+                            maxWidth: '760px',
                             px: '8px',
                             py: { xs: '4px', sm: '6px', md: '8px' },
                           }}
                         >
                           <ListItemText
                             primary={product.attributes.name}
+                            title={product.attributes.name}
                             primaryTypographyProps={{
                               color: stylingConstants.palette.text.primary,
                               fontSize: { xs: '14px', sm: '17px', md: '20px' },
+                              noWrap: true,
                             }}
                             sx={{
+                              ...textOverflowEllipsis.singleLine,
+                              display: 'block',
                               py: '4px',
                               my: { xs: 0, sm: '2px', md: '4px' },
                             }}

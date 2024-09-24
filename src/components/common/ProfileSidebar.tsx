@@ -47,8 +47,6 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const gotFullNames = firstName && lastName;
   const [modalOpen, setModalOpen] = useState(false);
 
-  console.log(data);
-
   useEffect(() => {
     const path = profileSidebarData.find(
       sidebarItem => sidebarItem.path === currentPath,
@@ -119,7 +117,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         </Typography>
         <Typography
           sx={{
-            ...textOverflowEllipsis,
+            ...textOverflowEllipsis.singleLine,
             maxWidth: { xs: '140px', md: '200px' },
             color: stylingConstants.palette.text.primary,
           }}

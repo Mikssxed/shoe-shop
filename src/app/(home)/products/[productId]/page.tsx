@@ -1,10 +1,11 @@
-import { Box, Container, Paper, Typography } from '@mui/material';
+import { Box, Container, Paper, Tooltip, Typography } from '@mui/material';
 import Image from 'next/image';
 
 import { ImageSlider } from '@/components/common';
 import { productIdStyles as styles } from '@/styles/product/product.style';
 import { getProduct } from '@/tools';
 import ActionButtons from './ActionButtons';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
 
 type Props = {
   params: { productId: string };
@@ -32,21 +33,41 @@ const Product = async ({ params: { productId } }: Props) => {
       <Box
         sx={{
           ...styles.productContainer,
-          alignItems: { xs: 'center', md: 'flex-start' },
+          alignItems: { xs: 'center', lg: 'flex-start' },
         }}
       >
         {images.length > 0 ? (
-          <ImageSlider images={images} />
+          <ImageSlider images={images} name={name} />
         ) : (
-          <Paper sx={styles.noImagePaper}>
-            <Image fill src="/icons/galleryIcon.svg" alt="no image" />
-          </Paper>
+          <Box component="div" sx={styles.noImageBox}>
+            <Image
+              width={250}
+              height={250}
+              src="/icons/galleryIcon.svg"
+              alt="no image"
+            />
+          </Box>
         )}
       </Box>
-      <Box sx={styles.productContainer}>
+      <Box
+        sx={{
+          ...styles.productContainer,
+          maxWidth: '900px',
+          alignSelf: 'center',
+        }}
+      >
         <Box sx={styles.productName}>
-          <Typography variant="h1">{name}</Typography>
-          <Typography variant="h3">${price}</Typography>
+          <Tooltip title={name} placement="top-end">
+            <Typography variant="h1" sx={{ ...textOverflowEllipsis.multiLine }}>
+              {name}
+            </Typography>
+          </Tooltip>
+          <Typography
+            variant="h3"
+            sx={{ lineHeight: { xs: '35px', md: '53px' } }}
+          >
+            ${price}
+          </Typography>
         </Box>
         <Box sx={styles.genderAndColor}>
           {gender && (

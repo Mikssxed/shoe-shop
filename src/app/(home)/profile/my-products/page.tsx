@@ -82,7 +82,7 @@ export default async function MyProducts() {
           <Typography
             sx={{
               ml: { xs: 1, sm: 3 },
-              ...textOverflowEllipsis,
+              ...textOverflowEllipsis.singleLine,
               maxWidth: { xs: '160px', sm: '220px' },
             }}
             variant="h4"
@@ -112,6 +112,7 @@ export default async function MyProducts() {
           sx={{
             alignItems: 'center',
             justifyContent: 'space-between',
+            gap: '4px',
             mb: 5,
           }}
         >
@@ -121,9 +122,16 @@ export default async function MyProducts() {
               variant="contained"
               sx={{
                 textTransform: 'none',
-                p: '8px 24px',
                 position: 'relative',
                 zIndex: 1,
+                width: { xs: 117, md: 152 },
+                height: { xs: 30.79, md: 40 },
+                fontSize: { xs: '12.32px', md: '1rem' },
+                lineHeight: { xs: '14.45px', md: '18.77px' },
+                fontWeight: 500,
+                p: 0,
+                borderRadius: { xs: '6.16px', md: '8px' },
+                flexShrink: 0,
               }}
             >
               Add product

@@ -42,7 +42,7 @@ export default function ActionButtons({
               .map(({ id, attributes: { value } }) => {
                 const isChecked = +value === selectedSize;
                 return (
-                  <Grid key={id} xs={3} sm={2} md={3} lg={2} item>
+                  <Grid key={id} xs={3} sm={2} item>
                     <Button
                       sx={{
                         ...styles.sizeBtn,

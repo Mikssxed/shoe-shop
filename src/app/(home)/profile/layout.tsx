@@ -7,7 +7,7 @@ export default function ProfileLayout({children}: {children: React.ReactNode}) {
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{maxWidth: 1850, mx: 'auto', px: '20px'}}
+      sx={{maxWidth: 1850, mx: 'auto'}}
     >
       <ProfileSidebar open blockOnMobile />
       <Container

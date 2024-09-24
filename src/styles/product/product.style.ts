@@ -11,12 +11,12 @@ export const productIdStyles: Record<string, SxProps> = {
   root: {
     maxWidth: '1300px',
     display: 'flex',
-    flexDirection: { xs: 'column', md: 'row' },
-    gap: '100px',
+    flexDirection: { xs: 'column', lg: 'row' },
+    gap: { xs: '40px', lg: '100px' },
     mt: '100px',
     pb: '100px',
   },
-  noImagePaper: {
+  noImageBox: {
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
@@ -46,7 +46,7 @@ export const productIdStyles: Record<string, SxProps> = {
   productName: {
     width: '100%',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     display: 'flex',
     gap: '24px',
   },
