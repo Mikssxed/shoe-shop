@@ -16,6 +16,8 @@ import {
   ProductResponse,
   ProductsResponse,
 } from '@/lib/types';
+import { IAddProductResponse } from '@/lib/types/responses/product.types';
+import { IAddProductRequest } from '@/lib/types/requests/product.type';
 import axiosInstance from '@/tools/axios';
 
 /**
@@ -52,9 +54,14 @@ export const fetchData = async <T>(
 export const postData = async <T>(
   url: string,
   options: Record<string, any>,
+  config?: AxiosRequestConfig,
 ): Promise<T> => {
   try {
-    const response: AxiosResponse<T> = await axiosInstance.post(url, options);
+    const response: AxiosResponse<T> = await axiosInstance.post(
+      url,
+      options,
+      config,
+    );
     return response.data;
   } catch (error) {
     console.error('Error posting data:', error);
@@ -230,6 +237,7 @@ export const forgotPassword = async (
  * @param {IResetPasswordRequest} data - The reset password request data.
  * @returns {Promise<IResetPasswordResponse>} - The response after the password reset.
  */
+
 export const resetPassword = async (
   data: IResetPasswordRequest,
 ): Promise<IResetPasswordResponse> => {
@@ -259,6 +267,34 @@ export const getMyProducts = async (
       Authorization: `Bearer ${user?.accessToken}`,
     },
   });
+};
+
+export const addProduct = async (
+  data: IAddProductRequest,
+  token: string,
+): Promise<IAddProductResponse> => {
+  const headers: any = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axiosInstance.post<IAddProductResponse>(
+    '/products',
+    data,
+    { headers },
+  );
+
+  return response.data;
+};
+
+export const addImages = (data: any) => {
+  const headers: any = {
+    'Content-Type': 'multipart/form-data',
+  };
+
+  const response = axiosInstance.post('/upload', data, { headers });
+
+  return response;
 };
 
 export const getLastViewed = async (ids: string[]) => {

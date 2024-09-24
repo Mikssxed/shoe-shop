@@ -10,10 +10,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import Image from 'next/image';
 import { ComponentProps, useId } from 'react';
 
-import { inter } from '@/lib/constants/themeConstants';
+import ErrorMessage from './ErrorMessage';
 
 type InputProps = InputBaseProps & {
   label: string;
@@ -70,34 +69,7 @@ const Input = ({
         {...props}
         id={id}
       />
-      {errorMessage && (
-        <Box
-          sx={{
-            color: theme.palette.error.main,
-            display: 'flex',
-            gap: '4px',
-            alignItems: 'center',
-          }}
-        >
-          <Image
-            src={'/icons/warningIcon.svg'}
-            alt="warning"
-            width={15}
-            height={13}
-          />
-          <Typography
-            component="p"
-            color={theme.palette.error.main}
-            sx={{
-              m: 0,
-              fontSize: theme.typography.body2,
-              fontFamily: inter.style.fontFamily,
-            }}
-          >
-            {errorMessage}
-          </Typography>
-        </Box>
-      )}
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
     </Box>
   );
 };

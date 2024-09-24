@@ -6,18 +6,20 @@ import { SelectProps } from '@mui/material/Select/Select';
 import { useId } from 'react';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
-import theme from '@/theme';
+import ErrorMessage from './ErrorMessage';
 
 type DropdownProps = SelectProps & {
   labelText?: string;
   options?: { value: number | string; name: string }[];
   withoutNone?: boolean;
+  errorMessage?: string;
 };
 
 const Dropdown = ({
   labelText,
   options = [],
   withoutNone = false,
+  errorMessage,
   ...props
 }: DropdownProps) => {
   const id = useId();
@@ -31,16 +33,22 @@ const Dropdown = ({
           borderRadius: '8px',
           maxHeight: '48px',
           color: stylingConstants.palette.text.primary,
-          border: `1px solid ${stylingConstants.palette.grey[700]}`,
+          border: `1px solid ${
+            errorMessage
+              ? stylingConstants.palette.error.main
+              : stylingConstants.palette.grey[700]
+          }`,
+          my: '3px',
         }}
         MenuProps={{ sx: { maxHeight: 400 } }}
         IconComponent={ExpandMoreIcon}
         {...props}
+        defaultValue={options.map(elem => elem.value).includes(0) ? 0 : ''}
       >
         {!withoutNone && (
           <MenuItem
             sx={{
-              fontSize: theme.typography.body2.fontSize,
+              fontSize: 15,
               color: stylingConstants.palette.text.primary,
             }}
             key="none"
@@ -52,7 +60,7 @@ const Dropdown = ({
         {options.map(({ value, name }) => (
           <MenuItem
             sx={{
-              fontSize: theme.typography.body2.fontSize,
+              fontSize: 15,
               color: stylingConstants.palette.text.primary,
             }}
             key={value}
@@ -62,6 +70,7 @@ const Dropdown = ({
           </MenuItem>
         ))}
       </Select>
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
     </Box>
   );
 };

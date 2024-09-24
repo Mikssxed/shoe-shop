@@ -11,7 +11,7 @@ interface IControlledInputProps {
   required?: boolean;
   placeholder: string;
   inputStyle?: SxProps<Theme>;
-  type?: 'password';
+  type?: 'password'| "number";
   containerProps?: ComponentProps<typeof Box>;
 }
 

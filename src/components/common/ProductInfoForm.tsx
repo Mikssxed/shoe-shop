@@ -1,55 +1,44 @@
-"use client";
+'use client';
 
-import {
-  Box,
-  Button,
-  Typography,
-  Grid,
-  InputLabel,
-  Paper,
-  IconButton,
-} from "@mui/material";
-import React, { useState } from "react";
-import { Dropdown, Input, TextArea } from "../ui";
-import theme from "@/theme";
-import { Gallery } from "iconsax-react";
-import Image from "next/image";
+import { Box, Button, Typography, InputLabel } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
+import { AxiosResponse } from 'axios';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { useDropzone } from 'react-dropzone';
+
 import {
   formAndImagesContainer,
   formSaveButton,
-  imageCoverOnHover,
-  imageUploadBox,
-  imageUploadText,
   inputContainer,
-  productImageContainer,
   productInfoFormContainer,
   productInfoTitle,
-  productSizeButton,
   saveButtonContainer,
-  trashIconContainer,
-} from "@/styles/products/productInfoFormStyles";
-import DeleteModal from "./DeleteModal";
-
-// TODO: use real sizes from backend
-const sizes = {
-  data: [
-    { id: 1, attributes: { value: 36 } },
-    { id: 2, attributes: { value: 37 } },
-    { id: 3, attributes: { value: 38 } },
-    { id: 4, attributes: { value: 39 } },
-    { id: 5, attributes: { value: 40 } },
-    { id: 6, attributes: { value: 41 } },
-    { id: 7, attributes: { value: 42 } },
-    { id: 8, attributes: { value: 43 } },
-    { id: 9, attributes: { value: 44 } },
-    { id: 10, attributes: { value: 45 } },
-  ],
-};
+} from '@/styles/products/productInfoFormStyles';
+import ControlledInput from './ControlledInput';
+import ControlledDropdown from '../ui/ControlledDropdown';
+import ErrorMessage from '../ui/ErrorMessage';
+import { useFilters } from '@/tools';
+import { IAddProductRequest } from '@/lib/types/requests/product.type';
+import { addProduct, addImages } from '@/tools';
+import { IReactQueryError } from '@/lib/types';
+import { IAddProductResponse } from '@/lib/types/responses/product.types';
+import { AddProductFormSchema, AddProductFormData } from '@/lib/validation';
+import { TextArea } from '../ui';
+import ListProductImages from './ListProductImages';
+import { stylingConstants } from '@/lib/constants/themeConstants';
+import { IProductInfoFormProps } from '@/lib/types';
+import CategoriesSelect from './CategoriesSelect';
+import SizesSelects from './SizesSelects';
 
 const FormTitleAndDesc = ({ title, desc }: { title: string; desc: string }) => {
   return (
     <Box component="div">
-      <Typography variant="h1" sx={{ pl: "0.28px" }}>
+      <Typography variant="h1" sx={{ pl: '0.28px' }}>
         {title}
       </Typography>
       <Typography variant="body1" sx={productInfoTitle}>
@@ -59,155 +48,283 @@ const FormTitleAndDesc = ({ title, desc }: { title: string; desc: string }) => {
   );
 };
 
-// TODO: Create a reusable component for displaying size buttons for this component and product details
-const ListProductSizes = () => {
-  return (
-    <Box component="div" sx={inputContainer}>
-      <InputLabel>Add size</InputLabel>
-      <Grid container spacing={2}>
-        {/* TODO: Depending on edit or add product, some sizes should be rendered as selected */}
-        {sizes.data
-          .sort((a, b) => a.attributes.value - b.attributes.value)
-          .map(({ id, attributes: { value } }) => {
-            return (
-              // TODO: Discuss the size of the size buttons, fix them if it's needed
-              <Grid key={id} xs={4} sm={3} xl={"auto"} item>
-                <Button sx={productSizeButton} variant="outlined">
-                  EU-{value}
-                </Button>
-              </Grid>
-            );
-          })}
-      </Grid>
-    </Box>
-  );
-};
-
-const ListProductImages = ({ productImages }: { productImages: number[] }) => {
-  const [isDelete, setIsDelete] = useState<boolean>(false);
-  return (
-    <Box
-      component="div"
-      sx={{ ...inputContainer, maxWidth: { xs: "436px", lg: "none" } }}
-    >
-      <InputLabel>Product Images</InputLabel>
-      <Grid
-        container
-        spacing={{ xs: 2, sm: 5, lg: 2 }}
-        sx={{ minWidth: { xl: "692px" } }}
-      >
-        {productImages.map((item) => {
-          return (
-            <Grid key={item} item xs={6} lg={12} xl={6}>
-              <Box sx={productImageContainer}>
-                <Box sx={imageCoverOnHover}>
-                  <IconButton
-                    sx={trashIconContainer}
-                    onClick={() => setIsDelete(true)}
-                  >
-                    <Image
-                      width={20}
-                      height={20}
-                      src={"/icons/trash.svg"}
-                      alt="trash"
-                    />
-                  </IconButton>
-                </Box>
-                <Image
-                  src={"/images/sneakers_side_decor_1.png"}
-                  alt={"Product Image"}
-                  fill
-                  style={{ objectFit: "contain" }}
-                  priority={true}
-                  sizes="100%"
-                />
-              </Box>
-              {/* TODO: Update this modal to delete the selected image properly */}
-              <DeleteModal
-                open={isDelete}
-                name="selected image"
-                onClose={() => setIsDelete(false)}
-                onSubmit={() => console.log("Item deleted")}
-              />
-            </Grid>
-          );
-        })}
-        <Grid
-          item
-          xs={12}
-          sm={productImages.length > 0 ? 6 : 12}
-          lg={12}
-          xl={6}
-          padding={0}
-        >
-          <Paper elevation={0} sx={imageUploadBox}>
-            <Gallery
-              size="38"
-              color={theme.palette.grey[500]}
-              style={{ flexShrink: 0 }}
-            />
-            <Typography variant="body1" sx={imageUploadText}>
-              Drop your image here, <br />
-              or select{" "}
-              <span style={{ color: "#151e7a", textDecoration: "underline" }}>
-                click to browse
-              </span>
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
-  );
-};
-
-interface IProductInfoFormProps {
-  title: string;
-  desc: string;
-  productId?: number; // TODO: fetch the edited product from this id
-  isEdit: boolean; // TODO: update the values of inputs with the edited product's values depending on this boolean
-}
-
 const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
-  // TODO: Create form states and assign values to inputs. Get onSubmit as props, assign it to save button.
-  // TODO: replace this state with the actual data
-  const [productImages, setProductImages] = useState([1, 2, 3]);
+  const { data: userData } = useSession();
+  const { data: filtersData } = useFilters();
+  const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(false);
+  const router = useRouter();
+
+  const submitFormMutation: UseMutationResult<
+    IAddProductResponse,
+    IReactQueryError,
+    IAddProductRequest
+  > = useMutation({
+    mutationFn: (data: IAddProductRequest) => {
+      const token = userData?.user?.accessToken; // Get the JWT token from NextAuth
+      if (!token) throw new Error('No JWT token available');
+
+      return addProduct(data, token);
+    },
+    onSuccess: () => {
+      setIsAddButtonDisabled(true);
+      enqueueSnackbar('Product added successfully.', {
+        variant: 'success',
+        autoHideDuration: 2000,
+      });
+      router.push('/profile/my-products');
+    },
+    onError: () => {
+      throw new Error('Something went wrong');
+    },
+  });
+
+  const { handleSubmit, setValue, getValues, resetField, control } =
+    useForm<AddProductFormData>({
+      resolver: zodResolver(AddProductFormSchema),
+      defaultValues: {
+        gender: 0,
+        price: 0,
+        name: '',
+        images: [],
+        brand: 0,
+        color: 0,
+        description: '',
+        sizes: new Array(20).fill(0),
+        userID: '',
+        teamName: 'team-1',
+        categories: new Array(7).fill(0),
+      },
+    });
+
+  const uploadImagesMutation = useMutation<
+    AxiosResponse,
+    IReactQueryError,
+    AddProductFormData['images']
+  >({
+    mutationFn: (images: (number | File)[] | undefined) => {
+      const formData = new FormData();
+      if (images) {
+        images.forEach((file: any) => formData.append('files', file));
+      }
+
+      return addImages(formData);
+    },
+    onError: () => {
+      throw new Error('Something went wrong');
+    },
+  });
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles.length) {
+      const preValues = getValues('images');
+      if (preValues) {
+        setValue('images', [
+          ...preValues,
+          ...acceptedFiles.map(file =>
+            Object.assign(file, { preview: URL.createObjectURL(file) }),
+          ),
+        ]);
+      } else {
+        setValue(
+          'images',
+          acceptedFiles.map(file =>
+            Object.assign(file, { preview: URL.createObjectURL(file) }),
+          ),
+        );
+      }
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { 'image/*': [] },
+    multiple: true,
+  });
+
+  useEffect(() => {
+    if (userData) {
+      setValue('userID', userData.user.id);
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (filtersData) {
+      resetField('sizes', {
+        defaultValue: filtersData.sizes.data.map(_ => 0),
+      });
+      resetField('categories', {
+        defaultValue: filtersData.categories.data.map(_ => 0),
+      });
+    }
+  }, [filtersData]);
+
+  const onSubmit: SubmitHandler<AddProductFormData> = data => {
+    const { images, ...rest } = data;
+    uploadImagesMutation.mutate(images, {
+      onSuccess: response => {
+        const finalData = {
+          ...rest,
+          images: response.data.map((elem: any) => elem?.id),
+        };
+
+        submitFormMutation.mutate({ data: finalData });
+      },
+    });
+  };
+
+  const onError = () => {
+    enqueueSnackbar('Form validation failed. Please check the fields.', {
+      variant: 'error',
+      autoHideDuration: 2000,
+    });
+  };
+
   return (
-    <Box component="form" sx={productInfoFormContainer}>
-      <FormTitleAndDesc title={title} desc={desc} />
-      <Box component="div" sx={formAndImagesContainer}>
-        <Box
-          component="div"
-          sx={{ display: "flex", flexDirection: "column", gap: "23px" }}
-        >
-          <Input label="Product name" placeholder="Nike Air Max 90" />
-          <Input label="Price" placeholder="$160" />
-          <Dropdown labelText="Color" />
+    <>
+      <Box
+        component="form"
+        sx={productInfoFormContainer}
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
+        <FormTitleAndDesc title={title} desc={desc} />
+        <Box component="div" sx={formAndImagesContainer}>
           <Box
             component="div"
-            sx={{ display: "flex", maxWidth: "436px", gap: "16px" }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: '23px' }}
           >
-            {/* TODO: Add options props from the database */}
-            {/* TODO: handle data from backend (genders, sizes and colors...) */}
-            <Dropdown labelText="Gender" />
-            <Dropdown labelText="Brand" />
+            <ControlledInput
+              name="name"
+              control={control}
+              label="Product name"
+              required
+              placeholder="Nike Air Max 90"
+            />
+            <ControlledInput
+              name="price"
+              control={control}
+              label="Price"
+              required
+              placeholder="$160"
+              type="number"
+            />
+            <ControlledDropdown
+              name="color"
+              control={control}
+              labelText="Color"
+              options={filtersData?.colors.data.map(elem => ({
+                name: elem.attributes.name,
+                value: elem.id,
+              }))}
+              withoutNone
+            />
+            <Box
+              component="div"
+              sx={{ display: 'flex', maxWidth: '436px', gap: '16px' }}
+            >
+              <ControlledDropdown
+                name="gender"
+                control={control}
+                labelText="Gender"
+                options={filtersData?.genders.data.map(elem => ({
+                  name: elem.attributes.name,
+                  value: elem.id,
+                }))}
+              />
+              <ControlledDropdown
+                name="brand"
+                control={control}
+                labelText="Brand"
+                options={filtersData?.brands.data.map(elem => ({
+                  name: elem.attributes.name,
+                  value: elem.id,
+                }))}
+              />
+            </Box>
+            <Box component="div">
+              <InputLabel htmlFor={'cate'}>Categories</InputLabel>
+              <CategoriesSelect
+                name="categories"
+                control={control}
+                filtersData={filtersData}
+              />
+            </Box>
+            <Box component="div">
+              <Controller
+                name={'description'}
+                control={control}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <>
+                    <TextArea
+                      labelText="Description"
+                      name="product-description"
+                      style={{
+                        maxWidth: '436px',
+                        borderColor: `${error ? stylingConstants.palette.error.main : stylingConstants.palette.grey[700]}`,
+                        marginTop: '3px',
+                        marginBottom: '3px',
+                      }}
+                      placeholder="Do not exceed 300 characters."
+                      value={value}
+                      onChange={onChange}
+                    />
+                    {error && <ErrorMessage errorMessage={error?.message} />}
+                  </>
+                )}
+              />
+            </Box>
+            <Box component="div" sx={inputContainer}>
+              <InputLabel>Add size</InputLabel>
+              <SizesSelects
+                name="sizes"
+                control={control}
+                filtersData={filtersData}
+              />
+            </Box>
           </Box>
-          <TextArea
-            labelText="Description"
-            name="product-description"
-            style={{ maxWidth: "436px" }}
-            placeholder="Do not exceed 300 characters."
+          <Controller
+            name="images"
+            control={control}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <>
+                <ListProductImages
+                  productImages={value}
+                  onChange={onChange}
+                  getRootProps={getRootProps}
+                  isDragActive={isDragActive}
+                  getInputProps={getInputProps}
+                  error={error}
+                />
+              </>
+            )}
           />
-          <ListProductSizes />
         </Box>
-        <ListProductImages productImages={productImages} />
+        <Box component="div" sx={saveButtonContainer}>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{
+              ...formSaveButton,
+              '&.Mui-disabled': {
+                backgroundColor: stylingConstants.palette.primary.main,
+                color: '#fff',
+                opacity: 0.5,
+              },
+            }}
+            type="submit"
+            disabled={
+              submitFormMutation.isPending ||
+              uploadImagesMutation.isPending ||
+              isAddButtonDisabled
+            }
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
-      {/* Save Button */}
-      <Box component="div" sx={saveButtonContainer}>
-        <Button variant="contained" color="error" sx={formSaveButton}>
-          Save
-        </Button>
-      </Box>
-    </Box>
+    </>
   );
 };
 

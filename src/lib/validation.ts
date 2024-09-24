@@ -66,3 +66,35 @@ export const UpdateProfileValidation = z.object({
     .min(10, { message: 'Must be a valid mobile number' })
     .max(14, { message: 'Must be a valid mobile number' }),
 });
+
+export const AddProductFormSchema = z.object({
+  price: z.coerce.number().positive('Price must be positive'),
+  gender: z.number().positive('Gender is required'),
+  brand: z.number().positive('Brand is required'),
+  color: z.number().positive('Color is required'),
+  name: z.string().trim().min(1, 'Name is required'),
+  images: z
+    .array(z.instanceof(File).or(z.number()))
+    .min(1, 'You need to upload at least one image'),
+  description: z
+    .string()
+    .trim()
+    .min(1, 'Description is required')
+    .max(300, 'Do not exceed 300 characters'),
+  sizes: z
+    .array(z.number())
+    .transform(arr => arr.filter(num => num > 0))
+    .refine(arr => arr.length > 0, {
+      message: 'You need to pick at least one size',
+    }),
+  userID: z.string(),
+  teamName: z.string().min(1, 'Team name is required'),
+  categories: z
+    .array(z.number())
+    .transform(arr => arr.filter(num => num > 0))
+    .refine(arr => arr.length > 0, {
+      message: 'You need to pick at least one category',
+    }),
+});
+
+export type AddProductFormData = z.infer<typeof AddProductFormSchema>;
