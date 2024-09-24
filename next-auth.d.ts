@@ -15,6 +15,7 @@ declare module 'next-auth' {
   }
 
   interface User {
+    rememberMe?: boolean;
     firstName?: string | null;
     lastName?: string | null;
     username?: string;
@@ -31,6 +32,7 @@ declare module 'next-auth/jwt' {
     accessTokenExpires?: number;
     refreshToken?: string;
     token: string;
+    expires: number;
     exp?: number;
     iat?: number;
     jti?: string;

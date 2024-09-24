@@ -26,7 +26,7 @@ const SignInForm: React.FC = () => {
     defaultValues,
   });
 
-  const { isPending, isError, mutateAsync, error } = useSignIn();
+  const { isPending, mutateAsync } = useSignIn();
 
   const onSubmit = async (data: z.infer<typeof LogInFormValidation>) => {
     try {
@@ -100,6 +100,7 @@ const SignInForm: React.FC = () => {
         <Button
           variant="contained"
           type="submit"
+          disabled={isPending}
           sx={{
             mt: '56px',
             maxWidth: '436px',
