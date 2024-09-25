@@ -54,7 +54,8 @@ export const OrderValidation = z.object({
   promocode: z
     .string()
     .min(3, 'Promocode must be at least 3 characters')
-    .max(20, 'Promocode must be at most 20 characters'),
+    .max(20, 'Promocode must be at most 20 characters')
+    .or(z.literal('')),
 });
 
 export const UpdateProfileValidation = z.object({

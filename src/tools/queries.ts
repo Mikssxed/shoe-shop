@@ -146,6 +146,16 @@ export const deleteFromCartQuery = (
 };
 
 /**
+ * Custom hook to clear all items in the cart state.
+ *
+ * @returns {void} Updates the cart state in the query client.
+ */
+
+export const clearCartQuery = () => {
+  return queryClient.setQueryData(['cart'], []);
+};
+
+/**
  * Custom hook to increase the amount of a cart item.
  *
  * It increments the `amount` of the item in the cart that matches the given `id`.
