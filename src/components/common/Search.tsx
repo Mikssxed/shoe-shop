@@ -9,6 +9,7 @@ import {
   ListItemButton,
   ListItemText,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 
 import Cross from '/public/icons/cross.svg';
@@ -32,7 +33,7 @@ export default function Search({ open, onClose }: SearchProps) {
     searchParams.get('search') ?? '',
   );
   const debouncedSearch = useDebounce(searchQuery.trim(), 500);
-  const { data: productsNames } = useProductsNames(debouncedSearch);
+  const { data: productsNames, isLoading } = useProductsNames(debouncedSearch);
 
   //TODO: Maybe improve searching (right now it only searches based on products that contain search string)
   const updateSearch = (query: string) => {
@@ -125,7 +126,17 @@ export default function Search({ open, onClose }: SearchProps) {
                 onClear={handleClear}
                 focused={true}
               />
-
+              {isLoading && (
+                <Box
+                  sx={{
+                    alignSelf: 'center',
+                    mt: { xs: '12px', sm: '22px', md: '32px' },
+                    zIndex: 10,
+                  }}
+                >
+                  <CircularProgress size={64} />
+                </Box>
+              )}
               {debouncedSearch && productsNames && (
                 <>
                   <Typography

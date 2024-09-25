@@ -15,6 +15,7 @@ type SearchBarProps = {
   onSearch?: () => void;
   onClear?: () => void;
   focused?: boolean;
+  onInputClick?: () => void;
 };
 
 const SearchBar = ({
@@ -26,6 +27,7 @@ const SearchBar = ({
   onSearch,
   onClear,
   focused = false,
+  onInputClick,
 }: SearchBarProps) => {
   const isMobile = useIsMobile();
 
@@ -86,6 +88,7 @@ const SearchBar = ({
           },
         }}
         autoFocus={focused}
+        onClick={onInputClick}
       />
       {onSearch && (
         <Button

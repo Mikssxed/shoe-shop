@@ -88,9 +88,11 @@ const Header = () => {
             </Link>
           )}
           {!isMobile && (
-            <Box onClick={() => setOpenSearch(true)}>
-              <SearchBar width="min(320px, 25vw)" height="48px" />
-            </Box>
+            <SearchBar
+              width="min(320px, 25vw)"
+              height="48px"
+              onInputClick={() => setOpenSearch(true)}
+            />
           )}
           <Link
             href="/bag"
@@ -168,7 +170,6 @@ const Header = () => {
           )}
           {isMobile && (
             <Box sx={{ width: 24, height: 24 }}>
-              {/*TODO: Add onclick to show sidebar */}
               <HambergerMenu
                 size="24"
                 color={stylingConstants.palette.grey[700]}

@@ -40,7 +40,7 @@ const Dropdown = ({
           }`,
           my: '3px',
         }}
-        MenuProps={{ sx: { maxHeight: 400 } }}
+        MenuProps={{ sx: { maxHeight: 400 }, disableScrollLock: true }}
         IconComponent={ExpandMoreIcon}
         {...props}
         defaultValue={options.map(elem => elem.value).includes(0) ? 0 : ''}

@@ -21,6 +21,7 @@ const Modal = ({
 
   return (
     <Dialog
+      disableScrollLock={true}
       open={open}
       onClose={onClose}
       keepMounted
