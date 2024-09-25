@@ -1,7 +1,7 @@
 'use client';
 import { useLastViewed } from '@/tools';
 import { getLastViewedProductIds } from '@/utils';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Skeleton, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
@@ -20,9 +20,14 @@ function LastViewedProducts({ isFullWidth }: Props) {
 
   return (
     <>
-      <Typography sx={{ marginBottom: '24px' }} variant="h1">
-        Last viewed products
-      </Typography>
+      {isLoading ? (
+        <Skeleton variant="text" width="20%" height="53px" />
+      ) : (
+        <Typography sx={{ marginBottom: '24px' }} variant="h1">
+          Last viewed products
+        </Typography>
+      )}
+
       <Grid
         container
         spacing={{ xs: 2, sm: 5, lg: 6, xl: 8 }}
