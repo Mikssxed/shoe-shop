@@ -1,6 +1,7 @@
-import { FieldError } from 'react-hook-form';
+import { SxProps, Theme } from '@mui/material';
 import { BaseWithValue, Data, FiltersData } from './data.type';
 import { ICartItem, ProductAttributes } from './Product.type';
+import { FieldError } from 'react-hook-form';
 
 export interface IActionButtonsProps {
   sizes: Data<BaseWithValue>[];
@@ -24,6 +25,16 @@ export interface IBagPricingListProps {
   name: string;
   value: number;
   bold?: boolean;
+}
+
+export interface IProfilePictureProps {
+  avatarStyle?: SxProps<Theme>;
+  avatarUrl?: string;
+}
+
+export interface IDeleteAvatarModalProps {
+  isOpened: boolean;
+  onCloseModal: () => void;
 }
 
 export interface IProductInfoFormProps {

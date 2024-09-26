@@ -1,4 +1,5 @@
 import 'next-auth';
+import { IImage } from '@/lib/types';
 
 declare module 'next-auth' {
   /**
@@ -15,13 +16,14 @@ declare module 'next-auth' {
   }
 
   interface User {
-    rememberMe?: boolean;
     firstName?: string | null;
     lastName?: string | null;
     username?: string;
     email?: string | null;
     id?: string;
     accessToken?: string;
+    phoneNumber?: string | number;
+    avatar?: IImage;
   }
 }
 
@@ -32,7 +34,6 @@ declare module 'next-auth/jwt' {
     accessTokenExpires?: number;
     refreshToken?: string;
     token: string;
-    expires: number;
     exp?: number;
     iat?: number;
     jti?: string;

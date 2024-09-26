@@ -1,3 +1,5 @@
+import { IImage } from '@/lib/types';
+
 export interface IUser {
   id: number;
   username: string;
@@ -7,6 +9,10 @@ export interface IUser {
   blocked: boolean;
   createdAt: string;
   updatedAt: string;
+  phoneNumber: number;
+  firstName: string;
+  lastName: string;
+  avatar?: IImage;
 }
 
 export interface IUserRole {

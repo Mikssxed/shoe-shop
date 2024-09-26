@@ -9,6 +9,7 @@ interface IControlledInputProps {
   control: any;
   label: string;
   required?: boolean;
+  disabled?: boolean;
   placeholder: string;
   inputStyle?: SxProps<Theme>;
   type?: 'password'| "number";
@@ -20,6 +21,7 @@ const ControlledInput = ({
   control,
   label,
   required = false,
+  disabled = false,
   placeholder,
   inputStyle,
   type,
@@ -38,6 +40,7 @@ const ControlledInput = ({
             errorMessage={error ? error?.message : undefined}
             inputStyle={inputStyle}
             containerProps={containerProps}
+            disabled={disabled}
           />
         </>
       )}

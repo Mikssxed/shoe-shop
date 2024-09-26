@@ -170,6 +170,9 @@ theme = createTheme({
           '&:hover': {
             boxShadow: 'none',
           },
+          '&.Mui-disabled': {
+            borderColor: 'rgba(0, 0, 0, 0.12)',
+          },
         },
         contained: ({ theme }) => ({
           color: theme.palette.common.white,

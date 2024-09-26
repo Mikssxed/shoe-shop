@@ -59,13 +59,19 @@ export const OrderValidation = z.object({
 });
 
 export const UpdateProfileValidation = z.object({
-  firstName: z.string(),
+  firstName: z.string().min(2, 'Name must be at least 2 characters'),
   lastName: z.string(),
-  // TODO: make this a proper phone number validation
+  email: z.string().email('Invalid email address (ex. johndoe@gmail.com)'),
   phoneNumber: z
     .string()
-    .min(10, { message: 'Must be a valid mobile number' })
-    .max(14, { message: 'Must be a valid mobile number' }),
+    .refine(val => val === '' || /^\+?[1-9]\d{1,14}$/.test(val), {
+      message: 'Invalid phone number format (ex. +380997272000)',
+    })
+    .optional(),
+});
+
+export const avatarValidation = z.object({
+  avatar: z.any(),
 });
 
 export const AddProductFormSchema = z.object({

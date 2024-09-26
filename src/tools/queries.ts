@@ -1,6 +1,11 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { ICartItem, ProductAttributes, ProductsResponse } from '@/lib/types';
+import {
+  ICartItem,
+  IImage,
+  ProductAttributes,
+  ProductsResponse,
+} from '@/lib/types';
 import { User } from 'next-auth';
 import { queryClient } from '.';
 import {

@@ -1,50 +1,22 @@
-import { Box, Toolbar, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import ProfilePicture from '@/components/common/ProfilePicture';
-import { UpdateProfile } from '@/components/common/UpdateProfile';
-import {
-  updateProfileAvatarContainer,
-  updateProfileButtonContainerStyles,
-  updateProfileButtonStyles,
-  updateProfileInfoBoxStyles,
-} from '@/styles/profile/updateProfileStyles';
+import { UpdateProfileForm } from '@/components/forms/UpdateProfileForm';
+import AvatarForm from '@/components/forms/AvatarForm';
+import { settingPageStyles as styles } from '@/styles/profile/settingsPage.style';
 
 export default function ProfileSettings() {
   return (
-    <Box sx={{px: '20px'}}>
-      <Typography variant="h1">My Profile</Typography>
-      <Box sx={updateProfileInfoBoxStyles}>
-        <Box component="div" sx={updateProfileAvatarContainer}>
-          <ProfilePicture
-            avatarStyle={{ fontSize: { sm: '28px', md: '48px' } }}
-          />
-        </Box>
-        {/* TODO: Replace the buttons below with reusable Button component */}
-        <Toolbar
-          sx={updateProfileButtonContainerStyles}
-          disableGutters
-          variant="dense"
-        >
-          <Button
-            variant="outlined"
-            color="error"
-            sx={updateProfileButtonStyles}
-          >
-            Change Photo
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={updateProfileButtonStyles}
-          >
-            Delete
-          </Button>
-        </Toolbar>
+    <Box sx={styles.root}>
+      <Box sx={{ display: 'block' }}>
+        <Typography variant="h1" sx={styles.title}>
+          My Profile
+        </Typography>
+        <AvatarForm />
+        <Typography paragraph variant="body2" sx={styles.description}>
+          Welcome! Fill in any missing information and keep it accurate.
+        </Typography>
+        <UpdateProfileForm />
       </Box>
-      <Typography paragraph variant="body2">
-        Welcome back! Please enter your details to log into your account.
-      </Typography>
-      <UpdateProfile />
     </Box>
   );
 }

@@ -1,36 +1,36 @@
 'use client';
 
-import { Avatar, SxProps, Theme } from '@mui/material';
+import { Avatar, Skeleton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React from 'react';
 
 import { userAvatar } from '@/styles/profile/updateProfileStyles';
+import { IProfilePictureProps } from '@/lib/types';
 
-interface IProfilePictureProps {
-  avatarStyle?: SxProps<Theme>;
-}
+const ProfilePicture = ({ avatarStyle, avatarUrl }: IProfilePictureProps) => {
+  const { data: session, status } = useSession();
+  if (status === 'loading') {
+    return <Skeleton variant="circular" height="100%" width="100%" />;
+  }
 
-const ProfilePicture = ({ avatarStyle }: IProfilePictureProps) => {
-  const { data } = useSession();
-  const avatar: string | undefined = data?.user?.image;
-  const firstName: string | undefined = data?.user?.firstName;
-  const username: string = data?.user.username;
+  const { avatar, firstName, username } = session?.user;
+  const fullName = (firstName || username || ' ')[0].toUpperCase();
+
   return (
     <>
-      {avatar ? (
+      {avatarUrl || avatar ? (
         <Image
-          src={avatar}
-          // TODO: change alt text when avatar stored correctly
-          alt={(firstName || username || ' ')[0].toUpperCase()}
+          src={avatarUrl || avatar.url}
+          alt={fullName}
           fill
           sizes="100%"
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: 'cover', borderRadius: '100%' }}
         />
       ) : (
         <Avatar
           src="/"
-          alt={(firstName || username || ' ')[0].toUpperCase()}
+          alt={fullName}
           sx={{
             ...userAvatar,
             ...avatarStyle,

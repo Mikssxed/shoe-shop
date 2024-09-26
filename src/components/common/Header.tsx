@@ -145,7 +145,7 @@ const Header = () => {
               />
             </Box>
           )}
-          {status === 'authenticated' && !isMobile && (
+          {status !== 'unauthenticated' && !isMobile && (
             <Box
               sx={{
                 ml: { md: '16px' },

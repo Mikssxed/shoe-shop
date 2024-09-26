@@ -13,6 +13,9 @@ import {
   IResetPasswordResponse,
   ISignUpRequest,
   ISignUpResponse,
+  IUpdateUserRequest,
+  IUploadImageRes,
+  IUser,
   ProductResponse,
   ProductsResponse,
 } from '@/lib/types';
@@ -48,6 +51,7 @@ export const fetchData = async <T>(
  * @template T
  * @param {string} url - The API endpoint to post data to.
  * @param {Record<string, any>} options - The data to be sent in the POST request.
+ * @param {AxiosRequestConfig<any>} [config] - The axios request config to be sent in the POST request.
  * @returns {Promise<T>} - The response data.
  * @throws Will throw an error if the request fails.
  */
@@ -86,6 +90,42 @@ export const deleteData = async <T>(
       throw error.response?.data.error;
     } else {
       throw new Error('Unknown error');
+    }
+  }
+};
+/**
+ * Sends an HTTP PUT request to the specified URL with the provided options and headers.
+ *
+ * @template T - The expected type of the response data.
+ * @param {string} url - The URL to send the PUT request to.
+ * @param {Record<string, any>} options - The request body or other options to send with the PUT request.
+ * @param {any} headers - Headers to include in the request.
+ * @returns {Promise<T>} - A promise that resolves with the response data of type `T`.
+ * @throws {any} - Throws the error response from the server if it's an Axios error, or a generic error if an unknown error occurs.
+ *
+ * @example
+ * const data = await putData<{ success: boolean }>(
+ *   'https://api.example.com/resource',
+ *   { key: 'value' },
+ *   { Authorization: 'Bearer token' }
+ * );
+ */
+export const putData = async <T>(
+  url: string,
+  options: Record<string, any>,
+  headers: any,
+): Promise<T> => {
+  try {
+    const response: AxiosResponse<T> = await axiosInstance.put(url, options, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error putting data:', error);
+    if (axios.isAxiosError(error)) {
+      throw error.response?.data.error;
+    } else {
+      throw new Error('Unkhown error while request');
     }
   }
 };
@@ -268,6 +308,82 @@ export const getMyProducts = async (
     },
   });
 };
+
+/**
+ * Uploads an image file to the server using a POST request.
+ *
+ * This function sends a `multipart/form-data` request to the `/upload` endpoint,
+ * allowing the upload of image files. The server response, which includes
+ * the uploaded image's details, is returned.
+ *
+ * @param {any} file - The file object to be uploaded. It should be a `File` or `Blob` in `FormData`.
+ * @returns {Promise<IUploadImageRes>} - A promise that resolves to the response from the server containing the image details.
+ *
+ * @throws {Error} - If the request fails or the server responds with an error.
+ *
+ * @example
+ * const imageFile = document.querySelector('input[type="file"]').files[0];
+ * const response = await uploadImage(imageFile);
+ * console.log(response); // Outputs the uploaded image details
+ */
+
+export const uploadImage = async (file: any): Promise<IUploadImageRes> => {
+  return postData<IUploadImageRes>('/upload', file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+/**
+ * Updates the user profile by sending a PUT request to the server with the provided user data.
+ *
+ * @param {IUpdateUserRequest} user - The user data to be updated. It should contain the user ID and JWT for authorization.
+ * @returns {Promise<IUser>} - A promise that resolves with the updated user profile data.
+ *
+ * @throws {any} - Throws an error if the request fails.
+ *
+ * @example
+ * const updatedUser = await updateProfile({
+ *   id: 123,
+ *   firstName: 'John',
+ *   lastName: 'Doe',
+ *   email: 'johndoe@example.com',
+ *   jwt: 'your-jwt-token',
+ * });
+ */
+export const updateProfile = async (
+  user: IUpdateUserRequest,
+): Promise<IUser> => {
+  const body = { ...user, id: undefined, jwt: undefined };
+  const headers = {
+    Authorization: `Bearer ${user?.jwt}`,
+  };
+  return putData<IUser>(`/users/${user.id}`, body, headers);
+};
+
+/**
+ * Deletes the user's avatar by setting it to null and updates the user's profile.
+ *
+ * @param {Object} params - The parameters required to delete the avatar.
+ * @param {number} params.userId - The unique ID of the user whose avatar is to be deleted.
+ * @param {string} params.jwt - The JSON Web Token (JWT) used for authenticating the user.
+ *
+ * @returns {Promise<IUser>} A promise that resolves to the updated user profile.
+ *
+ * @example
+ * // Usage
+ * const updatedUser = await deleteAvatar({ userId: 1, jwt: 'your_jwt_token' });
+ * console.log(updatedUser.avatar); // null
+ */
+
+export const deleteAvatar = async ({
+  userId,
+  jwt,
+}: {
+  userId: number;
+  jwt: string;
+}): Promise<IUser> => updateProfile({ avatar: null, id: userId, jwt });
 
 export const addProduct = async (
   data: IAddProductRequest,
