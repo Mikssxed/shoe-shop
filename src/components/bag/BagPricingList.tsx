@@ -1,7 +1,5 @@
 import { Box, Typography } from '@mui/material';
 
-import { stylingConstants } from '@/lib/constants/themeConstants';
-
 import { IBagPricingListProps } from '@/lib/types';
 
 const BagPricingList: React.FC<IBagPricingListProps> = ({

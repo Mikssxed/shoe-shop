@@ -11,7 +11,7 @@ import {
 
 export default function ProfileSettings() {
   return (
-    <Box sx={{px: '20px'}}>
+    <Box sx={{ px: '20px' }}>
       <Typography variant="h1">My Profile</Typography>
       <Box sx={updateProfileInfoBoxStyles}>
         <Box component="div" sx={updateProfileAvatarContainer}>

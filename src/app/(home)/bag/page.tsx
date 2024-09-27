@@ -21,7 +21,9 @@ const Bag = () => {
       {cart.length ? (
         <Container component={'main'} maxWidth="xl" sx={styles.main}>
           <Box sx={styles.container}>
-            <Typography variant="h1" sx={styles.rootTitleDesktop}>Cart</Typography>
+            <Typography variant="h1" sx={styles.rootTitleDesktop}>
+              Cart
+            </Typography>
             {cart.map((shoe, index) => (
               <Fragment key={shoe.id + '_' + shoe.selectedSize}>
                 <BagItem item={shoe} />
@@ -49,10 +51,10 @@ const Bag = () => {
                 height={24}
               />
             </Box>
-            <Typography variant='h4' sx={styles.emptyCart_message}>
+            <Typography variant="h4" sx={styles.emptyCart_message}>
               You don&apos;t have any products yet
             </Typography>
-            <Typography variant='body2' sx={styles.emptyCart_subMessage}>
+            <Typography variant="body2" sx={styles.emptyCart_subMessage}>
               Add something to your cart
             </Typography>
             <Link href="/products">
