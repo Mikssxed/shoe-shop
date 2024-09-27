@@ -1,5 +1,6 @@
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
 import { AxiosResponse } from 'axios';
 
 import { ILogInResponse } from '@/lib/types';
@@ -23,6 +24,17 @@ export const authOptions: AuthOptions = {
               identifier: credentials?.identifier,
               password: credentials?.password,
             });
+
+          const rememberMe = credentials?.rememberMe === 'true';
+          const maxAge = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60;
+          const expires = new Date(Date.now() + maxAge * 1000);
+          cookies().set('maxAge', `${expires}`, {
+            httpOnly: true,
+            path: '/',
+            maxAge: maxAge,
+            sameSite: 'strict',
+            secure: true,
+          });
 
           const userInfo = await axiosInstance.get(
             `/users/${data.user?.id}?populate=avatar`,

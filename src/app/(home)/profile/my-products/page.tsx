@@ -17,9 +17,11 @@ export default async function MyProducts() {
   if (!user) {
     return null;
   }
-  const { username, firstName, lastName } = user;
+
+  const { firstName, lastName, username } = user;
+  const fullName = capitalizeFirstLetter([firstName,lastName].join(' ')) || username;
   const initialData = await getMyProducts(user, 1);
-  const gotFullNames = firstName && lastName;
+
   return (
     <>
       <Box
@@ -86,19 +88,9 @@ export default async function MyProducts() {
               maxWidth: { xs: '160px', sm: '220px' },
             }}
             variant="h4"
-            title={
-              gotFullNames
-                ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-                    lastName,
-                  )}`
-                : username
-            }
+            title={fullName}
           >
-            {gotFullNames
-              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-                  lastName,
-                )}`
-              : username}
+            {fullName}
           </Typography>
         </Stack>
       </Box>

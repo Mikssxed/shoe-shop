@@ -27,7 +27,7 @@ import { enqueueSnackbar } from 'notistack';
 import LogOutModal from './LogOutModal';
 import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
-import UserAvatarSkeleton from '../ui/loading-skeletons/UserAvatarSkeleton';
+import UserAvatarSkeleton from '@/components/ui/loading-skeletons/UserAvatarSkeleton';
 
 type Props = {
   open: boolean;
@@ -44,7 +44,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const isMobile = useIsMobile();
   const { data, status } = useSession();
   const { firstName, lastName, username } = data?.user || {};
-  const gotFullNames = firstName && lastName;
+  const fullName = capitalizeFirstLetter([firstName,lastName].join(' ')) || username;
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -77,6 +77,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   if (blockOnMobile && isMobile) {
     return null;
   }
+
   const user = (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
       <Box
@@ -121,19 +122,9 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
             maxWidth: { xs: '140px', md: '200px' },
             color: stylingConstants.palette.text.primary,
           }}
-          title={
-            gotFullNames
-              ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-                  lastName,
-                )}`
-              : username
-          }
+          title={fullName}
         >
-          {gotFullNames
-            ? `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-                lastName,
-              )}`
-            : username}
+          {fullName}
         </Typography>
       </Toolbar>
     </Box>

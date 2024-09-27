@@ -7,7 +7,7 @@ export interface ILogInRequest {
 }
 
 export interface ISignUpRequest {
-  username: string;
+  firstName: string;
   email: string;
   password: string;
 }

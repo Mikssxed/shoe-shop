@@ -16,7 +16,7 @@ import { signUp } from '@/tools';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 
 const defaultValues = {
-  name: '',
+  firstName: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -41,7 +41,7 @@ const SignUpForm: React.FC = () => {
   const onSubmit = async (data: z.infer<typeof SignUpFormValidation>) => {
     try {
       await mutation.mutateAsync({
-        username: data.name,
+        firstName: data.firstName,
         email: data.email,
         password: data.password,
       });
@@ -85,7 +85,7 @@ const SignUpForm: React.FC = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <ControlledInput
-          name="name"
+          name="firstName"
           control={control}
           label="Name"
           required

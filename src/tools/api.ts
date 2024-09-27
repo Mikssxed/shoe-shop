@@ -22,6 +22,7 @@ import {
 import { IAddProductResponse } from '@/lib/types/responses/product.types';
 import { IAddProductRequest } from '@/lib/types/requests/product.type';
 import axiosInstance from '@/tools/axios';
+import { generateRandomUsername } from '@/utils/helperFunctions';
 
 /**
  * Fetches data from a given URL using axios and handles any errors.
@@ -256,7 +257,12 @@ export const logIn = async (user: ILogInRequest): Promise<any> => {
 export const signUp = async (
   user: ISignUpRequest,
 ): Promise<ISignUpResponse> => {
-  return postData<ISignUpResponse>('/auth/local/register', user);
+  const username = generateRandomUsername();
+
+  return postData<ISignUpResponse>('/auth/local/register', {
+    ...user,
+    username,
+  });
 };
 
 /**
