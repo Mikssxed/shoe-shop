@@ -71,28 +71,26 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
               maxWidth: '1080px',
             }}
           >
-            {searchParams.has('search') ? (
+            {searchParams.get('search') ? (
               <>
                 Search Results:
-                {searchParams.get('search') !== '' && (
-                  <>
-                    <br />
-                    <Tooltip
-                      title={searchParams.get('search') || ''}
-                      placement="top-end"
+                <>
+                  <br />
+                  <Tooltip
+                    title={searchParams.get('search') || ''}
+                    placement="top-end"
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        ...textOverflowEllipsis.singleLine,
+                        maxWidth: '90%',
+                      }}
                     >
-                      <Box
-                        component="span"
-                        sx={{
-                          ...textOverflowEllipsis.singleLine,
-                          maxWidth: '90%',
-                        }}
-                      >
-                        {`"${searchParams.get('search')}"`}
-                      </Box>
-                    </Tooltip>
-                  </>
-                )}
+                      {`"${searchParams.get('search')}"`}
+                    </Box>
+                  </Tooltip>
+                </>
               </>
             ) : (
               'Available products'

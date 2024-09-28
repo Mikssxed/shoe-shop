@@ -66,8 +66,8 @@ const NotFoundError = () => {
             variant="body2"
             sx={{ pb: '18px', ...errorMessageStyles }}
           >
-            Lorem Ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-            nonummy nibh euismod tincidunt ut laoreet dolore magna
+            It seems that the page you tried to access might not exist anymore.
+            Go back to the previous page or go to the home page.
           </Typography>
           {!isMobile && (
             <Grid item sx={desktopButtonsStyles}>

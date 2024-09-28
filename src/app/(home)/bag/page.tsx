@@ -1,13 +1,12 @@
 'use client';
 
 import { Fragment } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Box, Button, Container, Divider, Typography } from '@mui/material';
+import { Box, Container, Divider, Typography } from '@mui/material';
 
 import { BagItem, BagSummary } from '@/components/bag';
 import { useQueryCartItems } from '@/tools';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
+import EmptyProductList from '@/components/common/EmptyProductList';
 
 const Bag = () => {
   const { data: cart = [] } = useQueryCartItems();
@@ -21,7 +20,9 @@ const Bag = () => {
       {cart.length ? (
         <Container component={'main'} maxWidth="xl" sx={styles.main}>
           <Box sx={styles.container}>
-            <Typography variant="h1" sx={styles.rootTitleDesktop}>Cart</Typography>
+            <Typography variant="h1" sx={styles.rootTitleDesktop}>
+              Cart
+            </Typography>
             {cart.map((shoe, index) => (
               <Fragment key={shoe.id + '_' + shoe.selectedSize}>
                 <BagItem item={shoe} />
@@ -40,27 +41,12 @@ const Bag = () => {
           <Typography variant="h1" sx={styles.emptyCart_rootTitle}>
             Cart
           </Typography>
-          <Box sx={styles.emptyCart_container}>
-            <Box sx={styles.emptyCart_bagTickWrapper}>
-              <Image
-                src={'/icons/bag-tick.svg'}
-                alt="bagTick"
-                width={24}
-                height={24}
-              />
-            </Box>
-            <Typography variant='h4' sx={styles.emptyCart_message}>
-              You don&apos;t have any products yet
-            </Typography>
-            <Typography variant='body2' sx={styles.emptyCart_subMessage}>
-              Add something to your cart
-            </Typography>
-            <Link href="/products">
-              <Button sx={styles.emptyCart_addProductBtn} variant="contained">
-                Add Product
-              </Button>
-            </Link>
-          </Box>
+          <EmptyProductList
+            text={"You don't have any products yet"}
+            subtext={'Add something to your cart'}
+            link={'/products'}
+            buttonText={'Add product'}
+          />
         </Container>
       )}
       {Boolean(cart.length) && (

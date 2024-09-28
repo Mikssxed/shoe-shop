@@ -9,7 +9,7 @@ type DeleteModalProps = {
 };
 
 const defaultText =
-  'Lorem ipsum dolor sit amet cosectetur. Sed imerdient tempor facilisi massa aliquet sit habitant. Lorem ipsum dolor amet consectetur.';
+  'This action cannot be undone. Please confirm deletion of this item. If you do not want to complete this action press Cancel.';
 
 const DeleteModal = ({
   name,

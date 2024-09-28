@@ -64,3 +64,10 @@ export interface ISizesSelectsProps {
   control: any;
   filtersData?: FiltersData;
 }
+
+export interface EmptyProductListProps {
+  text?: string;
+  subtext?: string;
+  link?: string;
+  buttonText?: string;
+}

@@ -1,18 +1,17 @@
 'use client';
 
-import { Avatar, Grid, Stack, Typography } from '@mui/material';
-import { BagCross1 } from 'iconsax-react';
+import { Grid } from '@mui/material';
 import { User } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 import { useIsMobile } from '@/hooks';
-import { stylingConstants } from '@/lib/constants/themeConstants';
 import { ProductsResponse } from '@/lib/types';
 import { useProducts } from '@/tools';
 import { buildParams } from '@/utils';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
+import EmptyProductList from './EmptyProductList';
 
 type Props = {
   fullWidth?: boolean;
@@ -84,27 +83,19 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
         ))}
       {products && products?.length <= 0 && (
         <Grid item xs={12} display="flex" justifyContent="center" marginY={5}>
-          <Stack gap={1} marginY={2}>
-            <Avatar
-              sx={{
-                width: 72,
-                height: 72,
-                mx: 'auto',
-              }}
-            >
-              <BagCross1
-                size="20"
-                color={stylingConstants.palette.grey[500]}
-                variant="Outline"
-              />
-            </Avatar>
-            <Typography variant="h4" textAlign="center">
-              We couldn&apos;t find any products
-            </Typography>
-            <Typography variant="body2" textAlign="center">
-              Try adjusting your search or filter to find what you want
-            </Typography>
-          </Stack>
+          {user ? (
+            <EmptyProductList
+              text={`You don't have any products yet`}
+              subtext={'Add new product'}
+            />
+          ) : (
+            <EmptyProductList
+              text={`We couldn't find any products`}
+              subtext={
+                'Try adjusting your search or filter to find what you want'
+              }
+            />
+          )}
         </Grid>
       )}
       {products &&

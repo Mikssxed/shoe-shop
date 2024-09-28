@@ -44,7 +44,6 @@ export const bagPageStyles = {
     width: '100%',
     maxWidth: { md: '300px', lg: '400px' },
   },
-
   emptyCart_main: {
     height: '100%',
     pt: '80px',
@@ -54,42 +53,6 @@ export const bagPageStyles = {
   emptyCart_rootTitle: {
     display: { xs: 'none', md: 'block' },
     mb: '57px',
-  },
-  emptyCart_container: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: '0.7',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emptyCart_bagTickWrapper: {
-    width: '72px',
-    height: '72px',
-    borderRadius: '100%',
-    bgcolor: '#F9FAFB',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    mb: '10px',
-  },
-  emptyCart_message: {
-    mb: '10px',
-    textAlign: 'center',
-    fontWeight: 500,
-    fontSize: { xs: '16px', md: '20px' },
-    lineHeight: { xs: '20px', md: '24px' },
-    color: stylingConstants.palette.text.primary,
-  },
-  emptyCart_subMessage: {
-    fontWeight: 300,
-    fontSize: { xs: '13px', md: '15px' },
-    lineHeight: { xs: '15px', md: '17.5px' },
-  },
-  emptyCart_addProductBtn: {
-    mt: '41px',
-    borderRadius: '8px',
-    textTransform: 'none',
-    width: '148px',
   },
 };
 
