@@ -47,7 +47,7 @@ function FilterToggle({ filtersData, initialProducts, maxPrice }: Props) {
         />
       )}
       <Box sx={{ p: { xs: 0, lg: '0 40px' }, mt: 3, width: '100%' }}>
-        {!searchParams.has('search') && (
+        {searchParams.size < 1 && (
           <LastViewedProducts isFullWidth={!showFilters} />
         )}
         <Box
