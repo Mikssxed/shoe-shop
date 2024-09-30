@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { TickCircle } from 'iconsax-react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Divider, Typography } from '@mui/material';
@@ -10,13 +12,11 @@ import { enqueueSnackbar } from 'notistack';
 
 import ControlledInput from '@/components/common/ControlledInput';
 import BagPricingList from '@/components/bag/BagPricingList';
+import Modal from '@/components/ui/Modal';
 import { OrderValidation } from '@/lib/validation';
-import { clearCartQuery, useQueryCartItems } from '@/tools';
-import { orderFormStyles as styles } from '@/styles/forms/forms.style';
-import Modal from '../ui/Modal';
-import Link from 'next/link';
-import { TickCircle } from 'iconsax-react';
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import { clearCartQuery, useQueryCartItems } from '@/tools';
+import { orderFormStyles as styles } from '@/styles/forms/orderForm.style';
 
 const defaultValues = {
   promocode: '',

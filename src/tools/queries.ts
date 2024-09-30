@@ -166,13 +166,19 @@ export const clearCartQuery = () => {
  * It increments the `amount` of the item in the cart that matches the given `id`.
  *
  * @param {number} id - The ID of the product in the cart whose amount needs to be increased.
+ * @param {number | 'unselected'} selectedSize - The selected size of the product to be increased.
  * @returns {void} Updates the cart state in the query client.
  */
 
-export const increaseCartItemAmount = (id: number) => {
+export const increaseCartItemAmount = (
+  id: number,
+  selectedSize: number | 'unselected',
+) => {
   return queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) =>
     cartItems.map(item =>
-      item.id === id ? { ...item, amount: item.amount + 1 } : item,
+      item.id === id && item.selectedSize === selectedSize
+        ? { ...item, amount: item.amount + 1 }
+        : item,
     ),
   );
 };
@@ -184,13 +190,19 @@ export const increaseCartItemAmount = (id: number) => {
  * If the item's amount reaches 0, the item is still kept in the cart.
  *
  * @param {number} id - The ID of the product in the cart whose amount needs to be decreased.
+ * @param {number | 'unselected'} selectedSize - The selected size of the product to be decreased.
  * @returns {void} Updates the cart state in the query client.
  */
 
-export const decreaseCartItemAmount = (id: number) => {
+export const decreaseCartItemAmount = (
+  id: number,
+  selectedSize: number | 'unselected',
+) => {
   return queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) =>
     cartItems.map(item =>
-      item.id === id ? { ...item, amount: item.amount - 1 } : item,
+      item.id === id && item.selectedSize === selectedSize
+        ? { ...item, amount: item.amount - 1 }
+        : item,
     ),
   );
 };
