@@ -15,19 +15,19 @@ import {
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 
 import ProfilePicture from '@/components/common/ProfilePicture';
 import { BaseSidebar } from '@/components/ui';
+import UserAvatarSkeleton from '@/components/ui/loading-skeletons/UserAvatarSkeleton';
 import { useIsMobile } from '@/hooks';
 import { profileSidebarData } from '@/lib/config/profileSidebarConfig';
 import { stylingConstants } from '@/lib/constants/themeConstants';
-import theme from '@/theme';
-import { enqueueSnackbar } from 'notistack';
-import LogOutModal from './LogOutModal';
-import { capitalizeFirstLetter } from '@/utils/helperFunctions';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
-import UserAvatarSkeleton from '@/components/ui/loading-skeletons/UserAvatarSkeleton';
+import theme from '@/theme';
+import { capitalizeFirstLetter } from '@/utils/helperFunctions';
+import LogOutModal from './LogOutModal';
 
 type Props = {
   open: boolean;
@@ -44,7 +44,8 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   const isMobile = useIsMobile();
   const { data, status } = useSession();
   const { firstName, lastName, username } = data?.user || {};
-  const fullName = capitalizeFirstLetter([firstName,lastName].join(' ')) || username;
+  const fullName =
+    capitalizeFirstLetter([firstName, lastName].join(' ')) || username;
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -64,6 +65,9 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
   ) => {
     e.preventDefault();
     router.push(path);
+    if (onClose) {
+      onClose();
+    }
   };
 
   const handleLogOut = async () => {
