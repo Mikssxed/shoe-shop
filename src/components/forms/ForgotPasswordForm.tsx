@@ -1,5 +1,5 @@
 'use client';
-//TODO: make it SSG
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Button } from '@mui/material';
 import { UseMutationResult, useMutation } from '@tanstack/react-query';
@@ -14,6 +14,7 @@ import {
 } from '@/lib/types';
 import { ForgotPasswordValidation } from '@/lib/validation';
 import { forgotPassword } from '@/tools';
+import { enqueueSnackbar } from 'notistack';
 
 const defaultValues = {
   email: '',
@@ -33,16 +34,18 @@ const ForgotPasswordForm = () => {
     IForgotPasswordReq
   > = useMutation({
     mutationFn: forgotPassword,
+    onError(error) {
+      enqueueSnackbar(error.message || 'Something went wrong!', {
+        variant: 'error',
+        autoHideDuration: 10000,
+      });
+    },
   });
 
-  const onSubmit = (data: z.infer<typeof ForgotPasswordValidation>) => {
-    try {
-      mutation.mutateAsync({
-        email: data.email,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+  const onSubmit = async (data: z.infer<typeof ForgotPasswordValidation>) => {
+    await mutation.mutateAsync({
+      email: data.email,
+    });
   };
 
   if (mutation.isSuccess) {
@@ -79,21 +82,6 @@ const ForgotPasswordForm = () => {
         required
         placeholder="example@mail.com"
       />
-
-      {mutation.isError && (
-        <Box sx={{ maxWidth: '436px', mt: '14px' }}>
-          <Alert
-            severity={mutation.isSuccess ? 'success' : 'error'}
-            sx={{
-              py: '14px',
-              fontSize: '16px',
-              borderRadius: '8px',
-            }}
-          >
-            {mutation.error?.response?.data?.error?.message || 'Unknown error'}
-          </Alert>
-        </Box>
-      )}
 
       <Button
         variant="contained"

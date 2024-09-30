@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Alert, Box, Button } from '@mui/material';
-import { useSearchParams } from 'next/navigation';
+import { Box, Button } from '@mui/material';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 
 import ControlledInput from '@/components/common/ControlledInput';
@@ -25,6 +25,7 @@ const defaultValues = {
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const code: string | null = searchParams.get('code');
+  const router = useRouter();
 
   const mutation: UseMutationResult<
     IResetPasswordResponse,
@@ -32,6 +33,19 @@ const ResetPasswordForm = () => {
     IResetPasswordRequest
   > = useMutation({
     mutationFn: resetPassword,
+    onError(error) {
+      enqueueSnackbar(error.message || 'Something went wrong!', {
+        variant: 'error',
+        autoHideDuration: 10000,
+      });
+    },
+    onSuccess() {
+      enqueueSnackbar('Your password was changed!', {
+        variant: 'success',
+        autoHideDuration: 10000,
+      });
+      router.push('/auth/sign-in');
+    },
   });
 
   const { handleSubmit, control } = useForm<
@@ -41,39 +55,12 @@ const ResetPasswordForm = () => {
     defaultValues,
   });
 
-  // TODO: Inform user with notification in case of an error
   const onSubmit = async (data: z.infer<typeof ResetPasswordValidation>) => {
-    try {
-      await mutation.mutateAsync({
-        ...data,
-        code: code,
-      });
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Something went wrong!', {
-        variant: 'error',
-        autoHideDuration: 10000,
-      });
-    }
+    await mutation.mutateAsync({
+      ...data,
+      code: code,
+    });
   };
-
-  // TODO: Replace this with a success and redirecting... notification
-  if (mutation.isSuccess) {
-    return (
-      <Alert
-        severity="success"
-        sx={{
-          maxWidth: '436px',
-          py: '14px',
-          my: '14px',
-          fontSize: '16px',
-          borderRadius: '8px',
-        }}
-      >
-        Password reset successful.
-      </Alert>
-    );
-  }
 
   return (
     <Box

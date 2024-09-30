@@ -287,6 +287,10 @@ export const forgotPassword = async (
 export const resetPassword = async (
   data: IResetPasswordRequest,
 ): Promise<IResetPasswordResponse> => {
+  if (!data.code) {
+    throw Error(`Your link doesn't have the required param "code"`);
+  }
+  
   return postData<IResetPasswordResponse>('/auth/reset-password', data);
 };
 
