@@ -42,6 +42,9 @@ export interface IProductInfoFormProps {
   desc: string;
   productId?: number;
   isEdit: boolean;
+  product?: ProductAttributes;
+  onClose?: () => void;
+  openEditModal?: boolean;
 }
 
 export interface IListProductImagesProps {
@@ -51,6 +54,7 @@ export interface IListProductImagesProps {
   isDragActive: boolean;
   getInputProps: any;
   error?: FieldError;
+  editProductImagesCount?: number;
 }
 
 export interface ICategoriesSelectProps {
@@ -63,6 +67,14 @@ export interface ISizesSelectsProps {
   name: string;
   control: any;
   filtersData?: FiltersData;
+}
+
+export interface IFileWithPreview extends File {
+  preview?: string;
+}
+
+export interface IImageWithSkeletonProps {
+  preview: string;
 }
 
 export interface EmptyProductListProps {

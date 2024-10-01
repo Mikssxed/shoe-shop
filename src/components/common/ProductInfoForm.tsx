@@ -22,18 +22,19 @@ import {
 import ControlledInput from './ControlledInput';
 import ControlledDropdown from '../ui/ControlledDropdown';
 import ErrorMessage from '../ui/ErrorMessage';
-import { useFilters } from '@/tools';
 import { IAddProductRequest } from '@/lib/types/requests/product.type';
-import { addProduct, addImages } from '@/tools';
+import { addProduct, addImages, useFilters } from '@/tools';
 import { IReactQueryError } from '@/lib/types';
 import { IAddProductResponse } from '@/lib/types/responses/product.types';
 import { AddProductFormSchema, AddProductFormData } from '@/lib/validation';
 import { TextArea } from '../ui';
 import ListProductImages from './ListProductImages';
 import { stylingConstants } from '@/lib/constants/themeConstants';
-import { IProductInfoFormProps } from '@/lib/types';
+import { IProductInfoFormProps, IFileWithPreview } from '@/lib/types';
 import CategoriesSelect from './CategoriesSelect';
 import SizesSelects from './SizesSelects';
+import useEditProduct from '@/hooks/useEditProduct';
+import RequiredStar from '../ui/RequiredStar';
 
 const FormTitleAndDesc = ({ title, desc }: { title: string; desc: string }) => {
   return (
@@ -48,11 +49,21 @@ const FormTitleAndDesc = ({ title, desc }: { title: string; desc: string }) => {
   );
 };
 
-const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
+const ProductInfoForm = ({
+  title,
+  desc,
+  isEdit,
+  product,
+  onClose,
+  openEditModal,
+}: IProductInfoFormProps) => {
   const { data: userData } = useSession();
   const { data: filtersData } = useFilters();
   const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(false);
+  const [oldFiles, setOldFiles] = useState<any[]>([]);
   const router = useRouter();
+  const editMutation = useEditProduct();
+  const token = userData?.user?.accessToken;
 
   const submitFormMutation: UseMutationResult<
     IAddProductResponse,
@@ -60,9 +71,7 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
     IAddProductRequest
   > = useMutation({
     mutationFn: (data: IAddProductRequest) => {
-      const token = userData?.user?.accessToken; // Get the JWT token from NextAuth
       if (!token) throw new Error('No JWT token available');
-
       return addProduct(data, token);
     },
     onSuccess: () => {
@@ -106,7 +115,6 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
       if (images) {
         images.forEach((file: any) => formData.append('files', file));
       }
-
       return addImages(formData);
     },
     onError: () => {
@@ -142,10 +150,20 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
   });
 
   useEffect(() => {
+    setProductValues();
+  }, [openEditModal]);
+
+  useEffect(() => {
+    if (oldFiles.length === product?.images?.data?.length) {
+      setValue('images', [...oldFiles]);
+    }
+  }, [oldFiles, setValue]);
+
+  useEffect(() => {
     if (userData) {
       setValue('userID', userData.user.id);
     }
-  }, [userData]);
+  }, [userData, setValue]);
 
   useEffect(() => {
     if (filtersData) {
@@ -155,21 +173,168 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
       resetField('categories', {
         defaultValue: filtersData.categories.data.map(_ => 0),
       });
+      if (product && isEdit) {
+        setProductValues();
+      }
     }
   }, [filtersData]);
 
+  const setProductValues = () => {
+    if (!filtersData || !product) return;
+
+    const {
+      name,
+      brand,
+      color,
+      price,
+      gender,
+      description,
+      categories,
+      sizes,
+      images,
+    } = product;
+
+    setValue('name', name);
+    setValue('price', price);
+    setValue('description', description);
+
+    brand?.data?.id && setValue('brand', brand.data.id);
+    color?.data?.id && setValue('color', color.data.id);
+    gender?.data?.id && setValue('gender', gender.data.id);
+
+    if (categories?.data) {
+      const oldCategoryIds = categories.data.map(cat => cat.id);
+      const newCategoryValues = filtersData.categories.data.map(elem =>
+        oldCategoryIds.includes(elem.id) ? elem.id : 0,
+      );
+      setValue('categories', newCategoryValues);
+    }
+
+    if (sizes?.data) {
+      const oldSizeIds = sizes.data.map(size => size.id);
+      const newSizeValues = filtersData.sizes.data.map(size =>
+        oldSizeIds.includes(size.id) ? size.id : 0,
+      );
+      setValue('sizes', newSizeValues);
+    }
+
+    if (images?.data) {
+      setOldFiles([]);
+      images.data.forEach(elem => convertImageUrlToFile(elem.attributes.url));
+    }
+  };
+
+  const convertImageUrlToFile = async (imageUrl: string) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const newFile = new File([blob], 'image.jpg', { type: blob.type });
+      setOldFiles(prev => [
+        ...prev,
+        Object.assign(newFile, { preview: imageUrl }),
+      ]);
+    } catch (error) {
+      console.error('Error converting image URL to file', error);
+    }
+  };
+
+  const isFileWithPreview = (item: unknown): item is IFileWithPreview => {
+    return item instanceof File && 'preview' in item;
+  };
+
+  const imagesProps = (images: (File | number)[]) => {
+    const notUploadedImages: File[] = [];
+    const alreadyUploadedImages: File[] = [];
+    const uploadedImagesIds: number[] = [];
+    images.forEach(elem => {
+      if (isFileWithPreview(elem)) {
+        if (elem.preview?.startsWith('https://res.cloudinary.com/')) {
+          alreadyUploadedImages.push(elem);
+        } else {
+          notUploadedImages.push(elem);
+        }
+      }
+    });
+
+    alreadyUploadedImages.forEach(elem => {
+      if (isFileWithPreview(elem) && product?.images?.data) {
+        product.images?.data.forEach(
+          oldFile =>
+            oldFile.attributes.url === elem.preview &&
+            uploadedImagesIds.push(oldFile.id),
+        );
+      }
+    });
+
+    return { notUploadedImages, alreadyUploadedImages, uploadedImagesIds };
+  };
+
   const onSubmit: SubmitHandler<AddProductFormData> = data => {
     const { images, ...rest } = data;
-    uploadImagesMutation.mutate(images, {
-      onSuccess: response => {
-        const finalData = {
-          ...rest,
-          images: response.data.map((elem: any) => elem?.id),
-        };
 
-        submitFormMutation.mutate({ data: finalData });
-      },
-    });
+    if (isEdit && product) {
+      const { notUploadedImages, alreadyUploadedImages, uploadedImagesIds } =
+        imagesProps(images);
+      if (!token) throw new Error('No JWT token available');
+      if (notUploadedImages.length === 0) {
+        const finalData = {
+          data: {
+            ...rest,
+            images: [...uploadedImagesIds],
+          },
+        };
+        editMutation.mutateAsync(
+          { data: finalData, token, id: product.id },
+          {
+            onSuccess: _ => {
+              setIsAddButtonDisabled(true);
+              if (onClose) onClose();
+              setTimeout(() => setIsAddButtonDisabled(false), 1000);
+            },
+          },
+        );
+      } else {
+        uploadImagesMutation.mutate(notUploadedImages, {
+          onSuccess: response => {
+            const finalData = {
+              data: {
+                ...rest,
+                images: [
+                  ...uploadedImagesIds,
+                  ...response.data.map((elem: any) => elem?.id),
+                ],
+              },
+            };
+            editMutation.mutate(
+              { data: finalData, token, id: product.id },
+              {
+                onSuccess: _ => {
+                  setIsAddButtonDisabled(true);
+                  if (onClose) onClose();
+                  setTimeout(() => setIsAddButtonDisabled(false), 1000);
+                },
+              },
+            );
+            setTimeout(() => {
+              setOldFiles([...alreadyUploadedImages]);
+              response.data.forEach((elem: any) =>
+                convertImageUrlToFile(elem.url),
+              );
+            }, 1000);
+          },
+        });
+      }
+    } else {
+      uploadImagesMutation.mutate(images, {
+        onSuccess: response => {
+          const finalData = {
+            ...rest,
+            images: response.data.map((elem: any) => elem?.id),
+          };
+          submitFormMutation.mutate({ data: finalData });
+        },
+      });
+    }
   };
 
   const onError = () => {
@@ -241,7 +406,10 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
               />
             </Box>
             <Box component="div">
-              <InputLabel htmlFor={'cate'}>Categories</InputLabel>
+              <InputLabel htmlFor={'cate'}>
+                Categories
+                <RequiredStar />
+              </InputLabel>
               <CategoriesSelect
                 name="categories"
                 control={control}
@@ -269,6 +437,7 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
                       placeholder="Do not exceed 300 characters."
                       value={value}
                       onChange={onChange}
+                      required
                     />
                     {error && <ErrorMessage errorMessage={error?.message} />}
                   </>
@@ -276,7 +445,10 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
               />
             </Box>
             <Box component="div" sx={inputContainer}>
-              <InputLabel>Add size</InputLabel>
+              <InputLabel>
+                Add size
+                <RequiredStar />
+              </InputLabel>
               <SizesSelects
                 name="sizes"
                 control={control}
@@ -296,6 +468,7 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
                   isDragActive={isDragActive}
                   getInputProps={getInputProps}
                   error={error}
+                  editProductImagesCount={product?.images?.data?.length}
                 />
               </>
             )}
@@ -317,10 +490,16 @@ const ProductInfoForm = ({ title, desc, isEdit }: IProductInfoFormProps) => {
             disabled={
               submitFormMutation.isPending ||
               uploadImagesMutation.isPending ||
+              editMutation.isPending ||
               isAddButtonDisabled
             }
           >
-            Save
+            {submitFormMutation.isPending ||
+            uploadImagesMutation.isPending ||
+            editMutation.isPending ||
+            isAddButtonDisabled
+              ? 'Saving...'
+              : 'Save'}
           </Button>
         </Box>
       </Box>

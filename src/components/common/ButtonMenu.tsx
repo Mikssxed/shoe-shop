@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 import EditProductModal from './EditProductModal';
 import DeleteModal from './DeleteModal';
+import { ProductAttributes } from '@/lib/types';
 
 const styles: Record<string, SxProps> = {
   menuItem: {
@@ -26,6 +27,7 @@ type ButtonMenuProps = MenuProps & {
   onDeleteProduct: () => void;
   name: string;
   onEditProduct?: () => void;
+  product: ProductAttributes;
 };
 
 const ButtonMenu = ({
@@ -33,6 +35,7 @@ const ButtonMenu = ({
   productid,
   onDeleteProduct,
   onEditProduct,
+  product,
   ...props
 }: ButtonMenuProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -41,7 +44,11 @@ const ButtonMenu = ({
 
   return (
     <>
-      <EditProductModal open={openEdit} onClose={() => setOpenEdit(false)} />
+      <EditProductModal
+        open={openEdit}
+        product={product}
+        onClose={() => setOpenEdit(false)}
+      />
       <Menu {...props}>
         <MenuList
           sx={{

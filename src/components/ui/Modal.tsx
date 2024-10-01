@@ -26,9 +26,12 @@ const Modal = ({
       onClose={onClose}
       keepMounted
       onClick={e => {
+        const target = e.target as Node;
         if (
-          e.target !== paperRef.current &&
-          !paperRef.current.contains(e.target)
+          paperRef.current &&
+          target !== paperRef.current &&
+          !paperRef.current.contains(target) &&
+          !document.querySelector('.MuiPopover-root')?.contains(target)
         ) {
           onClose();
         }
@@ -49,6 +52,7 @@ const Modal = ({
           boxShadow: 'none',
           ...paperStyle,
         },
+        onClick: (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation(),
       }}
       ref={paperRef}
     >

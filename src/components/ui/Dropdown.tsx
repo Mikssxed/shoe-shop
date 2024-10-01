@@ -7,6 +7,7 @@ import { useId } from 'react';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import ErrorMessage from './ErrorMessage';
+import RequiredStar from './RequiredStar';
 
 type DropdownProps = SelectProps & {
   labelText?: string;
@@ -25,7 +26,12 @@ const Dropdown = ({
   const id = useId();
   return (
     <Box sx={{ width: '100%', maxWidth: '436px' }}>
-      {labelText && <InputLabel htmlFor={id}>{labelText}</InputLabel>}
+      {labelText && (
+        <InputLabel htmlFor={id}>
+          {labelText}
+          <RequiredStar />
+        </InputLabel>
+      )}
       <Select
         id={id}
         sx={{

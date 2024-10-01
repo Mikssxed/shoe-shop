@@ -4,6 +4,7 @@ import {
   IconButton,
   InputLabel,
   Paper,
+  Skeleton,
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
@@ -22,6 +23,8 @@ import {
 import DeleteModal from './DeleteModal';
 import ErrorMessage from '../ui/ErrorMessage';
 import { IListProductImagesProps } from '@/lib/types';
+import RequiredStar from '../ui/RequiredStar';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 const ListProductImages = ({
   productImages = [],
@@ -30,6 +33,7 @@ const ListProductImages = ({
   isDragActive,
   getInputProps,
   error,
+  editProductImagesCount,
 }: IListProductImagesProps) => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
@@ -53,12 +57,31 @@ const ListProductImages = ({
       component="div"
       sx={{ ...inputContainer, maxWidth: { xs: '436px', lg: 'none' } }}
     >
-      <InputLabel>Product Images</InputLabel>
+      <InputLabel>
+        Product Images
+        <RequiredStar />
+      </InputLabel>
       <Grid
         container
         spacing={{ xs: 2, sm: 5, lg: 2 }}
         sx={{ minWidth: { xl: '692px' } }}
       >
+        {editProductImagesCount &&
+          editProductImagesCount > 0 &&
+          productImages.length === 0 &&
+          Array.from({ length: editProductImagesCount }, (_, i) => (
+            <Grid
+              key={'placeholderImageEditModal' + i}
+              item
+              xs={6}
+              lg={12}
+              xl={6}
+            >
+              <Box sx={productImageContainer}>
+                <Skeleton variant="rectangular" width="100%" height="100%" />
+              </Box>
+            </Grid>
+          ))}
         {productImages.map((item, index) => {
           return (
             <Grid key={item.preview + index} item xs={6} lg={12} xl={6}>
@@ -76,14 +99,7 @@ const ListProductImages = ({
                     />
                   </IconButton>
                 </Box>
-                <Image
-                  src={item.preview}
-                  alt={'Product Image'}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  priority={true}
-                  sizes="100%"
-                />
+                <ImageWithSkeleton preview={item.preview} />
               </Box>
               <DeleteModal
                 open={isDelete}

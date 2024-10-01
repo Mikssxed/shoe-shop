@@ -456,3 +456,26 @@ export const deleteProduct = async ({
     },
   });
 };
+
+export const editProduct = async ({
+  data,
+  token,
+  id,
+}: {
+  data: IAddProductRequest;
+  token: string;
+  id: number;
+}): Promise<IAddProductResponse> => {
+  const headers: any = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axiosInstance.put<IAddProductResponse>(
+    `/products/${id}?populate=*`,
+    data,
+    { headers },
+  );
+
+  return response.data;
+};

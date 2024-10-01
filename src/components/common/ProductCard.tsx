@@ -60,7 +60,7 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
 
   const editProduct = (id: number) => {
     // TODO: implement edit product
-  }
+  };
 
   return (
     <Box sx={{ position: 'relative', width: '100%' }}>
@@ -208,10 +208,11 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
             onClose={() => setAnchorEl(null)}
             onDeleteProduct={() => deleteProduct(product.id)}
             onEditProduct={() => editProduct(product.id)}
+            product={product}
           />
         </Box>
       )}
     </Box>
-  )
-}
-export default ProductCard
+  );
+};
+export default ProductCard;
