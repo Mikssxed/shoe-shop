@@ -3,15 +3,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import Testimonial from './Testimonial';
 
 interface ISideImageLayoutProps {
   children: React.ReactNode;
   imageSrc: string;
+  showTestimonial?: boolean;
 }
 
 export default function SideImageLayout({
   children,
   imageSrc,
+  showTestimonial,
 }: ISideImageLayoutProps) {
   return (
     <Box
@@ -68,8 +71,10 @@ export default function SideImageLayout({
         sx={{
           position: 'relative',
           display: { xs: 'none', lg: 'flex' },
+          maxWidth: '50vw',
         }}
       >
+        {showTestimonial && <Testimonial />}
         <Image
           src={imageSrc}
           alt="sneaker"

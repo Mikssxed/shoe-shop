@@ -17,5 +17,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const imageSrc = pathImageMap[pathname] || '';
 
-  return <SideImageLayout imageSrc={imageSrc}>{children}</SideImageLayout>;
+  return (
+    <SideImageLayout
+      showTestimonial={pathname === '/auth/sign-up'}
+      imageSrc={imageSrc}
+    >
+      {children}
+    </SideImageLayout>
+  );
 }
