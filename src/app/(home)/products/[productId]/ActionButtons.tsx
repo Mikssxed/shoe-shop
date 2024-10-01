@@ -9,7 +9,6 @@ import { IActionButtonsProps } from '@/lib/types/props.type';
 import { actionButtonsStyles as styles } from '@/styles/product/product.style';
 import { addToCartQuery } from '@/tools';
 import { addLastViewedProductId } from '@/utils';
-import { useSession } from 'next-auth/react';
 
 export default function ActionButtons({
   sizes,
@@ -21,7 +20,7 @@ export default function ActionButtons({
 
   const onSelectSize = (value: number) => setSelectedSize(value);
   const addToBag = () => {
-    addToCartQuery(product, data?.user?.id, selectedSize || 'unselected');
+    addToCartQuery(product, session?.user?.id, selectedSize || 'unselected');
     enqueueSnackbar('Succesfully added to cart', {
       variant: 'success',
       autoHideDuration: 2000,
