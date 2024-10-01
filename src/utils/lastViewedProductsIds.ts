@@ -1,13 +1,19 @@
-export function getLastViewedProductIds(): string[] {
+export function getLastViewedProductIds(userId?: string): string[] {
   if (globalThis.window === undefined) {
     return [];
   }
-  const storedIds = localStorage.getItem("lastViewed");
+
+  const storageKey = userId ? `lastViewed_${userId}` : 'lastViewed';
+
+  const storedIds = localStorage.getItem(storageKey);
   return storedIds ? JSON.parse(storedIds) : [];
 }
 
-export function addLastViewedProductId(newProductId: string): void {
-  const lastViewedIds = getLastViewedProductIds();
+export function addLastViewedProductId(
+  newProductId: string,
+  userId?: string,
+): void {
+  const lastViewedIds = getLastViewedProductIds(userId);
 
   if (lastViewedIds.includes(newProductId)) {
     return;
@@ -19,5 +25,7 @@ export function addLastViewedProductId(newProductId: string): void {
     lastViewedIds.pop();
   }
 
-  localStorage.setItem("lastViewed", JSON.stringify(lastViewedIds));
+  const storageKey = userId ? `lastViewed_${userId}` : 'lastViewed';
+
+  localStorage.setItem(storageKey, JSON.stringify(lastViewedIds));
 }

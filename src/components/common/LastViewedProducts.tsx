@@ -1,7 +1,9 @@
 'use client';
+import { Grid, Skeleton, Typography } from '@mui/material';
+import { useSession } from 'next-auth/react';
+
 import { useLastViewed } from '@/tools';
 import { getLastViewedProductIds } from '@/utils';
-import { Grid, Skeleton, Typography } from '@mui/material';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
@@ -10,7 +12,8 @@ type Props = {
 };
 
 function LastViewedProducts({ isFullWidth }: Props) {
-  const productIds = getLastViewedProductIds();
+  const { data: session } = useSession();
+  const productIds = getLastViewedProductIds(session?.user?.id);
 
   const { data: products, isLoading } = useLastViewed(productIds);
 

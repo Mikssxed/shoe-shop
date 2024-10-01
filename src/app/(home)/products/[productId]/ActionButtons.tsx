@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Button, Grid, Typography } from '@mui/material';
+import { useSession } from 'next-auth/react';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 
@@ -16,7 +17,7 @@ export default function ActionButtons({
   id,
 }: IActionButtonsProps) {
   const [selectedSize, setSelectedSize] = useState<number | undefined>();
-  const { data } = useSession();
+  const { data: session } = useSession();
 
   const onSelectSize = (value: number) => setSelectedSize(value);
   const addToBag = () => {
@@ -27,8 +28,8 @@ export default function ActionButtons({
     });
   };
   useEffect(() => {
-    addLastViewedProductId(id);
-  }, [id]);
+    addLastViewedProductId(id, session?.user?.id);
+  }, [id, session?.user?.id]);
 
   return (
     <>
