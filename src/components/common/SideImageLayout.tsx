@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
 
@@ -41,7 +42,9 @@ export default function SideImageLayout({
             overflowX: 'hidden',
           }}
         >
-          <Image src="/icons/logo.svg" alt="logo" width={40} height={30} />
+          <Link href="/products">
+            <Image src="/icons/logo.svg" alt="logo" width={40} height={30} />
+          </Link>
         </Box>
         <Box
           component="div"

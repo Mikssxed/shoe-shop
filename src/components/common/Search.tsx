@@ -12,7 +12,6 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import Cross from '/public/icons/cross.svg';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { useProductsNames } from '@/tools';
 import { useIsMobile, useDebounce } from '@/hooks';
@@ -109,13 +108,14 @@ export default function Search({ open, onClose }: SearchProps) {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: { xs: '100%', md: '90%' },
+            alignItems: 'center',
+            width: 'clamp(250px, 75dvw, 1070px)',
           }}
         >
           {open && (
             <>
               <SearchBar
-                width="clamp(250px, 70dvw, 1070px)"
+                width="100%"
                 height="80px"
                 value={searchQuery}
                 onChange={value => {
@@ -141,13 +141,9 @@ export default function Search({ open, onClose }: SearchProps) {
                 <>
                   <Typography
                     sx={{
+                      alignSelf: 'start',
                       mt: { xs: '12px', sm: '22px', md: '32px' },
-                      marginInline: {
-                        xs: '0px 10px',
-                        sm: '20px',
-                        md: '40px',
-                      },
-                      pl: '8px',
+                      pl: { xs: '2px', sm: '8px' },
                       color: stylingConstants.palette.text.secondary,
                       fontSize: { xs: '14px', sm: '17px', md: '20px' },
                     }}

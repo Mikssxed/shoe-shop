@@ -45,24 +45,15 @@ const SearchBar = ({
     >
       <Box
         sx={{
-          pl: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
+          pl: { xs: '10px', sm: '14px', md: `calc(${height}/3)` },
           height: '100%',
           position: 'absolute',
           pointerEvents: 'none',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
         }}
       >
-        {isMobile && (
-          <SearchNormal1 size="10" color={stylingConstants.palette.grey[700]} />
-        )}
-        {!isMobile && (
-          <SearchNormal1
-            size={`calc(${height}/3)`}
-            color={stylingConstants.palette.grey[700]}
-          />
-        )}
+        <SearchNormal1 size="60%" color={stylingConstants.palette.grey[700]} />
       </Box>
       <InputBase
         onFocus={e => {
@@ -84,7 +75,7 @@ const SearchBar = ({
           color: stylingConstants.palette.text.secondary,
           height: { xs: '25px', sm: '40px', md: height },
           '& > input': {
-            fontSize: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
+            fontSize: { xs: '12px', sm: '18px', md: `calc(${height}/3)` },
           },
         }}
         autoFocus={focused}
@@ -97,10 +88,10 @@ const SearchBar = ({
           sx={{
             alignSelf: 'center',
             mr: '4px',
-            fontSize: { xs: '10px', sm: '14px', md: '18px' },
-            height: '60%',
-            width: { xs: '5%', sm: '10%', md: '12%' },
-            minWidth: { xs: '40px', sm: '60px' },
+            fontSize: { xs: '12px', sm: '14px', md: '18px' },
+            height: { xs: '70%', sm: '60%' },
+            width: { xs: '7%', sm: '10%', md: '12%' },
+            minWidth: { xs: '48px', sm: '60px' },
           }}
         >
           Search
@@ -112,11 +103,11 @@ const SearchBar = ({
           onClick={onClear}
           sx={{
             alignSelf: 'center',
-            mr: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
-            fontSize: { xs: '10px', sm: '14px', md: '18px' },
-            height: '60%',
-            width: { xs: '5%', sm: '10%', md: '12%' },
-            minWidth: { xs: '40px', sm: '60px' },
+            mr: { xs: '8px', sm: '18px', md: `calc(${height}/3)` },
+            fontSize: { xs: '12px', sm: '14px', md: '18px' },
+            height: { xs: '70%', sm: '60%' },
+            width: { xs: '7%', sm: '10%', md: '12%' },
+            minWidth: { xs: '48px', sm: '60px' },
           }}
         >
           Clear

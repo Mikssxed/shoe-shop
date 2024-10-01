@@ -45,12 +45,15 @@ const Header = () => {
             flexGrow: 1,
             paddingInline: { xs: '20px', md: '30px', lg: '40px 60px' },
             backgroundcolor: stylingConstants.palette.background.default,
+            minHeight: { xs: '60px' },
             justifyItems: 'end',
             gap: { xs: '20px', md: 0 },
           }}
         >
           <Box sx={{ display: 'flex', flexGrow: 1 }}>
-            <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
+            <Link href="/products">
+              <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
+            </Link>
             {!isMobile && (
               <Link style={{ textDecoration: 'none' }} href="/products">
                 <Typography
@@ -64,7 +67,7 @@ const Header = () => {
               </Link>
             )}
           </Box>
-          {status === 'unauthenticated' && !isMobile && (
+          {status === 'unauthenticated' && (
             <Link
               href="/auth/sign-in"
               style={{
@@ -74,7 +77,7 @@ const Header = () => {
               <Button
                 sx={{
                   width: 'min(145px, 14vw)',
-                  height: '48px',
+                  height: { xs: '36px', md: '48px' },
                   typography: {
                     textTransform: 'none',
                     fontWeight: '700',
@@ -168,7 +171,7 @@ const Header = () => {
               </Link>
             </Box>
           )}
-          {isMobile && (
+          {status === 'authenticated' && isMobile && (
             <Box sx={{ width: 24, height: 24 }}>
               <HambergerMenu
                 size="24"
@@ -180,7 +183,7 @@ const Header = () => {
         </Toolbar>
         <Divider />
       </AppBar>
-      {isMobile && (
+      {status === 'authenticated' && isMobile && (
         <ProfileSidebar
           open={sidebarOpen}
           onClose={() => setSidebarOpen(false)}

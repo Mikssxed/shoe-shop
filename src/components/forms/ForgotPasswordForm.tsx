@@ -15,7 +15,6 @@ import {
 } from '@/lib/types';
 import { ForgotPasswordValidation } from '@/lib/validation';
 import { forgotPassword } from '@/tools';
-import { enqueueSnackbar } from 'notistack';
 
 const defaultValues = {
   email: '',
