@@ -1,11 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import {
-  ICartItem,
-  IImage,
-  ProductAttributes,
-  ProductsResponse,
-} from '@/lib/types';
+import { ICartItem, ProductAttributes, ProductsResponse } from '@/lib/types';
 import { User } from 'next-auth';
 import { queryClient } from '.';
 import {
@@ -96,8 +91,13 @@ export const useProductsNames = (searchString: string) => {
 export const useQueryCartItems = () => {
   return useQuery<ICartItem[]>({
     queryKey: ['cart'],
-    queryFn: () => queryClient.getQueryData<ICartItem[]>(['cart']) || [],
-    initialData: [],
+    queryFn: () => {
+      if (globalThis.localStorage === undefined) {
+        return [];
+      }
+      const storedCart = localStorage.getItem('cart');
+      return storedCart ? JSON.parse(storedCart) : [];
+    },
   });
 };
 
@@ -116,8 +116,8 @@ export const addToCartQuery = (
   product: ProductAttributes,
   selectedSize: number | 'unselected' = 'unselected',
 ) => {
-  return queryClient.setQueryData(['cart'], (oldItems: ICartItem[] = []) =>
-    oldItems.find(
+  queryClient.setQueryData(['cart'], (oldItems: ICartItem[] = []) => {
+    const updatedCart = oldItems.find(
       item => item.id === product.id && item.selectedSize === selectedSize,
     )
       ? oldItems.map(item =>
@@ -125,8 +125,12 @@ export const addToCartQuery = (
             ? { ...item, amount: item.amount + 1 }
             : item,
         )
-      : [...oldItems, { ...product, amount: 1, selectedSize }],
-  );
+      : [...oldItems, { ...product, amount: 1, selectedSize }];
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    return updatedCart;
+  });
 };
 
 /**
@@ -143,11 +147,15 @@ export const deleteFromCartQuery = (
   id: number,
   selectedSize: number | 'unselected',
 ) => {
-  return queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) =>
-    cartItems.filter(
+  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+    const updatedCart = cartItems.filter(
       item => !(item.id === id && item.selectedSize === selectedSize),
-    ),
-  );
+    );
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    return updatedCart;
+  });
 };
 
 /**
@@ -174,13 +182,17 @@ export const increaseCartItemAmount = (
   id: number,
   selectedSize: number | 'unselected',
 ) => {
-  return queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) =>
-    cartItems.map(item =>
+  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+    const updatedCart = cartItems.map(item =>
       item.id === id && item.selectedSize === selectedSize
         ? { ...item, amount: item.amount + 1 }
         : item,
-    ),
-  );
+    );
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    return updatedCart;
+  });
 };
 
 /**
@@ -198,13 +210,17 @@ export const decreaseCartItemAmount = (
   id: number,
   selectedSize: number | 'unselected',
 ) => {
-  return queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) =>
-    cartItems.map(item =>
+  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+    const updatedCart = cartItems.map(item =>
       item.id === id && item.selectedSize === selectedSize
-        ? { ...item, amount: item.amount - 1 }
+        ? { ...item, amount: Math.max(0, item.amount - 1) }
         : item,
-    ),
-  );
+    );
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    return updatedCart;
+  });
 };
 
 /**
@@ -219,13 +235,14 @@ export const decreaseCartItemAmount = (
  */
 
 export const changeSelectedSize = (shoe: ICartItem, newSize: number) => {
-  return queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
     const existedItem = cartItems.find(
       item => item.id === shoe.id && item.selectedSize === newSize,
     );
 
+    let updatedCart;
     if (existedItem) {
-      return cartItems
+      updatedCart = cartItems
         .map(item => {
           if (item.id === shoe.id && item.selectedSize === newSize)
             return { ...item, amount: item.amount + shoe.amount };
@@ -234,13 +251,17 @@ export const changeSelectedSize = (shoe: ICartItem, newSize: number) => {
           return item;
         })
         .filter(item => item);
+    } else {
+      updatedCart = cartItems.map(item =>
+        item.id === shoe.id && item.selectedSize === shoe.selectedSize
+          ? { ...item, selectedSize: newSize }
+          : item,
+      );
     }
 
-    return cartItems.map(item =>
-      item.id === shoe.id && item.selectedSize === shoe.selectedSize
-        ? { ...item, selectedSize: newSize }
-        : item,
-    );
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    return updatedCart;
   });
 };
 

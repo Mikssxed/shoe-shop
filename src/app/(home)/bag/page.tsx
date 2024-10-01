@@ -1,15 +1,17 @@
 'use client';
 
-import { Fragment } from 'react';
 import { Box, Container, Divider, Typography } from '@mui/material';
+import { Fragment } from 'react';
 
 import { BagItem, BagSummary } from '@/components/bag';
-import { useQueryCartItems } from '@/tools';
-import { bagPageStyles as styles } from '@/styles/bag/bag.style';
 import EmptyProductList from '@/components/common/EmptyProductList';
+import BagItemsSkeleton from '@/components/ui/loading-skeletons/BagItemsSkeleton';
+import SummarySectionSkeleton from '@/components/ui/loading-skeletons/SummarySectionSkeleton';
+import { bagPageStyles as styles } from '@/styles/bag/bag.style';
+import { useQueryCartItems } from '@/tools';
 
 const Bag = () => {
-  const { data: cart = [] } = useQueryCartItems();
+  const { data: cart = [], isLoading } = useQueryCartItems();
 
   return (
     <>
@@ -17,7 +19,12 @@ const Bag = () => {
         Cart
       </Typography>
       <Divider sx={{ display: { xs: 'block', md: 'none' }, mb: '17px' }} />
-      {cart.length ? (
+      {isLoading ? (
+        <Container component={'main'} maxWidth="xl" sx={styles.main}>
+          <BagItemsSkeleton />
+          <SummarySectionSkeleton />
+        </Container>
+      ) : cart.length ? (
         <Container component={'main'} maxWidth="xl" sx={styles.main}>
           <Box sx={styles.container}>
             <Typography variant="h1" sx={styles.rootTitleDesktop}>
