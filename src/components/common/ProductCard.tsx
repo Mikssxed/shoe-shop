@@ -14,16 +14,17 @@ import {
 } from '@mui/material';
 import { BagTick } from 'iconsax-react';
 import { User } from 'next-auth';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 import { MouseEvent, useState } from 'react';
 
-import { textOverflowEllipsis } from '@/styles/commonStyles';
 import ButtonMenu from '@/components/common/ButtonMenu';
 import useDeleteProduct from '@/hooks/useDeleteProduct';
 import { ProductAttributes } from '@/lib/types';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { addToCartQuery } from '@/tools';
 
 type Props = {
@@ -34,11 +35,11 @@ type Props = {
 
 const ProductCard = ({ product, imagePriority, user }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  const { data: session } = useSession();
   const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    addToCartQuery(product);
+    addToCartQuery(product, session?.user?.id);
 
     enqueueSnackbar('Succesfully added to cart', {
       variant: 'success',

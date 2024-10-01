@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { TickCircle } from 'iconsax-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { enqueueSnackbar } from 'notistack';
@@ -23,7 +24,8 @@ const defaultValues = {
 };
 
 const OrderForm = () => {
-  const { data: cart = [] } = useQueryCartItems();
+  const { data: session } = useSession();
+  const { data: cart = [] } = useQueryCartItems(session?.user?.id);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
@@ -129,7 +131,10 @@ const OrderForm = () => {
           Delivery time: {Math.floor(Math.random() * 8 + 2)} days.
         </Typography>
         <Link href="/products">
-          <Button variant="contained" onClick={clearCartQuery}>
+          <Button
+            variant="contained"
+            onClick={() => clearCartQuery(session?.user?.id)}
+          >
             Back to home page
           </Button>
         </Link>

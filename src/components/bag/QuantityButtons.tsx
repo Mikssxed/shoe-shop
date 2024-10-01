@@ -1,23 +1,27 @@
-import { useState } from 'react';
-import Image from 'next/image';
+'use client';
 import { Box, Typography } from '@mui/material';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 import { SymbolButton } from '@/components/ui';
 import { IQuantityButtonsProps } from '@/lib/types';
-import { decreaseCartItemAmount, increaseCartItemAmount } from '@/tools';
 import { quantityButtonsStyles as styles } from '@/styles/bag/bag.style';
+import { decreaseCartItemAmount, increaseCartItemAmount } from '@/tools';
 
 const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
   const [isQuantityOpened, setIsQuantityOpened] = useState<boolean>(false);
+  const { data: session } = useSession();
 
   const onClickQuantity = () => {
+    setIsQuantityOpened(prev => !prev);
     setIsQuantityOpened(prev => !prev);
   };
 
   const onClickDecrease = () =>
-    decreaseCartItemAmount(item.id, item.selectedSize);
+    decreaseCartItemAmount(item.id, session?.user?.id, item.selectedSize);
   const onClickIncrease = () =>
-    increaseCartItemAmount(item.id, item.selectedSize);
+    increaseCartItemAmount(item.id, session?.user?.id, item.selectedSize);
 
   const isMinusDisabled = item.amount <= 1;
   const isPlusDisabled = item.amount >= item.number;

@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Container, Divider, Typography } from '@mui/material';
+import { useSession } from 'next-auth/react';
 import { Fragment } from 'react';
 
 import { BagItem, BagSummary } from '@/components/bag';
@@ -11,7 +12,8 @@ import { bagPageStyles as styles } from '@/styles/bag/bag.style';
 import { useQueryCartItems } from '@/tools';
 
 const Bag = () => {
-  const { data: cart = [], isLoading } = useQueryCartItems();
+  const { data: session } = useSession();
+  const { data: cart = [], isLoading } = useQueryCartItems(session?.user?.id);
 
   return (
     <>

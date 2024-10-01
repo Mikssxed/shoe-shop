@@ -15,19 +15,19 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { useIsMobile } from '@/hooks';
+import { stylingConstants } from '@/lib/constants/themeConstants';
+import { useQueryCartItems } from '@/tools';
+import { ProfileSidebar } from '.';
 import ProfilePicture from './ProfilePicture';
 import Search from './Search';
 import SearchBar from './SearchBar';
-import { ProfileSidebar } from '.';
-import { stylingConstants } from '@/lib/constants/themeConstants';
-import { useQueryCartItems } from '@/tools';
 
 const Header = () => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useIsMobile();
   const [openSearch, setOpenSearch] = useState(false);
-  const { data: cartItems = [] } = useQueryCartItems();
+  const { data: cartItems = [] } = useQueryCartItems(data?.user?.id);
 
   return (
     <>

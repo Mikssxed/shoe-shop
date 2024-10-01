@@ -18,6 +18,7 @@ import {
  *
  * @param {ProductsResponse} initialProducts - The initial set of products to start with.
  * @param {Object} [params={}] - Optional query parameters to filter or sort products.
+ * @param {User} [user] - The current authenticated user.
  * @returns {Object} - The result of the infinite query, including data, fetching status, and pagination.
  */
 export const useProducts = (
@@ -85,20 +86,67 @@ export const useProductsNames = (searchString: string) => {
 /**
  * Custom hook to fetch items from cart state.
  *
- * @returns {Object[]} - The result of the query, including array of all cart items, fetching status, and potential errors.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
+ * @returns {Object[]} - The result of the query, including an array of all cart items, fetching status, and potential errors.
  */
-
-export const useQueryCartItems = () => {
+export const useQueryCartItems = (userId: string | undefined) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
   return useQuery<ICartItem[]>({
-    queryKey: ['cart'],
+    queryKey: [storageKey],
     queryFn: () => {
-      if (globalThis.localStorage === undefined) {
+      if (
+        typeof window === 'undefined' ||
+        globalThis.localStorage === undefined
+      ) {
         return [];
       }
-      const storedCart = localStorage.getItem('cart');
-      return storedCart ? JSON.parse(storedCart) : [];
+
+      const guestCart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+      if (userId) {
+        const userCart = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+        const mergedCart = mergeCarts(guestCart, userCart);
+
+        localStorage.setItem(storageKey, JSON.stringify(mergedCart));
+
+        localStorage.removeItem('cart');
+
+        return mergedCart;
+      }
+
+      return guestCart;
     },
   });
+};
+
+/**
+ * Merges the guest cart and the user cart by combining matching items.
+ *
+ * @param {ICartItem[]} guestCart - The cart items for the guest user.
+ * @param {ICartItem[]} userCart - The cart items for the authenticated user.
+ * @returns {ICartItem[]} - The merged array of cart items.
+ */
+const mergeCarts = (
+  guestCart: ICartItem[],
+  userCart: ICartItem[],
+): ICartItem[] => {
+  const mergedCart = [...guestCart];
+
+  userCart.forEach(userItem => {
+    const existingItem = mergedCart.find(
+      item =>
+        item.id === userItem.id && item.selectedSize === userItem.selectedSize,
+    );
+
+    if (existingItem) {
+      existingItem.amount += userItem.amount;
+    } else {
+      mergedCart.push(userItem);
+    }
+  });
+
+  return mergedCart;
 };
 
 /**
@@ -108,15 +156,17 @@ export const useQueryCartItems = () => {
  * its `amount` is incremented. If the item does not exist, it is added to the cart.
  *
  * @param {ProductAttributes} product - The product object that includes all properties of the item to add to the cart.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @param {number | 'unselected'} [selectedSize='unselected'] - The selected size of the product. If no size is selected, it defaults to 'unselected'.
  * @returns {void} Updates the cart state in the query client.
  */
-
 export const addToCartQuery = (
   product: ProductAttributes,
+  userId: string | undefined,
   selectedSize: number | 'unselected' = 'unselected',
 ) => {
-  queryClient.setQueryData(['cart'], (oldItems: ICartItem[] = []) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
+  queryClient.setQueryData([storageKey], (oldItems: ICartItem[] = []) => {
     const updatedCart = oldItems.find(
       item => item.id === product.id && item.selectedSize === selectedSize,
     )
@@ -127,7 +177,7 @@ export const addToCartQuery = (
         )
       : [...oldItems, { ...product, amount: 1, selectedSize }];
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
 
     return updatedCart;
   });
@@ -140,19 +190,22 @@ export const addToCartQuery = (
  *
  * @param {number} id - The ID of the product to remove from the cart.
  * @param {number | 'unselected'} selectedSize - The selected size of the product to be removed.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @returns {void} Updates the cart state in the query client.
  */
-
 export const deleteFromCartQuery = (
   id: number,
   selectedSize: number | 'unselected',
+  userId: string | undefined,
 ) => {
-  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
+
+  queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
     const updatedCart = cartItems.filter(
       item => !(item.id === id && item.selectedSize === selectedSize),
     );
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
 
     return updatedCart;
   });
@@ -161,11 +214,13 @@ export const deleteFromCartQuery = (
 /**
  * Custom hook to clear all items in the cart state.
  *
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @returns {void} Updates the cart state in the query client.
  */
-
-export const clearCartQuery = () => {
-  return queryClient.setQueryData(['cart'], []);
+export const clearCartQuery = (userId: string | undefined) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
+  localStorage.removeItem(storageKey);
+  return queryClient.setQueryData([storageKey], []);
 };
 
 /**
@@ -174,22 +229,25 @@ export const clearCartQuery = () => {
  * It increments the `amount` of the item in the cart that matches the given `id`.
  *
  * @param {number} id - The ID of the product in the cart whose amount needs to be increased.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @param {number | 'unselected'} selectedSize - The selected size of the product to be increased.
  * @returns {void} Updates the cart state in the query client.
  */
-
 export const increaseCartItemAmount = (
   id: number,
+  userId: string | undefined,
+
   selectedSize: number | 'unselected',
 ) => {
-  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
+  queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
     const updatedCart = cartItems.map(item =>
       item.id === id && item.selectedSize === selectedSize
         ? { ...item, amount: item.amount + 1 }
         : item,
     );
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
 
     return updatedCart;
   });
@@ -202,40 +260,47 @@ export const increaseCartItemAmount = (
  * If the item's amount reaches 0, the item is still kept in the cart.
  *
  * @param {number} id - The ID of the product in the cart whose amount needs to be decreased.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @param {number | 'unselected'} selectedSize - The selected size of the product to be decreased.
  * @returns {void} Updates the cart state in the query client.
  */
-
 export const decreaseCartItemAmount = (
   id: number,
+  userId: string | undefined,
   selectedSize: number | 'unselected',
 ) => {
-  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
+  queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
     const updatedCart = cartItems.map(item =>
       item.id === id && item.selectedSize === selectedSize
         ? { ...item, amount: Math.max(0, item.amount - 1) }
         : item,
     );
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
 
     return updatedCart;
   });
 };
 
 /**
- * Custom hook to change the selected size of a shoe in the cart.
+ * Custom hook to change the selected size of a shoe in the cart for a specific user.
  *
  * If the new size already exists in the cart for the same shoe, it combines the amounts.
  * Otherwise, it updates the selected size of the shoe.
  *
  * @param {ICartItem} shoe - The shoe item in the cart whose size is being changed.
  * @param {number} newSize - The new size to update the shoe to.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @returns {void} Updates the cart state in the query client.
  */
-
-export const changeSelectedSize = (shoe: ICartItem, newSize: number) => {
-  queryClient.setQueryData(['cart'], (cartItems: ICartItem[]) => {
+export const changeSelectedSize = (
+  shoe: ICartItem,
+  newSize: number,
+  userId: string | undefined,
+) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
+  queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
     const existedItem = cartItems.find(
       item => item.id === shoe.id && item.selectedSize === newSize,
     );
@@ -250,7 +315,7 @@ export const changeSelectedSize = (shoe: ICartItem, newSize: number) => {
             return null;
           return item;
         })
-        .filter(item => item);
+        .filter(item => item !== null);
     } else {
       updatedCart = cartItems.map(item =>
         item.id === shoe.id && item.selectedSize === shoe.selectedSize
@@ -259,12 +324,18 @@ export const changeSelectedSize = (shoe: ICartItem, newSize: number) => {
       );
     }
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
 
     return updatedCart;
   });
 };
 
+/**
+ * Custom hook to fetch last viewed products by their IDs.
+ *
+ * @param {string[]} ids - Array of product IDs to retrieve.
+ * @returns {Object} - The result of the query, including last viewed product data, fetching status, and potential errors.
+ */
 export const useLastViewed = (ids: string[]) => {
   return useQuery({
     queryKey: ['lastViewed', ids],

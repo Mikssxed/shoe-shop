@@ -1,28 +1,32 @@
-import Image from 'next/image';
-import Link from 'next/link';
+'use client';
+
 import {
   Box,
   Button,
+  MenuItem,
   Paper,
   Select,
-  Typography,
-  MenuItem,
   SelectChangeEvent,
+  Typography,
 } from '@mui/material';
-
-import { TSelectedSize, BagItemProps } from '@/lib/types';
-import { changeSelectedSize, deleteFromCartQuery } from '@/tools';
-import QuantityButtons from './QuantityButtons';
-import { bagItemStyles as styles } from '@/styles/bag/bag.style';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { enqueueSnackbar } from 'notistack';
 
+import { BagItemProps, TSelectedSize } from '@/lib/types';
+import { bagItemStyles as styles } from '@/styles/bag/bag.style';
+import { changeSelectedSize, deleteFromCartQuery } from '@/tools';
+import QuantityButtons from './QuantityButtons';
+
 const BagItem: React.FC<BagItemProps> = ({ item }) => {
+  const { data: session } = useSession();
   const handleChange = (event: SelectChangeEvent<TSelectedSize>) => {
-    changeSelectedSize(item, Number(event.target.value));
+    changeSelectedSize(item, Number(event.target.value), session?.user?.id);
   };
 
   const onDelete = () => {
-    deleteFromCartQuery(item.id, item.selectedSize);
+    deleteFromCartQuery(item.id, item.selectedSize, session?.user?.id);
     enqueueSnackbar('Succesfully deleted from cart', {
       variant: 'success',
       autoHideDuration: 2000,
