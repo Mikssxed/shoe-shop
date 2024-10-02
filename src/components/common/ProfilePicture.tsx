@@ -14,7 +14,11 @@ const ProfilePicture = ({ avatarStyle, avatarUrl }: IProfilePictureProps) => {
     return <Skeleton variant="circular" height="100%" width="100%" />;
   }
 
-  const { avatar, firstName, username } = session?.user;
+  const { avatar, firstName, username } = session?.user || {
+    avatar: undefined,
+    firstName: undefined,
+    username: undefined,
+  };
   const fullName = (firstName || username || ' ')[0].toUpperCase();
 
   return (

@@ -73,6 +73,7 @@ export default function Search({ open, onClose }: SearchProps) {
 
   return (
     <Modal
+      data-testid="searchModal"
       open={open}
       onClose={handleClose}
       keepMounted={true}
@@ -91,6 +92,7 @@ export default function Search({ open, onClose }: SearchProps) {
       }}
     >
       <Box
+        data-testid="searchModal__content"
         sx={{
           alignSelf: 'start',
           p: { xs: '20px 25px', sm: '30px 35px', md: '40px 45px' },

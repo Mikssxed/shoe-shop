@@ -1,6 +1,13 @@
 'use client';
 
-import { AppBar, Box, Divider, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Divider,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { Bag, HambergerMenu, SearchNormal1 } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -10,84 +17,75 @@ import { useState } from 'react';
 import { useIsMobile } from '@/hooks';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import { useQueryCartItems } from '@/tools';
-import { ProfileSidebar } from '.';
-import ProfilePicture from './ProfilePicture';
-import Search from './Search';
-import SearchBar from './SearchBar';
-import BaseButton from '../ui/BaseButton';
+import {
+  ProfileSidebar,
+  ProfilePicture,
+  Search,
+  SearchBar,
+} from '@/components/common';
+import styles from '@/styles/components/common/header.style';
 
 const Header = () => {
-  const { status, data } = useSession();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { status, data: session } = useSession();
   const isMobile = useIsMobile();
-  const [openSearch, setOpenSearch] = useState(false);
-  const { data: cartItems = [] } = useQueryCartItems(data?.user?.id);
+  const { data: cartItems = [] } = useQueryCartItems(session?.user?.id);
+
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
+
+  const onOpenSearch = () => setOpenSearch(true);
+  const onCloseSearch = () => setOpenSearch(false);
+  const onCloseProfileSidebar = () => setShowSidebar(false);
+  const onClickHamburger = () => setShowSidebar(true);
+
+  const cartItemAmount = cartItems.reduce((prev, curr) => {
+    return prev + curr.amount;
+  }, 0);
 
   return (
     <>
-      <Search open={openSearch} onClose={() => setOpenSearch(false)} />
-      <AppBar
-        color="inherit"
-        sx={{
-          width: '100%',
-          position: 'sticky',
-          boxShadow: 'none',
-        }}
-      >
-        <Toolbar
-          sx={{
-            flexGrow: 1,
-            paddingInline: { xs: '20px', md: '30px', lg: '40px 60px' },
-            backgroundcolor: stylingConstants.palette.background.default,
-            minHeight: { xs: '60px' },
-            justifyItems: 'end',
-            gap: { xs: '20px', md: 0 },
-          }}
-        >
+      <Search open={openSearch} onClose={onCloseSearch} />
+      <AppBar color="inherit" sx={styles.appBar}>
+        <Toolbar sx={styles.toolBar}>
           <Box sx={{ display: 'flex', flexGrow: 1 }}>
             <Link href="/products">
-              <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
+              <Image
+                data-testid="header__logo"
+                alt="logo"
+                width="40"
+                height="30"
+                src="/icons/logo.png"
+              />
             </Link>
             {!isMobile && (
-              <Link style={{ textDecoration: 'none' }} href="/products">
-                <Typography
-                  align="center"
-                  sx={{ marginInline: '44px', lineHeight: '30px' }}
-                  variant="body1"
-                  color={stylingConstants.palette.text.primary}
-                >
+              <Link
+                data-testid="header__linkToProductsPage"
+                style={{ textDecoration: 'none' }}
+                href="/products"
+              >
+                <Typography sx={styles.logoSubtext} variant="body1">
                   Products
                 </Typography>
               </Link>
             )}
           </Box>
           {status === 'unauthenticated' && (
-            <Link
-              href="/auth/sign-in"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              <BaseButton
+            <Link href="/auth/sign-in" style={{ textDecoration: 'none' }}>
+              <Button
+                data-testid="header__signInButton"
+                sx={styles.signInButton}
                 variant="outlined"
-                sx={{
-                  width: 'min(145px, 14vw)',
-                  height: { xs: '36px', md: '48px' },
-                  typography: {
-                    textTransform: 'none',
-                    fontWeight: '700',
-                  },
-                }}
+                color="primary"
               >
                 Sign in
-              </BaseButton>
+              </Button>
             </Link>
           )}
           {!isMobile && (
             <SearchBar
               width="min(320px, 25vw)"
               height="48px"
-              onInputClick={() => setOpenSearch(true)}
+              onInputClick={onOpenSearch}
             />
           )}
           <Link
@@ -100,6 +98,7 @@ const Header = () => {
             }}
           >
             <Bag
+              data-testid="header__bagIcon"
               size="24"
               color={
                 cartItems.length > 0
@@ -109,56 +108,33 @@ const Header = () => {
             />
             {cartItems.length > 0 && (
               <Box
+                data-testid="header__bagSpan"
                 component="span"
-                sx={{
-                  position: 'absolute',
-                  backgroundColor: stylingConstants.palette.primary.main,
-                  minWidth: '26px',
-                  textAlign: 'center',
-                  borderRadius: '16px',
-                  padding: '4px 8px',
-                  color: 'white',
-                  transform: 'translate(-10px, -10px)',
-                }}
+                sx={styles.cartItemAmount}
               >
-                {cartItems.reduce((prev, curr) => {
-                  return prev + curr.amount;
-                }, 0)}
+                {cartItemAmount}
               </Box>
             )}
           </Link>
           {isMobile && (
             <Box
+              data-testid="header__searchIcon"
               sx={{ width: 17, height: 17 }}
-              onClick={() => setOpenSearch(true)}
+              onClick={onOpenSearch}
             >
               <SearchNormal1
                 size="17"
                 color={stylingConstants.palette.grey[700]}
-                style={{
-                  cursor: 'pointer',
-                }}
+                style={{ cursor: 'pointer' }}
               />
             </Box>
           )}
           {status !== 'unauthenticated' && !isMobile && (
-            <Box
-              sx={{
-                ml: { md: '16px' },
-              }}
-            >
+            <Box sx={{ ml: { md: '16px' } }}>
               <Link
+                data-testid="header__avatarLink"
                 href="/profile/my-products"
-                style={{
-                  width: 24,
-                  height: 24,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  borderRadius: '50%',
-                  position: 'relative',
-                }}
+                style={styles.profilePictureLink}
               >
                 <ProfilePicture />
               </Link>
@@ -167,9 +143,10 @@ const Header = () => {
           {status === 'authenticated' && isMobile && (
             <Box sx={{ width: 24, height: 24 }}>
               <HambergerMenu
+                data-testid="header__hamburger"
                 size="24"
                 color={stylingConstants.palette.grey[700]}
-                onClick={() => setSidebarOpen(true)}
+                onClick={onClickHamburger}
               />
             </Box>
           )}
@@ -177,10 +154,7 @@ const Header = () => {
         <Divider />
       </AppBar>
       {status === 'authenticated' && isMobile && (
-        <ProfileSidebar
-          open={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-        />
+        <ProfileSidebar open={showSidebar} onClose={onCloseProfileSidebar} />
       )}
     </>
   );

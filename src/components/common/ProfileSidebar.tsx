@@ -136,9 +136,10 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
 
   const Content = () => {
     return (
-      <Box>
+      <Box data-testid="profileSideBar">
         {isMobile && (
           <Box
+            data-testid="profileSideBar__content"
             sx={{
               width: '100%',
               justifyContent: 'flex-end',

@@ -1,3 +1,5 @@
+'use client';
+
 import { useMutation } from '@tanstack/react-query';
 import { SignInResponse, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';

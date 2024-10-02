@@ -1,3 +1,5 @@
+'use client';
+
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box, IconButton, Typography } from '@mui/material';

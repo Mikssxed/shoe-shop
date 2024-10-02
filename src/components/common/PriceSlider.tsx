@@ -1,3 +1,5 @@
+'use client';
+
 import { Slider } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';

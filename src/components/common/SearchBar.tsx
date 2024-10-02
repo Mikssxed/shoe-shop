@@ -35,6 +35,7 @@ const SearchBar = ({
 
   return (
     <Box
+      data-testid="searchbar"
       sx={{
         position: 'relative',
         display: 'flex',
@@ -58,6 +59,7 @@ const SearchBar = ({
         <SearchNormal1 size="60%" color={stylingConstants.palette.grey[700]} />
       </Box>
       <InputBase
+        data-testid="searchbar__input"
         onFocus={e => {
           if (!focused) e.target.blur();
         }}

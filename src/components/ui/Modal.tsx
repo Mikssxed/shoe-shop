@@ -1,3 +1,5 @@
+'use client';
+
 import { Dialog, SxProps, useTheme } from '@mui/material';
 import { PropsWithChildren, useRef } from 'react';
 
@@ -21,6 +23,7 @@ const Modal = ({
 
   return (
     <Dialog
+      data-testid="modal"
       disableScrollLock={true}
       open={open}
       onClose={onClose}
