@@ -18,6 +18,7 @@ import { stylingConstants } from '@/lib/constants/themeConstants';
 import { OrderValidation } from '@/lib/validation';
 import { orderFormStyles as styles } from '@/styles/forms/orderForm.style';
 import { clearCartQuery, useQueryCartItems } from '@/tools';
+import BaseButton from '../ui/BaseButton';
 
 const defaultValues = {
   promocode: '',
@@ -95,19 +96,14 @@ const OrderForm = () => {
           bold
         />
         <Divider sx={styles.dividerAfterTotal} />
-
-        <Button variant="contained" sx={styles.md_checkoutBtn} type="submit">
+        <BaseButton type="submit" sx={styles.md_checkoutBtn}>
           Checkout
-        </Button>
+        </BaseButton>
       </Box>
       <Box sx={styles.xs_checkoutContainer}>
-        <Button
-          sx={styles.xs_checkoutBtn}
-          variant="contained"
-          onClick={handleSubmit(onSubmit)}
-        >
+        <BaseButton sx={styles.xs_checkoutBtn} onClick={handleSubmit(onSubmit)}>
           Checkout
-        </Button>
+        </BaseButton>
       </Box>
       <Modal
         open={showCheckoutModal}
@@ -131,12 +127,9 @@ const OrderForm = () => {
           Delivery time: {Math.floor(Math.random() * 8 + 2)} days.
         </Typography>
         <Link href="/products">
-          <Button
-            variant="contained"
-            onClick={() => clearCartQuery(session?.user?.id)}
-          >
+          <BaseButton onClick={() => clearCartQuery(session?.user?.id)}>
             Back to home page
-          </Button>
+          </BaseButton>
         </Link>
       </Modal>
     </>

@@ -10,6 +10,7 @@ import {
 import Image from 'next/image';
 import Modal from '../ui/Modal';
 import Cross from '/public/icons/cross.svg';
+import BaseButton from '../ui/BaseButton';
 
 type Props = {
   open: boolean;
@@ -66,19 +67,17 @@ const BaseModal = ({
           '& > *': { flexGrow: '1', height: { xs: '40px', md: '61px' } },
         }}
       >
-        <Button variant="outlined" color="primary" onClick={onClose}>
+        <BaseButton variant="outlined" onClick={onClose}>
           Cancel
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
+        </BaseButton>
+        <BaseButton
           onClick={() => {
             onSubmit();
             onClose();
           }}
         >
           {submitText}
-        </Button>
+        </BaseButton>
       </DialogActions>
     </Box>
   );

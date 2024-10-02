@@ -1,3 +1,5 @@
+import { buttonStyles } from '../commonStyles';
+
 export const profileSettingsStyles = {
   myProfileTitleStyles: {
     fontSize: { xs: '30px', md: '45px' },
@@ -32,8 +34,5 @@ export const profileSettingsStyles = {
     m: { xs: '0 4.8px 23.13px 0.28px', md: '0 0 48px' },
   },
   profilePicture: { fontSize: { sm: '28px', md: '48px' } },
-  avatarControlButton: {
-    width: { xs: '117px', md: '152px' },
-    height: { xs: '31px', md: '40px' },
-  },
+  avatarControlButton: buttonStyles.commonBtn,
 };

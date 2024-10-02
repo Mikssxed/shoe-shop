@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { Box, Toolbar, Button } from '@mui/material';
+import { Box, Toolbar } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -12,6 +12,7 @@ import { profileSettingsStyles as styles } from '@/styles/profile/profileSetting
 import { avatarValidation } from '@/lib/validation';
 import { useUploadAvatarMutation } from '@/tools/mutations';
 import DeleteAvatarModal from '@/components/modals/DeleteAvatarModal';
+import BaseButton from '../ui/BaseButton';
 
 export default function AvatarForm() {
   const { data: session, status } = useSession();
@@ -59,25 +60,24 @@ export default function AvatarForm() {
             {...register('avatar')}
           />
           <label htmlFor="file-upload">
-            <Button
+            <BaseButton
               variant="outlined"
               component={'span'}
               disabled={uploadMutation.isPending || status !== 'authenticated'}
               sx={styles.avatarControlButton}
             >
               {uploadMutation.isPending ? 'Loading...' : 'Change Photo'}
-            </Button>
+            </BaseButton>
           </label>
         </Box>
 
-        <Button
-          variant="contained"
+        <BaseButton
           sx={styles.avatarControlButton}
           onClick={onOpenModal}
           disabled={!session?.user?.avatar}
         >
           Delete
-        </Button>
+        </BaseButton>
 
         <DeleteAvatarModal
           isOpened={isOpenedDeleteModal}

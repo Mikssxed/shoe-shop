@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -11,6 +11,8 @@ import ControlledInput from '@/components/common/ControlledInput';
 import { useSignIn } from '@/hooks';
 import { LogInFormValidation } from '@/lib/validation';
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import BaseButton from '../ui/BaseButton';
+import { buttonStyles } from '@/styles/commonStyles';
 
 const defaultValues = {
   email: '',
@@ -97,20 +99,17 @@ const SignInForm: React.FC = () => {
             </Link>
           </Typography>
         </Box>
-        <Button
-          variant="contained"
+        <BaseButton
           type="submit"
           disabled={isPending}
           sx={{
+            ...buttonStyles.authBtn,
+            ...buttonStyles.disabledBtn,
             mt: '56px',
-            maxWidth: '436px',
-            py: '14px',
-            fontSize: '16px',
-            borderRadius: '8px',
           }}
         >
           {isPending ? 'Loading...' : 'Sign In'}
-        </Button>
+        </BaseButton>
       </Box>
       <Box
         component="div"

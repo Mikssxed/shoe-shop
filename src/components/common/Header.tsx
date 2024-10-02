@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  AppBar,
-  Box,
-  Button,
-  Divider,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, Divider, Toolbar, Typography } from '@mui/material';
 import { Bag, HambergerMenu, SearchNormal1 } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -21,6 +14,7 @@ import { ProfileSidebar } from '.';
 import ProfilePicture from './ProfilePicture';
 import Search from './Search';
 import SearchBar from './SearchBar';
+import BaseButton from '../ui/BaseButton';
 
 const Header = () => {
   const { status, data } = useSession();
@@ -74,7 +68,8 @@ const Header = () => {
                 textDecoration: 'none',
               }}
             >
-              <Button
+              <BaseButton
+                variant="outlined"
                 sx={{
                   width: 'min(145px, 14vw)',
                   height: { xs: '36px', md: '48px' },
@@ -83,11 +78,9 @@ const Header = () => {
                     fontWeight: '700',
                   },
                 }}
-                variant="outlined"
-                color="primary"
               >
                 Sign in
-              </Button>
+              </BaseButton>
             </Link>
           )}
           {!isMobile && (

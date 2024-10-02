@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import { EmptyProductListProps } from '@/lib/types';
 import { emptyProductListStyles as styles } from '@/styles/emptyProductList/emptyProductList.style';
+import BaseButton from '../ui/BaseButton';
 
 const EmptyProductList = ({
   text,
@@ -36,12 +37,9 @@ const EmptyProductList = ({
         </Typography>
         {link && (
           <Link href={link} style={styles.emptyProductList_link}>
-            <Button
-              sx={styles.emptyProductList_addProductBtn}
-              variant="contained"
-            >
+            <BaseButton sx={styles.emptyProductList_addProductBtn}>
               {buttonText}
-            </Button>
+            </BaseButton>
           </Link>
         )}
       </Stack>

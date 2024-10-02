@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Box, Button } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { UseMutationResult, useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -15,6 +15,8 @@ import {
 } from '@/lib/types';
 import { ForgotPasswordValidation } from '@/lib/validation';
 import { forgotPassword } from '@/tools';
+import BaseButton from '../ui/BaseButton';
+import { buttonStyles } from '@/styles/commonStyles';
 
 const defaultValues = {
   email: '',
@@ -83,19 +85,9 @@ const ForgotPasswordForm = () => {
         placeholder="example@mail.com"
       />
 
-      <Button
-        variant="contained"
-        type="submit"
-        sx={{
-          mt: '20px',
-          maxWidth: '436px',
-          py: '14px',
-          fontSize: '16px',
-          borderRadius: '8px',
-        }}
-      >
+      <BaseButton type="submit" sx={{ ...buttonStyles.authBtn, mt: '20px' }}>
         Reset Password
-      </Button>
+      </BaseButton>
     </Box>
   );
 };

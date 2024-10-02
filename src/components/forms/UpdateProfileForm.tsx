@@ -5,13 +5,14 @@ import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 
 import ControlledInput from '@/components/common/ControlledInput';
 import { UpdateProfileValidation } from '@/lib/validation';
 import { updateProfileFormStyles as styles } from '@/styles/forms/updateProfileForm.style';
 import { useUpdateProfileMutation } from '@/tools/mutations';
 import { UpdateProfileFormSkeleton } from '@/components/ui/loading-skeletons/UpdateProfileFormSkeleton';
+import BaseButton from '../ui/BaseButton';
 
 const defaultValues = {
   firstName: '',
@@ -90,14 +91,9 @@ export const UpdateProfileForm: React.FC = () => {
         placeholder={'+000123456789'}
         inputStyle={styles.field}
       />
-      <Button
-        type="submit"
-        variant="contained"
-        sx={styles.submitButton}
-        disabled={isPending}
-      >
+      <BaseButton type="submit" sx={styles.submitButton} disabled={isPending}>
         {isPending ? 'Loading...' : 'Save Changes'}
-      </Button>
+      </BaseButton>
     </Box>
   );
 };

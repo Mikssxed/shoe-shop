@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,9 +6,10 @@ import Link from 'next/link';
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { ProductList } from '@/components/common';
 import ProfilePicture from '@/components/common/ProfilePicture';
-import { textOverflowEllipsis } from '@/styles/commonStyles';
+import { buttonStyles, textOverflowEllipsis } from '@/styles/commonStyles';
 import { getMyProducts } from '@/tools';
 import { capitalizeFirstLetter } from '@/utils/helperFunctions';
+import BaseButton from '@/components/ui/BaseButton';
 
 export default async function MyProducts() {
   const session = await getServerSession(authOptions);
@@ -110,24 +111,16 @@ export default async function MyProducts() {
         >
           <Typography variant="h1">My Products</Typography>
           <Link href="/profile/add-product">
-            <Button
-              variant="contained"
+            <BaseButton
               sx={{
-                textTransform: 'none',
+                ...buttonStyles.commonBtn,
                 position: 'relative',
                 zIndex: 1,
-                width: { xs: 117, md: 152 },
-                height: { xs: 30.79, md: 40 },
-                fontSize: { xs: '12.32px', md: '1rem' },
-                lineHeight: { xs: '14.45px', md: '18.77px' },
-                fontWeight: 500,
-                p: 0,
-                borderRadius: { xs: '6.16px', md: '8px' },
                 flexShrink: 0,
               }}
             >
               Add product
-            </Button>
+            </BaseButton>
           </Link>
         </Stack>
         <ProductList initialProducts={initialData} user={user} />

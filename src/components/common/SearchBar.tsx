@@ -1,8 +1,10 @@
-import { Box, Button, InputBase } from '@mui/material';
+import { Box, InputBase } from '@mui/material';
 import { SearchNormal1 } from 'iconsax-react';
 
 import { useIsMobile } from '@/hooks';
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import BaseButton from '../ui/BaseButton';
+import { buttonStyles } from '@/styles/commonStyles';
 
 type SearchBarProps = {
   width: string;
@@ -82,36 +84,25 @@ const SearchBar = ({
         onClick={onInputClick}
       />
       {onSearch && (
-        <Button
+        <BaseButton
           variant="outlined"
           onClick={onSearch}
-          sx={{
-            alignSelf: 'center',
-            mr: '4px',
-            fontSize: { xs: '12px', sm: '14px', md: '18px' },
-            height: { xs: '70%', sm: '60%' },
-            width: { xs: '7%', sm: '10%', md: '12%' },
-            minWidth: { xs: '48px', sm: '60px' },
-          }}
+          sx={{ ...buttonStyles.searchInputBtn, mr: '4px' }}
         >
           Search
-        </Button>
+        </BaseButton>
       )}
       {onClear && (
-        <Button
+        <BaseButton
           variant="outlined"
           onClick={onClear}
           sx={{
-            alignSelf: 'center',
-            mr: { xs: '8px', sm: '18px', md: `calc(${height}/3)` },
-            fontSize: { xs: '12px', sm: '14px', md: '18px' },
-            height: { xs: '70%', sm: '60%' },
-            width: { xs: '7%', sm: '10%', md: '12%' },
-            minWidth: { xs: '48px', sm: '60px' },
+            ...buttonStyles.searchInputBtn,
+            mr: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
           }}
         >
           Clear
-        </Button>
+        </BaseButton>
       )}
     </Box>
   );

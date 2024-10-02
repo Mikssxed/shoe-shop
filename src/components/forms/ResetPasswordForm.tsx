@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 
@@ -16,6 +16,8 @@ import {
 } from '@/lib/types';
 import { ResetPasswordValidation } from '@/lib/validation';
 import { resetPassword } from '@/tools';
+import BaseButton from '../ui/BaseButton';
+import { buttonStyles } from '@/styles/commonStyles';
 
 const defaultValues = {
   password: '',
@@ -97,23 +99,17 @@ const ResetPasswordForm = () => {
         />
       </Box>
 
-      <Button
-        variant="contained"
+      <BaseButton
         type="submit"
         disabled={mutation.isPending}
         sx={{
+          ...buttonStyles.authBtn,
+          ...buttonStyles.disabledBtn,
           mt: '20px',
-          maxWidth: '436px',
-          py: '14px',
-          fontSize: '16px',
-          borderRadius: '8px',
-          '&.Mui-disabled': {
-            border: '0',
-          },
         }}
       >
         {mutation.isPending ? 'Loading...' : 'Reset Password'}
-      </Button>
+      </BaseButton>
     </Box>
   );
 };

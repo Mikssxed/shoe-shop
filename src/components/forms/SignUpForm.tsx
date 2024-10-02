@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Box, Button, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import { UseMutationResult, useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,8 @@ import { IReactQueryError, ISignUpRequest, ISignUpResponse } from '@/lib/types';
 import { SignUpFormValidation } from '@/lib/validation';
 import { signUp } from '@/tools';
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import BaseButton from '../ui/BaseButton';
+import { buttonStyles } from '@/styles/commonStyles';
 
 const defaultValues = {
   firstName: '',
@@ -113,23 +115,17 @@ const SignUpForm: React.FC = () => {
           placeholder="at least 8 characters"
           type="password"
         />
-        <Button
-          variant={'contained'}
+        <BaseButton
           type="submit"
           disabled={mutation.isPending}
           sx={{
+            ...buttonStyles.authBtn,
+            ...buttonStyles.disabledBtn,
             mt: '66px',
-            maxWidth: '436px',
-            py: '14px',
-            fontSize: '16px',
-            borderRadius: '8px',
-            '&.Mui-disabled': {
-              border: '0',
-            },
           }}
         >
           {mutation.isPending ? 'Loading...' : 'Sign Up'}
-        </Button>
+        </BaseButton>
       </Box>
       <Box
         component="div"

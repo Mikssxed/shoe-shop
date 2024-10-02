@@ -1,3 +1,5 @@
+import { buttonStyles } from '../commonStyles';
+
 export const updateProfileFormStyles = {
   root: {
     display: 'flex',
@@ -15,9 +17,8 @@ export const updateProfileFormStyles = {
     '& *': { cursor: 'not-allowed !important' },
   },
   submitButton: {
-    width: { xs: 117, md: 152 },
-    height: { xs: 30.79, md: 40 },
+    ...buttonStyles.commonBtn,
     mt: '32px',
-    alignSelf: { xs: 'center', md: 'flex-end' },
+    alignSelf: 'flex-end',
   },
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import { IActionButtonsProps } from '@/lib/types/props.type';
 import { actionButtonsStyles as styles } from '@/styles/product/product.style';
 import { addToCartQuery } from '@/tools';
 import { addLastViewedProductId } from '@/utils';
+import BaseButton from '@/components/ui/BaseButton';
 
 export default function ActionButtons({
   sizes,
@@ -44,7 +45,7 @@ export default function ActionButtons({
                 const isChecked = +value === selectedSize;
                 return (
                   <Grid key={id} xs={3} sm={2} item>
-                    <Button
+                    <BaseButton
                       sx={{
                         ...styles.sizeBtn,
                         color: isChecked ? 'white' : 'text.secondary',
@@ -53,7 +54,7 @@ export default function ActionButtons({
                       onClick={() => onSelectSize(+value)}
                     >
                       EU-{value}
-                    </Button>
+                    </BaseButton>
                   </Grid>
                 );
               })}
@@ -61,9 +62,9 @@ export default function ActionButtons({
         </Box>
       )}
       <Box sx={styles.addButtons}>
-        <Button onClick={addToBag} variant="contained" sx={styles.actionButton}>
+        <BaseButton onClick={addToBag} sx={styles.actionButton}>
           Add to Bag
-        </Button>
+        </BaseButton>
       </Box>
     </>
   );

@@ -1,6 +1,5 @@
-import { Button, Grid, Typography, useTheme } from '@mui/material';
+import { Grid, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { useIsMobile } from '@/hooks';
 import {
@@ -15,20 +14,6 @@ import ErrorButtons from './ErrorButtons';
 const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
   const isMobile = useIsMobile();
   const theme = useTheme();
-  const Buttons = () => {
-    return (
-      <>
-        <Button variant="outlined" onClick={reset}>
-          Try again
-        </Button>
-        <Link href="/">
-          <Button sx={{ width: '100%' }} variant="contained">
-            Home
-          </Button>
-        </Link>
-      </>
-    );
-  };
 
   return (
     <BaseErrorPage>

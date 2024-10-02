@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Typography, InputLabel } from '@mui/material';
+import { Box, Typography, InputLabel } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
@@ -33,6 +33,7 @@ import { stylingConstants } from '@/lib/constants/themeConstants';
 import { IProductInfoFormProps, IFileWithPreview } from '@/lib/types';
 import CategoriesSelect from './CategoriesSelect';
 import SizesSelects from './SizesSelects';
+import BaseButton from '../ui/BaseButton';
 import useEditProduct from '@/hooks/useEditProduct';
 import RequiredStar from '../ui/RequiredStar';
 
@@ -475,17 +476,8 @@ const ProductInfoForm = ({
           />
         </Box>
         <Box component="div" sx={saveButtonContainer}>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{
-              ...formSaveButton,
-              '&.Mui-disabled': {
-                backgroundColor: stylingConstants.palette.primary.main,
-                color: '#fff',
-                opacity: 0.5,
-              },
-            }}
+          <BaseButton
+            sx={formSaveButton}
             type="submit"
             disabled={
               submitFormMutation.isPending ||
@@ -500,7 +492,7 @@ const ProductInfoForm = ({
             isAddButtonDisabled
               ? 'Saving...'
               : 'Save'}
-          </Button>
+          </BaseButton>
         </Box>
       </Box>
     </>

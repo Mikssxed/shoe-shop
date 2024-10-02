@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
 import Link from 'next/link';
+import BaseButton from '../ui/BaseButton';
 
 type Props = {
   onClick: () => void;
@@ -9,13 +9,11 @@ type Props = {
 const ErrorButtons = ({ onClick, cancelButtonText }: Props) => {
   return (
     <>
-      <Button variant="outlined" onClick={onClick}>
+      <BaseButton variant="outlined" onClick={onClick}>
         {cancelButtonText}
-      </Button>
+      </BaseButton>
       <Link href="/">
-        <Button sx={{ width: '100%' }} variant="contained">
-          Home
-        </Button>
+        <BaseButton sx={{ width: '100%' }}>Home</BaseButton>
       </Link>
     </>
   );

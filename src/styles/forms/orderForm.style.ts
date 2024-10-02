@@ -31,8 +31,6 @@ export const orderFormStyles = {
   md_checkoutBtn: {
     display: { xs: 'none', md: 'block' },
     mt: { md: '70px', xl: '113px' },
-    textTransform: 'none',
-    bgcolor: stylingConstants.palette.primary.main,
     fontSize: '16px',
     height: '40px',
   },
@@ -50,8 +48,6 @@ export const orderFormStyles = {
     alignItems: 'center',
   },
   xs_checkoutBtn: {
-    textTransform: 'none',
-    bgcolor: '#FE645E',
     fontSize: '16px',
     width: '100%',
     maxWidth: '400px',

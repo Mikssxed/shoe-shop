@@ -38,8 +38,8 @@ export const emptyProductListStyles = {
     textDecoration: 'none',
   },
   emptyProductList_addProductBtn: {
+    width: 152,
+    height: 40,
     borderRadius: '8px',
-    textTransform: 'none',
-    width: '148px',
   },
 };
