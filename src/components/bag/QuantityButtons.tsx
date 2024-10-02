@@ -15,7 +15,6 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
 
   const onClickQuantity = () => {
     setIsQuantityOpened(prev => !prev);
-    setIsQuantityOpened(prev => !prev);
   };
 
   const onClickDecrease = () =>

@@ -64,6 +64,9 @@ theme = createTheme({
     },
     h4: {
       fontSize: 20,
+      [theme.breakpoints.down('md')]: {
+        fontSize: 15,
+      },
     },
     h5: {
       fontSize: 18,

@@ -8,6 +8,7 @@ import {
   Select,
   SelectChangeEvent,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -42,24 +43,32 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
               src={item?.images?.data[0]?.attributes?.url}
               alt="sneakers"
               fill
+              style={{ minWidth: '102px' }}
             />
           ) : (
             <Paper sx={styles.noImagePaper}>
-              <Image fill src="/icons/galleryIcon.svg" alt="icon" />
+              <Image
+                fill
+                src="/icons/galleryIcon.svg"
+                alt="icon"
+                style={{ minWidth: '102px' }}
+              />
             </Paper>
           )}
         </Link>
       </Box>
       <Box sx={styles.about}>
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
           <Box sx={{ flex: '1' }}>
             <Link
               href={'/products/' + item.id}
               style={{ textDecoration: 'none' }}
             >
-              <Typography variant="h4" sx={styles.name}>
-                {item.name}
-              </Typography>
+              <Tooltip title={item.name} placement="top-end">
+                <Typography variant="h4" sx={styles.name}>
+                  {item.name}
+                </Typography>
+              </Tooltip>
             </Link>
             <Typography variant="body1" sx={styles.gender}>
               {item.gender?.data?.attributes.name}&apos;s Shoes
@@ -72,6 +81,7 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
               <Select
                 value={item.selectedSize}
                 onChange={handleChange}
+                MenuProps={{ disableScrollLock: true }}
                 sx={styles.selectSize}
               >
                 {item.selectedSize === 'unselected' && (
@@ -92,7 +102,9 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
             </Box>
           </Box>
           <Box>
-            <Typography sx={styles.price}>${item.price}</Typography>
+            <Tooltip title={`$${item.price}`} placement="top-end">
+              <Typography sx={styles.price}>${item.price}</Typography>
+            </Tooltip>
           </Box>
         </Box>
         <Box sx={styles.amountButtons}>

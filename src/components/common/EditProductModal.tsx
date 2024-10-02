@@ -24,7 +24,11 @@ const EditProductModal = ({
         minWidth: { lg: '1150px', xl: '1487px' },
         justifyContent: 'center',
       }}
-      paperStyle={{ maxWidth: '100%' }}
+      paperStyle={{
+        maxWidth: '100%',
+        p: { sm: '20px', md: '32px' },
+        paddingInline: { md: '40px 65px' },
+      }}
     >
       <ProductInfoForm
         title={title}

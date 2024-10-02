@@ -8,12 +8,10 @@ export default function ProfileSettings() {
   return (
     <Box sx={styles.root}>
       <Box sx={{ display: 'block' }}>
-        <Typography variant="h1" sx={styles.title}>
-          My Profile
-        </Typography>
+        <Typography variant="h1">My Profile</Typography>
         <AvatarForm />
         <Typography paragraph variant="body2" sx={styles.description}>
-          Welcome! Fill in any missing information and keep it accurate.
+          Welcome! Fill in any missing information and please keep it accurate.
         </Typography>
         <UpdateProfileForm />
       </Box>

@@ -1,4 +1,5 @@
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import { textOverflowEllipsis } from '@/styles/commonStyles';
 
 export const bagPageStyles = {
   rootTitleMobile: {
@@ -78,8 +79,13 @@ export const bagItemStyles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    gap: '8px',
   },
-  name: { color: stylingConstants.palette.text.primary },
+  name: {
+    color: stylingConstants.palette.text.primary,
+    maxWidth: { xs: '140px', sm: '330px', md: '450px' },
+    ...textOverflowEllipsis.singleLine,
+  },
   gender: { mt: '4px' },
   inStockText: {
     mt: '12px',
@@ -93,8 +99,10 @@ export const bagItemStyles = {
   price: {
     fontSize: { xs: 12, md: 20, xl: 30 },
     lineHeight: { xs: '14px', md: '23px', xl: '35.2px' },
+    maxWidth: { xs: '50px', sm: '360px' },
     color: stylingConstants.palette.text.primary,
     fontWeight: 500,
+    ...textOverflowEllipsis.singleLine,
   },
   amountButtons: {
     display: 'flex',
@@ -117,12 +125,14 @@ export const bagItemStyles = {
     width: { xs: '14px', xl: '24px' },
   },
   selectSize: {
+    border: `1px solid ${stylingConstants.palette.grey[500]}`,
     ml: { xs: 1, md: 2 },
     [`& div[role="combobox"]`]: {
       fontSize: { xs: 12, md: 16 },
       lineHeight: { xs: '13px' },
       p: 1,
     },
+    height: 25,
   },
   selectSize_menuItem: {
     minHeight: 'min-content',

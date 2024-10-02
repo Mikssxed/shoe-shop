@@ -51,7 +51,7 @@ const ButtonMenu = ({
         product={product}
         onClose={() => setOpenEdit(false)}
       />
-      <Menu {...props}>
+      <Menu {...props} disableScrollLock={true}>
         <MenuList
           sx={{
             p: 0,

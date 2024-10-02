@@ -8,6 +8,7 @@ export const productInfoFormContainer = {
   maxWidth: '1480px',
   justifyContent: { md: 'space-between' },
   position: 'relative',
+  p: { xs: '24px 20px', md: '20px 0' },
 };
 
 export const productInfoTitle = {
@@ -107,7 +108,7 @@ export const saveButtonContainer = {
   textAlign: 'right',
   mt: { lg: '6px' },
   position: { lg: 'absolute' },
-  top: 0,
+  top: 20,
   right: 0,
 };
 
