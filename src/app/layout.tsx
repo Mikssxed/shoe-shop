@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import AppProvider from '@/lib/AppProvider';
 import theme from '@/theme';
 import '../styles/globals.css';
+import '../styles/animation.css';
 
 export const metadata: Metadata = {
   title: 'Shoe shop',

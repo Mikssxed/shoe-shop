@@ -1,8 +1,9 @@
-import { Box } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import { useState } from 'react';
 import Testimonial from './Testimonial';
 
 interface ISideImageLayoutProps {
@@ -16,6 +17,10 @@ export default function SideImageLayout({
   imageSrc,
   showTestimonial,
 }: ISideImageLayoutProps) {
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+
+  const onLoadImage = () => setIsImageLoading(false);
+
   return (
     <Box
       component="main"
@@ -70,11 +75,40 @@ export default function SideImageLayout({
         component="aside"
         sx={{
           position: 'relative',
-          display: { xs: 'none', lg: 'flex' },
-          maxWidth: '50vw',
+          display: {
+            xs: 'none',
+            lg: 'flex',
+          },
+          maxWidth: `${isImageLoading ? 'none' : '50vw'}`,
         }}
       >
-        {showTestimonial && <Testimonial />}
+        {isImageLoading && (
+          <Box
+            component="div"
+            sx={{
+              // Side image is scaled with screen height and it's ratio of width/height
+              // that prevents image from stretching is 1.158. Therefore 1.158 used as divisor
+              width: 'calc(100vh / 1.158)',
+              height: '100vh',
+              position: 'fixed',
+              top: '0',
+              right: '0',
+              overflowX: 'hidden',
+              overflowY: 'scroll',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+            }}
+          >
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height="100vh"
+              sx={{ display: 'block' }}
+            />
+          </Box>
+        )}
+        {showTestimonial && !isImageLoading && <Testimonial />}
         <Image
           src={imageSrc}
           alt="sneaker"
@@ -85,7 +119,11 @@ export default function SideImageLayout({
             width: 'fit-content',
             position: 'sticky',
             top: '0',
+            opacity: `${isImageLoading ? 0 : 1}`,
+            transition: 'all 0.5s',
           }}
+          priority
+          onLoad={onLoadImage}
         />
       </Box>
     </Box>
