@@ -130,7 +130,7 @@ const Header = () => {
             </Box>
           )}
           {status !== 'unauthenticated' && !isMobile && (
-            <Box sx={{ ml: { md: '16px' } }}>
+            <Box sx={{ ml: { md: '16px', position: 'relative' } }}>
               <Link
                 data-testid="header__avatarLink"
                 href="/profile/my-products"

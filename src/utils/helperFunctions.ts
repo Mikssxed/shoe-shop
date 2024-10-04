@@ -39,5 +39,3 @@ export function generateRandomUsername() {
 
   return `${randomAdjective}${randomNoun}${randomNumber}`;
 }
-
-console.log(generateRandomUsername());

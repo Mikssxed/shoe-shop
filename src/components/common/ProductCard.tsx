@@ -22,10 +22,10 @@ import { enqueueSnackbar } from 'notistack';
 import { MouseEvent, useState } from 'react';
 
 import ButtonMenu from '@/components/common/ButtonMenu';
-import useDeleteProduct from '@/hooks/useDeleteProduct';
 import { ProductAttributes } from '@/lib/types';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { addToCartQuery } from '@/tools';
+import { useDeleteProduct } from '@/tools/mutations';
 
 type Props = {
   product: ProductAttributes;

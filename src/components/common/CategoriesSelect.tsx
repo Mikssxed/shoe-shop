@@ -1,3 +1,5 @@
+'use client';
+
 import { Autocomplete, Chip, TextField } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Controller } from 'react-hook-form';

@@ -10,7 +10,13 @@ import {
   IUploadImageRes,
   IUploadImageReq,
 } from '@/lib/types';
-import { deleteAvatar, queryClient, updateProfile, uploadImage } from '@/tools';
+import {
+  deleteAvatar,
+  deleteProduct,
+  queryClient,
+  updateProfile,
+  uploadImage,
+} from '@/tools';
 
 /**
  * Custom hook that returns a mutation for updating a user profile using React Query.
@@ -159,6 +165,25 @@ export const useDeleteAvatarMutation = (): UseMutationResult<
       enqueueSnackbar(error.message, {
         variant: 'error',
         autoHideDuration: 10000,
+      });
+    },
+  });
+};
+
+export const useDeleteProduct = (name: string) => {
+  return useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      enqueueSnackbar(`Product "${name}" has been deleted.`, {
+        variant: 'default',
+        autoHideDuration: 5000,
+      });
+    },
+    onError: (error: any) => {
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        autoHideDuration: 5000,
       });
     },
   });

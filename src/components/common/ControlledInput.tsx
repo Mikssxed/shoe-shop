@@ -1,3 +1,5 @@
+"use client"
+
 import { ComponentProps } from 'react';
 import { Controller } from 'react-hook-form';
 import { Box, SxProps, Theme } from '@mui/material';

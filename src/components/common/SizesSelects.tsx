@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Grid } from '@mui/material';
 import { Controller } from 'react-hook-form';
 

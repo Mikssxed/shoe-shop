@@ -1,9 +1,8 @@
 import { stylingConstants } from '@/lib/constants/themeConstants';
-import theme from '@/theme';
 
 export const errorTitleStyles = {
   pt: '36px',
-  color: theme.palette.text.primary,
+  color: stylingConstants.palette.text.primary,
   textAlign: { xs: 'center', md: 'left' },
 };
 
@@ -24,8 +23,8 @@ export const desktopButtonsStyles = {
 export const mobileButtonsStyles = {
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing(2),
-  minHeight: theme.spacing(5),
+  gap: '8px',
+  minHeight: '20px',
   width: '100%',
   m: '36px 0 44px',
   px: '20px',
