@@ -29,7 +29,6 @@ export interface IBagPricingListProps {
 
 export interface IProfilePictureProps {
   avatarStyle?: SxProps<Theme>;
-  avatarUrl?: string;
 }
 
 export interface IDeleteAvatarModalProps {
