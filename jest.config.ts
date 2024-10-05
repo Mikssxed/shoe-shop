@@ -11,6 +11,15 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  collectCoverage: true,
+  coverageThreshold: {
+    global: {
+      statements: 75,
+      branches: 75,
+      functions: 75,
+      lines: 75,
+    },
+  },
 };
 
 export default createJestConfig(config);
