@@ -55,6 +55,20 @@ export const bagPageStyles = {
     display: { xs: 'none', md: 'block' },
     mb: '57px',
   },
+  continueShopping: {
+    m: { xs: '20px auto', md: '40px auto' },
+    p: '20px 40px',
+    borderRadius: '20px',
+
+    '& a': {
+      color: stylingConstants.palette.primary.main,
+      textDecoration: 'none',
+    },
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 };
 
 export const bagItemStyles = {

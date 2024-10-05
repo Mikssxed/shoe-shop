@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import { useState } from 'react';
 import Testimonial from './Testimonial';
 
 interface ISideImageLayoutProps {
