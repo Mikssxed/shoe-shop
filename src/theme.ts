@@ -10,12 +10,14 @@ declare module '@mui/material/styles' {
     body3: React.CSSProperties;
     menu: React.CSSProperties;
     category: React.CSSProperties;
+    extremeHuge: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
     body3?: React.CSSProperties;
     menu?: React.CSSProperties;
     category?: React.CSSProperties;
+    extremeHuge?: React.CSSProperties;
   }
 }
 
@@ -24,11 +26,12 @@ declare module '@mui/material/Typography' {
     body3: true;
     menu: true;
     category: true;
+    extremeHuge: true;
   }
 }
 
 const workSans = Work_Sans({
-  weight: ['300', '400', '500', '600'],
+  weight: ['300', '400', '500', '600', '900'],
   style: 'normal',
   display: 'swap',
   subsets: ['latin'],
@@ -107,6 +110,21 @@ theme = createTheme({
       fontSize: 16,
       color: '#000',
       fontWeight: 500,
+    },
+    extremeHuge: {
+      fontFamily: workSans.style.fontFamily,
+      fontSize: 140,
+      lineHeight: '164px',
+      color: '#000',
+      fontWeight: 900,
+      [theme.breakpoints.down('xl')]: {
+        fontSize: 80,
+        lineHeight: '92px',
+      },
+      [theme.breakpoints.down('lg')]: {
+        fontSize: 60,
+        lineHeight: '72px',
+      },
     },
   },
   components: {

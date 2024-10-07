@@ -26,7 +26,7 @@ export default {
     height: { xs: '36px', md: '48px' },
     typography: {
       textTransform: 'none',
-      fontWeight: '700',
+      fontWeight: '600',
     },
   },
   cartItemAmount: {

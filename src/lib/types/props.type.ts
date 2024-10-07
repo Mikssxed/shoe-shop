@@ -73,7 +73,8 @@ export interface IFileWithPreview extends File {
 }
 
 export interface IImageWithSkeletonProps {
-  preview: string;
+  src: string;
+  alt?: string;
 }
 
 export interface EmptyProductListProps {
@@ -81,4 +82,10 @@ export interface EmptyProductListProps {
   subtext?: string;
   link?: string;
   buttonText?: string;
+}
+
+export interface ThankYouPageProps {
+  params: {
+    orderId: string;
+  };
 }

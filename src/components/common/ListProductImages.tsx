@@ -101,7 +101,7 @@ const ListProductImages = ({
                     />
                   </IconButton>
                 </Box>
-                <ImageWithSkeleton preview={item.preview} />
+                <ImageWithSkeleton src={item.preview} />
               </Box>
               <DeleteModal
                 open={isDelete}

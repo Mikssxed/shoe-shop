@@ -12,11 +12,13 @@ import ErrorButtons from './ErrorButtons';
 import { FilterSidebar } from './FilterSidebar';
 import Header from './Header';
 import ImageSlider from './ImageSlider';
+import ImageWithSkeleton from './ImageWithSkeleton';
 import LastViewedProducts from './LastViewedProducts';
 import ListProductImages from './ListProductImages';
 import LogOutModal from './LogOutModal';
 import NotFoundError from './NotFoundError';
 import { Option } from './Option';
+import PageLoading from './PageLoading';
 import PriceSlider from './PriceSlider';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
@@ -45,11 +47,13 @@ export {
   FilterSidebar,
   Header,
   ImageSlider,
+  ImageWithSkeleton,
   LastViewedProducts,
   ListProductImages,
   LogOutModal,
   NotFoundError,
   Option,
+  PageLoading,
   PriceSlider,
   ProductCard,
   ProductCardSkeleton,
