@@ -14,7 +14,7 @@ interface IControlledInputProps {
   disabled?: boolean;
   placeholder: string;
   inputStyle?: SxProps<Theme>;
-  type?: 'password'| "number";
+  type?: 'password' | 'number';
   containerProps?: ComponentProps<typeof Box>;
 }
 
@@ -38,7 +38,13 @@ const ControlledInput = ({
           <Input
             required={required}
             label={label}
-            inputProps={{ value, onChange, placeholder, type }}
+            inputProps={{
+              value,
+              onChange,
+              placeholder,
+              type,
+              'data-testid': `${label}-input`,
+            }}
             errorMessage={error ? error?.message : undefined}
             inputStyle={inputStyle}
             containerProps={containerProps}

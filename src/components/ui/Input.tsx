@@ -69,7 +69,9 @@ const Input = ({
         {...props}
         id={id}
       />
-      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+      {errorMessage && (
+        <ErrorMessage errorMessage={errorMessage} label={label} />
+      )}
     </Box>
   );
 };

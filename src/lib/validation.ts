@@ -4,15 +4,23 @@ export const SignUpFormValidation = z
   .object({
     firstName: z
       .string()
+      .trim()
+      .min(1, 'Name is required')
       .min(2, 'Name must be at least 2 characters')
       .max(50, 'Name must be at most 50 characters'),
-    email: z.string().email('Invalid email address (ex. johndoe@gmail.com)'),
+    email: z
+      .string()
+      .trim()
+      .min(1, 'Email is required')
+      .email('Invalid email address (ex. johndoe@gmail.com)'),
     password: z
       .string()
+      .min(1, 'Password is required')
       .min(8, 'Password must be at least 8 characters')
       .max(20, 'Password must be at most 20 characters'),
     confirmPassword: z
       .string()
+      .min(1, 'Password is required')
       .min(8, 'Password must be at least 8 characters')
       .max(20, 'Password must be at most 20 characters'),
   })
@@ -47,7 +55,11 @@ export const ResetPasswordValidation = z
   });
 
 export const ForgotPasswordValidation = z.object({
-  email: z.string().email('Invalid email address (ex. johndoe@gmail.com)'),
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required')
+    .email('Invalid email address (ex. johndoe@gmail.com)'),
 });
 
 export const OrderValidation = z.object({

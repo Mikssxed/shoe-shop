@@ -6,10 +6,11 @@ import { inter } from '@/lib/constants/themeConstants';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 
 interface ErrorMessageProps {
+  label: string;
   errorMessage?: string;
 }
 
-const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => {
+const ErrorMessage = ({ errorMessage, label }: ErrorMessageProps) => {
   return (
     <Box
       sx={{
@@ -26,6 +27,7 @@ const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => {
         height={13}
       />
       <Typography
+        data-testid={`${label}-error`}
         component="p"
         color={stylingConstants.palette.error.main}
         sx={{
