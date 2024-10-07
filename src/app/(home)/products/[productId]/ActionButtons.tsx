@@ -5,11 +5,11 @@ import { useSession } from 'next-auth/react';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 
+import BaseButton from '@/components/ui/BaseButton';
 import { IActionButtonsProps } from '@/lib/types/props.type';
 import { actionButtonsStyles as styles } from '@/styles/product/product.style';
 import { addToCartQuery } from '@/tools';
 import { addLastViewedProductId } from '@/utils';
-import BaseButton from '@/components/ui/BaseButton';
 
 export default function ActionButtons({
   sizes,
@@ -22,7 +22,7 @@ export default function ActionButtons({
   const onSelectSize = (value: number) => setSelectedSize(value);
   const addToBag = () => {
     addToCartQuery(product, session?.user?.id, selectedSize || 'unselected');
-    enqueueSnackbar('Succesfully added to cart', {
+    enqueueSnackbar('Successfully added to cart', {
       variant: 'success',
       autoHideDuration: 2000,
     });

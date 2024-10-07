@@ -9,6 +9,7 @@ type Props = PropsWithChildren & {
   containerStyle?: SxProps;
   isMobile?: boolean;
   onClose?: () => void;
+  filters?: boolean;
 };
 
 export default function BaseSidebar({
@@ -17,6 +18,7 @@ export default function BaseSidebar({
   containerStyle,
   isMobile = false,
   onClose,
+  filters,
 }: Props) {
   const [sidebarWidth, setSidebarWidth] = useState(320);
 
@@ -34,6 +36,7 @@ export default function BaseSidebar({
 
   return (
     <Drawer
+      data-testid={filters ? `filters-${open ? 'open' : 'closed'}` : 'sidebar'}
       variant={isMobile ? 'temporary' : 'persistent'}
       anchor={isMobile ? 'right' : 'left'}
       open={open}

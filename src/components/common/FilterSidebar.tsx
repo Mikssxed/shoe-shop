@@ -63,7 +63,11 @@ export const FilterSidebar = ({
           }}
         >
           {isMobile ? (
-            <IconButton onClick={onClose} sx={{ display: { md: 'none' } }}>
+            <IconButton
+              data-testid="closeFilters"
+              onClick={onClose}
+              sx={{ display: { md: 'none' } }}
+            >
               <Image
                 src={'/icons/cross.svg'}
                 alt="close"
@@ -116,6 +120,7 @@ export const FilterSidebar = ({
         open={open}
         containerStyle={{ p: '24px 0px' }}
         onClose={onClose}
+        filters={true}
       >
         <Content />
       </BaseSidebar>

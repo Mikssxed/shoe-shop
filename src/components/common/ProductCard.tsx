@@ -41,7 +41,7 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
 
     addToCartQuery(product, session?.user?.id);
 
-    enqueueSnackbar('Succesfully added to cart', {
+    enqueueSnackbar('Successfully added to cart', {
       variant: 'success',
       autoHideDuration: 2000,
     });
@@ -92,6 +92,7 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
                 }}
               >
                 <IconButton
+                  data-testid={`add-to-cart-${product.id}`}
                   sx={{
                     backgroundColor: 'rgba(255,255,255, 0.70)',
                     borderRadius: '50%',

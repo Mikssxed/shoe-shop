@@ -7,8 +7,8 @@ import {
   Paper,
   Select,
   SelectChangeEvent,
-  Typography,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -28,7 +28,7 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
 
   const onDelete = () => {
     deleteFromCartQuery(item.id, item.selectedSize, session?.user?.id);
-    enqueueSnackbar('Succesfully deleted from cart', {
+    enqueueSnackbar('Successfully deleted from cart', {
       variant: 'success',
       autoHideDuration: 2000,
     });
