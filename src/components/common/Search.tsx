@@ -73,7 +73,7 @@ export default function Search({ open, onClose }: SearchProps) {
 
   return (
     <Modal
-      data-testid="searchModal"
+      dataTestId="searchModal"
       open={open}
       onClose={handleClose}
       keepMounted={true}
@@ -104,7 +104,13 @@ export default function Search({ open, onClose }: SearchProps) {
         }}
       >
         {!isMobile && (
-          <Image alt="logo" width="40" height="30" src="/icons/logo.png" />
+          <Image
+            data-testid="searchModal__logo"
+            alt="logo"
+            width="40"
+            height="30"
+            src="/icons/logo.png"
+          />
         )}
         <Box
           sx={{
@@ -142,6 +148,7 @@ export default function Search({ open, onClose }: SearchProps) {
               {debouncedSearch && productsNames && (
                 <>
                   <Typography
+                    data-testid="search__result-text"
                     sx={{
                       alignSelf: 'start',
                       mt: { xs: '12px', sm: '22px', md: '32px' },
@@ -177,6 +184,7 @@ export default function Search({ open, onClose }: SearchProps) {
                       .map(product => (
                         <ListItemButton
                           key={product.id}
+                          data-testid="search__result-item"
                           onClick={() => handleSubmit(product.attributes.name)}
                           sx={{
                             width: { xs: '90%', sm: '80%' },
@@ -218,6 +226,7 @@ export default function Search({ open, onClose }: SearchProps) {
           }}
         >
           <Image
+            data-testid="searchModal__cross"
             src={'/icons/cross.svg'}
             alt="close"
             width={27}

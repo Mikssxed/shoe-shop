@@ -47,6 +47,7 @@ const SearchBar = ({
       }}
     >
       <Box
+        data-testid="searchbar__search-icon"
         sx={{
           pl: { xs: '10px', sm: '14px', md: `calc(${height}/3)` },
           height: '100%',
@@ -90,6 +91,7 @@ const SearchBar = ({
           variant="outlined"
           onClick={onSearch}
           sx={{ ...buttonStyles.searchInputBtn, mr: '4px' }}
+          data-testid="searchbar__search-button"
         >
           Search
         </BaseButton>
@@ -102,6 +104,7 @@ const SearchBar = ({
             ...buttonStyles.searchInputBtn,
             mr: { xs: '10px', sm: '18px', md: `calc(${height}/3)` },
           }}
+          data-testid="searchbar__clear-button"
         >
           Clear
         </BaseButton>

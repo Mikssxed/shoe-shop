@@ -12,6 +12,7 @@ interface IBaseButtonProps extends ButtonBaseProps {
   sx?: SxProps<Theme>;
   variant?: ButtonOwnProps['variant'];
   color?: ButtonOwnProps['color'];
+  dataTestId?: string;
 }
 
 const BaseButton = ({
@@ -19,10 +20,17 @@ const BaseButton = ({
   sx,
   color,
   variant = 'contained',
+  dataTestId = 'button',
   ...props
 }: IBaseButtonProps) => {
   return (
-    <Button variant={variant} color={color} sx={sx} {...props}>
+    <Button
+      data-testid={dataTestId}
+      variant={variant}
+      color={color}
+      sx={sx}
+      {...props}
+    >
       {children}
     </Button>
   );

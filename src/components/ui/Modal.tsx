@@ -9,6 +9,7 @@ type ModalProps = PropsWithChildren & {
   keepMounted?: boolean;
   containerStyle?: SxProps;
   paperStyle?: SxProps;
+  dataTestId?: string;
 };
 
 const Modal = ({
@@ -17,13 +18,14 @@ const Modal = ({
   onClose,
   containerStyle,
   paperStyle,
+  dataTestId = 'modal',
 }: ModalProps) => {
   const theme = useTheme();
   const paperRef = useRef<any>(null);
 
   return (
     <Dialog
-      data-testid="modal"
+      data-testid={dataTestId}
       disableScrollLock={true}
       open={open}
       onClose={onClose}
