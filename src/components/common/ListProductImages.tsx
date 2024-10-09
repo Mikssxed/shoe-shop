@@ -22,7 +22,7 @@ import {
   productImageContainer,
   trashIconContainer,
 } from '@/styles/products/productInfoFormStyles';
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../modals/DeleteModal';
 import ErrorMessage from '../ui/ErrorMessage';
 import { IListProductImagesProps } from '@/lib/types';
 import RequiredStar from '../ui/RequiredStar';

@@ -1,4 +1,4 @@
-import BaseModal from "./BaseModal";
+import BaseModal from './BaseModal';
 
 type Props = {
   open: boolean;

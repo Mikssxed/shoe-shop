@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import DeleteModal from '@/components/common/DeleteModal';
+import DeleteModal from '@/components/modals/DeleteModal';
 
 //TODO: Delete this file, just used to see delete dialog in action
 export default function DummyPage() {

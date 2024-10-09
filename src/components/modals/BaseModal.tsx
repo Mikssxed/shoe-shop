@@ -19,6 +19,7 @@ type Props = {
   text?: string;
   header?: string;
   submitText: string;
+  dataTestId?: string;
 };
 
 const BaseModal = ({
@@ -28,9 +29,13 @@ const BaseModal = ({
   onSubmit,
   text,
   submitText,
+  dataTestId,
 }: Props) => {
   const Content = () => (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+    <Box
+      data-testid={dataTestId ? dataTestId : 'modal'}
+      sx={{ display: 'flex', flexDirection: 'column', gap: '25px' }}
+    >
       <DialogTitle
         sx={{
           display: 'flex',
@@ -43,6 +48,7 @@ const BaseModal = ({
       >
         {header}
         <Image
+          data-testid="modal__cross"
           src={Cross}
           alt="close"
           width={20}

@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import EditProductModal from './EditProductModal';
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../modals/DeleteModal';
 import { ProductAttributes } from '@/lib/types';
 
 const styles: Record<string, SxProps> = {

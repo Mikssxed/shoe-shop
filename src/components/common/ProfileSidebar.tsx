@@ -27,7 +27,7 @@ import { stylingConstants } from '@/lib/constants/themeConstants';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import theme from '@/theme';
 import { capitalizeFirstLetter } from '@/utils/helperFunctions';
-import LogOutModal from './LogOutModal';
+import LogOutModal from '../modals/LogOutModal';
 
 type Props = {
   open: boolean;
