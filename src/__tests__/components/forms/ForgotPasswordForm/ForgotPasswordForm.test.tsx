@@ -55,8 +55,8 @@ describe('ForgotPasswordForm Validation', () => {
   });
 });
 
-describe('ForgotPasswordForm Sucess', () => {
-  it('shows success message after sucessful password reset request', async () => {
+describe('ForgotPasswordForm Success', () => {
+  it('shows success message after successful password reset request', async () => {
     await forgotPasswordFormSuccess();
 
     await waitFor(() => {

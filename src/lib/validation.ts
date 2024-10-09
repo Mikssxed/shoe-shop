@@ -42,10 +42,12 @@ export const ResetPasswordValidation = z
   .object({
     password: z
       .string()
+      .min(1, 'Password is required')
       .min(8, 'Password must be at least 8 characters')
       .max(20, 'Password must be at most 20 characters'),
     passwordConfirmation: z
       .string()
+      .min(1, 'Password is required')
       .min(8, 'Password must be at least 8 characters')
       .max(20, 'Password must be at most 20 characters'),
   })

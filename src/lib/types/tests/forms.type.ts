@@ -10,3 +10,20 @@ export type EmailChangeEvent = {
   changeEmailInput: (value: string) => Promise<void>;
   submitForm: () => Promise<void>;
 };
+
+export enum InputType {
+  Password = 'password',
+  ConfirmPassword = 'confirmPassword',
+}
+
+export type PasswordChangeEvent = {
+  changePasswordInput: (value: string) => Promise<void>;
+  changeConfirmPasswordInput: (value: string) => Promise<void>;
+  submitForm: () => Promise<void>;
+};
+
+export type MatchingPasswordValidation = PasswordChangeEvent & {
+  userData: {
+    password: string;
+  };
+};

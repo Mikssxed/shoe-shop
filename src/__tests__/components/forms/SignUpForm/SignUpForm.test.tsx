@@ -7,18 +7,19 @@ import SignUpForm from '@/components/forms/SignUpForm';
 import {
   emailIsAlreadyTaken,
   emptyInputs,
-  longConfirmPasswordInput,
   longNameInput,
-  longPasswordInput,
-  notMatchingPasswordInputs,
   setupSignUpForm,
-  shortConfirmPasswordInput,
   shortNameInput,
-  shortPasswordInput,
   signUpSuccess,
 } from './signUpFormValidation';
 import { setup } from '../setup';
-import { invalidEmailInput } from '../functions';
+import {
+  invalidEmailInput,
+  longPasswordInput,
+  notMatchingPasswordInputs,
+  shortPasswordInput,
+} from '../functions';
+import { InputType } from '@/lib/types/tests/forms.type';
 
 jest.mock('@/tools', () => ({
   signUp: jest.fn(),
@@ -106,7 +107,8 @@ describe('SignUpForm Validation', () => {
   });
 
   it('shows validation error when password is too short', async () => {
-    const errorMessage = await shortPasswordInput();
+    const form = setupSignUpForm();
+    const errorMessage = await shortPasswordInput(form, InputType.Password);
 
     await waitFor(() => {
       expect(errorMessage).toHaveTextContent(
@@ -116,7 +118,8 @@ describe('SignUpForm Validation', () => {
   });
 
   it('shows validation error when password is too long', async () => {
-    const errorMessage = await longPasswordInput();
+    const form = setupSignUpForm();
+    const errorMessage = await longPasswordInput(form, InputType.Password);
 
     await waitFor(() => {
       expect(errorMessage).toHaveTextContent(
@@ -126,7 +129,11 @@ describe('SignUpForm Validation', () => {
   });
 
   it('shows validation error when confirm password is too short', async () => {
-    const errorMessage = await shortConfirmPasswordInput();
+    const form = setupSignUpForm();
+    const errorMessage = await shortPasswordInput(
+      form,
+      InputType.ConfirmPassword,
+    );
 
     await waitFor(() => {
       expect(errorMessage).toHaveTextContent(
@@ -136,7 +143,11 @@ describe('SignUpForm Validation', () => {
   });
 
   it('shows validation error when confirm password is too long', async () => {
-    const errorMessage = await longConfirmPasswordInput();
+    const form = setupSignUpForm();
+    const errorMessage = await longPasswordInput(
+      form,
+      InputType.ConfirmPassword,
+    );
 
     await waitFor(() => {
       expect(errorMessage).toHaveTextContent(
@@ -146,7 +157,8 @@ describe('SignUpForm Validation', () => {
   });
 
   it('shows validation error when password and confirm password do not match', async () => {
-    const errorMessage = await notMatchingPasswordInputs();
+    const form = setupSignUpForm();
+    const errorMessage = await notMatchingPasswordInputs(form);
 
     await waitFor(() => {
       expect(errorMessage).toHaveTextContent("Passwords don't match");
@@ -165,8 +177,8 @@ describe('SignUpForm Validation', () => {
   });
 });
 
-describe('SignUpForm Sucess', () => {
-  it('shows success message after sucessful sign up', async () => {
+describe('SignUpForm Success', () => {
+  it('shows success message after successful sign up', async () => {
     await signUpSuccess();
 
     await waitFor(() => {

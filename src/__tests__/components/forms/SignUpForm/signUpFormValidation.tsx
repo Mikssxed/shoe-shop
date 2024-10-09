@@ -74,69 +74,6 @@ export async function longNameInput() {
   return errorMessage;
 }
 
-export async function shortPasswordInput() {
-  const form = setupSignUpForm();
-
-  await form.changePasswordInput('Test');
-  await form.submitForm();
-
-  const errorMessage = await waitFor(() =>
-    screen.getByTestId('Password-error'),
-  );
-  return errorMessage;
-}
-
-export async function longPasswordInput() {
-  const form = setupSignUpForm();
-
-  const longPwd = 't'.repeat(21);
-  await form.changePasswordInput(longPwd);
-  await form.submitForm();
-
-  const errorMessage = await waitFor(() =>
-    screen.getByTestId('Password-error'),
-  );
-  return errorMessage;
-}
-
-export async function shortConfirmPasswordInput() {
-  const form = setupSignUpForm();
-
-  await form.changeConfirmPasswordInput('Test');
-  await form.submitForm();
-
-  const errorMessage = await waitFor(() =>
-    screen.getByTestId('Confirm Password-error'),
-  );
-  return errorMessage;
-}
-
-export async function longConfirmPasswordInput() {
-  const form = setupSignUpForm();
-
-  const longPwd = 't'.repeat(21);
-  await form.changeConfirmPasswordInput(longPwd);
-  await form.submitForm();
-
-  const errorMessage = await waitFor(() =>
-    screen.getByTestId('Confirm Password-error'),
-  );
-  return errorMessage;
-}
-
-export async function notMatchingPasswordInputs() {
-  const form = setupSignUpForm();
-
-  await form.changePasswordInput(form.userData.password);
-  await form.changeConfirmPasswordInput(form.userData.password + '*');
-  await form.submitForm();
-
-  const errorMessage = await waitFor(() =>
-    screen.getByTestId('Confirm Password-error'),
-  );
-  return errorMessage;
-}
-
 export async function emailIsAlreadyTaken() {
   const errorMessage = 'Email or Username are already taken';
 

@@ -35,12 +35,6 @@ const ResetPasswordForm = () => {
     IResetPasswordRequest
   > = useMutation({
     mutationFn: resetPassword,
-    onError(error) {
-      enqueueSnackbar(error.message || 'Something went wrong!', {
-        variant: 'error',
-        autoHideDuration: 10000,
-      });
-    },
     onSuccess() {
       enqueueSnackbar('Your password was changed!', {
         variant: 'success',
@@ -58,10 +52,17 @@ const ResetPasswordForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof ResetPasswordValidation>) => {
-    await mutation.mutateAsync({
-      ...data,
-      code: code,
-    });
+    try {
+      await mutation.mutateAsync({
+        ...data,
+        code: code,
+      });
+    } catch (error: any) {
+      enqueueSnackbar(error.message || 'Something went wrong!', {
+        variant: 'error',
+        autoHideDuration: 10000,
+      });
+    }
   };
 
   return (
