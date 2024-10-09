@@ -14,9 +14,13 @@ const EmptyProductList = ({
   buttonText,
 }: EmptyProductListProps) => {
   return (
-    <Box sx={styles.emptyProductList_container}>
+    <Box
+      data-testid="empty-product-list"
+      sx={styles.emptyProductList_container}
+    >
       <Stack gap={1} marginY={2}>
         <Avatar
+          data-testid="empty-product-list__picture"
           sx={{
             width: 72,
             height: 72,
@@ -37,7 +41,10 @@ const EmptyProductList = ({
         </Typography>
         {link && (
           <Link href={link} style={styles.emptyProductList_link}>
-            <BaseButton sx={styles.emptyProductList_addProductBtn}>
+            <BaseButton
+              data-testid="empty-product-list__add-button"
+              sx={styles.emptyProductList_addProductBtn}
+            >
               {buttonText}
             </BaseButton>
           </Link>

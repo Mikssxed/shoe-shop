@@ -6,15 +6,18 @@ interface ISymbolButtonProps {
   children: ReactNode;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
+  dataTestId?: string;
 }
 
 const SymbolButton: React.FC<ISymbolButtonProps> = ({
   children,
   onClick,
   disabled = false,
+  dataTestId,
 }) => {
   return (
     <Button
+      data-testid={dataTestId}
       sx={{
         ...buttonStyles.symbolBtn,
         position: 'relative',

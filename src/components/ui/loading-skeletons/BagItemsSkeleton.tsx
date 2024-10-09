@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 
 const BagItemsSkeleton = () => {
   return (
-    <Box sx={styles.container}>
+    <Box data-testid="bag__item__skeleton" sx={styles.container}>
       {[1, 2, 3].map(index => (
         <Fragment key={index}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>

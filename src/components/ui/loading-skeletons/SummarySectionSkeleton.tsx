@@ -3,6 +3,7 @@ import { Box, Skeleton, Typography } from '@mui/material';
 const SummarySectionSkeleton = () => {
   return (
     <Box
+      data-testid="bag__summary__skeleton"
       sx={{
         marginTop: '60px',
         marginBottom: '70px',

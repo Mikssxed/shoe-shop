@@ -40,6 +40,7 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
         <Link href={'/products/' + item.id}>
           {item.images?.data ? (
             <Image
+              data-testid="bag-item__picture"
               src={item?.images?.data[0]?.attributes?.url}
               alt="sneakers"
               fill
@@ -61,19 +62,32 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
           <Box sx={{ flex: '1' }}>
             <Link
+              data-testid="bag-item__link"
               href={'/products/' + item.id}
               style={{ textDecoration: 'none' }}
             >
               <Tooltip title={item.name} placement="top-end">
-                <Typography variant="h4" sx={styles.name}>
+                <Typography
+                  data-testid="bag-item__name"
+                  variant="h4"
+                  sx={styles.name}
+                >
                   {item.name}
                 </Typography>
               </Tooltip>
             </Link>
-            <Typography variant="body1" sx={styles.gender}>
+            <Typography
+              data-testid="bag-item__gender"
+              variant="body1"
+              sx={styles.gender}
+            >
               {item.gender?.data?.attributes.name}&apos;s Shoes
             </Typography>
-            <Typography variant="h2" sx={styles.inStockText}>
+            <Typography
+              data-testid="bag-item__in-stock"
+              variant="h2"
+              sx={styles.inStockText}
+            >
               In Stock
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
@@ -82,6 +96,7 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
                 value={item.selectedSize}
                 onChange={handleChange}
                 MenuProps={{ disableScrollLock: true }}
+                inputProps={{ 'data-testid': 'bag-item__size' }}
                 sx={styles.selectSize}
               >
                 {item.selectedSize === 'unselected' && (
@@ -91,11 +106,12 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
                 )}
                 {item?.sizes?.data.map(size => (
                   <MenuItem
+                    data-testid={'bag-item__size__option'}
                     key={'k' + size.id + item.id}
                     value={size.attributes.value}
                     sx={styles.selectSize_menuItem}
                   >
-                    EU-{size.attributes.value}
+                    {`EU-${size.attributes.value}`}
                   </MenuItem>
                 ))}
               </Select>
@@ -103,17 +119,23 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
           </Box>
           <Box>
             <Tooltip title={`$${item.price}`} placement="top-end">
-              <Typography sx={styles.price}>${item.price}</Typography>
+              <Typography data-testid="bag-item__price" sx={styles.price}>
+                ${item.price}
+              </Typography>
             </Tooltip>
           </Box>
         </Box>
         <Box sx={styles.amountButtons}>
           <QuantityButtons item={item} />
-          <Button sx={styles.deleteButton} onClick={onDelete}>
+          <Button
+            data-testid="bag-item__delete-button"
+            sx={styles.deleteButton}
+            onClick={onDelete}
+          >
             <Box sx={styles.deleteIconWrapper}>
               <Image
-                layout="fill"
-                objectFit="contain"
+                fill
+                style={{ objectFit: 'contain' }}
                 src={'/icons/trash.svg'}
                 alt="trash"
               />

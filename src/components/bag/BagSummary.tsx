@@ -16,6 +16,7 @@ const BagSummary: React.FC = () => {
       }}
     >
       <Typography
+        data-testid="summary__title-desktop"
         variant="h1"
         sx={{ mb: '68px', display: { xs: 'none', md: 'block' } }}
       >

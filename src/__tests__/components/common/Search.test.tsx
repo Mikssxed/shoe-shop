@@ -36,6 +36,10 @@ describe('Search Component', () => {
     });
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('Renders correctly', () => {
     it('should render search modal with logo, searchbar and cross button', () => {
       render(<Search open={true} onClose={onClose} />);

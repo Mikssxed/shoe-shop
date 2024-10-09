@@ -28,9 +28,13 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
   return (
     <>
       {/* desktop version */}
-      <Box sx={styles.md_root}>
+      <Box data-testid="quantity-desktop" sx={styles.md_root}>
         <Box sx={styles.md_buttonsWrapper}>
-          <SymbolButton onClick={onClickDecrease} disabled={isMinusDisabled}>
+          <SymbolButton
+            dataTestId="quantity-desktop__decrease"
+            onClick={onClickDecrease}
+            disabled={isMinusDisabled}
+          >
             <Image
               src="/icons/minus-2.svg"
               alt="minus"
@@ -38,9 +42,18 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
               height={12}
             />
           </SymbolButton>
-          <Typography sx={styles.md_amount}>{item.amount}</Typography>
+          <Typography
+            data-testid="quantity-desktop__amount"
+            sx={styles.md_amount}
+          >
+            {item.amount}
+          </Typography>
 
-          <SymbolButton onClick={onClickIncrease} disabled={isPlusDisabled}>
+          <SymbolButton
+            dataTestId="quantity-desktop__increase"
+            onClick={onClickIncrease}
+            disabled={isPlusDisabled}
+          >
             <Image src="/icons/plus-2.svg" alt="plus" width={12} height={12} />
           </SymbolButton>
         </Box>
@@ -49,8 +62,9 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
       </Box>
 
       {/* mobile version */}
-      <Box sx={styles.xs_root}>
+      <Box data-testid="quantity-mobile" sx={styles.xs_root}>
         <Box
+          data-testid="quantity-accordion"
           sx={{ display: 'flex', alignItems: 'center' }}
           onClick={onClickQuantity}
         >
@@ -67,7 +81,11 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
         </Box>
         {isQuantityOpened && (
           <Box sx={styles.xs_buttonsWrapper}>
-            <SymbolButton onClick={onClickDecrease} disabled={isMinusDisabled}>
+            <SymbolButton
+              dataTestId="quantity-mobile__decrease"
+              onClick={onClickDecrease}
+              disabled={isMinusDisabled}
+            >
               <Image
                 src="/icons/minus-2.svg"
                 alt="minus"
@@ -76,9 +94,18 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
               />
             </SymbolButton>
 
-            <Typography sx={styles.xs_amount}>{item.amount}</Typography>
+            <Typography
+              data-testid="quantity-mobile__amount"
+              sx={styles.xs_amount}
+            >
+              {item.amount}
+            </Typography>
 
-            <SymbolButton onClick={onClickIncrease} disabled={isPlusDisabled}>
+            <SymbolButton
+              dataTestId="quantity-mobile__increase"
+              onClick={onClickIncrease}
+              disabled={isPlusDisabled}
+            >
               <Image
                 src="/icons/plus-2.svg"
                 alt="plus"

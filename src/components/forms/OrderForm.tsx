@@ -19,6 +19,7 @@ import { OrderValidation } from '@/lib/validation';
 import { orderFormStyles as styles } from '@/styles/forms/orderForm.style';
 import { clearCartQuery, useQueryCartItems } from '@/tools';
 import BaseButton from '../ui/BaseButton';
+import { useIsMobile } from '@/hooks';
 
 const defaultValues = {
   promocode: '',
@@ -30,6 +31,7 @@ const OrderForm = () => {
   const [subtotal, setSubtotal] = useState<number>(0);
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const isMobile = useIsMobile();
 
   const { handleSubmit, control } = useForm<z.infer<typeof OrderValidation>>({
     resolver: zodResolver(OrderValidation),
@@ -96,15 +98,27 @@ const OrderForm = () => {
           bold
         />
         <Divider sx={styles.dividerAfterTotal} />
-        <BaseButton type="submit" sx={styles.md_checkoutBtn}>
-          Checkout
-        </BaseButton>
+        {!isMobile && (
+          <BaseButton
+            dataTestId="order__checkout-button-desktop"
+            type="submit"
+            sx={styles.md_checkoutBtn}
+          >
+            Checkout
+          </BaseButton>
+        )}
       </Box>
-      <Box sx={styles.xs_checkoutContainer}>
-        <BaseButton sx={styles.xs_checkoutBtn} onClick={handleSubmit(onSubmit)}>
-          Checkout
-        </BaseButton>
-      </Box>
+      {isMobile && (
+        <Box sx={styles.xs_checkoutContainer}>
+          <BaseButton
+            dataTestId="order__checkout-button-mobile"
+            sx={styles.xs_checkoutBtn}
+            onClick={handleSubmit(onSubmit)}
+          >
+            Checkout
+          </BaseButton>
+        </Box>
+      )}
       <Modal
         open={showCheckoutModal}
         onClose={() => console.log('checked out')}
