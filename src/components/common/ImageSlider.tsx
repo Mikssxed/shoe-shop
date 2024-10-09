@@ -73,6 +73,7 @@ const ImageSlider = ({ images, name }: ImageSliderProps) => {
 
   return (
     <Stack
+      data-testid="imageSlider"
       direction={isMobile ? 'column-reverse' : 'row'}
       spacing={2}
       sx={{

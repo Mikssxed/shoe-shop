@@ -7,6 +7,10 @@ const createJestConfig = nextJest({
 
 const config: Config = {
   coverageProvider: 'v8',
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -14,7 +18,6 @@ const config: Config = {
   // Run tests only for the files that end with .test before the extension
   // Example: SignUpForm.test.tsx will run / setup.ts will be ignored
   testRegex: '(/__tests__/.*\\.test)\\.[jt]sx?$',
-  collectCoverage: true,
   coverageThreshold: {
     global: {
       statements: 75,

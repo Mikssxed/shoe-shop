@@ -17,9 +17,10 @@ export default function ActionButtons({
   id,
 }: IActionButtonsProps) {
   const [selectedSize, setSelectedSize] = useState<number | undefined>();
-  const { data: session } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
   const onSelectSize = (value: number) => setSelectedSize(value);
+
   const addToBag = () => {
     addToCartQuery(product, session?.user?.id, selectedSize || 'unselected');
     enqueueSnackbar('Successfully added to cart', {
@@ -27,9 +28,12 @@ export default function ActionButtons({
       autoHideDuration: 2000,
     });
   };
+
   useEffect(() => {
-    addLastViewedProductId(id, session?.user?.id);
-  }, [id, session?.user?.id]);
+    if (sessionStatus !== 'loading') {
+      addLastViewedProductId(id, session?.user?.id);
+    }
+  }, [id, session?.user.id, sessionStatus]);
 
   return (
     <>
@@ -38,7 +42,12 @@ export default function ActionButtons({
           <Typography variant="h4" sx={styles.productLabel}>
             Select Size
           </Typography>
-          <Grid container spacing={2} sx={{ pt: '14px' }}>
+          <Grid
+            data-testid="singleProductPage__sizeSelector"
+            container
+            spacing={2}
+            sx={{ pt: '14px' }}
+          >
             {sizes
               .sort((a, b) => +a.attributes.value - +b.attributes.value)
               .map(({ id, attributes: { value } }) => {
@@ -46,6 +55,7 @@ export default function ActionButtons({
                 return (
                   <Grid key={id} xs={3} sm={2} item>
                     <BaseButton
+                      data-testid={'singleProductPage__sizeButton__' + value}
                       sx={{
                         ...styles.sizeBtn,
                         color: isChecked ? 'white' : 'text.secondary',
@@ -62,8 +72,13 @@ export default function ActionButtons({
         </Box>
       )}
       <Box sx={styles.addButtons}>
-        <BaseButton onClick={addToBag} sx={styles.actionButton}>
-          Add to Bag
+        <BaseButton
+          data-testid="singleProductPage__addToBagButton"
+          onClick={addToBag}
+          sx={styles.actionButton}
+          disabled={sessionStatus === 'loading'}
+        >
+          {sessionStatus === 'loading' ? 'Wait...' : 'Add to Bag'}
         </BaseButton>
       </Box>
     </>

@@ -84,6 +84,10 @@ export interface EmptyProductListProps {
   buttonText?: string;
 }
 
+export interface ISingleProductPageProps {
+  params: { productId: string };
+}
+
 export interface ThankYouPageProps {
   params: {
     orderId: string;

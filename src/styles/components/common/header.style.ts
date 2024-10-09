@@ -1,6 +1,6 @@
 import { stylingConstants } from '@/lib/constants/themeConstants';
 
-export default {
+const styles = {
   appBar: {
     width: '100%',
     position: 'sticky',
@@ -48,3 +48,5 @@ export default {
     borderRadius: '50%',
   },
 };
+
+export default styles;
