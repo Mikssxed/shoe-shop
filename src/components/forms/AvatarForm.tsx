@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { Box, Toolbar } from '@mui/material';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Toolbar } from '@mui/material';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import ProfilePicture from '@/components/common/ProfilePicture';
-import { profileSettingsStyles as styles } from '@/styles/profile/profileSettingsPage.style';
-import { avatarValidation } from '@/lib/validation';
-import { useUploadAvatarMutation } from '@/tools/mutations';
 import DeleteAvatarModal from '@/components/modals/DeleteAvatarModal';
+import { avatarValidation } from '@/lib/validation';
+import { profileSettingsStyles as styles } from '@/styles/profile/profileSettingsPage.style';
+import { useUploadAvatarMutation } from '@/tools/mutations';
 import BaseButton from '../ui/BaseButton';
 
 export default function AvatarForm() {

@@ -50,6 +50,7 @@ const Input = ({
         )}
       </InputLabel>
       <InputBase
+        data-testid={label}
         sx={{
           width: '100%',
           maxWidth: '436px',

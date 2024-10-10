@@ -1,16 +1,15 @@
 'use client';
 import {
   Box,
-  Button,
   DialogActions,
   DialogContentText,
   DialogTitle,
   Divider,
 } from '@mui/material';
 import Image from 'next/image';
+import BaseButton from '../ui/BaseButton';
 import Modal from '../ui/Modal';
 import Cross from '/public/icons/cross.svg';
-import BaseButton from '../ui/BaseButton';
 
 type Props = {
   open: boolean;
@@ -90,6 +89,7 @@ const BaseModal = ({
 
   return (
     <Modal
+      dataTestId={`modal-${header}`}
       open={open}
       onClose={onClose}
       paperStyle={{

@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box } from '@mui/material';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import ControlledInput from '@/components/common/ControlledInput';
+import { UpdateProfileFormSkeleton } from '@/components/ui/loading-skeletons/UpdateProfileFormSkeleton';
 import { UpdateProfileValidation } from '@/lib/validation';
 import { updateProfileFormStyles as styles } from '@/styles/forms/updateProfileForm.style';
 import { useUpdateProfileMutation } from '@/tools/mutations';
-import { UpdateProfileFormSkeleton } from '@/components/ui/loading-skeletons/UpdateProfileFormSkeleton';
 import BaseButton from '../ui/BaseButton';
 
 const defaultValues = {

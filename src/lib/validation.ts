@@ -73,7 +73,10 @@ export const OrderValidation = z.object({
 });
 
 export const UpdateProfileValidation = z.object({
-  firstName: z.string().min(2, 'Name must be at least 2 characters'),
+  firstName: z
+    .string()
+    .transform(value => value.replace(/\s+/g, ''))
+    .pipe(z.string().min(2, 'Name must be at least 2 characters')),
   lastName: z.string(),
   email: z.string().email('Invalid email address (ex. johndoe@gmail.com)'),
   phoneNumber: z
