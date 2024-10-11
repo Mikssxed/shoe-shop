@@ -2,7 +2,11 @@ import { Box, Typography } from '@mui/material';
 
 import OrderForm from '@/components/forms/OrderForm';
 
-const BagSummary: React.FC = () => {
+type Props = {
+  onClick?: () => Promise<void>;
+};
+
+const BagSummary = ({ onClick }: Props) => {
   return (
     <Box
       sx={{
@@ -23,7 +27,7 @@ const BagSummary: React.FC = () => {
         Summary
       </Typography>
 
-      <OrderForm />
+      <OrderForm onClick={onClick} />
     </Box>
   );
 };

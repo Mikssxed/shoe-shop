@@ -14,23 +14,27 @@ import { z } from 'zod';
 import BagPricingList from '@/components/bag/BagPricingList';
 import ControlledInput from '@/components/common/ControlledInput';
 import Modal from '@/components/ui/Modal';
+import { useIsMobile } from '@/hooks';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import { OrderValidation } from '@/lib/validation';
 import { orderFormStyles as styles } from '@/styles/forms/orderForm.style';
 import { clearCartQuery, useQueryCartItems } from '@/tools';
+import { useRouter } from 'next/navigation';
 import BaseButton from '../ui/BaseButton';
-import { useIsMobile } from '@/hooks';
+
+type Props = { onClick?: () => void };
 
 const defaultValues = {
   promocode: '',
 };
 
-const OrderForm = () => {
+const OrderForm = ({ onClick }: Props) => {
   const { data: session } = useSession();
   const { data: cart = [] } = useQueryCartItems(session?.user?.id);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const router = useRouter();
   const isMobile = useIsMobile();
 
   const { handleSubmit, control } = useForm<z.infer<typeof OrderValidation>>({
@@ -40,9 +44,13 @@ const OrderForm = () => {
 
   const onSubmit = () => {
     try {
+      if (onClick) {
+        onClick();
+        return;
+      }
       if (cart.some(item => item.selectedSize === 'unselected'))
         throw Error('All products must have selected size!');
-      setShowCheckoutModal(true);
+      router.push('/bag/checkout');
     } catch (error: any) {
       enqueueSnackbar(error.message, {
         variant: 'error',
@@ -113,7 +121,7 @@ const OrderForm = () => {
           <BaseButton
             dataTestId="order__checkout-button-mobile"
             sx={styles.xs_checkoutBtn}
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => (onClick ? onClick() : handleSubmit(onSubmit))}
           >
             Checkout
           </BaseButton>
