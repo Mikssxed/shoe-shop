@@ -12,8 +12,14 @@ const config: Config = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov'],
   testEnvironment: 'jsdom',
+  setupFiles: ['./setup.jest.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^jose': 'jose',
+    '@panva/hkdf': '@panva/hkdf',
+    '^preact-render-to-string': 'preact-render-to-string',
+    '^preact': 'preact',
+    '^uuid': 'uuid',
   },
   // Run tests only for the files that end with .test before the extension
   // Example: SignUpForm.test.tsx will run / setup.ts will be ignored

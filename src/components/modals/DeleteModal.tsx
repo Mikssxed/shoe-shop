@@ -26,7 +26,7 @@ const DeleteModal = ({
       open={open}
       submitText="Delete"
       header={`Are you sure you want to delete ${name}?`}
-      dataTestId="deleteModal"
+      dataTestId="delete-modal"
     />
   );
 };

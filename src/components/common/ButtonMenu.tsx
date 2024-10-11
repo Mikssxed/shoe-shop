@@ -76,6 +76,7 @@ const ButtonMenu = ({
             <Typography variant="menu">Edit</Typography>
           </MenuItem>
           <MenuItem
+            data-testid="button-menu__delete"
             sx={styles.menuItem}
             onClick={e => {
               setOpenDeleteModal(true);

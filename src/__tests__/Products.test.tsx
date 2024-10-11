@@ -13,6 +13,7 @@ import { useIsMobile } from '@/hooks';
 
 // Import utility functions
 import { mockFiltersData, mockMaxPrice, mockProductData } from '@/lib/mocks';
+import { IntersectionObserver } from '@/lib/mocks';
 import {
   addToCartQuery,
   getFiltersData,
@@ -23,24 +24,6 @@ import {
 } from '@/tools';
 
 // Set up global IntersectionObserver for the tests
-class IntersectionObserver {
-  root = null;
-  rootMargin = '';
-  thresholds = [];
-
-  disconnect() {
-    return null;
-  }
-  observe() {
-    return null;
-  }
-  takeRecords() {
-    return [];
-  }
-  unobserve() {
-    return null;
-  }
-}
 window.IntersectionObserver = IntersectionObserver;
 global.IntersectionObserver = IntersectionObserver;
 

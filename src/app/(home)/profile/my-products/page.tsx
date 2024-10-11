@@ -20,7 +20,8 @@ export default async function MyProducts() {
   }
 
   const { firstName, lastName, username } = user;
-  const fullName = capitalizeFirstLetter([firstName,lastName].join(' ')) || username;
+  const fullName =
+    capitalizeFirstLetter([firstName, lastName].join(' ')) || username;
   const initialData = await getMyProducts(user, 1);
 
   return (
@@ -51,7 +52,7 @@ export default async function MyProducts() {
         >
           <Image
             src="/images/myProductsBanner.png"
-            alt="My products"
+            alt="My Products Banner"
             fill
             priority
             quality={100}
@@ -110,7 +111,10 @@ export default async function MyProducts() {
           }}
         >
           <Typography variant="h1">My Products</Typography>
-          <Link href="/profile/add-product">
+          <Link
+            data-testid="my-products__add-product"
+            href="/profile/add-product"
+          >
             <BaseButton
               sx={{
                 ...buttonStyles.commonBtn,

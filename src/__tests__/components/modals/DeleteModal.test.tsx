@@ -2,7 +2,14 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { DeleteModal } from '@/components/common';
-import { mockModalProps } from '@/lib/mocks/DeleteModalMock';
+
+export const mockModalProps = {
+  name: 'product',
+  open: true,
+  text: 'This action cannot be undone. Please confirm deletion of this item. If you do not want to complete this action press Cancel.',
+  onClose: jest.fn(),
+  onSubmit: jest.fn(),
+};
 
 describe('DeleteModal component', () => {
   beforeEach(() => {
@@ -22,7 +29,7 @@ describe('DeleteModal component', () => {
   });
 
   it('should render delete modal and its content', () => {
-    expect(screen.getByTestId('deleteModal')).toBeInTheDocument();
+    expect(screen.getByTestId('delete-modal')).toBeInTheDocument();
     expect(screen.getByTestId('modal__cross')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', {

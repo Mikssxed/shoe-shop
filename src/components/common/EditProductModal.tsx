@@ -16,6 +16,7 @@ const EditProductModal = ({
 }) => {
   return (
     <Modal
+      dataTestId="edit-product-modal"
       open={open}
       onClose={onClose}
       containerStyle={{

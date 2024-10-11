@@ -64,8 +64,15 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
   };
 
   return (
-    <Box sx={{ position: 'relative', width: '100%' }}>
-      <Link href={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+    <Box
+      data-testid="product-card"
+      sx={{ position: 'relative', width: '100%' }}
+    >
+      <Link
+        data-testid="product-card__link"
+        href={`/products/${product.id}`}
+        style={{ textDecoration: 'none' }}
+      >
         <Card
           sx={{
             width: 1,
@@ -188,6 +195,7 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
       {isProfile && (
         <Box>
           <IconButton
+            data-testid="product-card__button-menu"
             aria-label="settings"
             sx={{
               position: 'absolute',

@@ -76,6 +76,7 @@ const BaseModal = ({
           Cancel
         </BaseButton>
         <BaseButton
+          dataTestId="submit-button"
           onClick={() => {
             onSubmit();
             onClose();
