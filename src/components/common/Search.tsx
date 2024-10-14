@@ -35,6 +35,7 @@ export default function Search({ open, onClose }: SearchProps) {
   const { data: productsNames, isLoading } = useProductsNames(debouncedSearch);
 
   //TODO: Maybe improve searching (right now it only searches based on products that contain search string)
+  // TODO: Consider implementing FuzzySearch
   const updateSearch = (query: string) => {
     const params = new URLSearchParams(searchParams);
     if (!query) {

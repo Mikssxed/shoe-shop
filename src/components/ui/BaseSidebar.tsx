@@ -49,8 +49,8 @@ export default function BaseSidebar({
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
           width: sidebarWidth,
-          height: { xs: '100%', md: 'calc(100vh - 120px)' }, // 120px is the height of the header TODO: change to theme value
-          top: { xs: 0, md: '120px' }, // 120px is the height of the header TODO: change to theme value
+          height: { xs: '100%', md: 'calc(100vh - 120px)' },
+          top: { xs: 0, md: '120px' },
           border: 'none',
           overflowX: 'hidden',
         },

@@ -30,7 +30,7 @@ const NotFoundError = () => {
         sx={{
           justifyContent: 'center',
           width: '100%',
-          height: { xs: '100%', md: 'calc(100% - 120px)' }, //TODO: replace 120px with theme value
+          height: { xs: '100%', md: 'calc(100% - 120px)' },
           mb: { xs: '44px', md: 0 },
         }}
       >

@@ -59,10 +59,6 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
     }
   };
 
-  const editProduct = (id: number) => {
-    // TODO: implement edit product
-  };
-
   return (
     <Box
       data-testid="product-card"
@@ -217,7 +213,6 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             onClose={() => setAnchorEl(null)}
             onDeleteProduct={() => deleteProduct(product.id)}
-            onEditProduct={() => editProduct(product.id)}
             product={product}
           />
         </Box>

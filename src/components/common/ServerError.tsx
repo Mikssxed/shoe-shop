@@ -26,7 +26,7 @@ const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
           alignItems: 'center',
           gap: theme.spacing(2),
           width: '100%',
-          height: { xs: '100%', md: 'calc(100vh - 120px)' }, //TODO: replace 120px with theme value
+          height: { xs: '100%', md: 'calc(100vh - 120px)' },
         }}
       >
         <Grid
@@ -70,7 +70,7 @@ const ServerError = ({ error, reset }: { error: Error; reset: () => void }) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'end',
-            height: { xs: '100%', md: 'calc(100vh - 120px)' }, //TODO: replace 120px with theme value
+            height: { xs: '100%', md: 'calc(100vh - 120px)' },
             minHeight: { md: '480px' },
             width: '100%',
             overflow: 'hidden',
