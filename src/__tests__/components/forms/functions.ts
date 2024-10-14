@@ -20,7 +20,10 @@ export async function shortPasswordInput<T extends PasswordChangeEvent>(
 ) {
   if (inputType === InputType.Password) {
     await form.changePasswordInput('Test');
-  } else if (inputType === InputType.ConfirmPassword) {
+  } else if (
+    inputType === InputType.ConfirmPassword &&
+    form.changeConfirmPasswordInput
+  ) {
     await form.changeConfirmPasswordInput('Test');
   }
 
@@ -41,7 +44,10 @@ export async function longPasswordInput<T extends PasswordChangeEvent>(
   const longPwd = 't'.repeat(21);
   if (inputType === InputType.Password) {
     await form.changePasswordInput(longPwd);
-  } else if (inputType === InputType.ConfirmPassword) {
+  } else if (
+    inputType === InputType.ConfirmPassword &&
+    form.changeConfirmPasswordInput
+  ) {
     await form.changeConfirmPasswordInput(longPwd);
   }
 

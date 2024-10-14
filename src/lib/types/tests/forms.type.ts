@@ -18,11 +18,15 @@ export enum InputType {
 
 export type PasswordChangeEvent = {
   changePasswordInput: (value: string) => Promise<void>;
-  changeConfirmPasswordInput: (value: string) => Promise<void>;
+  changeConfirmPasswordInput?: (value: string) => Promise<void>;
   submitForm: () => Promise<void>;
 };
 
-export type MatchingPasswordValidation = PasswordChangeEvent & {
+export type MatchingPasswordValidation = Omit<
+  PasswordChangeEvent,
+  'changeConfirmPasswordInput'
+> & {
+  changeConfirmPasswordInput: (value: string) => Promise<void>;
   userData: {
     password: string;
   };

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { enqueueSnackbar } from 'notistack';
 
 import SignUpForm from '@/components/forms/SignUpForm';
@@ -192,17 +192,20 @@ describe('SignUpForm Success', () => {
 });
 
 describe('SignUpForm Navigation', () => {
-  it('redirects user to /auth/sign-in when "Log in" link is clicked', async () => {
-    const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
-    const { user } = setup(
+  const renderComponent = () =>
+    render(
       <QueryClientProvider client={queryClient}>
         <SignUpForm />
       </QueryClientProvider>,
     );
+  it('redirects user to /auth/sign-in when "Log in" link is clicked', async () => {
+    renderComponent();
     const loginLink = screen.getByRole('link', { name: /Log in/i });
 
-    await user.click(loginLink);
+    // Use fireEvent instead of userEvent to avoid 'Not implemented: navigation (except hash changes)' error
+    fireEvent.click(loginLink);
 
     expect(loginLink.closest('a')).toHaveAttribute('href', '/auth/sign-in');
   });

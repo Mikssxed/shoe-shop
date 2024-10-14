@@ -64,15 +64,6 @@ const useSignIn = () => {
         }
       });
     },
-    onError: (e: any) => {
-      const errorMessage =
-        e.response!.data.error.message.replace('identifier', 'email') ||
-        'Wrong credentials';
-      enqueueSnackbar(errorMessage, {
-        variant: 'error',
-        autoHideDuration: 10000,
-      });
-    },
   });
 };
 

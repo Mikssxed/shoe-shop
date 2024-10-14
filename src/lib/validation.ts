@@ -30,9 +30,13 @@ export const SignUpFormValidation = z
   });
 
 export const LogInFormValidation = z.object({
-  email: z.string().email('Invalid email address (ex. johndoe@gmail.com)'),
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Invalid email address (ex. johndoe@gmail.com)'),
   password: z
     .string()
+    .min(1, 'Password is required')
     .min(8, 'Password must be at least 8 characters')
     .max(20, 'Password must be at most 20 characters'),
   rememberMe: z.boolean(),

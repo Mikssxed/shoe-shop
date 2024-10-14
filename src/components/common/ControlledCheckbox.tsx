@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Controller } from 'react-hook-form';
@@ -25,6 +25,11 @@ const ControlledCheckbox = ({
               sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }}
               value={value}
               onChange={onChange}
+              inputProps={
+                {
+                  'data-testid': `${label}-checkbox`,
+                } as React.InputHTMLAttributes<HTMLInputElement>
+              }
             />
           }
           label={label}

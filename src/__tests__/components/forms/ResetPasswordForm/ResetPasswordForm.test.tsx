@@ -68,6 +68,28 @@ describe('ResetPasswordForm Rendering', () => {
       screen.getByRole('button', { name: /Reset Password/i }),
     ).toBeInTheDocument();
   });
+
+  it('renders the submit button with "Reset Password" initially', () => {
+    renderComponent();
+
+    const submitButton = screen.getByRole('button', {
+      name: /Reset Password/i,
+    });
+    expect(submitButton).toBeInTheDocument();
+    expect(submitButton).toBeEnabled();
+  });
+
+  it('changes button text to "Loading..." and disables the button when the mutation is pending', async () => {
+    await buttonState();
+
+    const submitButton = screen.getByRole('button', {
+      name: /Loading.../i,
+    });
+
+    await waitFor(() => {
+      expect(submitButton).toBeDisabled();
+    });
+  });
 });
 
 describe('ResetPasswordForm Validation', () => {
@@ -204,39 +226,6 @@ describe('ResetPasswordForm Errors', () => {
         variant: 'error',
         autoHideDuration: 10000,
       });
-    });
-  });
-});
-
-describe('ResetPasswordForm Button State', () => {
-  const queryClient = new QueryClient();
-
-  const renderComponent = () =>
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ResetPasswordForm />
-      </QueryClientProvider>,
-    );
-
-  it('renders the submit button with "Reset Password" initially', () => {
-    renderComponent();
-
-    const submitButton = screen.getByRole('button', {
-      name: /Reset Password/i,
-    });
-    expect(submitButton).toBeInTheDocument();
-    expect(submitButton).toBeEnabled();
-  });
-
-  it('changes button text to "Loading..." and disables the button when the mutation is pending', async () => {
-    await buttonState();
-
-    const submitButton = screen.getByRole('button', {
-      name: /Loading.../i,
-    });
-
-    await waitFor(() => {
-      expect(submitButton).toBeDisabled();
     });
   });
 });

@@ -13,6 +13,7 @@ import { LogInFormValidation } from '@/lib/validation';
 import { stylingConstants } from '@/lib/constants/themeConstants';
 import BaseButton from '../ui/BaseButton';
 import { buttonStyles } from '@/styles/commonStyles';
+import { enqueueSnackbar } from 'notistack';
 
 const defaultValues = {
   email: '',
@@ -38,7 +39,15 @@ const SignInForm: React.FC = () => {
         rememberMe: data.rememberMe,
       });
     } catch (error: any) {
-      console.error(error);
+      const errorMessage =
+        error?.response!?.data?.error?.message?.replace(
+          'identifier',
+          'email',
+        ) || 'Wrong credentials';
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+        autoHideDuration: 10000,
+      });
     }
   };
 
