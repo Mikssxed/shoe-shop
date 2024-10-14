@@ -22,11 +22,18 @@ export default function ActionButtons({
   const onSelectSize = (value: number) => setSelectedSize(value);
 
   const addToBag = () => {
-    addToCartQuery(product, session?.user?.id, selectedSize || 'unselected');
-    enqueueSnackbar('Successfully added to cart', {
-      variant: 'success',
-      autoHideDuration: 2000,
-    });
+    if (sessionStatus === 'authenticated') {
+      addToCartQuery(product, session?.user?.id, selectedSize || 'unselected');
+      enqueueSnackbar('Successfully added to cart', {
+        variant: 'success',
+        autoHideDuration: 2000,
+      });
+    } else {
+      enqueueSnackbar('You must be logged in to add product to bag', {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
+    }
   };
 
   useEffect(() => {

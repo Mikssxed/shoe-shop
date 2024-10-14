@@ -35,7 +35,7 @@ type Props = {
 
 const ProductCard = ({ product, imagePriority, user }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -79,7 +79,7 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
           }}
         >
           <Box sx={{ position: 'relative', aspectRatio: 320 / 380 }}>
-            {!isProfile && (
+            {!isProfile && status === 'authenticated' && (
               <Box
                 sx={{
                   position: 'absolute',
