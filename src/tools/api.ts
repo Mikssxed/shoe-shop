@@ -290,7 +290,7 @@ export const resetPassword = async (
   if (!data.code) {
     throw Error(`Your link doesn't have the required param "code"`);
   }
-  
+
   return postData<IResetPasswordResponse>('/auth/reset-password', data);
 };
 
@@ -423,15 +423,18 @@ export const addImages = (data: any) => {
   return response;
 };
 
-export const getLastViewed = async (ids: string[]) => {
+export const getStored = async (ids: string[], pageSize: number) => {
   if (!ids.length) {
     return { data: [] };
   }
+
+  const limitedIds = ids.slice(0, pageSize);
+
   const response = await fetchData<ProductsResponse>('/products', {
     params: {
       'pagination[page]': 1,
-      'pagination[pageSize]': 4,
-      'filters[id][$in]': ids,
+      'pagination[pageSize]': pageSize,
+      'filters[id][$in]': limitedIds,
       populate: '*',
     },
   });

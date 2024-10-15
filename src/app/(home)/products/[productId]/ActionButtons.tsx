@@ -9,7 +9,11 @@ import BaseButton from '@/components/ui/BaseButton';
 import { IActionButtonsProps } from '@/lib/types/props.type';
 import { actionButtonsStyles as styles } from '@/styles/product/product.style';
 import { addToCartQuery } from '@/tools';
-import { addLastViewedProductId } from '@/utils';
+import {
+  addLastViewedProductId,
+  isProductWishlisted,
+  toggleWishlistedProductId,
+} from '@/utils';
 
 export default function ActionButtons({
   sizes,
@@ -18,6 +22,17 @@ export default function ActionButtons({
 }: IActionButtonsProps) {
   const [selectedSize, setSelectedSize] = useState<number | undefined>();
   const { data: session, status: sessionStatus } = useSession();
+  const [wishlisted, setWishlisted] = useState(() =>
+    isProductWishlisted(id, session?.user?.id),
+  );
+
+  useEffect(() => {
+    setWishlisted(isProductWishlisted(id, session?.user?.id));
+  }, [sessionStatus]);
+
+  useEffect(() => {
+    addLastViewedProductId(id, session?.user?.id);
+  }, [id, session?.user?.id]);
 
   const onSelectSize = (value: number) => setSelectedSize(value);
 
@@ -31,6 +46,22 @@ export default function ActionButtons({
     } else {
       enqueueSnackbar('You must be logged in to add product to bag', {
         variant: 'error',
+        autoHideDuration: 2000,
+      });
+    }
+  };
+
+  const addToWishlist = () => {
+    toggleWishlistedProductId(id, session?.user?.id);
+    setWishlisted(prevWishlisted => !prevWishlisted);
+    if (wishlisted) {
+      enqueueSnackbar('Successfully removed from wishlist', {
+        variant: 'success',
+        autoHideDuration: 2000,
+      });
+    } else {
+      enqueueSnackbar('Successfully added to wishlist', {
+        variant: 'success',
         autoHideDuration: 2000,
       });
     }
@@ -79,6 +110,18 @@ export default function ActionButtons({
         </Box>
       )}
       <Box sx={styles.addButtons}>
+        <BaseButton
+          onClick={addToWishlist}
+          variant="outlined"
+          sx={styles.actionButton}
+          disabled={sessionStatus === 'loading'}
+        >
+          {sessionStatus === 'loading'
+            ? 'Wait...'
+            : wishlisted
+              ? 'Remove From Wishlist'
+              : 'Add to Wishlist'}
+        </BaseButton>
         <BaseButton
           data-testid="singleProductPage__addToBagButton"
           onClick={addToBag}

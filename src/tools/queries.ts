@@ -5,11 +5,11 @@ import { User } from 'next-auth';
 import { queryClient } from '.';
 import {
   getFiltersData,
-  getLastViewed,
   getMyProducts,
   getProduct,
   getProducts,
   getProductsNames,
+  getStored,
 } from './api';
 
 /**
@@ -331,15 +331,21 @@ export const changeSelectedSize = (
 };
 
 /**
- * Custom hook to fetch last viewed products by their IDs.
+ * Custom hook to fetch lastViewed or wishlisted products by their IDs.
  *
+ * @param {'lastViewed' | 'wishlisted'} key - The key that determines whether to fetch last viewed or wishlisted products.
  * @param {string[]} ids - Array of product IDs to retrieve.
+ * @param {number} pageSize - Number of products to retrieve per page.
  * @returns {Object} - The result of the query, including last viewed product data, fetching status, and potential errors.
  */
-export const useLastViewed = (ids: string[]) => {
+export const useStored = (
+  key: 'lastViewed' | 'wishlisted',
+  ids: string[],
+  pageSize: number = 12,
+) => {
   return useQuery({
-    queryKey: ['lastViewed', ids],
-    queryFn: () => getLastViewed(ids),
+    queryKey: [key, ids, pageSize],
+    queryFn: () => getStored(ids, pageSize),
     select: data => data.data,
   });
 };

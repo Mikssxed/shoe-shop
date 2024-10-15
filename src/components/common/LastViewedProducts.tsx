@@ -1,11 +1,19 @@
 'use client';
-import { Grid, Skeleton, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Skeleton,
+  Typography,
+  Link as MUILink,
+} from '@mui/material';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import { useLastViewed } from '@/tools';
-import { getLastViewedProductIds } from '@/utils';
+import { useStored } from '@/tools';
+import { getStoredProductIds } from '@/utils';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
+import { stylingConstants } from '@/lib/constants/themeConstants';
 
 type Props = {
   isFullWidth: boolean;
@@ -13,9 +21,8 @@ type Props = {
 
 function LastViewedProducts({ isFullWidth }: Props) {
   const { data: session } = useSession();
-  const productIds = getLastViewedProductIds(session?.user?.id);
-
-  const { data: products, isLoading } = useLastViewed(productIds);
+  const productIds = getStoredProductIds('lastViewed', session?.user?.id);
+  const { data: products, isLoading } = useStored('lastViewed', productIds, 4);
 
   if (!products?.length && !isLoading) {
     return null;
@@ -26,9 +33,35 @@ function LastViewedProducts({ isFullWidth }: Props) {
       {isLoading ? (
         <Skeleton variant="text" width="20%" height="53px" />
       ) : (
-        <Typography sx={{ marginBottom: '24px' }} variant="h1">
-          Last viewed products
-        </Typography>
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-end', md: 'baseline' },
+            mb: '24px',
+          }}
+        >
+          <Typography variant="h1" sx={{ m: 0 }}>
+            Last viewed products
+          </Typography>
+          <MUILink
+            component={Link}
+            href={'/profile/recently-viewed'}
+            sx={{
+              flexShrink: 0,
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+              lineHeight: '35px',
+              mb: { xs: '-3px', md: 0 },
+              color: stylingConstants.palette.text.primary,
+              textDecorationColor: stylingConstants.palette.text.primary,
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            See All
+          </MUILink>
+        </Box>
       )}
 
       <Grid

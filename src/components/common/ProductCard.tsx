@@ -26,14 +26,21 @@ import { ProductAttributes } from '@/lib/types';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { addToCartQuery } from '@/tools';
 import { useDeleteProduct } from '@/tools/mutations';
+import WishlistIcon from './WishlistIcon';
 
 type Props = {
   product: ProductAttributes;
   imagePriority: boolean;
   user?: User;
+  handleWishlist?: (productId: string) => void;
 };
 
-const ProductCard = ({ product, imagePriority, user }: Props) => {
+const ProductCard = ({
+  product,
+  imagePriority,
+  user,
+  handleWishlist,
+}: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { data: session, status } = useSession();
   const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
@@ -49,6 +56,7 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
 
   const pathName = usePathname();
   const isProfile = pathName.includes('/profile/my-products');
+  const isWishlist = pathName.includes('/profile/my-wishlist');
   const mutation = useDeleteProduct(product.name);
 
   const deleteProduct = (id: number) => {
@@ -216,6 +224,9 @@ const ProductCard = ({ product, imagePriority, user }: Props) => {
             product={product}
           />
         </Box>
+      )}
+      {isWishlist && handleWishlist && (
+        <WishlistIcon handleWishlist={handleWishlist} id={product.id} />
       )}
     </Box>
   );

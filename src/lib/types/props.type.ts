@@ -93,3 +93,10 @@ export interface ThankYouPageProps {
     orderId: string;
   };
 }
+
+export interface IStoredProductsProp {
+  products: never[] | Data<ProductAttributes>[] | undefined;
+  isLoading: boolean;
+  title: string;
+  emptyStateText: string;
+}
