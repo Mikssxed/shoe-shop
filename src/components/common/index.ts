@@ -18,7 +18,6 @@ import ListProductImages from './ListProductImages';
 import LogOutModal from '../modals/LogOutModal';
 import NotFoundError from './NotFoundError';
 import { Option } from './Option';
-import PageLoading from './PageLoading';
 import PriceSlider from './PriceSlider';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
@@ -53,7 +52,6 @@ export {
   LogOutModal,
   NotFoundError,
   Option,
-  PageLoading,
   PriceSlider,
   ProductCard,
   ProductCardSkeleton,

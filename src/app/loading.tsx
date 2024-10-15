@@ -6,10 +6,14 @@ export default function PageLoading() {
     <Box
       component="div"
       sx={{
-        width: '100%',
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
         display: 'flex',
         alignItems: 'center',
-        mt: '40px',
+        justifyContent: 'center',
         perspective: '1000px',
       }}
     >
