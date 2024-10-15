@@ -3,7 +3,8 @@
 import { Box, Container, Divider, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+import { enqueueSnackbar } from 'notistack';
 
 import { BagItem, BagSummary } from '@/components/bag';
 import EmptyProductList from '@/components/common/EmptyProductList';
@@ -11,13 +12,30 @@ import BaseButton from '@/components/ui/BaseButton';
 import BagItemsSkeleton from '@/components/ui/loading-skeletons/BagItemsSkeleton';
 import SummarySectionSkeleton from '@/components/ui/loading-skeletons/SummarySectionSkeleton';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
-import { useQueryCartItems } from '@/tools';
+import { useQueryCartItems, validateCartItems } from '@/tools';
 import { useIsMobile } from '@/hooks';
 
 const Bag = () => {
   const { data: session } = useSession();
   const { data: cart = [], isLoading } = useQueryCartItems(session?.user?.id);
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      validateCartItems(session?.user?.id).then(isProductRemoved => {
+        if (isProductRemoved) {
+          enqueueSnackbar(
+            'Some products have been removed from the cart because they are no longer available.',
+            {
+              variant: 'default',
+              autoHideDuration: 5000,
+              preventDuplicate: true,
+            },
+          );
+        }
+      });
+    }
+  }, [cart]);
 
   return (
     <>

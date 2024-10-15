@@ -57,7 +57,11 @@ const ProductCard = ({
   const pathName = usePathname();
   const isProfile = pathName.includes('/profile/my-products');
   const isWishlist = pathName.includes('/profile/my-wishlist');
-  const mutation = useDeleteProduct(product.name);
+  const mutation = useDeleteProduct(
+    product.name,
+    product.id,
+    session?.user?.id,
+  );
 
   const deleteProduct = (id: number) => {
     try {

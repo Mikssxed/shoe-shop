@@ -14,6 +14,7 @@ import {
   deleteAvatar,
   deleteProduct,
   queryClient,
+  removeProductFromCartOnDelete,
   updateProfile,
   uploadImage,
 } from '@/tools';
@@ -170,11 +171,14 @@ export const useDeleteAvatarMutation = (): UseMutationResult<
   });
 };
 
-export const useDeleteProduct = (name: string) => {
+export const useDeleteProduct = (name: string, id: number, userId?: string) => {
+  const storageKey = userId ? `cart_${userId}` : 'cart';
   return useMutation({
     mutationFn: deleteProduct,
     onSuccess: () => {
+      removeProductFromCartOnDelete(id, userId);
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: [storageKey] });
       enqueueSnackbar(`Product "${name}" has been deleted.`, {
         variant: 'default',
         autoHideDuration: 5000,
