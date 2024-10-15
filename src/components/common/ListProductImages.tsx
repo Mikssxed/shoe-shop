@@ -150,7 +150,10 @@ const ListProductImages = ({
             </Typography>
           </Paper>
           {error && productImages.length < 1 && (
-            <ErrorMessage errorMessage={error?.message} />
+            <ErrorMessage
+              errorMessage={error?.message}
+              label="Product Images"
+            />
           )}
         </Grid>
       </Grid>

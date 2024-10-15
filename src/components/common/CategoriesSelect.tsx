@@ -62,7 +62,9 @@ const CategoriesSelect = ({
               }}
             />
           )}
-          {error && <ErrorMessage errorMessage={error?.message} />}
+          {error && (
+            <ErrorMessage errorMessage={error?.message} label="Category" />
+          )}
         </>
       )}
     />

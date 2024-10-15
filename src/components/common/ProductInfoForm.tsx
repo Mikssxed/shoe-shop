@@ -440,7 +440,12 @@ const ProductInfoForm = ({
                       onChange={onChange}
                       required
                     />
-                    {error && <ErrorMessage errorMessage={error?.message} />}
+                    {error && (
+                      <ErrorMessage
+                        errorMessage={error?.message}
+                        label="Description"
+                      />
+                    )}
                   </>
                 )}
               />

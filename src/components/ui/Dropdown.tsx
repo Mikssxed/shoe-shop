@@ -76,7 +76,9 @@ const Dropdown = ({
           </MenuItem>
         ))}
       </Select>
-      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+      {errorMessage && (
+        <ErrorMessage errorMessage={errorMessage} label={labelText || ''} />
+      )}
     </Box>
   );
 };

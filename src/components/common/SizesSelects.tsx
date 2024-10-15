@@ -47,7 +47,9 @@ const SizesSelects = ({ name, control, filtersData }: ISizesSelectsProps) => {
               </Grid>
             ))}
           </Grid>
-          {error && <ErrorMessage errorMessage={error?.message} />}
+          {error && (
+            <ErrorMessage errorMessage={error?.message} label="Sizes" />
+          )}
         </>
       )}
     />
