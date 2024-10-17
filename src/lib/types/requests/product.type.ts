@@ -12,3 +12,7 @@ export interface IAddProductRequest {
     teamName: string;
   };
 }
+
+export interface IEditProductRequest extends IAddProductRequest {
+  id: number;
+}

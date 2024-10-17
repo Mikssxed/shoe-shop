@@ -1,1 +1,1 @@
-export interface IUploadImageReq {}
+export type IUploadImageReq = FormData

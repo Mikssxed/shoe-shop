@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import ControlledCheckbox from '@/components/common/ControlledCheckbox';
-import ControlledInput from '@/components/common/ControlledInput';
+import ControlledCheckbox from '@/components/controlled/ControlledCheckbox';
+import ControlledInput from '@/components/controlled/ControlledInput';
 import { useSignIn } from '@/hooks';
 import { LogInFormValidation } from '@/lib/validation';
 import { stylingConstants } from '@/lib/constants/themeConstants';
@@ -62,10 +62,7 @@ const SignInForm: React.FC = () => {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box
-          component="div"
-          sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
-        >
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <ControlledInput
             name="email"
             control={control}
@@ -83,7 +80,6 @@ const SignInForm: React.FC = () => {
           />
         </Box>
         <Box
-          component="div"
           sx={{
             mt: '12px',
             display: 'flex',
@@ -120,10 +116,7 @@ const SignInForm: React.FC = () => {
           {isPending ? 'Loading...' : 'Sign In'}
         </BaseButton>
       </Box>
-      <Box
-        component="div"
-        sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}
-      >
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
         <Typography
           variant="body1"
           sx={{

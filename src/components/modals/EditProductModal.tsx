@@ -1,4 +1,4 @@
-import ProductInfoForm from './ProductInfoForm';
+import { ProductForm } from '@/components/forms';
 import Modal from '../ui/Modal';
 import { ProductAttributes } from '@/lib/types';
 
@@ -20,7 +20,7 @@ const EditProductModal = ({
       open={open}
       onClose={onClose}
       containerStyle={{
-        display: 'flex',
+        display: open ? 'flex' : 'none',
         boxSizing: 'border-box',
         minWidth: { lg: '1150px', xl: '1487px' },
         justifyContent: 'center',
@@ -31,10 +31,10 @@ const EditProductModal = ({
         paddingInline: { md: '40px 65px' },
       }}
     >
-      <ProductInfoForm
+      <ProductForm
         title={title}
         desc={description}
-        isEdit={true}
+        mode="edit"
         product={product}
         onClose={onClose}
         openEditModal={open}

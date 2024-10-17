@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { enqueueSnackbar } from 'notistack';
 
-import ControlledInput from '@/components/common/ControlledInput';
+import ControlledInput from '@/components/controlled/ControlledInput';
 import { IReactQueryError, ISignUpRequest, ISignUpResponse } from '@/lib/types';
 import { SignUpFormValidation } from '@/lib/validation';
 import { signUp } from '@/tools';
@@ -127,10 +127,7 @@ const SignUpForm: React.FC = () => {
           {mutation.isPending ? 'Loading...' : 'Sign Up'}
         </BaseButton>
       </Box>
-      <Box
-        component="div"
-        sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}
-      >
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
         <Typography
           variant="body1"
           sx={{

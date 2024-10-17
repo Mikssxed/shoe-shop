@@ -12,52 +12,70 @@ import {
 import { useState } from 'react';
 import Image from 'next/image';
 import { Gallery } from 'iconsax-react';
+import { useDropzone } from 'react-dropzone';
+import { useQuery } from '@tanstack/react-query';
 
 import { stylingConstants } from '@/lib/constants/themeConstants';
-import {
-  imageCoverOnHover,
-  imageUploadBox,
-  imageUploadText,
-  inputContainer,
-  productImageContainer,
-  trashIconContainer,
-} from '@/styles/products/productInfoFormStyles';
-import DeleteModal from '../modals/DeleteModal';
+import styles from '@/styles/forms/productForm.style';
+import DeleteModal from '@/components/modals/DeleteModal';
 import ErrorMessage from '../ui/ErrorMessage';
-import { IListProductImagesProps } from '@/lib/types';
+import { IImage, IListProductImagesProps, TMyImage } from '@/lib/types';
 import RequiredStar from '../ui/RequiredStar';
 import ImageWithSkeleton from './ImageWithSkeleton';
+import { queryClient } from '@/tools';
+import { getItemUrl } from '@/utils/helperFunctions';
+import { useUploadImages } from '@/hooks';
+import { enqueueSnackbar } from 'notistack';
 
-const ListProductImages = ({
-  productImages = [],
-  onChange,
-  getRootProps,
-  isDragActive,
-  getInputProps,
-  error,
-  editProductImagesCount,
-}: IListProductImagesProps) => {
-  const [isDelete, setIsDelete] = useState<boolean>(false);
+const ListProductImages = ({ queryKey, error }: IListProductImagesProps) => {
+  const { data: images } = useQuery<IImage[] | TMyImage[]>({ queryKey });
 
-  function onDelete() {
-    const updatedImages = productImages.filter(
-      (_, index) => index !== selectedIndex,
-    );
-    onChange(updatedImages);
-    setIsDelete(false);
-  }
+  const [idDeleteModal, setIdDeleteModal] = useState<null | number>(null);
+  const [skeletonAmount, setSkeletonAmount] = useState<number>(0);
 
-  const handleDeleteClick = (index: number) => {
-    setSelectedIndex(index);
-    setIsDelete(true);
+  const uploadImagesMutation = useUploadImages();
+
+  const onDrop = (acceptedFiles: File[]) => {
+    if (!acceptedFiles.length) return;
+    setSkeletonAmount(acceptedFiles.length);
+    const formData = new FormData();
+
+    Array.from(acceptedFiles).forEach(file => {
+      formData.append('files', file);
+    });
+
+    uploadImagesMutation.mutateAsync(formData, {
+      onSuccess: (data: IImage[]) => {
+        queryClient.setQueryData(queryKey, (prev: IImage[] | null) =>
+          prev ? [...prev, ...data] : [...data],
+        );
+        setSkeletonAmount(0);
+      },
+    });
   };
 
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { 'image/*': [] },
+    multiple: true,
+  });
+
+  const onDelete = () => {
+    queryClient.setQueryData(queryKey, (prev: IImage[]) =>
+      prev.filter(item => item.id !== idDeleteModal),
+    );
+    setIdDeleteModal(null);
+  };
+
+  const onOpenDeleteModal = (id: number) => {
+    setIdDeleteModal(id);
+  };
+
+  const onCloseDeleteModal = () => setIdDeleteModal(null);
 
   return (
     <Box
-      component="div"
-      sx={{ ...inputContainer, maxWidth: { xs: '436px', lg: 'none' } }}
+      sx={{ ...styles.inputContainer, maxWidth: { xs: '436px', lg: 'none' } }}
     >
       <InputLabel>
         Product Images
@@ -68,55 +86,53 @@ const ListProductImages = ({
         spacing={{ xs: 2, sm: 5, lg: 2 }}
         sx={{ minWidth: { xl: '692px' } }}
       >
-        {editProductImagesCount &&
-          editProductImagesCount > 0 &&
-          productImages.length === 0 &&
-          Array.from({ length: editProductImagesCount }, (_, i) => (
-            <Grid
-              key={'placeholderImageEditModal' + i}
-              item
-              xs={6}
-              lg={12}
-              xl={6}
-            >
-              <Box sx={productImageContainer}>
-                <Skeleton variant="rectangular" width="100%" height="100%" />
-              </Box>
-            </Grid>
-          ))}
-        {productImages.map((item, index) => {
-          return (
-            <Grid key={item.preview + index} item xs={6} lg={12} xl={6}>
-              <Box sx={productImageContainer}>
-                <Box sx={imageCoverOnHover}>
-                  <IconButton
-                    sx={trashIconContainer}
-                    onClick={() => handleDeleteClick(index)}
-                  >
-                    <Image
-                      width={20}
-                      height={20}
-                      src={'/icons/trash.svg'}
-                      alt="trash"
-                    />
-                  </IconButton>
+        {Array.isArray(images) &&
+          images.map(item => {
+            return (
+              <Grid key={item.id} item xs={6} lg={12} xl={6}>
+                <Box sx={styles.productImageContainer}>
+                  <Box sx={styles.imageCoverOnHover}>
+                    <IconButton
+                      sx={styles.trashIconContainer}
+                      onClick={() => onOpenDeleteModal(item.id)}
+                    >
+                      <Image
+                        width={20}
+                        height={20}
+                        src={'/icons/trash.svg'}
+                        alt="trash"
+                      />
+                    </IconButton>
+                  </Box>
+                  <ImageWithSkeleton src={getItemUrl(item)} />
                 </Box>
-                <ImageWithSkeleton src={item.preview} />
-              </Box>
-              <DeleteModal
-                open={isDelete}
-                name="selected image"
-                onClose={() => setIsDelete(false)}
-                onSubmit={onDelete}
-                text={`Do you want to delete the selected image?`}
-              />
-            </Grid>
-          );
-        })}
+                <DeleteModal
+                  open={Boolean(idDeleteModal)}
+                  name="selected image"
+                  onClose={onCloseDeleteModal}
+                  onSubmit={onDelete}
+                  text={`Do you want to delete the selected image?`}
+                />
+              </Grid>
+            );
+          })}
+        {Array.from({ length: skeletonAmount }).map((_, i) => (
+          <Grid
+            key={'placeholderImageEditModal' + i}
+            item
+            xs={6}
+            lg={12}
+            xl={6}
+          >
+            <Box sx={styles.productImageContainer}>
+              <Skeleton variant="rectangular" width="100%" height="100%" />
+            </Box>
+          </Grid>
+        ))}
         <Grid
           item
           xs={12}
-          sm={productImages.length > 0 ? 6 : 12}
+          sm={Array.isArray(images) && images?.length > 0 ? 6 : 12}
           lg={12}
           xl={6}
           padding={0}
@@ -125,23 +141,18 @@ const ListProductImages = ({
             {...getRootProps()}
             elevation={0}
             sx={{
-              ...imageUploadBox,
-              borderColor: `${error && productImages.length < 1 ? stylingConstants.palette.error.main : isDragActive ? '#aaa' : stylingConstants.palette.text.secondary}`,
+              ...styles.imageUploadBox,
+              borderColor: `${error && Array.isArray(images) && images.length < 1 ? stylingConstants.palette.error.main : isDragActive ? '#aaa' : stylingConstants.palette.text.secondary}`,
               mb: '3px',
             }}
           >
-            <input
-              {...getInputProps()}
-              onChange={e => {
-                onChange(e.target.files);
-              }}
-            />
+            <input {...getInputProps()} />
             <Gallery
               size="38"
               color={stylingConstants.palette.grey[500]}
               style={{ flexShrink: 0 }}
             />
-            <Typography variant="body1" sx={imageUploadText}>
+            <Typography variant="body1" sx={styles.imageUploadText}>
               Drop your image here, <br />
               or select{' '}
               <span style={{ color: '#151e7a', textDecoration: 'underline' }}>
@@ -149,11 +160,8 @@ const ListProductImages = ({
               </span>
             </Typography>
           </Paper>
-          {error && productImages.length < 1 && (
-            <ErrorMessage
-              errorMessage={error?.message}
-              label="Product Images"
-            />
+          {error && Array.isArray(images) && images.length < 1 && (
+            <ErrorMessage errorMessage={error?.message} label={'image-list'} />
           )}
         </Grid>
       </Grid>

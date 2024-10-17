@@ -101,9 +101,7 @@ export const AddProductFormSchema = z.object({
   brand: z.number().positive('Brand is required'),
   color: z.number().positive('Color is required'),
   name: z.string().trim().min(1, 'Name is required'),
-  images: z
-    .array(z.instanceof(File).or(z.number()))
-    .min(1, 'You need to upload at least one image'),
+  images: z.array(z.number()).min(1, 'You need to upload at least one image'),
   description: z
     .string()
     .trim()

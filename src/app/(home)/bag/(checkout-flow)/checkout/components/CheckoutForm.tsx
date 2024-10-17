@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { BagSummary } from '@/components/bag';
-import { ControlledInput } from '@/components/common';
+import { ControlledInput } from '@/components/controlled';
 import { useIsMobile } from '@/hooks';
 import { CheckoutFormValidation } from '@/lib/validation';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';

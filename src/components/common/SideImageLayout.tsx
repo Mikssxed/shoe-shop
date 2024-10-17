@@ -57,7 +57,6 @@ export default function SideImageLayout({
           </Link>
         </Box>
         <Box
-          component="div"
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -86,7 +85,6 @@ export default function SideImageLayout({
       >
         {isImageLoading && (
           <Box
-            component="div"
             sx={{
               // Side image is scaled with screen height and it's ratio of width/height
               // that prevents image from stretching is 1.158. Therefore 1.158 used as divisor

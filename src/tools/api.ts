@@ -6,8 +6,10 @@ import {
   ApiResponseList,
   BaseWithName,
   BaseWithValue,
+  IEditProductRequest,
   IForgotPasswordReq,
   IForgotPasswordRes,
+  IImage,
   ILogInRequest,
   IResetPasswordRequest,
   IResetPasswordResponse,
@@ -19,7 +21,7 @@ import {
   ProductResponse,
   ProductsResponse,
 } from '@/lib/types';
-import { IAddProductResponse } from '@/lib/types/responses/product.types';
+import { IAddProductResponse } from '@/lib/types/responses/product.type';
 import { IAddProductRequest } from '@/lib/types/requests/product.type';
 import axiosInstance from '@/tools/axios';
 import { generateRandomUsername } from '@/utils/helperFunctions';
@@ -337,8 +339,10 @@ export const getMyProducts = async (
  * console.log(response); // Outputs the uploaded image details
  */
 
-export const uploadImage = async (file: any): Promise<IUploadImageRes> => {
-  return postData<IUploadImageRes>('/upload', file, {
+export const uploadImages = async (
+  formData: FormData,
+): Promise<IUploadImageRes> => {
+  return postData<IUploadImageRes>('/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -399,6 +403,8 @@ export const addProduct = async (
   data: IAddProductRequest,
   token: string,
 ): Promise<IAddProductResponse> => {
+  if (!token) throw new Error('No JWT token available');
+
   const headers: any = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -413,14 +419,14 @@ export const addProduct = async (
   return response.data;
 };
 
-export const addImages = (data: any) => {
+export const addImages = async (data: any): Promise<IImage[]> => {
   const headers: any = {
     'Content-Type': 'multipart/form-data',
   };
 
-  const response = axiosInstance.post('/upload', data, { headers });
+  const response = await axiosInstance.post('/upload', data, { headers });
 
-  return response;
+  return response.data;
 };
 
 export const getStored = async (ids: string[], pageSize: number) => {

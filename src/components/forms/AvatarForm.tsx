@@ -46,7 +46,7 @@ export default function AvatarForm() {
 
   return (
     <Box component="form" sx={styles.infoBox}>
-      <Box component="div" sx={styles.avatarContainer}>
+      <Box sx={styles.avatarContainer}>
         <ProfilePicture avatarStyle={styles.profilePicture} />
       </Box>
 

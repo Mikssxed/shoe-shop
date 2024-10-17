@@ -45,7 +45,7 @@ const SingleProductPage = async (props: ISingleProductPageProps) => {
         {images.length > 0 ? (
           <ImageSlider images={images} name={name} />
         ) : (
-          <Box component="div" sx={styles.noImageBox}>
+          <Box sx={styles.noImageBox}>
             <Image
               data-testid="singleProductPage__withoutSliderImage"
               width={250}

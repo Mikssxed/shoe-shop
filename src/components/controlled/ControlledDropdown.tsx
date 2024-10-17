@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 
-import Dropdown from './Dropdown';
+import Dropdown from '../ui/Dropdown';
 
 interface IControlledDropdownProps {
   name: string;

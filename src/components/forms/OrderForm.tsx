@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import BagPricingList from '@/components/bag/BagPricingList';
-import ControlledInput from '@/components/common/ControlledInput';
+import ControlledInput from '@/components/controlled/ControlledInput';
 import { useIsMobile } from '@/hooks';
 import { OrderValidation } from '@/lib/validation';
 import { orderFormStyles as styles } from '@/styles/forms/orderForm.style';

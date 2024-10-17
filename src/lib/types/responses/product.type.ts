@@ -14,3 +14,5 @@ export interface IAddProductResponse {
   meta?: {};
   error?: string;
 }
+
+export interface IEditProductResponse extends IAddProductResponse {}

@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
 
-import ControlledInput from '@/components/common/ControlledInput';
+import ControlledInput from '@/components/controlled/ControlledInput';
 import {
   IReactQueryError,
   IResetPasswordRequest,

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import ControlledInput from '@/components/common/ControlledInput';
+import { ControlledInput } from '@/components/controlled';
 import { UpdateProfileFormSkeleton } from '@/components/ui/loading-skeletons/UpdateProfileFormSkeleton';
 import { UpdateProfileValidation } from '@/lib/validation';
 import { updateProfileFormStyles as styles } from '@/styles/forms/updateProfileForm.style';

@@ -16,7 +16,7 @@ import {
   queryClient,
   removeProductFromStoresOnDelete,
   updateProfile,
-  uploadImage,
+  uploadImages,
 } from '@/tools';
 
 /**
@@ -93,12 +93,12 @@ export const useUpdateProfileMutation = (): UseMutationResult<
 export const useUploadAvatarMutation = (): UseMutationResult<
   IUploadImageRes,
   IReactQueryError,
-  IUploadImageReq
+  FormData
 > => {
   const { data: session, update } = useSession();
 
   return useMutation({
-    mutationFn: uploadImage,
+    mutationFn: uploadImages,
     onSuccess: async (data: IImage[]) => {
       const updatedUser = await updateProfile({
         id: session?.user.id,

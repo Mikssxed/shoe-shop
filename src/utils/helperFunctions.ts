@@ -1,3 +1,5 @@
+import { IImage, TMyImage } from "@/lib/types";
+
 export const capitalizeFirstLetter = (text: string) => {
   return text
     .split(' ')
@@ -39,3 +41,13 @@ export function generateRandomUsername() {
 
   return `${randomAdjective}${randomNoun}${randomNumber}`;
 }
+
+export const getItemUrl = (item: IImage | TMyImage): string => {
+  if ('previewUrl' in item && item.previewUrl) return item.previewUrl; // Handle IImage case
+  if ('url' in item && item?.url) return item?.url;
+  if ('attributes' in item && item?.attributes?.previewUrl)
+    return item?.attributes.previewUrl;
+  if ('attributes' in item && item?.attributes.url) return item?.attributes.url;
+
+  return 'https://lightwidget.com/wp-content/uploads/localhost-file-not-found.jpg';
+};

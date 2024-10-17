@@ -151,7 +151,7 @@ const mergeCarts = (
 };
 
 /**
- * Custom hook to add an item to the cart state.
+ * Function to add an item to the cart state.
  *
  * If the item with the same `product.id` and `selectedSize` already exists in the cart,
  * its `amount` is incremented. If the item does not exist, it is added to the cart.
@@ -185,7 +185,7 @@ export const addToCartQuery = (
 };
 
 /**
- * Custom hook to remove an item from the cart state.
+ * Function to remove an item from the cart state.
  *
  * It removes the item from the cart that matches the given `id` and `selectedSize`.
  *
@@ -213,7 +213,7 @@ export const deleteFromCartQuery = (
 };
 
 /**
- * Custom hook to clear all items in the cart state.
+ * Function to clear all items in the cart state.
  *
  * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
  * @returns {void} Updates the cart state in the query client.
@@ -225,7 +225,7 @@ export const clearCartQuery = (userId: string | undefined) => {
 };
 
 /**
- * Custom hook to increase the amount of a cart item.
+ * Function to increase the amount of a cart item.
  *
  * It increments the `amount` of the item in the cart that matches the given `id`.
  *
@@ -255,7 +255,7 @@ export const increaseCartItemAmount = (
 };
 
 /**
- * Custom hook to decrease the amount of a cart item.
+ * Function to decrease the amount of a cart item.
  *
  * It decrements the `amount` of the item in the cart that matches the given `id`.
  * If the item's amount reaches 0, the item is still kept in the cart.
@@ -285,7 +285,7 @@ export const decreaseCartItemAmount = (
 };
 
 /**
- * Custom hook to change the selected size of a shoe in the cart for a specific user.
+ * Function to change the selected size of a shoe in the cart for a specific user.
  *
  * If the new size already exists in the cart for the same shoe, it combines the amounts.
  * Otherwise, it updates the selected size of the shoe.

@@ -40,32 +40,31 @@ export interface IProductInfoFormProps {
   title: string;
   desc: string;
   productId?: number;
-  isEdit: boolean;
+  mode?: 'create' | 'edit';
   product?: ProductAttributes;
   onClose?: () => void;
   openEditModal?: boolean;
 }
 
 export interface IListProductImagesProps {
-  productImages: any[] | undefined;
-  onChange: (arg0: any) => void;
-  getRootProps: any;
-  isDragActive: boolean;
-  getInputProps: any;
+  queryKey: string[];
   error?: FieldError;
-  editProductImagesCount?: number;
 }
 
 export interface ICategoriesSelectProps {
   control: any;
   name: string;
   filtersData?: FiltersData;
+  label?: string;
+  required?: boolean;
 }
 
 export interface ISizesSelectsProps {
   name: string;
   control: any;
   filtersData?: FiltersData;
+  label?: string;
+  required?: boolean;
 }
 
 export interface IFileWithPreview extends File {

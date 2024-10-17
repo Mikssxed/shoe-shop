@@ -4,7 +4,6 @@ import Image from 'next/image';
 export default function PageLoading() {
   return (
     <Box
-      component="div"
       sx={{
         position: 'absolute',
         top: '0',

@@ -26,6 +26,20 @@ export type TImage = {
   };
 };
 
+export type TMyImage = {
+  id: number;
+  attributes: {
+    url: string;
+    previewUrl: string;
+    width: number;
+    height: number;
+    provider_metadata: {
+      public_id: string;
+      resource_type: string;
+    };
+  };
+};
+
 export type ProductAttributes = {
   categories?: RequestData<Data<BaseWithName>[]>;
   sizes?: RequestData<Data<BaseWithValue>[]>;

@@ -6,7 +6,6 @@ import React from 'react';
 const UserAvatarSkeleton = () => {
   return (
     <Box
-      component="div"
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -15,7 +14,6 @@ const UserAvatarSkeleton = () => {
     >
       <Skeleton variant="circular" width={64} height={64} />
       <Box
-        component="div"
         sx={{
           display: 'flex',
           flexDirection: 'column',

@@ -41,8 +41,9 @@ import axiosInstance from '@/tools/axios';
  *
  * signIn({ identifier: 'user@example.com', password: 'password123' });
  */
-const useSignIn = () => {
+export const useSignIn = () => {
   const router = useRouter();
+
   return useMutation<ILogInResponse, IReactQueryError, ILogInRequest>({
     mutationFn: async (credentials: ILogInRequest) => {
       return axiosInstance.post(
@@ -66,5 +67,3 @@ const useSignIn = () => {
     },
   });
 };
-
-export default useSignIn;

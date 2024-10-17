@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { enqueueSnackbar } from 'notistack';
 
-import ControlledInput from '@/components/common/ControlledInput';
+import ControlledInput from '@/components/controlled/ControlledInput';
 import {
   IForgotPasswordReq,
   IForgotPasswordRes,

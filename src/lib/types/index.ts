@@ -5,7 +5,9 @@ export * from './image.type';
 
 export * from './requests/user.type';
 export * from './requests/image.type';
+export * from './requests/product.type';
 
 export * from './responses/user.type';
 export * from './responses/image.type';
+export * from './responses/product.type';
 export * from './responses/error.type';
