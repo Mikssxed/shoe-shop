@@ -20,7 +20,7 @@ type Props = {
 };
 
 function LastViewedProducts({ isFullWidth }: Props) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const productIds = getStoredProductIds('lastViewed', session?.user?.id);
   const { data: products, isLoading } = useStored('lastViewed', productIds, 4);
 
@@ -45,22 +45,24 @@ function LastViewedProducts({ isFullWidth }: Props) {
           <Typography variant="h1" sx={{ m: 0 }}>
             Last viewed products
           </Typography>
-          <MUILink
-            component={Link}
-            href={'/profile/recently-viewed'}
-            sx={{
-              flexShrink: 0,
-              fontSize: { xs: '1rem', sm: '1.25rem' },
-              lineHeight: '35px',
-              mb: { xs: '-3px', md: 0 },
-              color: stylingConstants.palette.text.primary,
-              textDecorationColor: stylingConstants.palette.text.primary,
-              position: 'relative',
-              zIndex: 2,
-            }}
-          >
-            See All
-          </MUILink>
+          {status === 'authenticated' && (
+            <MUILink
+              component={Link}
+              href={'/profile/recently-viewed'}
+              sx={{
+                flexShrink: 0,
+                fontSize: { xs: '1rem', sm: '1.25rem' },
+                lineHeight: '35px',
+                mb: { xs: '-3px', md: 0 },
+                color: stylingConstants.palette.text.primary,
+                textDecorationColor: stylingConstants.palette.text.primary,
+                position: 'relative',
+                zIndex: 2,
+              }}
+            >
+              See All
+            </MUILink>
+          )}
         </Box>
       )}
 

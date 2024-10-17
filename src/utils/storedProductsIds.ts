@@ -1,5 +1,7 @@
+import { ICartItem } from '@/lib/types';
+
 export function getStoredProductIds(
-  storeName: 'lastViewed' | 'wishlisted',
+  storeName: 'lastViewed' | 'wishlisted' | 'cart',
   userId?: string,
 ): string[] {
   if (globalThis.window === undefined) {
@@ -7,10 +9,19 @@ export function getStoredProductIds(
   }
 
   const storageKey = userId ? `${storeName}_${userId}` : storeName;
+  const storedData = localStorage.getItem(storageKey);
+  let storedIds: string[] = [];
 
-  const storedIds = localStorage.getItem(storageKey);
+  if (storeName === 'cart') {
+    const cartProducts: ICartItem[] = JSON.parse(
+      localStorage.getItem(storageKey) || '[]',
+    );
+    storedIds = cartProducts.map(product => product.id.toString());
+  } else {
+    storedIds = storedData ? JSON.parse(storedData) : [];
+  }
 
-  return storedIds ? JSON.parse(storedIds) : [];
+  return storedIds;
 }
 
 export function addLastViewedProductId(

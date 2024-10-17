@@ -12,7 +12,7 @@ import BaseButton from '@/components/ui/BaseButton';
 import BagItemsSkeleton from '@/components/ui/loading-skeletons/BagItemsSkeleton';
 import SummarySectionSkeleton from '@/components/ui/loading-skeletons/SummarySectionSkeleton';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
-import { useQueryCartItems, validateCartItems } from '@/tools';
+import { useQueryCartItems, validateStoredItems } from '@/tools';
 import { useIsMobile } from '@/hooks';
 
 const Bag = () => {
@@ -22,7 +22,7 @@ const Bag = () => {
 
   useEffect(() => {
     if (cart.length > 0) {
-      validateCartItems(session?.user?.id).then(isProductRemoved => {
+      validateStoredItems('cart', session?.user?.id).then(isProductRemoved => {
         if (isProductRemoved) {
           enqueueSnackbar(
             'Some products have been removed from the cart because they are no longer available.',

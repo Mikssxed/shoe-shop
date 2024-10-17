@@ -52,16 +52,23 @@ export default function ActionButtons({
   };
 
   const addToWishlist = () => {
-    toggleWishlistedProductId(id, session?.user?.id);
-    setWishlisted(prevWishlisted => !prevWishlisted);
-    if (wishlisted) {
-      enqueueSnackbar('Successfully removed from wishlist', {
-        variant: 'success',
-        autoHideDuration: 2000,
-      });
+    if (sessionStatus === 'authenticated') {
+      toggleWishlistedProductId(id, session?.user?.id);
+      setWishlisted(prevWishlisted => !prevWishlisted);
+      if (wishlisted) {
+        enqueueSnackbar('Successfully removed from wishlist', {
+          variant: 'success',
+          autoHideDuration: 2000,
+        });
+      } else {
+        enqueueSnackbar('Successfully added to wishlist', {
+          variant: 'success',
+          autoHideDuration: 2000,
+        });
+      }
     } else {
-      enqueueSnackbar('Successfully added to wishlist', {
-        variant: 'success',
+      enqueueSnackbar('You must be logged in to add product to wishlist', {
+        variant: 'error',
         autoHideDuration: 2000,
       });
     }

@@ -14,7 +14,7 @@ import {
   deleteAvatar,
   deleteProduct,
   queryClient,
-  removeProductFromCartOnDelete,
+  removeProductFromStoresOnDelete,
   updateProfile,
   uploadImage,
 } from '@/tools';
@@ -176,7 +176,7 @@ export const useDeleteProduct = (name: string, id: number, userId?: string) => {
   return useMutation({
     mutationFn: deleteProduct,
     onSuccess: () => {
-      removeProductFromCartOnDelete(id, userId);
+      removeProductFromStoresOnDelete(id, userId);
       queryClient.invalidateQueries({ queryKey: ['products'] });
       queryClient.invalidateQueries({ queryKey: [storageKey] });
       enqueueSnackbar(`Product "${name}" has been deleted.`, {

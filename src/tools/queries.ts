@@ -11,7 +11,7 @@ import {
   getProductsNames,
   getStored,
 } from './api';
-import { getCartProductsIds } from '@/utils/productsOnCart';
+import { getStoredProductIds } from '@/utils';
 
 /**
  * Custom hook to fetch paginated products using infinite scrolling.
@@ -332,33 +332,64 @@ export const changeSelectedSize = (
 };
 
 /**
- * Function to update cart when user deletes a product that exist on cart.
+ * Function to update cart, wishlis and recently viewed products when user deletes a product that exist in these stores.
  *
  * @param {number} id - The ID of the product in the cart that no longer exist in the database.
+ * @param {'lastViewed' | 'wishlisted' | 'cart'} storeName - Name of the store that will be updated
  * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
- * @returns {void} Updates the cart state in the query client.
+ * @returns {void} Updates the store state in the query client and localStorage.
  */
-// TODO: Apply the same functionality to last viewed and wishlisted products after their pages(branch) merged.
-export const removeProductFromCartOnDelete = (id: number, userId?: string) => {
-  const storageKey = userId ? `cart_${userId}` : 'cart';
+export const removeProductFromStore = (
+  id: number,
+  storeName: 'lastViewed' | 'wishlisted' | 'cart',
+  userId?: string,
+) => {
+  const storageKey = userId ? `${storeName}_${userId}` : storeName;
 
-  queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
-    const updatedCart = cartItems.filter(product => product.id !== id);
-    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
-    return updatedCart;
-  });
+  if (storeName === 'cart') {
+    queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
+      const updatedCart = cartItems.filter(product => product.id !== id);
+      localStorage.setItem(storageKey, JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  } else {
+    const storedIds = getStoredProductIds(storeName, userId);
+    const updatedStoredIds = storedIds.filter(
+      productId => productId !== id.toString(),
+    );
+    localStorage.setItem(storageKey, JSON.stringify(updatedStoredIds));
+  }
 };
 
 /**
- * Validate products in the cart by checking their existence in the backend.
+ * Invoke of removeProductFromStore function for all stores.
  *
+ * @param {number} id - The ID of the product in the cart that no longer exist in the database.
+ * @param {string | undefined} userId - The ID of the current user, or undefined if not authenticated.
+ * @returns {void} Updates the store state in the query client and localStorage.
+ */
+export const removeProductFromStoresOnDelete = (
+  id: number,
+  userId?: string,
+) => {
+  removeProductFromStore(id, 'lastViewed', userId);
+  removeProductFromStore(id, 'wishlisted', userId);
+  removeProductFromStore(id, 'cart', userId);
+};
+
+/**
+ * Validate products in the cart, wishlist and recently-viewed by checking their existence in the backend.
+ *
+ * @param {'lastViewed' | 'wishlisted' | 'cart'} storeName - Name of the store that will be validated
  * @param {string} userId - The ID of the current user, or undefined if not authenticated.
  * @returns {booleann} - Returns boolean to let the related component know whether there is any change in the array.
  */
-// TODO: do the same validation for last viewed and wishlisted products after their pages(branch) merged.
-export const validateCartItems = async (userId?: string) => {
-  const storageKey = userId ? `cart_${userId}` : 'cart';
-  const productIds = getCartProductsIds(userId);
+export const validateStoredItems = async (
+  storeName: 'lastViewed' | 'wishlisted' | 'cart',
+  userId?: string,
+) => {
+  const storageKey = userId ? `${storeName}_${userId}` : storeName;
+  const productIds = getStoredProductIds(storeName, userId);
 
   const validatedCart = await Promise.allSettled(
     productIds.map(id => getProduct(id)),
@@ -372,13 +403,20 @@ export const validateCartItems = async (userId?: string) => {
     response => response.status === 'rejected',
   );
 
-  queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
-    const updatedCart = cartItems.filter(product =>
-      validCartItems.includes(product.id),
+  if (storeName === 'cart') {
+    queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
+      const updatedCart = cartItems.filter(product =>
+        validCartItems.includes(product.id),
+      );
+      localStorage.setItem(storageKey, JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  } else {
+    const updatedStoredIds = productIds.filter(productId =>
+      validCartItems.includes(Number(productId)),
     );
-    localStorage.setItem(storageKey, JSON.stringify(updatedCart));
-    return updatedCart;
-  });
+    localStorage.setItem(storageKey, JSON.stringify(updatedStoredIds));
+  }
 
   return invalidProductIds.length > 0;
 };

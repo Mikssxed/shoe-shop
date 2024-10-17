@@ -1,15 +1,37 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 import StoredProducts from '@/components/common/StoredProducts';
-import { useStored } from '@/tools';
+import { useStored, validateStoredItems } from '@/tools';
 import { getStoredProductIds } from '@/utils';
+import { enqueueSnackbar } from 'notistack';
 
 export default function RecentlyViewed() {
   const { data: session } = useSession();
   const productIds = getStoredProductIds('lastViewed', session?.user?.id);
   const { data: products, isLoading } = useStored('lastViewed', productIds);
+
+  useEffect(() => {
+    if (products && products?.length > 0) {
+      validateStoredItems('lastViewed', session?.user?.id).then(
+        isProductRemoved => {
+          if (isProductRemoved) {
+            enqueueSnackbar(
+              'Some products have been removed from the history because they are no longer available.',
+              {
+                variant: 'default',
+                autoHideDuration: 5000,
+                preventDuplicate: true,
+              },
+            );
+          }
+        },
+      );
+    }
+  }, [products]);
+
   return (
     <StoredProducts
       products={products}
