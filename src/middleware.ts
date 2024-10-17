@@ -23,9 +23,8 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/profile/add-product',
-    '/profile/my-products',
-    '/profile/settings',
+    '/profile/:path*',
+    '/bag/thank-you/:path*',
     '/auth/:path*',
     '/',
     '/bag/checkout',
