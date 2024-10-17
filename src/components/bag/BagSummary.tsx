@@ -4,9 +4,10 @@ import OrderForm from '@/components/forms/OrderForm';
 
 type Props = {
   onClick?: () => Promise<void>;
+  submitText?: string;
 };
 
-const BagSummary = ({ onClick }: Props) => {
+const BagSummary = ({ onClick, submitText }: Props) => {
   return (
     <Box
       sx={{
@@ -27,7 +28,7 @@ const BagSummary = ({ onClick }: Props) => {
         Summary
       </Typography>
 
-      <OrderForm onClick={onClick} />
+      <OrderForm submitText={submitText} onClick={onClick} />
     </Box>
   );
 };

@@ -1,11 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Divider, Typography } from '@mui/material';
-import { TickCircle } from 'iconsax-react';
+import { Box, Button, Divider } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,29 +11,29 @@ import { z } from 'zod';
 
 import BagPricingList from '@/components/bag/BagPricingList';
 import ControlledInput from '@/components/common/ControlledInput';
-import Modal from '@/components/ui/Modal';
 import { useIsMobile } from '@/hooks';
-import { stylingConstants } from '@/lib/constants/themeConstants';
 import { OrderValidation } from '@/lib/validation';
 import { orderFormStyles as styles } from '@/styles/forms/orderForm.style';
-import { clearCartQuery, useQueryCartItems } from '@/tools';
+import { useQueryCartItems } from '@/tools';
+import { formatAmount } from '@/utils';
 import { useRouter } from 'next/navigation';
 import BaseButton from '../ui/BaseButton';
 
-type Props = { onClick?: () => void };
+type Props = { onClick?: () => void; submitText?: string };
 
 const defaultValues = {
   promocode: '',
 };
 
-const OrderForm = ({ onClick }: Props) => {
+const OrderForm = ({ onClick, submitText }: Props) => {
   const { data: session } = useSession();
   const { data: cart = [] } = useQueryCartItems(session?.user?.id);
   const [subtotal, setSubtotal] = useState<number>(0);
   const [showPromoInput, setShowPromoInput] = useState(false);
-  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const router = useRouter();
   const isMobile = useIsMobile();
+
+  const shippingCost = 20;
 
   const { handleSubmit, control } = useForm<z.infer<typeof OrderValidation>>({
     resolver: zodResolver(OrderValidation),
@@ -44,6 +42,9 @@ const OrderForm = ({ onClick }: Props) => {
 
   const onSubmit = () => {
     try {
+      if (subtotal >= 999999.99) {
+        throw Error('Order total exceeds the maximum amount allowed!');
+      }
       if (onClick) {
         onClick();
         return;
@@ -63,7 +64,9 @@ const OrderForm = ({ onClick }: Props) => {
 
   useEffect(() => {
     setSubtotal(
-      cart.reduce((total: number, item) => total + item.price * item.amount, 0),
+      +cart
+        .reduce((total: number, item) => total + item.price * item.amount, 0)
+        .toFixed(2),
     );
   }, [cart]);
 
@@ -94,66 +97,41 @@ const OrderForm = ({ onClick }: Props) => {
         )}
 
         <Box sx={styles.bagPricingList}>
-          <BagPricingList name="Subtotal" value={subtotal} />
-          <BagPricingList name="Shipping" value={subtotal ? 20 : 0} />
+          <BagPricingList name="Subtotal" value={formatAmount(subtotal)} />
+          <BagPricingList name="Shipping" value={subtotal ? shippingCost : 0} />
           <BagPricingList name="Tax" value={0} />
         </Box>
 
         <Divider sx={styles.dividerBeforeTotal} />
         <BagPricingList
           name="Total"
-          value={subtotal ? subtotal + 20 : 0}
+          value={subtotal ? formatAmount(subtotal + shippingCost) : 0}
           bold
         />
         <Divider sx={styles.dividerAfterTotal} />
         {!isMobile && (
           <BaseButton
+            disabled={submitText === 'Processing...'}
             dataTestId="order__checkout-button-desktop"
             type="submit"
             sx={styles.md_checkoutBtn}
           >
-            Checkout
+            {submitText || 'Checkout'}
           </BaseButton>
         )}
       </Box>
       {isMobile && (
         <Box sx={styles.xs_checkoutContainer}>
           <BaseButton
+            disabled={submitText === 'Processing...'}
             dataTestId="order__checkout-button-mobile"
             sx={styles.xs_checkoutBtn}
             onClick={() => (onClick ? onClick() : handleSubmit(onSubmit))}
           >
-            Checkout
+            {submitText || 'Checkout'}
           </BaseButton>
         </Box>
       )}
-      <Modal
-        open={showCheckoutModal}
-        onClose={() => console.log('checked out')}
-        paperStyle={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '32px',
-        }}
-      >
-        <Typography variant="h2">Successful purchase!</Typography>
-        <TickCircle
-          size={128}
-          variant="Bold"
-          color={stylingConstants.palette.primary.main}
-        />
-        <Typography variant="body1" sx={{ textAlign: 'center' }}>
-          You have successfully purchased the products.
-          <br />
-          Delivery time: {Math.floor(Math.random() * 8 + 2)} days.
-        </Typography>
-        <Link href="/products">
-          <BaseButton onClick={() => clearCartQuery(session?.user?.id)}>
-            Back to home page
-          </BaseButton>
-        </Link>
-      </Modal>
     </>
   );
 };

@@ -1,10 +1,11 @@
+'use client';
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
+import BaseButton from '@/components/ui/BaseButton';
 import { ThankYouPageProps } from '@/lib/types';
 import styles from '@/styles/bag/thank-you/thank-you.style';
-import BaseButton from '@/components/ui/BaseButton';
-import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 
 const ThankYouPage = ({ params }: ThankYouPageProps) => {
   const { orderId } = params;
