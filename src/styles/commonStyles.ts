@@ -50,11 +50,14 @@ export const buttonStyles = {
     },
   },
   symbolBtn: {
-    minWidth: { xs: '15px', md: '26px', xl: '32px' },
-    minHeight: { xs: '15px', md: '26px', xl: '32px' },
-    borderRadius: '100%',
+    width: { xs: '20px', md: '32px' },
+    height: { xs: '20px', md: '32px' },
+    minWidth: { xs: '20px', md: '32px' },
+    minHeight: { xs: '20px', md: '32px' },
+    borderRadius: '50%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    flexShrink: 0,
   },
 };

@@ -38,8 +38,8 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
             <Image
               src="/icons/minus-2.svg"
               alt="minus"
-              width={12}
-              height={12}
+              width={10}
+              height={10}
             />
           </SymbolButton>
           <Typography

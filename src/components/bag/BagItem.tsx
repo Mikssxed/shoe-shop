@@ -59,7 +59,13 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
         </Link>
       </Box>
       <Box sx={styles.about}>
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: { xs: '2px', sm: '8px' },
+          }}
+        >
           <Box sx={{ flex: '1' }}>
             <Link
               data-testid="bag-item__link"
@@ -91,7 +97,12 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
               In Stock
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-              <Typography variant="h4">size:</Typography>
+              <Typography
+                variant="h4"
+                sx={{ fontSize: { xs: '12px', sm: '15px', md: '20px' } }}
+              >
+                size:
+              </Typography>
               <Select
                 value={item.selectedSize}
                 onChange={handleChange}

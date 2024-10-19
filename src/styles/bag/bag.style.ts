@@ -18,6 +18,7 @@ export const bagPageStyles = {
     flexDirection: { xs: 'column', md: 'row' },
     gap: '40px',
     justifyContent: 'space-between',
+    px: { xs: '8px', sm: '20px' },
   },
   container: {
     display: 'flex',
@@ -75,7 +76,7 @@ export const bagItemStyles = {
   root: {
     display: 'flex',
     flexDirection: 'row',
-    gap: { xs: '15px', md: '30px', xl: '46px' },
+    gap: { xs: '5px', md: '30px', xl: '46px' },
   },
   picture: {
     height: { xs: '100px', md: '156px', xl: '214px' },
@@ -97,7 +98,7 @@ export const bagItemStyles = {
   },
   name: {
     color: stylingConstants.palette.text.primary,
-    maxWidth: { xs: '140px', sm: '330px', md: '450px' },
+    maxWidth: { xs: 'calc(100vw - 190px)', sm: '330px', md: '450px' },
     ...textOverflowEllipsis.singleLine,
   },
   gender: { mt: '4px' },
@@ -140,13 +141,14 @@ export const bagItemStyles = {
   },
   selectSize: {
     border: `1px solid ${stylingConstants.palette.grey[500]}`,
-    ml: { xs: 1, md: 2 },
+    ml: { xs: '4px', md: 2 },
     [`& div[role="combobox"]`]: {
       fontSize: { xs: 12, md: 16 },
       lineHeight: { xs: '13px' },
       p: 1,
     },
     height: 25,
+    width: 80,
   },
   selectSize_menuItem: {
     minHeight: 'min-content',
