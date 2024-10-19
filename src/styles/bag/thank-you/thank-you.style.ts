@@ -18,13 +18,16 @@ export default {
   },
   orderInfoBox: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: { xs: 'center', md: 'start' },
     justifyContent: { xs: 'center', md: 'start' },
     gap: '12px',
 
     '& p': {
       fontSize: { xs: 18, md: 24, lg: 32, xl: 48 },
       lineHeight: { xs: '22px', md: '28px', lg: '38px', xl: '56.3px' },
+      wordBreak: 'break-word',
+      overflowWrap: 'break-word',
     },
   },
   forYourOrder: {
