@@ -12,6 +12,7 @@ export default function CheckoutFormSkeleton() {
   return (
     <>
       <Container
+        data-testid="checkout-form-skeleton"
         component={'main'}
         maxWidth="xl"
         sx={{ ...styles.main, pt: 0, flexDirection: 'column' }}

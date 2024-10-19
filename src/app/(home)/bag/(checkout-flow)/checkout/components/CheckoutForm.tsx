@@ -43,8 +43,7 @@ export default function CheckoutForm({ id }: Props) {
   const isMobile = useIsMobile();
   const { data: session } = useSession();
   const router = useRouter();
-
-  const { handleSubmit, control, setValue } = useForm({
+  const { handleSubmit, control, setValue, watch } = useForm({
     resolver: zodResolver(CheckoutFormValidation),
     defaultValues,
   });
@@ -67,7 +66,6 @@ export default function CheckoutForm({ id }: Props) {
       if (!stripe || !elements) {
         return;
       }
-
       setIsLoading(true);
       const { error } = await stripe.confirmPayment({
         elements,
@@ -104,6 +102,7 @@ export default function CheckoutForm({ id }: Props) {
   return (
     <>
       <Container
+        data-testid="checkout-form"
         component={'main'}
         maxWidth="xl"
         sx={{ ...styles.main, pt: 0, flexDirection: 'column' }}
