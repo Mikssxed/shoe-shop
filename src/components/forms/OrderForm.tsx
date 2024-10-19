@@ -126,7 +126,7 @@ const OrderForm = ({ onClick, submitText }: Props) => {
             disabled={submitText === 'Processing...'}
             dataTestId="order__checkout-button-mobile"
             sx={styles.xs_checkoutBtn}
-            onClick={() => (onClick ? onClick() : handleSubmit(onSubmit))}
+            onClick={handleSubmit(onSubmit)}
           >
             {submitText || 'Checkout'}
           </BaseButton>
