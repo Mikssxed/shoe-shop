@@ -55,7 +55,7 @@ const Input = ({
           width: '100%',
           maxWidth: '436px',
           borderRadius: '8px',
-          p: '12px 16px',
+          p: { xs: '8px 16px', md: '12px 16px' },
           mt: '8px',
           border: !!errorMessage
             ? `1px solid ${theme.palette.error.main}`

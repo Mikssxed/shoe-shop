@@ -1,7 +1,7 @@
 'use client';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, InputLabel, MenuItem, Select, useTheme } from '@mui/material';
 import { SelectProps } from '@mui/material/Select/Select';
 import { useId } from 'react';
 
@@ -24,6 +24,8 @@ const Dropdown = ({
   ...props
 }: DropdownProps) => {
   const id = useId();
+  const theme = useTheme();
+
   return (
     <Box sx={{ width: '100%', maxWidth: '436px' }}>
       {labelText && (
@@ -45,6 +47,13 @@ const Dropdown = ({
               : stylingConstants.palette.grey[700]
           }`,
           my: '3px',
+          '.MuiOutlinedInput-notchedOutline': { border: 0 },
+          '& .MuiInputBase-input': {
+            [theme.breakpoints.down('md')]: {
+              fontSize: '10px',
+            },
+            py: { xs: '8.5px', md: '13.5px' },
+          },
         }}
         MenuProps={{ sx: { maxHeight: 400 }, disableScrollLock: true }}
         IconComponent={ExpandMoreIcon}

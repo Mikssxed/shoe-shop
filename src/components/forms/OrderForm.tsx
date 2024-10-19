@@ -43,7 +43,7 @@ const OrderForm = ({ onClick, submitText }: Props) => {
   const onSubmit = () => {
     try {
       if (subtotal >= 999999.99) {
-        throw Error('Order total exceeds the maximum amount allowed!');
+        throw Error('Order total cannot exceed 999,999.99!');
       }
       if (onClick) {
         onClick();

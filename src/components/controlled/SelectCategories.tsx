@@ -1,6 +1,12 @@
 'use client';
 
-import { Autocomplete, Chip, InputLabel, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Chip,
+  InputLabel,
+  TextField,
+  useTheme,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Controller } from 'react-hook-form';
 
@@ -16,6 +22,8 @@ const SelectCategories = ({
   label,
   required = true,
 }: ICategoriesSelectProps) => {
+  const theme = useTheme();
+
   return (
     <>
       {label && (
@@ -43,6 +51,14 @@ const SelectCategories = ({
                       label={option.attributes.name}
                       {...getTagProps({ index })}
                       key={option.id}
+                      sx={{
+                        height: { xs: '28px', md: '32px' },
+                        '& .MuiChip-label': {
+                          [theme.breakpoints.down('md')]: {
+                            fontSize: '10px',
+                          },
+                        },
+                      }}
                     />
                   ))
                 }
@@ -58,16 +74,22 @@ const SelectCategories = ({
                   maxWidth: '436px',
                   borderRadius: '8px',
                   my: '3px',
+                  '.MuiOutlinedInput-notchedOutline': { border: 0 },
                   border: !!error
                     ? `1px solid ${stylingConstants.palette.error.main}`
                     : `1px solid ${stylingConstants.palette.grey[700]}`,
                   '& .MuiOutlinedInput-root': {
+                    height: { xs: '34px', md: '48px' },
+                    py: 0,
                     '&:hover fieldset': {
                       border: 'none',
                     },
                     '&.Mui-focused fieldset': {
                       border: 'none',
                     },
+                  },
+                  '& .MuiAutocomplete-hasClearIcon': {
+                    py: { xs: '6.5px', md: '5px' },
                   },
                 }}
               />

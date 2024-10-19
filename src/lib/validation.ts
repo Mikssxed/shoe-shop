@@ -96,7 +96,10 @@ export const avatarValidation = z.object({
 });
 
 export const AddProductFormSchema = z.object({
-  price: z.coerce.number().positive('Price must be positive'),
+  price: z.coerce
+    .number()
+    .positive('Price must be positive')
+    .max(999999.99, 'Price must be lower than 1,000,000.00'),
   gender: z.number().positive('Gender is required'),
   brand: z.number().positive('Brand is required'),
   color: z.number().positive('Color is required'),
