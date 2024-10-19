@@ -123,7 +123,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
         <Typography
           sx={{
             ...textOverflowEllipsis.singleLine,
-            maxWidth: { xs: '140px', md: '200px' },
+            maxWidth: { xs: '140px', md: '190px' },
             color: stylingConstants.palette.text.primary,
           }}
           title={fullName}
@@ -171,7 +171,7 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
           <>
             <Box
               sx={{
-                pl: '40px',
+                pl: { xs: '20px', md: '40px' },
                 pt: '37.6px',
                 pb: '32px',
               }}

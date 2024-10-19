@@ -43,6 +43,8 @@ const BaseModal = ({
           p: 0,
           fontSize: { xs: '30px', md: '45px' },
           lineHeight: { xs: '35px', md: '53px' },
+          wordBreak: 'break-word',
+          whiteSpace: 'normal',
         }}
       >
         {header}

@@ -13,7 +13,7 @@ export const productIdStyles: Record<string, SxProps> = {
     display: 'flex',
     flexDirection: { xs: 'column', lg: 'row' },
     gap: { xs: '40px', lg: '100px' },
-    mt: '100px',
+    mt: { xs: '50px', sm: '100px' },
     pb: '100px',
   },
   noImageBox: {
