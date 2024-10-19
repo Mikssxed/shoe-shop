@@ -1,12 +1,19 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
+import { useChat } from 'ai/react';
 
 import styles from '@/styles/forms/productForm.style';
 import {
@@ -17,11 +24,13 @@ import {
   SelectCategories,
   SelectSizes,
 } from '@/components/controlled';
-import BaseButton from '@/components/ui/BaseButton';
 import { queryClient, useFilters } from '@/tools';
 import { AddProductFormSchema, AddProductFormData } from '@/lib/validation';
 import { IProductInfoFormProps, IImage } from '@/lib/types';
 import { useEditProduct, useCreateProduct } from '@/hooks';
+import { AiSuggessionButton, BaseButton } from '@/components/ui';
+import { getAiPromptForDescriptionByTitle } from '@/utils/ai-prompts';
+import { DESCRIPTION_LIMIT } from '@/lib/constants';
 
 const defaultValues = {
   gender: 0,
@@ -63,11 +72,38 @@ const ProductForm = ({
     IImage[]
   >({ queryKey: imagesQueryKey });
 
-  const { handleSubmit, setValue, resetField, reset, control } =
-    useForm<AddProductFormData>({
-      resolver: zodResolver(AddProductFormSchema),
-      defaultValues,
-    });
+  const {
+    handleSubmit,
+    setValue,
+    reset,
+    resetField,
+    getValues,
+    control,
+    watch,
+    clearErrors,
+  } = useForm<AddProductFormData>({
+    resolver: zodResolver(AddProductFormSchema),
+    defaultValues,
+  });
+  const watchName = watch('name');
+
+  const {
+    messages,
+    handleInputChange: onChangeNameForChat,
+    handleSubmit: onSubmitChat,
+    isLoading: isLoadingChat,
+  } = useChat();
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  const onClickAiSuggest = () => {
+    clearErrors('description');
+
+    onSubmitChat();
+
+    const { name } = getValues();
+    setValue('name', name + '   ');
+    setTimeout(() => setValue('name', name), 0);
+  };
 
   const setProductValues = () => {
     if (!filtersData || !product) return;
@@ -113,6 +149,14 @@ const ProductForm = ({
     }
   };
 
+  useEffect(() => {
+    const value = getAiPromptForDescriptionByTitle(watchName);
+
+    onChangeNameForChat({
+      target: { value },
+    } as ChangeEvent<HTMLInputElement>);
+  }, [watchName]);
+
   const onSubmit: SubmitHandler<AddProductFormData> = data => {
     if (formStatus !== 'normal') return;
     setFormStatus('pending');
@@ -150,13 +194,21 @@ const ProductForm = ({
   };
 
   useEffect(() => {
-    setProductValues();
-  }, [openEditModal]);
+    if (messages?.length) {
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage?.content && lastMessage?.role !== 'user') {
+        setValue(
+          'description',
+          lastMessage.content.slice(0, DESCRIPTION_LIMIT),
+        );
+      }
+    }
+  }, [messages, setValue]);
+
+  useEffect(setProductValues, [openEditModal]);
 
   useEffect(() => {
-    if (userData) {
-      setValue('userID', userData.user.id);
-    }
+    if (userData) setValue('userID', userData.user.id);
   }, [userData, setValue]);
 
   useEffect(() => {
@@ -207,6 +259,8 @@ const ProductForm = ({
     isPendingImages ||
     editProductMutation.isPending;
 
+  const isAiSuggestionDisabled = isLoadingChat || !watchName.trim();
+
   return (
     <>
       <Box
@@ -230,6 +284,7 @@ const ProductForm = ({
               label="Product name"
               required
               placeholder="Nike Air Max 90"
+              ref={nameInputRef}
             />
             <ControlledInput
               name="price"
@@ -269,13 +324,20 @@ const ProductForm = ({
                 required
               />
             </Box>
-            <Box>
+            <Box position="relative">
               <ControlledTextArea
                 name="description"
                 control={control}
                 label="Description"
                 placeholder="Do not exceed 300 characters."
-              />
+                disabled={isLoadingChat}
+              >
+                <AiSuggessionButton
+                  onClick={onClickAiSuggest}
+                  isLoading={isLoadingChat}
+                  disabled={isAiSuggestionDisabled}
+                />
+              </ControlledTextArea>
             </Box>
             <Box sx={styles.inputContainer}>
               <SelectSizes

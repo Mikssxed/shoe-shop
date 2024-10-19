@@ -14,7 +14,7 @@ export const stylingConstants = {
     fontWeightBold: 600,
   },
   palette: {
-    primary: { main: '#fe645e' },
+    primary: { main: '#fe645e', secondary: '#F7635E1A' },
     error: { main: '#fe645e' },
     text: {
       primary: '#000',

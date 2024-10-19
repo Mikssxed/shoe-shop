@@ -1,17 +1,27 @@
 import { Control, Controller } from 'react-hook-form';
+import { ReactElement } from 'react';
 
 import { TextArea } from '@/components/ui';
 import { stylingConstants } from '@/lib/constants/themeConstants';
-import ErrorMessage from '../ui/ErrorMessage';
+import ErrorMessage from '@/components/ui/ErrorMessage';
 
 type Props = {
   name: string;
   control: Control<any>;
   label: string;
   placeholder?: string;
+  disabled?: boolean;
+  children: ReactElement<any, any>;
 };
 
-const ControlledTextArea = ({ name, control, label, placeholder }: Props) => {
+const ControlledTextArea = ({
+  name,
+  control,
+  label,
+  placeholder,
+  disabled = false,
+  children,
+}: Props) => {
   return (
     <Controller
       name={name}
@@ -31,7 +41,10 @@ const ControlledTextArea = ({ name, control, label, placeholder }: Props) => {
             value={value}
             onChange={onChange}
             required
-          />
+            disabled={disabled}
+          >
+            {children}
+          </TextArea>
           {error && (
             <ErrorMessage
               label="product-description"

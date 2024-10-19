@@ -74,6 +74,7 @@ export interface IFileWithPreview extends File {
 export interface IImageWithSkeletonProps {
   src: string;
   alt?: string;
+  style?: any; //TODO replace any
 }
 
 export interface EmptyProductListProps {

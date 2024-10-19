@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import { ComponentProps } from 'react';
+import { ComponentProps, RefObject } from 'react';
 import { Controller } from 'react-hook-form';
 import { Box, SxProps, Theme } from '@mui/material';
 
@@ -16,6 +16,7 @@ interface IControlledInputProps {
   inputStyle?: SxProps<Theme>;
   type?: 'password' | 'number';
   containerProps?: ComponentProps<typeof Box>;
+  ref?: RefObject<HTMLInputElement>;
 }
 
 const ControlledInput = ({
@@ -28,6 +29,7 @@ const ControlledInput = ({
   inputStyle,
   type,
   containerProps,
+  ref,
 }: IControlledInputProps) => {
   return (
     <Controller
@@ -44,6 +46,7 @@ const ControlledInput = ({
               placeholder,
               type,
               'data-testid': `${label}-input`,
+              ref,
             }}
             errorMessage={error ? error?.message : undefined}
             inputStyle={inputStyle}

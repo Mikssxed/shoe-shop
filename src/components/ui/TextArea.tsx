@@ -9,13 +9,14 @@ import {
 } from '@mui/material';
 import { InputBaseProps } from '@mui/material/InputBase/InputBase';
 import Image from 'next/image';
-import { useId } from 'react';
+import { ReactElement, useId } from 'react';
 
 type TextareaProps = InputBaseProps & {
   labelText: string;
   name: string;
   errorMessage?: string;
   required?: boolean;
+  children: ReactElement<any, any>;
 };
 
 const Textarea = ({
@@ -23,6 +24,7 @@ const Textarea = ({
   name,
   errorMessage,
   required,
+  children,
   ...props
 }: TextareaProps) => {
   const id = useId();
@@ -62,6 +64,7 @@ const Textarea = ({
         inputProps={{ style: { overflowX: 'hidden' } }}
         {...props}
         error={!!errorMessage}
+        endAdornment={children}
       />
       {errorMessage && (
         <Box
