@@ -1,6 +1,6 @@
 'use client';
 
-import { Grid } from '@mui/material';
+import { Grid, LinearProgress } from '@mui/material';
 import { User } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
@@ -9,9 +9,9 @@ import { useIsMobile } from '@/hooks';
 import { ProductsResponse } from '@/lib/types';
 import { useProducts } from '@/tools';
 import { buildParams } from '@/utils';
+import EmptyProductList from './EmptyProductList';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
-import EmptyProductList from './EmptyProductList';
 
 type Props = {
   fullWidth?: boolean;
@@ -29,6 +29,7 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
     isLoading,
     hasNextPage,
     fetchNextPage,
+    isFetchingNextPage,
   } = useProducts(initialProducts, buildParams(searchParams), user);
   const bottomElementRef = useRef<HTMLDivElement>(null);
 
@@ -120,6 +121,21 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
             />
           </Grid>
         ))}
+      {isFetchingNextPage && (
+        <Grid
+          item
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          marginBottom={4}
+          marginTop={-2}
+        >
+          <LinearProgress
+            color="primary"
+            sx={{ width: 1, height: 10, borderRadius: 10 }}
+          />
+        </Grid>
+      )}
       <div ref={bottomElementRef} />
     </Grid>
   );
