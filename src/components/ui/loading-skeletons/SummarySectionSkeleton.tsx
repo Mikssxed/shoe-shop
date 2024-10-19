@@ -7,7 +7,7 @@ const SummarySectionSkeleton = () => {
       sx={{
         marginTop: '60px',
         marginBottom: '70px',
-        width: '400px',
+        width: '100%',
       }}
     >
       <Typography variant="h1" component="h2" sx={{ marginBottom: '2' }}>
