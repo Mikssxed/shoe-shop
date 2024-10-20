@@ -32,6 +32,7 @@ export const SignUpFormValidation = z
 export const LogInFormValidation = z.object({
   email: z
     .string()
+    .trim()
     .min(1, 'Email is required')
     .email('Invalid email address (ex. johndoe@gmail.com)'),
   password: z
