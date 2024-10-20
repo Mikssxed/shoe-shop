@@ -20,6 +20,7 @@ import { CheckoutFormValidation } from '@/lib/validation';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
 import { clearCartQuery } from '@/tools';
 import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
 
 type Props = {
   id: string;
@@ -43,7 +44,13 @@ export default function CheckoutForm({ id }: Props) {
   const isMobile = useIsMobile();
   const { data: session } = useSession();
   const router = useRouter();
-  const { handleSubmit, control, setValue, watch } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(CheckoutFormValidation),
     defaultValues,
   });
@@ -52,14 +59,32 @@ export default function CheckoutForm({ id }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (Object.keys(errors).length === 0) {
+      return;
+    }
+    enqueueSnackbar('Validation error. Plese check fields.', {
+      variant: 'error',
+    });
+  }, [errors]);
+
+  useEffect(() => {
     if (!session) {
       return;
     }
-    setValue('name', session.user.name || '');
-    setValue('email', session.user.email);
-    setValue('phone', session.user.phone || '');
-    setValue('surname', session.user.surname || '');
-  }, [session, setValue]);
+    const fields = ['name', 'surname', 'email', 'phone'] as const;
+    const userValues = {
+      name: session.user.name || '',
+      surname: session.user.surname || '',
+      email: session.user.email,
+      phone: session.user.phone || '',
+    };
+
+    fields.forEach(field => {
+      if (!getValues(field)) {
+        setValue(field, userValues[field]);
+      }
+    });
+  }, [session, setValue, getValues]);
 
   const onSubmit = async (data: z.infer<typeof CheckoutFormValidation>) => {
     try {
@@ -93,6 +118,9 @@ export default function CheckoutForm({ id }: Props) {
         throw new Error(error?.message);
       }
     } catch (error: any) {
+      enqueueSnackbar(error?.message || 'An unexpected error occurred.', {
+        variant: 'error',
+      });
       setMessage(error?.message || 'An unexpected error occurred.');
     } finally {
       setIsLoading(false);

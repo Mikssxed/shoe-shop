@@ -30,7 +30,8 @@ export default function Checkout() {
   );
 
   useEffect(() => {
-    if (!cart.length || !total || !session?.user) return;
+    if (!cart.length || !total || !session?.user || clientSecret || orderId)
+      return;
 
     const payload = {
       items: cart,
@@ -49,7 +50,7 @@ export default function Checkout() {
       .catch(error => {
         console.error('Error creating payment intent:', error);
       });
-  }, [cart, total, session?.user]);
+  }, [cart, total, session?.user, clientSecret, orderId]);
 
   const appearance: { theme: 'stripe' | 'night' | 'flat' | undefined } = {
     theme: 'stripe',

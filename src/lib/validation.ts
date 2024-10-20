@@ -129,10 +129,12 @@ export const AddProductFormSchema = z.object({
 export const CheckoutFormValidation = z.object({
   name: z
     .string()
+    .trim()
     .min(1, 'Name is required')
     .max(50, 'Name must be at most 50 characters'),
   surname: z
     .string()
+    .trim()
     .min(1, 'Surname is required')
     .max(50, 'Surname must be at most 50 characters'),
   email: z
@@ -142,15 +144,17 @@ export const CheckoutFormValidation = z.object({
     .email('Invalid email address (ex. johndoe@gmail.com)'),
   phone: z
     .string()
+    .trim()
     .min(1, 'Phone number is required')
     .refine(val => val === '' || /^\+?[1-9]\d{1,14}$/.test(val), {
       message: 'Invalid phone number format (ex. +380997272000)',
     }),
-  country: z.string().min(1, 'Country is required'),
-  city: z.string().min(1, 'City is required'),
-  state: z.string().min(1, 'State is required'),
+  country: z.string().trim().min(1, 'Country is required'),
+  city: z.string().trim().min(1, 'City is required'),
+  state: z.string().trim().min(1, 'State is required'),
   zipCode: z
     .string()
+    .trim()
     .min(5, 'Zip code must be at least 5 digits')
     .regex(
       /^\d{5,10}$/,
@@ -158,6 +162,7 @@ export const CheckoutFormValidation = z.object({
     ),
   address: z
     .string()
+    .trim()
     .min(1, 'Address is required')
     .max(100, 'Address must be at most 100 characters'),
 });
