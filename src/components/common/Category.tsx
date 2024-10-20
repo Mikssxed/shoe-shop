@@ -1,7 +1,5 @@
 'use client';
 
-import { ReactNode } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -11,9 +9,12 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ReactNode, useMemo, useState } from 'react';
 
-import { Option } from './Option';
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import { Option } from './Option';
+import SearchInput from './SearchInput';
 
 type CategoryProps = {
   name: string;
@@ -28,6 +29,7 @@ export const Category = ({ name, children, options }: CategoryProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const [searchBrand, setSearchBrand] = useState('');
 
   const updateFilter = (option: string | number, action: 'add' | 'remove') => {
     const params = new URLSearchParams(searchParams);
@@ -43,6 +45,13 @@ export const Category = ({ name, children, options }: CategoryProps) => {
   const handleRemoveFilter = (option: string | number) => {
     updateFilter(option, 'remove');
   };
+
+  const filteredOptions = useMemo(() => {
+    if (!searchBrand && name !== 'Brand') return options;
+    return options?.filter(({ value }) =>
+      String(value).toLowerCase().includes(searchBrand.toLowerCase()),
+    );
+  }, [searchBrand, options, name]);
 
   return (
     <>
@@ -69,17 +78,22 @@ export const Category = ({ name, children, options }: CategoryProps) => {
           <Typography variant="category">{name}</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ pl: 0 }}>
+          {name === 'Brand' && (
+            <SearchInput value={searchBrand} onChange={setSearchBrand} />
+          )}
           {children}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {options?.map(({ id, value }) => (
-              <Option
-                key={id}
-                value={value}
-                checked={searchParams.has(name.toLowerCase(), String(value))}
-                onAddFilter={() => handleAddFilter(value)}
-                onRemoveFilter={() => handleRemoveFilter(value)}
-              />
-            ))}
+            {(name === 'Brand' ? filteredOptions : options)?.map(
+              ({ id, value }) => (
+                <Option
+                  key={id}
+                  value={value}
+                  checked={searchParams.has(name.toLowerCase(), String(value))}
+                  onAddFilter={() => handleAddFilter(value)}
+                  onRemoveFilter={() => handleRemoveFilter(value)}
+                />
+              ),
+            )}
           </Box>
         </AccordionDetails>
       </Accordion>

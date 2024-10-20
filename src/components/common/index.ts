@@ -1,6 +1,8 @@
+import SizesSelects from '../controlled/SelectSizes';
+import BaseModal from '../modals/BaseModal';
+import LogOutModal from '../modals/LogOutModal';
 import AddProductForm from './AddProductForm';
 import BaseErrorPage from './BaseErrorPage';
-import BaseModal from '../modals/BaseModal';
 import ButtonMenu from './ButtonMenu';
 import { Category } from './Category';
 import ErrorButtons from './ErrorButtons';
@@ -10,7 +12,6 @@ import ImageSlider from './ImageSlider';
 import ImageWithSkeleton from './ImageWithSkeleton';
 import LastViewedProducts from './LastViewedProducts';
 import ListProductImages from './ListProductImages';
-import LogOutModal from '../modals/LogOutModal';
 import NotFoundError from './NotFoundError';
 import { Option } from './Option';
 import PriceSlider from './PriceSlider';
@@ -21,9 +22,9 @@ import ProfilePicture from './ProfilePicture';
 import { ProfileSidebar } from './ProfileSidebar';
 import Search from './Search';
 import SearchBar from './SearchBar';
+import SearchInput from './SearchInput';
 import ServerError from './ServerError';
 import SideImageLayout from './SideImageLayout';
-import SizesSelects from '../controlled/SelectSizes';
 
 export {
   AddProductForm,
@@ -49,6 +50,7 @@ export {
   ProfileSidebar,
   Search,
   SearchBar,
+  SearchInput,
   ServerError,
   SideImageLayout,
   SizesSelects,
