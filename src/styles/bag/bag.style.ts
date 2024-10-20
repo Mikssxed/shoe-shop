@@ -148,7 +148,7 @@ export const bagItemStyles = {
       p: 1,
     },
     height: 25,
-    width: 80,
+    width: { xs: 80, sm: 'min-content' },
   },
   selectSize_menuItem: {
     minHeight: 'min-content',
