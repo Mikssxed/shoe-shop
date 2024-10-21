@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { ICartItem, ProductAttributes, ProductsResponse } from '@/lib/types';
+import { getStoredProductIds } from '@/utils';
 import { User } from 'next-auth';
 import { queryClient } from '.';
 import {
@@ -11,7 +12,6 @@ import {
   getProductsNames,
   getStored,
 } from './api';
-import { getStoredProductIds } from '@/utils';
 
 /**
  * Custom hook to fetch paginated products using infinite scrolling.
@@ -23,7 +23,7 @@ import { getStoredProductIds } from '@/utils';
  * @returns {Object} - The result of the infinite query, including data, fetching status, and pagination.
  */
 export const useProducts = (
-  initialProducts: ProductsResponse,
+  initialProducts?: ProductsResponse,
   params?: {},
   user?: User,
 ) => {

@@ -1,6 +1,11 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { useChat } from 'ai/react';
+import { useSession } from 'next-auth/react';
+import { enqueueSnackbar } from 'notistack';
 import {
   ChangeEvent,
   useEffect,
@@ -8,29 +13,26 @@ import {
   useRef,
   useState,
 } from 'react';
-import { enqueueSnackbar } from 'notistack';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery } from '@tanstack/react-query';
-import { useSession } from 'next-auth/react';
-import { useChat } from 'ai/react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import styles from '@/styles/forms/productForm.style';
 import {
   ControlledDropdown,
+  ControlledImageList,
   ControlledInput,
   ControlledTextArea,
-  ControlledImageList,
   SelectCategories,
   SelectSizes,
 } from '@/components/controlled';
-import { queryClient, useFilters } from '@/tools';
-import { AddProductFormSchema, AddProductFormData } from '@/lib/validation';
-import { IProductInfoFormProps, IImage } from '@/lib/types';
-import { useEditProduct, useCreateProduct } from '@/hooks';
 import { AiSuggessionButton, BaseButton } from '@/components/ui';
-import { getAiPromptForDescriptionByTitle } from '@/utils/ai-prompts';
+import { useCreateProduct, useEditProduct } from '@/hooks';
 import { DESCRIPTION_LIMIT } from '@/lib/constants';
+import { IImage, IProductInfoFormProps } from '@/lib/types';
+import { AddProductFormData, AddProductFormSchema } from '@/lib/validation';
+import styles from '@/styles/forms/productForm.style';
+import { queryClient, useFilters, useProducts } from '@/tools';
+import { buildParams } from '@/utils';
+import { getAiPromptForDescriptionByTitle } from '@/utils/ai-prompts';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const defaultValues = {
   gender: 0,
@@ -55,14 +57,21 @@ const ProductForm = ({
   product,
   onClose,
   openEditModal,
+  duplicate,
 }: IProductInfoFormProps) => {
   const [formStatus, setFormStatus] = useState<TFormStatus>('normal');
   const { data: userData } = useSession();
   const { data: filtersData } = useFilters();
   const token = userData?.user?.accessToken;
-
+  const router = useRouter();
   const editProductMutation = useEditProduct(); //TODO try to use one mutation hook only (for example: const mutation = mode === 'create' ? useCreateProduct() : mode === 'edit' ? useEditProduct() ...)
   const createProductMutation = useCreateProduct();
+  const searchParams = useSearchParams();
+  const { refetch } = useProducts(
+    undefined,
+    buildParams(searchParams),
+    userData?.user,
+  );
 
   const imagesQueryKey = ['productUploadedImages'];
   if (mode !== 'create' && product?.id) {
@@ -157,15 +166,25 @@ const ProductForm = ({
     } as ChangeEvent<HTMLInputElement>);
   }, [watchName]);
 
-  const onSubmit: SubmitHandler<AddProductFormData> = data => {
+  const onSubmit: SubmitHandler<AddProductFormData> = async data => {
     if (formStatus !== 'normal') return;
     setFormStatus('pending');
 
     if (mode === 'create') {
       createProductMutation.mutate(
         { data: { ...data } },
-        { onSuccess: () => setFormStatus('success') },
+        {
+          onSuccess: async () => {
+            if (onClose) onClose();
+            setFormStatus('success');
+            await refetch();
+            setFormStatus('normal');
+          },
+        },
       );
+      if (duplicate) {
+        return;
+      }
       reset();
     }
     if (mode === 'edit' && product) {
@@ -179,6 +198,7 @@ const ProductForm = ({
           onSuccess: () => {
             if (onClose) onClose();
             setFormStatus('normal');
+            router.refresh();
           },
           onError: () => setFormStatus('normal'),
         },

@@ -11,7 +11,11 @@ import {
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { DeleteModal, EditProductModal } from '@/components/modals';
+import {
+  DeleteModal,
+  DuplicateProductModal,
+  EditProductModal,
+} from '@/components/modals';
 import { ProductAttributes } from '@/lib/types';
 
 const styles: Record<string, SxProps> = {
@@ -41,6 +45,7 @@ const ButtonMenu = ({
 }: ButtonMenuProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openDuplicateModal, setOpenDuplicateModal] = useState(false);
   const router = useRouter();
 
   return (
@@ -49,6 +54,11 @@ const ButtonMenu = ({
         open={openEdit}
         product={product}
         onClose={() => setOpenEdit(false)}
+      />
+      <DuplicateProductModal
+        open={openDuplicateModal}
+        onClose={() => setOpenDuplicateModal(false)}
+        product={product}
       />
       <Menu {...props} disableScrollLock={true}>
         <MenuList
@@ -73,6 +83,16 @@ const ButtonMenu = ({
             }}
           >
             <Typography variant="menu">Edit</Typography>
+          </MenuItem>
+          <MenuItem
+            divider
+            sx={styles.menuItem}
+            onClick={e => {
+              setOpenDuplicateModal(true);
+              props.onClose?.(e, 'backdropClick');
+            }}
+          >
+            <Typography variant="menu">Duplicate</Typography>
           </MenuItem>
           <MenuItem
             data-testid="button-menu__delete"

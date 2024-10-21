@@ -44,6 +44,7 @@ export interface IProductInfoFormProps {
   product?: ProductAttributes;
   onClose?: () => void;
   openEditModal?: boolean;
+  duplicate?: boolean;
 }
 
 export interface IListProductImagesProps {
