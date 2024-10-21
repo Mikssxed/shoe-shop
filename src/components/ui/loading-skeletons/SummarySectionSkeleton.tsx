@@ -5,9 +5,10 @@ const SummarySectionSkeleton = () => {
     <Box
       data-testid="bag__summary__skeleton"
       sx={{
-        marginTop: '60px',
-        marginBottom: '70px',
-        width: '100%',
+        mt: '60px',
+        mb: '70px',
+        mx: 'auto',
+        width: { xs: '90%', sm: '400px' },
       }}
     >
       <Typography variant="h1" component="h2" sx={{ marginBottom: '2' }}>
@@ -36,11 +37,11 @@ const SummarySectionSkeleton = () => {
 
       <Box
         sx={{
-          paddingTop: '20px',
+          pt: '20px',
           display: 'flex',
           justifyContent: 'space-between',
-          marginTop: '60px',
-          paddingBottom: '30px',
+          mt: '60px',
+          pb: '30px',
           borderTop: '1px solid #EAECF0',
           borderBottom: '1px solid #EAECF0',
         }}

@@ -22,7 +22,7 @@ const DeleteModal = ({
     <BaseModal
       onClose={onClose}
       onSubmit={onSubmit}
-      text={defaultText}
+      text={text}
       open={open}
       submitText="Delete"
       header={`Are you sure you want to delete ${name}?`}

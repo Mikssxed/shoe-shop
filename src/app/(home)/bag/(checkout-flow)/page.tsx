@@ -97,7 +97,7 @@ const Bag = () => {
           />
         </Container>
       )}
-      {cart.length && isMobile && (
+      {cart.length > 0 && isMobile && (
         <>
           <Divider sx={{ display: { xs: 'block', md: 'none' }, mt: '17px' }} />
           <Typography

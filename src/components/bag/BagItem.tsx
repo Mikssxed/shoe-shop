@@ -14,17 +14,24 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { enqueueSnackbar } from 'notistack';
+import { useState } from 'react';
 
 import { BagItemProps, TSelectedSize } from '@/lib/types';
 import { bagItemStyles as styles } from '@/styles/bag/bag.style';
 import { changeSelectedSize, deleteFromCartQuery } from '@/tools';
 import QuantityButtons from './QuantityButtons';
+import { DeleteModal } from '../modals';
 
 const BagItem: React.FC<BagItemProps> = ({ item }) => {
   const { data: session } = useSession();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
   const handleChange = (event: SelectChangeEvent<TSelectedSize>) => {
     changeSelectedSize(item, Number(event.target.value), session?.user?.id);
   };
+
+  const openModal = () => setOpenDeleteModal(true);
+  const closeModal = () => setOpenDeleteModal(false);
 
   const onDelete = () => {
     deleteFromCartQuery(item.id, item.selectedSize, session?.user?.id);
@@ -141,7 +148,7 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
           <Button
             data-testid="bag-item__delete-button"
             sx={styles.deleteButton}
-            onClick={onDelete}
+            onClick={openModal}
           >
             <Box sx={styles.deleteIconWrapper}>
               <Image
@@ -155,6 +162,16 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
           </Button>
         </Box>
       </Box>
+      <DeleteModal
+        name={item.name}
+        text="Warning: Are you sure you want to remove the selected item from your cart?"
+        open={openDeleteModal}
+        onClose={closeModal}
+        onSubmit={() => {
+          setOpenDeleteModal(false);
+          onDelete();
+        }}
+      />
     </Box>
   );
 };
