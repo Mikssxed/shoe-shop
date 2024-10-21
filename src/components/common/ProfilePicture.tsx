@@ -45,13 +45,13 @@ const ProfilePicture = ({ avatarStyle }: IProfilePictureProps) => {
       ) : (
         <Avatar
           data-testid="profilePicture__avatarWithoutImage"
-          src="/"
-          alt={fullName}
           sx={{
             ...userAvatar,
             ...avatarStyle,
           }}
-        />
+        >
+          {fullName}
+        </Avatar>
       )}
     </>
   );
