@@ -35,7 +35,7 @@ const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
       onChangeCommitted={handlePriceSelected}
       valueLabelFormat={value => `$${value}`}
       valueLabelDisplay="auto"
-      getAriaLabel={() => 'Price range'}
+      aria-label="small"
       getAriaValueText={() => [priceRange[0], priceRange[1]].toString()}
       sx={{
         mt: '25px',
@@ -57,21 +57,10 @@ const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
         '& .MuiSlider-valueLabel': {
           lineHeight: 1.2,
           fontSize: 12,
-          background: 'unset',
-          p: 0,
-          width: 40,
           height: 40,
-          borderRadius: '50% 50% 50% 0',
+          borderRadius: '10px',
           backgroundColor: 'primary.main',
-          transformOrigin: 'bottom left',
-          transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-          '&:before': { display: 'none' },
-          '&.MuiSlider-valueLabelOpen': {
-            transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
-          },
-          '& > *': {
-            transform: 'rotate(45deg)',
-          },
+          zIndex: 2,
         },
         '& .MuiSlider-rail': {
           color: 'grey.A200',
