@@ -5,6 +5,7 @@ import { Box, Toolbar } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { enqueueSnackbar } from 'notistack';
 import { z } from 'zod';
 
 import ProfilePicture from '@/components/common/ProfilePicture';
@@ -23,19 +24,33 @@ export default function AvatarForm() {
   const [isOpenedDeleteModal, setIsOpenedDeleteModal] =
     useState<boolean>(false);
 
-  const { register, handleSubmit, watch } = useForm<
-    z.infer<typeof avatarValidation>
-  >({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<z.infer<typeof avatarValidation>>({
     resolver: zodResolver(avatarValidation),
   });
   const watchAvatar = watch('avatar');
 
   const onSubmit = async (data: z.infer<typeof avatarValidation>) => {
-    const formData = new FormData();
-    formData.append('files', data.avatar[0]);
+    if (data.avatar && data.avatar.length > 0) {
+      const formData = new FormData();
+      formData.append('files', data.avatar[0]);
 
-    await uploadMutation.mutateAsync(formData);
+      await uploadMutation.mutateAsync(formData);
+    }
   };
+
+  useEffect(() => {
+    if (errors.avatar) {
+      enqueueSnackbar(errors.avatar.message, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
+    }
+  }, [errors.avatar]);
 
   useEffect(() => {
     if (watchAvatar?.length) handleSubmit(onSubmit)();

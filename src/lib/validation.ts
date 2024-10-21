@@ -92,8 +92,33 @@ export const UpdateProfileValidation = z.object({
     .optional(),
 });
 
+const MAX_FILE_SIZE = 5;
+const ACCEPTED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+];
+
+const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
+  const result = sizeInBytes / (1024 * 1024);
+  return +result.toFixed(decimalsNum);
+};
+
 export const avatarValidation = z.object({
-  avatar: z.any(),
+  avatar: z
+    .custom<FileList>()
+    .optional()
+    .refine(files => {
+      return Array.from(files ?? []).every(
+        file => sizeInMB(file.size) <= MAX_FILE_SIZE,
+      );
+    }, `File size should be less than ${MAX_FILE_SIZE}MB`)
+    .refine(files => {
+      return Array.from(files ?? []).every(file =>
+        ACCEPTED_IMAGE_TYPES.includes(file.type),
+      );
+    }, 'Only these types are allowed: .jpg, .jpeg, .png, .webp'),
 });
 
 export const AddProductFormSchema = z.object({
