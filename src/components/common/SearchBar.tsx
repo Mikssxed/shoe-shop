@@ -38,7 +38,7 @@ const SearchBar = ({
       data-testid="searchbar"
       sx={{
         position: 'relative',
-        display: 'flex',
+        display: { xs: 'none', md: 'flex' },
         marginInline: { xs: '0px 10px', sm: '20px', md: '40px' },
         width,
         height: { xs: '25px', sm: '40px', md: height },

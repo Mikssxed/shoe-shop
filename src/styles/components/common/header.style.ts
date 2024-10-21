@@ -16,6 +16,7 @@ const styles = {
   },
   leftSide: { display: 'flex', flexGrow: 1 },
   logoSubtext: {
+    display: { xs: 'none', md: 'block' },
     align: 'center',
     marginInline: '44px',
     lineHeight: '30px',

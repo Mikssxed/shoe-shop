@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Divider,
+  Skeleton,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -116,18 +117,27 @@ const Header = () => {
               </Box>
             )}
           </Link>
-          {isMobile && (
-            <Box
-              data-testid="header__searchIcon"
-              sx={{ width: 17, height: 17 }}
-              onClick={onOpenSearch}
-            >
-              <SearchNormal1
-                size="17"
-                color={stylingConstants.palette.grey[700]}
-                style={{ cursor: 'pointer' }}
-              />
-            </Box>
+          {status === 'loading' ? (
+            <Skeleton
+              variant="circular"
+              width={24}
+              height={24}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            />
+          ) : (
+            isMobile && (
+              <Box
+                data-testid="header__searchIcon"
+                sx={{ width: 17, height: 17 }}
+                onClick={onOpenSearch}
+              >
+                <SearchNormal1
+                  size="17"
+                  color={stylingConstants.palette.grey[700]}
+                  style={{ cursor: 'pointer' }}
+                />
+              </Box>
+            )
           )}
           {status !== 'unauthenticated' && !isMobile && (
             <Box sx={{ ml: { md: '16px', position: 'relative' } }}>
