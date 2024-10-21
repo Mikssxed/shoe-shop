@@ -11,10 +11,16 @@ export const productIdStyles: Record<string, SxProps> = {
   root: {
     maxWidth: '1300px',
     display: 'flex',
+    flexDirection: 'column',
+    gap: { xs: '20px', sm: '40px' },
+    mt: { xs: '50px', md: '100px' },
+    pb: '100px',
+  },
+  childRoot: {
+    display: 'flex',
     flexDirection: { xs: 'column', lg: 'row' },
     gap: { xs: '40px', lg: '100px' },
-    mt: { xs: '50px', sm: '100px' },
-    pb: '100px',
+    mt: { sm: '50px', md: 0 },
   },
   noImageBox: {
     textAlign: 'center',
