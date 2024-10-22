@@ -1,3 +1,8 @@
+jest.mock('@ai-sdk/react', () => ({
+  __esModule: true,
+  useAssistant: jest.fn(),
+}));
+
 const {
   TextEncoder: ImportedTextDecoder,
   TextDecoder: ImportedTextEncoder,

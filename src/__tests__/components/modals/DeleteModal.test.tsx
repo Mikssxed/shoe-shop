@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { DeleteModal } from '@/components/common';
+import { DeleteModal } from '@/components/modals';
 
 export const mockModalProps = {
   name: 'product',
