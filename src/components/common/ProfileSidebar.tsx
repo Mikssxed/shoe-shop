@@ -244,7 +244,10 @@ export const ProfileSidebar = ({ open, onClose, blockOnMobile }: Props) => {
       <BaseSidebar
         isMobile={isMobile}
         open={open}
-        containerStyle={{ p: '24px 0px' }}
+        containerStyle={{
+          p: '24px 0px',
+          display: { xs: blockOnMobile ? 'none' : 'flex', md: 'flex' },
+        }}
         onClose={onClose}
       >
         <Content />
