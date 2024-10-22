@@ -25,7 +25,7 @@ import ButtonMenu from '@/components/common/ButtonMenu';
 import { ProductAttributes } from '@/lib/types';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { addToCartQuery } from '@/tools';
-import { useDeleteProduct } from '@/tools/mutations';
+import { useDeleteProduct } from '@/hooks';
 import WishlistIcon from './WishlistIcon';
 
 type Props = {

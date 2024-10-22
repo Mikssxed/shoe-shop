@@ -19,7 +19,7 @@ import {
   useDeleteAvatarMutation,
   useUpdateProfileMutation,
   useUploadAvatarMutation,
-} from '@/tools/mutations';
+} from '@/hooks/mutations';
 
 jest.mock('next-auth/react');
 jest.mock('@/hooks');
@@ -28,7 +28,6 @@ jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(),
   usePathname: jest.fn(),
 }));
-jest.mock('@/tools/mutations');
 
 const queryClient = new QueryClient();
 

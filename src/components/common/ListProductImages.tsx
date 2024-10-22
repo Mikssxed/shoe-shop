@@ -25,7 +25,6 @@ import ImageWithSkeleton from './ImageWithSkeleton';
 import { queryClient } from '@/tools';
 import { getItemUrl } from '@/utils/helperFunctions';
 import { useUploadImages } from '@/hooks';
-import { enqueueSnackbar } from 'notistack';
 
 const ListProductImages = ({ queryKey, error }: IListProductImagesProps) => {
   const { data: images } = useQuery<IImage[] | TMyImage[]>({ queryKey });

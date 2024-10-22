@@ -12,7 +12,7 @@ import ProfilePicture from '@/components/common/ProfilePicture';
 import DeleteAvatarModal from '@/components/modals/DeleteAvatarModal';
 import { avatarValidation } from '@/lib/validation';
 import { profileSettingsStyles as styles } from '@/styles/profile/profileSettingsPage.style';
-import { useUploadAvatarMutation } from '@/tools/mutations';
+import { useUploadAvatarMutation } from '@/hooks';
 import BaseButton from '../ui/BaseButton';
 
 export default function AvatarForm() {

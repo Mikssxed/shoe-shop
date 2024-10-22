@@ -1,3 +1,5 @@
+"use client"
+
 import { useSession } from 'next-auth/react';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';

@@ -1,6 +1,6 @@
 import { BaseModal } from '@/components/common';
 import { IDeleteAvatarModalProps } from '@/lib/types';
-import { useDeleteAvatarMutation } from '@/tools/mutations';
+import { useDeleteAvatarMutation } from '@/hooks';
 
 const DeleteAvatarModal = ({
   isOpened,

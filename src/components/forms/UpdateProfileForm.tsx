@@ -11,7 +11,7 @@ import { ControlledInput } from '@/components/controlled';
 import { UpdateProfileFormSkeleton } from '@/components/ui/loading-skeletons/UpdateProfileFormSkeleton';
 import { UpdateProfileValidation } from '@/lib/validation';
 import { updateProfileFormStyles as styles } from '@/styles/forms/updateProfileForm.style';
-import { useUpdateProfileMutation } from '@/tools/mutations';
+import { useUpdateProfileMutation } from '@/hooks';
 import BaseButton from '../ui/BaseButton';
 
 const defaultValues = {
