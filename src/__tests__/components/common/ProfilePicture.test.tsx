@@ -72,8 +72,8 @@ describe('ProfilePicture Component', () => {
     expect(queryAvatarWithImage()).not.toBeInTheDocument();
 
     expect(queryAvatarWithoutImage()).toBeInTheDocument();
-    expect(
-      queryAvatarWithoutImage()?.querySelector('img')?.getAttribute('alt'),
-    ).toBe(sessionWithoutAvatar.user.firstName[0].toUpperCase());
+    expect(queryAvatarWithoutImage()?.innerHTML).toBe(
+      sessionWithoutAvatar.user.firstName[0].toUpperCase(),
+    );
   });
 });

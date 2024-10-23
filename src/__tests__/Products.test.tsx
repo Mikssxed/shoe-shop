@@ -12,8 +12,12 @@ import { Header } from '@/components/common';
 import { useIsMobile } from '@/hooks';
 
 // Import utility functions
-import { mockFiltersData, mockMaxPrice, mockProductData } from '@/lib/mocks';
-import { IntersectionObserver } from '@/lib/mocks';
+import {
+  IntersectionObserver,
+  mockFiltersData,
+  mockMaxPrice,
+  mockProductData,
+} from '@/lib/mocks';
 import {
   addToCartQuery,
   getFiltersData,
@@ -54,7 +58,7 @@ describe('Products Component', () => {
   };
 
   const setupMocks = () => {
-    (useSession as jest.Mock).mockReturnValue({ status: 'unauthenticated' });
+    (useSession as jest.Mock).mockReturnValue({ status: 'authenticated' });
     (useIsMobile as jest.Mock).mockReturnValue(false);
     (usePathname as jest.Mock).mockReturnValue('/products');
     (useQueryCartItems as jest.Mock).mockReturnValue({ data: [] });

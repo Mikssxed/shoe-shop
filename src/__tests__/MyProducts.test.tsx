@@ -1,16 +1,28 @@
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
 import '@testing-library/jest-dom';
-import { screen, render } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import { enqueueSnackbar } from 'notistack';
 
 import MyProducts from '@/app/(home)/profile/my-products/page';
-import { mockSessionWithUser, mockProductData } from '@/lib/mocks';
-import { getMyProducts, useProducts, useFilters, deleteProduct } from '@/tools';
-import { IntersectionObserver } from '@/lib/mocks';
+import {
+  useCreateProduct,
+  useDeleteProduct,
+  useEditProduct,
+  useIsMobile,
+} from '@/hooks';
+import {
+  IntersectionObserver,
+  mockProductData,
+  mockSessionWithUser,
+} from '@/lib/mocks';
+import { getMyProducts, useFilters, useProducts } from '@/tools';
 
 // Set up global IntersectionObserver for the tests
 window.IntersectionObserver = IntersectionObserver;
@@ -21,7 +33,7 @@ jest.mock('@/tools', () => ({
   useProducts: jest.fn(),
   useFilters: jest.fn(),
   deleteProduct: jest.fn(),
-  queryClient: { invalidateQueries: jest.fn() },
+  queryClient: { invalidateQueries: jest.fn(), setQueryData: jest.fn() },
 }));
 jest.mock('next-auth');
 jest.mock('next-auth/react');
@@ -36,12 +48,45 @@ jest.mock('');
 const mockRouter = {
   push: jest.fn(),
 };
+jest.mock('ai/react', () => ({
+  useChat: jest.fn(() => ({
+    messages: [],
+    sendMessage: jest.fn(),
+    handleInputChange: jest.fn(event => {}), // You can also mock the event here if needed
+    handleSubmit: jest.fn(),
+    isLoadingChat: false,
+  })),
+}));
 
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQuery: jest.fn(),
+}));
+
+const mockCreateProductMutation = {
+  mutate: jest.fn(),
+  isPending: false,
+};
+
+const mockEditProductMutation = {
+  mutate: jest.fn(),
+  isPending: false,
+};
+const mockDeleteProduct = jest.fn();
 const mockQueryClient = new QueryClient();
 mockQueryClient.invalidateQueries = jest.fn();
 
 describe('My Products page and components', () => {
   beforeEach(() => {
+    (useQuery as jest.Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
+      isPending: false,
+    });
+    (useCreateProduct as jest.Mock).mockReturnValue(mockCreateProductMutation);
+    (useEditProduct as jest.Mock).mockReturnValue(mockEditProductMutation);
     (getServerSession as jest.Mock).mockReturnValue(mockSessionWithUser.data);
     (useSession as jest.Mock).mockReturnValue(mockSessionWithUser);
     (getMyProducts as jest.Mock).mockResolvedValue([]);
@@ -51,6 +96,10 @@ describe('My Products page and components', () => {
       sizes: { data: [] },
       categories: { data: [] },
     });
+    (useDeleteProduct as jest.Mock).mockReturnValue({
+      mutateAsync: mockDeleteProduct,
+    });
+    (useIsMobile as jest.Mock).mockReturnValue(false);
   });
 
   afterEach(() => {
@@ -178,18 +227,19 @@ describe('My Products page and components', () => {
 
       await userEvent.click(deleteMenuButton);
 
-      expect(screen.getByTestId('delete-modal')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByTestId('delete-modal')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+      });
 
       await userEvent.click(screen.getByTestId('submit-button'));
 
-      expect(deleteProduct).toHaveBeenCalled();
-      expect(enqueueSnackbar).toHaveBeenCalledWith(
-        `Product "${mockProductData.data[0].attributes.name}" has been deleted.`,
-        {
-          variant: 'default',
-          autoHideDuration: 5000,
-        },
-      );
+      await waitFor(() => {
+        expect(mockDeleteProduct).toHaveBeenCalled();
+      });
     });
   });
 });

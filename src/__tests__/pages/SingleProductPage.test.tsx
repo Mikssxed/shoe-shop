@@ -1,10 +1,9 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
 import { enqueueSnackbar } from 'notistack';
 
 import SingleProductPage from '@/app/(home)/products/[productId]/page';
-import { addToCartQuery, getProduct } from '@/tools';
 import {
   mockProduct,
   mockProductNoBrand,
@@ -17,12 +16,14 @@ import {
   mockProductNoPrice,
   mockProductNoSize,
 } from '@/lib/mocks/';
-import { addLastViewedProductId } from '@/utils';
 import {
   mockSessionAuthed,
   mockSessionLoading,
   mockSessionUnauthed,
 } from '@/lib/mocks/sessionMocks';
+import { addToCartQuery, getProduct } from '@/tools';
+import { addLastViewedProductId } from '@/utils';
+import { useRouter } from 'next/navigation';
 
 jest.mock('notistack', () => ({
   enqueueSnackbar: jest.fn(),
@@ -35,10 +36,15 @@ jest.mock('@/tools', () => ({
 
 jest.mock('@/utils', () => ({
   addLastViewedProductId: jest.fn(),
+  isProductWishlisted: jest.fn(),
 }));
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
 }));
 
 const defaultProps = {
@@ -66,12 +72,17 @@ const querySizeButton = (size: number) =>
 const queryAddToBagButton = () => query('singleProductPage__addToBagButton');
 const queryProductDescription = () => query('singleProductPage__description');
 
+const mockRouter = {
+  back: jest.fn(),
+};
+
 describe('Single Product page', () => {
   beforeEach(() => {
     // (useSession as jest.Mock).mockReturnValue({ status: 'unauthenticated' });
     (useSession as jest.Mock).mockReturnValue(mockSessionAuthed);
 
     (getProduct as jest.Mock).mockReturnValue(mockProduct);
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
   });
 
   it('renders the Single Product page', async () => {

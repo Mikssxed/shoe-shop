@@ -1,17 +1,17 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
 import { enqueueSnackbar } from 'notistack';
 
+import Bag from '@/app/(home)/bag/(checkout-flow)/page';
 import { useIsMobile } from '@/hooks';
-import Bag from '@/app/(home)/bag/page';
 import { mockCartItems as mockItems } from '@/lib/mocks';
 import {
-  useQueryCartItems,
-  increaseCartItemAmount,
+  changeSelectedSize,
   decreaseCartItemAmount,
   deleteFromCartQuery,
-  changeSelectedSize,
+  increaseCartItemAmount,
+  useQueryCartItems,
 } from '@/tools';
 
 jest.mock('next-auth/react');
@@ -27,6 +27,7 @@ jest.mock('@/tools', () => ({
   decreaseCartItemAmount: jest.fn(),
   deleteFromCartQuery: jest.fn(),
   changeSelectedSize: jest.fn(),
+  validateStoredItems: jest.fn().mockResolvedValue(false),
 }));
 jest.mock('notistack', () => ({ enqueueSnackbar: jest.fn() }));
 
@@ -142,12 +143,12 @@ describe('Bag Components', () => {
 
       expect(screen.getByTestId('summary__title-desktop')).toBeInTheDocument();
       expect(screen.getByText('Subtotal')).toBeInTheDocument();
-      expect(screen.getByText('$1647')).toBeInTheDocument();
+      expect(screen.getByText('$1,647')).toBeInTheDocument();
       expect(screen.getByText('Shipping')).toBeInTheDocument();
       expect(screen.getByText('$20')).toBeInTheDocument();
       expect(screen.getByText('Tax')).toBeInTheDocument();
       expect(screen.getByText('Total')).toBeInTheDocument();
-      expect(screen.getByText('$1667')).toBeInTheDocument();
+      expect(screen.getByText('$1,667')).toBeInTheDocument();
       expect(
         screen.getByTestId('order__checkout-button-desktop'),
       ).toBeInTheDocument();
@@ -214,6 +215,7 @@ describe('Bag Components', () => {
       render(<Bag />);
 
       fireEvent.click(screen.getByTestId('bag-item__delete-button'));
+      fireEvent.click(screen.getByTestId('submit-button'));
       expect(deleteFromCartQuery).toHaveBeenCalledWith(1, 39, 1);
       expect(enqueueSnackbar).toHaveBeenCalledWith(
         'Successfully deleted from cart',

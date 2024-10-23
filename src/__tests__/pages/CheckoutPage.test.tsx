@@ -30,6 +30,7 @@ jest.mock('@stripe/react-stripe-js', () => ({
   PaymentElement: () => <div data-testid="payment-element" />, // Mock PaymentElement
   Elements: ({ children }: PropsWithChildren) => <div>{children}</div>, // Mock Elements
 }));
+jest.mock('notistack', () => ({ enqueueSnackbar: jest.fn() }));
 
 describe('Checkout Page', () => {
   const mockRouter = {

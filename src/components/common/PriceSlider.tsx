@@ -35,7 +35,6 @@ const PriceSlider = ({ maxPrice: productMaxPrice }: { maxPrice: number }) => {
       onChangeCommitted={handlePriceSelected}
       valueLabelFormat={value => `$${value}`}
       valueLabelDisplay="auto"
-      aria-label="small"
       getAriaValueText={() => [priceRange[0], priceRange[1]].toString()}
       sx={{
         mt: '25px',

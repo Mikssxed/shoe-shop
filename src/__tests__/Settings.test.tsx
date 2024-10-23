@@ -13,13 +13,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import ProfileSettings from '@/app/(home)/profile/settings/page';
 import DeleteAvatarModal from '@/components/modals/DeleteAvatarModal';
-import { useIsMobile } from '@/hooks';
-import { mockSession } from '@/lib/mocks';
 import {
   useDeleteAvatarMutation,
+  useIsMobile,
   useUpdateProfileMutation,
   useUploadAvatarMutation,
-} from '@/hooks/mutations';
+} from '@/hooks';
+import { mockSession } from '@/lib/mocks';
 
 jest.mock('next-auth/react');
 jest.mock('@/hooks');
@@ -29,22 +29,18 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
 
+jest.mock('@/hooks', () => ({
+  useUpdateProfileMutation: jest.fn(),
+  useUploadAvatarMutation: jest.fn(),
+  useDeleteAvatarMutation: jest.fn(),
+  useIsMobile: jest.fn(),
+}));
+
 const queryClient = new QueryClient();
 
 const mockProfileUpdate = jest.fn();
 const mockAvatarUpload = jest.fn();
 
-(useUpdateProfileMutation as jest.Mock).mockReturnValue({
-  mutateAsync: mockProfileUpdate,
-  isPending: false,
-});
-
-(useUploadAvatarMutation as jest.Mock).mockReturnValue({
-  mutateAsync: mockAvatarUpload,
-  isPending: false,
-  isSuccess: false,
-  reset: jest.fn(),
-});
 describe('ProfileSettings Component', () => {
   let mockDeleteAvatarMutation: jest.Mock;
   beforeEach(() => {
@@ -67,6 +63,17 @@ describe('ProfileSettings Component', () => {
     (useDeleteAvatarMutation as jest.Mock).mockReturnValue({
       mutateAsync: mockDeleteAvatarMutation,
       isPending: false,
+    });
+    (useUpdateProfileMutation as jest.Mock).mockReturnValue({
+      mutateAsync: mockProfileUpdate,
+      isPending: false,
+    });
+
+    (useUploadAvatarMutation as jest.Mock).mockReturnValue({
+      mutateAsync: mockAvatarUpload,
+      isPending: false,
+      isSuccess: false,
+      reset: jest.fn(),
     });
   });
 

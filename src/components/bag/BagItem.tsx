@@ -19,8 +19,8 @@ import { useState } from 'react';
 import { BagItemProps, TSelectedSize } from '@/lib/types';
 import { bagItemStyles as styles } from '@/styles/bag/bag.style';
 import { changeSelectedSize, deleteFromCartQuery } from '@/tools';
-import QuantityButtons from './QuantityButtons';
 import { DeleteModal } from '../modals';
+import QuantityButtons from './QuantityButtons';
 
 const BagItem: React.FC<BagItemProps> = ({ item }) => {
   const { data: session } = useSession();
