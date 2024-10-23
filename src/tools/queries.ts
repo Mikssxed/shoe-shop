@@ -27,8 +27,9 @@ export const useProducts = (
   params?: {},
   user?: User,
 ) => {
+  const myProducts = user ? 'my-products' : '';
   return useInfiniteQuery({
-    queryKey: ['products', JSON.stringify(params)],
+    queryKey: ['products', JSON.stringify(params) + myProducts],
     queryFn: ({ pageParam }) =>
       user ? getMyProducts(user, pageParam) : getProducts(pageParam, params),
     getNextPageParam: lastPage => {
