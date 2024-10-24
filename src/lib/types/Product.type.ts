@@ -1,3 +1,6 @@
+import { PaymentIntent } from '@stripe/stripe-js';
+import { NextResponse } from 'next/server';
+
 import {
   ApiResponse,
   ApiResponseList,
@@ -60,7 +63,7 @@ export interface ISelectedSize {
 export interface ICartItem {
   id: number;
   name: string;
-  images?: RequestData<Data<TImage>[] | null>;
+  images?: RequestData<Data<TImage>[]>;
   description: string;
   number: number;
   teamName: string;
@@ -69,4 +72,22 @@ export interface ICartItem {
   amount: number;
   selectedSize: TSelectedSize;
   sizes?: RequestData<Data<BaseWithValue>[]>;
+}
+
+export interface Order {
+  paymentIntent: PaymentIntent;
+  invoice: any;
+}
+
+export interface SavedOrderStatus {
+  status: OrderStatus;
+  updated: number;
+}
+
+export type OrderStatus = 'shipped' | 'cancelled' | 'received';
+
+export interface OrderResponseBody {
+  orders: Order[];
+  has_more: boolean;
+  next_page: string;
 }

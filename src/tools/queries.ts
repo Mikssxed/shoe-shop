@@ -1,7 +1,13 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { ICartItem, ProductAttributes, ProductsResponse } from '@/lib/types';
 import { getStoredProductIds } from '@/utils';
+import {
+  ICartItem,
+  SavedOrderStatus,
+  ProductAttributes,
+  ProductsResponse,
+  OrderResponseBody,
+} from '@/lib/types';
 import { User } from 'next-auth';
 import { queryClient } from '.';
 import {
@@ -11,6 +17,7 @@ import {
   getProducts,
   getProductsNames,
   getStored,
+  getOrders,
 } from './api';
 
 /**
@@ -439,5 +446,103 @@ export const useStored = (
     queryKey: [key, ids, pageSize],
     queryFn: () => getStored(ids, pageSize),
     select: data => data.data,
+  });
+};
+
+/**
+ * Custom hook to fetch paginated orders using infinite scrolling.
+ * It fetches the orders page by page and merges them into a single list.
+ *
+ * @param {User} [user] - The current authenticated user.
+ * @returns {Object} - The result of the infinite query, including data, fetching status, and pagination.
+ */
+export const useOrders = (user: User, initialOrders: OrderResponseBody[]) => {
+  return useInfiniteQuery({
+    queryKey: ['orders'],
+    queryFn: ({ pageParam }) => getOrders(user.id!, pageParam),
+    getNextPageParam: lastPage =>
+      lastPage.has_more ? lastPage.next_page : undefined,
+    select: data => data.pages.flatMap(page => page.orders),
+    initialPageParam: '',
+    initialData: {
+      pages: initialOrders,
+      pageParams: [
+        '',
+        ...initialOrders.map(page => page.next_page).slice(0, -1),
+      ],
+    },
+    staleTime: 0,
+  });
+};
+
+/**
+ * Custom hook to fetch order statuses state.
+ *
+ * @returns {Object[]} - The result of the query.
+ */
+export const useOrderStatuses = () => {
+  const storageKey = 'order_statuses';
+  return useQuery<Map<string, SavedOrderStatus>>({
+    queryKey: [storageKey],
+    queryFn: () => {
+      if (
+        typeof window === 'undefined' ||
+        globalThis.localStorage === undefined
+      ) {
+        return new Map<string, SavedOrderStatus>();
+      }
+      return new Map<string, SavedOrderStatus>(
+        JSON.parse(localStorage.getItem(storageKey) || '[]'),
+      );
+    },
+  });
+};
+
+/**
+ * Function to save order statuses state.
+ *
+ *
+ * @param {Map<string,SavedOrderStatus>} orderStatus - The map with order ids as keys and status as values.
+ * @returns {void} Updates the order statuses state.
+ */
+export const saveOrderStatuses = (
+  orderStatuses: Map<string, SavedOrderStatus>,
+) => {
+  const storageKey = `order_statuses`;
+  queryClient.setQueryData([storageKey], () => {
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(Array.from(orderStatuses.entries())),
+    );
+
+    return orderStatuses;
+  });
+};
+
+/**
+ * Function to add new order status.
+ *
+ *
+ * @param {string} id - Id of payment intent that status refers to.
+ * @returns {void} Updates the order statuses state.
+ */
+export const addOrderStatus = (id: string) => {
+  const storageKey = `order_statuses`;
+  queryClient.setQueryData([storageKey], () => {
+    const orderStatuses = new Map<string, SavedOrderStatus>(
+      JSON.parse(localStorage.getItem(storageKey) || '[]'),
+    );
+
+    orderStatuses.set(id, {
+      status: 'shipped',
+      updated: new Date().getTime(),
+    });
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(Array.from(orderStatuses.entries())),
+    );
+
+    return orderStatuses;
   });
 };

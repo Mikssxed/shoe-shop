@@ -1,7 +1,7 @@
 'use client';
 
 import { alpha, createTheme } from '@mui/material/styles';
-import { Work_Sans } from 'next/font/google';
+import { Work_Sans, Nunito_Sans } from 'next/font/google';
 
 import { stylingConstants } from './lib/constants/themeConstants';
 
@@ -11,6 +11,8 @@ declare module '@mui/material/styles' {
     menu: React.CSSProperties;
     category: React.CSSProperties;
     extremeHuge: React.CSSProperties;
+    orderLabel: React.CSSProperties;
+    orderInfo: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -18,6 +20,8 @@ declare module '@mui/material/styles' {
     menu?: React.CSSProperties;
     category?: React.CSSProperties;
     extremeHuge?: React.CSSProperties;
+    orderLabel?: React.CSSProperties;
+    orderInfo?: React.CSSProperties;
   }
 }
 
@@ -27,11 +31,21 @@ declare module '@mui/material/Typography' {
     menu: true;
     category: true;
     extremeHuge: true;
+    orderLabel: true;
+    orderInfo: true;
   }
 }
 
 const workSans = Work_Sans({
   weight: ['300', '400', '500', '600', '900'],
+  style: 'normal',
+  display: 'swap',
+  subsets: ['latin'],
+  fallback: ['system-ui', 'arial'],
+});
+
+const nunitoSans = Nunito_Sans({
+  weight: ['700'],
   style: 'normal',
   display: 'swap',
   subsets: ['latin'],
@@ -124,6 +138,30 @@ theme = createTheme({
       [theme.breakpoints.down('lg')]: {
         fontSize: 60,
         lineHeight: '72px',
+      },
+    },
+    orderLabel: {
+      fontFamily: nunitoSans.style.fontFamily,
+      fontSize: 14,
+      color: '#8C9196',
+      fontWeight: 700,
+      [theme.breakpoints.down('lg')]: {
+        fontSize: 12,
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 10,
+      },
+    },
+    orderInfo: {
+      fontFamily: nunitoSans.style.fontFamily,
+      fontSize: 14,
+      color: '#1E2832',
+      fontWeight: 700,
+      [theme.breakpoints.down('lg')]: {
+        fontSize: 12,
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 10,
       },
     },
   },

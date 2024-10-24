@@ -18,6 +18,7 @@ const stripePromise = loadStripe(
 export default function Checkout() {
   const [clientSecret, setClientSecret] = useState('');
   const [orderId, setOrderId] = useState('');
+  const [invoiceId, setInvoiceId] = useState('');
   const { data: session } = useSession();
   const { data: cart = [] } = useQueryCartItems(session?.user?.id);
 
@@ -36,16 +37,33 @@ export default function Checkout() {
     const payload = {
       items: cart,
       total: total + 20,
-      user: session?.user,
+      userId: session?.user.id,
     };
+    const headers = { 'Content-Type': 'application/json' };
 
     axios
-      .post('/api/create-payment-intent', payload, {
-        headers: { 'Content-Type': 'application/json' },
+      .post('/api/orders', payload, {
+        headers,
       })
-      .then(res => {
-        setClientSecret(res.data.clientSecret);
-        setOrderId(res.data.id);
+      .then(createInvoiceRes => {
+        setInvoiceId(createInvoiceRes.data.id);
+        axios
+          .post(
+            '/api/create-payment-intent',
+            {
+              total: total,
+              userId: session?.user.id,
+              customerId: createInvoiceRes.data.customer,
+              invoiceId: createInvoiceRes.data.id,
+            },
+            {
+              headers,
+            },
+          )
+          .then(createPaymentIntentRes => {
+            setClientSecret(createPaymentIntentRes.data.clientSecret);
+            setOrderId(createPaymentIntentRes.data.id);
+          });
       })
       .catch(error => {
         console.error('Error creating payment intent:', error);
@@ -71,7 +89,7 @@ export default function Checkout() {
       )}
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm id={orderId} />
+          <CheckoutForm orderId={orderId} invoiceId={invoiceId} />
         </Elements>
       )}
     </Container>

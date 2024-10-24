@@ -32,7 +32,7 @@ const ThankYouPage = ({ params }: ThankYouPageProps) => {
         </Typography>
         <Box sx={styles.buttonsContainer}>
           {/* TODO: change the path after the page is created */}
-          <Link href={`/order/${orderId}`} passHref>
+          <Link href={`/profile/order-history?id=${orderId}`} passHref>
             <BaseButton variant="outlined" sx={styles.button}>
               View Order
             </BaseButton>

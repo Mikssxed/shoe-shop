@@ -3,9 +3,9 @@
 import { Grid, LinearProgress } from '@mui/material';
 import { User } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
-import { useIsMobile } from '@/hooks';
+import { useIsMobile, useIntersectionObserver } from '@/hooks';
 import { ProductsResponse } from '@/lib/types';
 import { useProducts } from '@/tools';
 import { buildParams } from '@/utils';
@@ -33,29 +33,7 @@ const ProductList = ({ fullWidth, initialProducts, user }: Props) => {
   } = useProducts(initialProducts, buildParams(searchParams), user);
   const bottomElementRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && hasNextPage) {
-            fetchNextPage();
-          }
-        });
-      },
-      { threshold: 1 },
-    );
-
-    const bottomElement = bottomElementRef.current;
-    if (bottomElement) {
-      observer.observe(bottomElement);
-    }
-
-    return () => {
-      if (bottomElement) {
-        observer.unobserve(bottomElement);
-      }
-    };
-  }, [bottomElementRef, hasNextPage, fetchNextPage]);
+  useIntersectionObserver(hasNextPage, fetchNextPage, bottomElementRef);
 
   return (
     <Grid

@@ -18,12 +18,14 @@ import { ControlledInput } from '@/components/controlled';
 import { useIsMobile } from '@/hooks';
 import { CheckoutFormValidation } from '@/lib/validation';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
-import { clearCartQuery } from '@/tools';
+import { addOrderStatus, clearCartQuery, queryClient } from '@/tools';
 import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
+import axios from 'axios';
 
 type Props = {
-  id: string;
+  orderId: string;
+  invoiceId: string;
 };
 
 const defaultValues = {
@@ -38,12 +40,13 @@ const defaultValues = {
   address: '',
 };
 
-export default function CheckoutForm({ id }: Props) {
+export default function CheckoutForm({ orderId, invoiceId }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const isMobile = useIsMobile();
   const { data: session } = useSession();
   const router = useRouter();
+  const [paymentType, setPaymentType] = useState('card');
   const {
     handleSubmit,
     control,
@@ -111,8 +114,19 @@ export default function CheckoutForm({ id }: Props) {
         redirect: 'if_required',
       });
 
+      //finalize invoice to create invoice pdf
+      await axios.put(
+        '/api/orders',
+        { invoiceId, paymentType },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
+
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+      addOrderStatus(orderId);
       clearCartQuery(session?.user?.id);
-      router.push(`/bag/thank-you/${id}`);
+      router.push(`/bag/thank-you/${orderId}`);
 
       if (error) {
         throw new Error(error?.message);
@@ -244,7 +258,10 @@ export default function CheckoutForm({ id }: Props) {
             Payment Info
           </Typography>
 
-          <PaymentElement id="payment-element" />
+          <PaymentElement
+            id="payment-element"
+            onChange={e => setPaymentType(e.value.type)}
+          />
           {message && (
             <Typography color="error" sx={{ mt: 2 }}>
               {message}

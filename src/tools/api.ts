@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { User } from 'next-auth';
 import { signIn } from 'next-auth/react';
+import Stripe from 'stripe';
 
 import {
   ApiResponseList,
@@ -487,4 +488,90 @@ export const editProduct = async ({
   );
 
   return response.data;
+};
+
+export const fetchOrdersFromStripe = async (
+  userId: string,
+  pageParam?: string,
+) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const limit = 8;
+
+  const searchInvoicesResult = await stripe.invoices.search({
+    query: `metadata["userId"]:"${userId}"`,
+    limit,
+    page: pageParam ? pageParam : undefined,
+  });
+
+  const invoices = searchInvoicesResult.data;
+
+  if (invoices.length === 0) {
+    return {
+      orders: [],
+      has_more: false,
+      next_page: '',
+    };
+  }
+
+  let query = '';
+
+  invoices.forEach((invoice, index) => {
+    query += `metadata["invoiceId"]:"${invoice.id}"`;
+    if (index !== invoices.length - 1) query += ' OR ';
+  });
+
+  const searchPaymentIntentsResult = await stripe.paymentIntents.search({
+    query,
+    limit: limit * 2,
+  });
+
+  const paymentIntentsData = searchPaymentIntentsResult.data;
+  const orders = paymentIntentsData
+    .map(paymentIntent => ({
+      paymentIntent,
+      invoice: invoices.find(
+        invoice => invoice.id === paymentIntent.metadata.invoiceId,
+      ),
+    }))
+    .filter(
+      order =>
+        order.invoice !== undefined &&
+        order.invoice.lines.data.length > 0 &&
+        order.paymentIntent.shipping?.address !== undefined,
+    );
+
+  return {
+    orders,
+    has_more: searchInvoicesResult.has_more,
+    next_page: searchInvoicesResult.next_page,
+  };
+};
+
+export const getInitialOrders = async (userId: string) => {
+  let lastFetch = await fetchOrdersFromStripe(userId);
+  const initialOrdersData = [lastFetch];
+
+  while (
+    initialOrdersData.reduce((length, page) => length + page.orders.length, 0) <
+      10 &&
+    lastFetch.has_more
+  ) {
+    lastFetch = await fetchOrdersFromStripe(
+      userId,
+      lastFetch.next_page ? lastFetch.next_page : undefined,
+    );
+    initialOrdersData.push(lastFetch);
+  }
+  return Response.json(initialOrdersData);
+};
+
+export const getOrders = async (userId: string, pageParam?: string) => {
+  return await axios
+    .get(
+      `/api/orders?userId=${userId}${pageParam ? '&pageParam=' + pageParam : ''}`,
+    )
+    .then(res => res.data)
+    .catch(error => {
+      console.error('Error while getting orders:', error);
+    });
 };
