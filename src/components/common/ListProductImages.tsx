@@ -50,6 +50,9 @@ const ListProductImages = ({ queryKey, error }: IListProductImagesProps) => {
         );
         setSkeletonAmount(0);
       },
+      onError: () => {
+        setSkeletonAmount(0);
+      },
     });
   };
 
