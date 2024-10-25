@@ -8,6 +8,7 @@ import ActionButtons from './ActionButtons';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { ISingleProductPageProps } from '@/lib/types';
 import BackButton from '@/components/common/BackButton';
+import { formatAmount } from '@/utils';
 
 const SingleProductPage = async (props: ISingleProductPageProps) => {
   if (!props || !props.params || !props.params.productId) return null;
@@ -77,13 +78,20 @@ const SingleProductPage = async (props: ISingleProductPageProps) => {
                 {name}
               </Typography>
             </Tooltip>
-            <Typography
-              data-testid="singleProductPage__price"
-              variant="h3"
-              sx={{ lineHeight: { xs: '35px', md: '53px' } }}
-            >
-              ${price}
-            </Typography>
+
+            <Tooltip title={price} placement="top-end">
+              <Typography
+                data-testid="singleProductPage__price"
+                variant="h3"
+                sx={{
+                  minWidth: '110px',
+                  lineHeight: { xs: '35px', md: '53px' },
+                  ...textOverflowEllipsis.singleLine,
+                }}
+              >
+                ${formatAmount(price)}
+              </Typography>
+            </Tooltip>
           </Box>
           <Box sx={styles.genderAndColor}>
             {gender && (

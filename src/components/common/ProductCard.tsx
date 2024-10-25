@@ -27,6 +27,7 @@ import { ProductAttributes } from '@/lib/types';
 import { textOverflowEllipsis } from '@/styles/commonStyles';
 import { addToCartQuery } from '@/tools';
 import WishlistIcon from './WishlistIcon';
+import { formatAmount } from '@/utils';
 
 type Props = {
   product: ProductAttributes;
@@ -193,7 +194,7 @@ const ProductCard = ({
                   variant="h3"
                   sx={{ fontSize: { xs: '10px', sm: '22px' } }}
                 >
-                  ${product.price}
+                  ${formatAmount(product.price)}
                 </Typography>
               </Stack>
             </CardContent>

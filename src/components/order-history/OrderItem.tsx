@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { orderItemStyle as styles } from '@/styles/orderHistory/order.style';
 import OrderDetail from './OrderDetail';
 import { OrderItemProps } from '@/lib/types';
+import { formatAmount } from '@/utils';
 
 const OrderItem = ({ item }: OrderItemProps) => {
   return (
@@ -47,7 +48,7 @@ const OrderItem = ({ item }: OrderItemProps) => {
       />
       <OrderDetail
         labelText={'Price:'}
-        infoText={`${item.amount / 100 / parseInt(item.metadata.quantity)}$`}
+        infoText={`${formatAmount(item.amount / 100 / parseInt(item.metadata.quantity))}$`}
         containerStyle={styles.price}
       />
     </Box>

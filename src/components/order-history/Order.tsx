@@ -18,6 +18,7 @@ import OrderStatus from './OrderStatus';
 import { OrderProps } from '@/lib/types';
 import { orderStyle as styles } from '@/styles/orderHistory/order.style';
 import { stylingConstants } from '@/lib/constants/themeConstants';
+import { formatAmount } from '@/utils';
 
 const Order = ({
   invoice,
@@ -49,7 +50,7 @@ const Order = ({
           />
           <OrderDetail
             labelText={'Summary:'}
-            infoText={`${paymentIntent.amount / 100}$`}
+            infoText={`${formatAmount(paymentIntent.amount / 100)}$`}
             containerStyle={styles.summaryPrice}
           />
           <OrderStatus status={status} isUpdating={isStatusUpdating} />

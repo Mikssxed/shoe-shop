@@ -21,6 +21,7 @@ import { bagItemStyles as styles } from '@/styles/bag/bag.style';
 import { changeSelectedSize, deleteFromCartQuery } from '@/tools';
 import { DeleteModal } from '../modals';
 import QuantityButtons from './QuantityButtons';
+import { formatAmount } from '@/utils';
 
 const BagItem: React.FC<BagItemProps> = ({ item }) => {
   const { data: session } = useSession();
@@ -136,9 +137,9 @@ const BagItem: React.FC<BagItemProps> = ({ item }) => {
             </Box>
           </Box>
           <Box>
-            <Tooltip title={`$${item.price}`} placement="top-end">
+            <Tooltip title={`$${formatAmount(item.price)}`} placement="top-end">
               <Typography data-testid="bag-item__price" sx={styles.price}>
-                ${item.price}
+                ${formatAmount(item.price)}
               </Typography>
             </Tooltip>
           </Box>
