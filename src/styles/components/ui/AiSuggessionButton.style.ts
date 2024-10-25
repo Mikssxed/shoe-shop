@@ -2,13 +2,13 @@ import { stylingConstants } from '@/lib/constants/themeConstants';
 
 const styles = {
   root: {
-    display: { xs: 'none', lg: 'inline-flex' },
+    display: 'inline-flex',
     position: 'absolute',
-    right: '10px',
-    bottom: '10px',
+    right: { xs: '2px', sm: '3px', lg: '10px' },
+    bottom: { xs: '1px', md: '3px', lg: '10px' },
     border: 0,
     backgroundColor: stylingConstants.palette.primary.secondary,
-    p: '6px 8px',
+    p: { xs: '5px 4px', md: '6px 8px' },
     minWidth: '44px',
 
     '& svg': {
@@ -18,7 +18,7 @@ const styles = {
     },
 
     '&:hover, &:focus': {
-      bottom: '12px',
+      bottom: { xs: '2.5px', md: '4px', lg: '12px' },
       backgroundColor: stylingConstants.palette.primary.main,
       color: '#fff',
 
