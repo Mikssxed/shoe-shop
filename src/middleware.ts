@@ -2,21 +2,52 @@ import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import filterOrderIds from './utils/filterOrderIds';
+
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const res = NextResponse.next();
 
   const token = await getToken({ req });
-  const pathnamePage = pathname.split('/')[1];
+  const pathNames = pathname.split('/');
 
-  if ((pathnamePage === 'auth' && token) || pathnamePage === '') {
+  if ((pathNames[1] === 'auth' && token) || pathNames[1] === '') {
     const url = new URL(`/products`, req.url);
     return NextResponse.redirect(url);
   }
-  if (pathnamePage !== 'auth' && !token) {
+  if (pathNames[1] !== 'auth' && !token) {
     const url = new URL(`/auth/sign-in`, req.url);
     return NextResponse.redirect(url);
   }
+
+  if (pathNames[2] === 'order-history') {
+    const searchParams = req.nextUrl.searchParams;
+    const ids = searchParams.getAll('id');
+    if (ids.length > 0) {
+      const validIds = await filterOrderIds(ids, token?.sub);
+      if (validIds.length !== ids.length) {
+        let searchQuery = '/profile/order-history';
+        validIds.forEach((id, index) => {
+          if (index === 0) searchQuery += '?';
+          searchQuery += `id=${id}`;
+          if (index !== validIds.length - 1) searchQuery += '&';
+        });
+        const url = new URL(searchQuery, req.url);
+        return NextResponse.redirect(url);
+      }
+    }
+  }
+  // Does not work - after every checkout intead of showing thank you page it shows 404 page
+  // if (pathNames[2] === 'thank-you') {
+  //   if (pathNames.length > 3) {
+  //     const id = pathNames[3];
+  //     const matches = await filterOrderIds([id], token?.sub);
+  //     if (matches.length === 0) {
+  //       const url = new URL(`/not_found-thank-you-${id}`, req.url);
+  //       return NextResponse.redirect(url);
+  //     }
+  //   }
+  // }
 
   return res;
 }
