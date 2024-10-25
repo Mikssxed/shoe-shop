@@ -12,7 +12,6 @@ import ImageSlider from './ImageSlider';
 import ImageWithSkeleton from './ImageWithSkeleton';
 import LastViewedProducts from './LastViewedProducts';
 import ListProductImages from './ListProductImages';
-import NotFoundError from './NotFoundError';
 import { Option } from './Option';
 import PriceSlider from './PriceSlider';
 import ProductCard from './ProductCard';
@@ -40,7 +39,6 @@ export {
   LastViewedProducts,
   ListProductImages,
   LogOutModal,
-  NotFoundError,
   Option,
   PriceSlider,
   ProductCard,

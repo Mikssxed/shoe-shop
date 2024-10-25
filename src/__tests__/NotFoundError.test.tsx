@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/components/common';
+import NotFoundError from '@/app/not-found';
 import { useIsMobile } from '@/hooks';
 import { useQueryCartItems } from '@/tools';
 import '@testing-library/jest-dom';
