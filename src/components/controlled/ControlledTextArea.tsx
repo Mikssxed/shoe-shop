@@ -42,6 +42,7 @@ const ControlledTextArea = ({
             onChange={onChange}
             required
             disabled={disabled}
+            data-testid="description-input"
           >
             {children}
           </TextArea>

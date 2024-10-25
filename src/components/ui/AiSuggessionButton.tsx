@@ -20,6 +20,7 @@ export const AiSuggessionButton: React.FC<Props> = ({
       variant="contained"
       onClick={onClick}
       disabled={disabled}
+      data-testid="ai-button"
     >
       <Typography sx={styles.text}>Use AI suggestion</Typography>
       {isLoading ? <AnimatedThreeDots /> : <LogoIcon />}

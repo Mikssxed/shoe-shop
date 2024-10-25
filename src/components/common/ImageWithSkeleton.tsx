@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Skeleton } from '@mui/material';
 
@@ -12,12 +12,15 @@ const ImageWithSkeleton = ({
 }: IImageWithSkeletonProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const onLoaded = () => setIsLoading(false);
-
   return (
     <>
       {isLoading && (
-        <Skeleton variant="rectangular" width="100%" height="100%" />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height="100%"
+          data-testid="skeleton"
+        />
       )}
       <Image
         src={src}
@@ -26,7 +29,8 @@ const ImageWithSkeleton = ({
         style={{ objectFit: 'cover', display: isLoading ? 'none' : 'block' }}
         priority={true}
         sizes="100%"
-        onLoad={onLoaded}
+        onLoad={() => setIsLoading(false)}
+        data-testid="product-image"
       />
     </>
   );

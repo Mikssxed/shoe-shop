@@ -305,6 +305,7 @@ const ProductForm = ({
               required
               placeholder="Nike Air Max 90"
               ref={nameInputRef}
+              data-testid="name-input"
             />
             <ControlledInput
               name="price"
@@ -313,6 +314,7 @@ const ProductForm = ({
               required
               placeholder="$160"
               type="number"
+              data-testid="price-input"
             />
             <ControlledDropdown
               name="color"
@@ -320,6 +322,7 @@ const ProductForm = ({
               labelText="Color"
               options={colorOptions}
               withoutNone
+              data-testid="color-input"
             />
             <Box sx={styles.genderAndBrand}>
               <ControlledDropdown
@@ -327,12 +330,14 @@ const ProductForm = ({
                 control={control}
                 labelText="Gender"
                 options={genderOptions}
+                data-testid="gender-input"
               />
               <ControlledDropdown
                 name="brand"
                 control={control}
                 labelText="Brand"
                 options={brandOptions}
+                data-testid="brand-input"
               />
             </Box>
             <Box>

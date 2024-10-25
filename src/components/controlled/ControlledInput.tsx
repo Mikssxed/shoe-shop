@@ -30,6 +30,7 @@ const ControlledInput = forwardRef<HTMLInputElement, IControlledInputProps>(
       inputStyle,
       type,
       containerProps,
+      ...props
     },
     ref,
   ) => {
@@ -53,6 +54,7 @@ const ControlledInput = forwardRef<HTMLInputElement, IControlledInputProps>(
             inputStyle={inputStyle}
             containerProps={containerProps}
             disabled={disabled}
+            {...props}
           />
         )}
       />

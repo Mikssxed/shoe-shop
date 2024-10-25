@@ -92,6 +92,7 @@ const SelectCategories = ({
                     py: { xs: '6.5px', md: '5px' },
                   },
                 }}
+                data-testid="categories-input"
               />
             )}
             {error && (

@@ -93,6 +93,7 @@ const ListProductImages = ({ queryKey, error }: IListProductImagesProps) => {
                   <Box sx={styles.imageCoverOnHover}>
                     <IconButton
                       sx={styles.trashIconContainer}
+                      data-testid="delete-image-button"
                       onClick={() => onOpenDeleteModal(item.id)}
                     >
                       <Image
@@ -123,7 +124,7 @@ const ListProductImages = ({ queryKey, error }: IListProductImagesProps) => {
             lg={12}
             xl={6}
           >
-            <Box sx={styles.productImageContainer}>
+            <Box sx={styles.productImageContainer} data-testid="skeleton">
               <Skeleton variant="rectangular" width="100%" height="100%" />
             </Box>
           </Grid>
@@ -145,7 +146,7 @@ const ListProductImages = ({ queryKey, error }: IListProductImagesProps) => {
               mb: '3px',
             }}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} data-testid="file-input" />
             <Gallery
               size="38"
               color={stylingConstants.palette.grey[500]}
