@@ -37,7 +37,7 @@ export default function WishlistIcon({
         }}
         onClick={() => handleWishlist(id.toString())}
       >
-        <HeartSlash size="24" />
+        <HeartSlash size="24" data-testid={`wishlist-icon-${id}`} />
       </Box>
     </Tooltip>
   );

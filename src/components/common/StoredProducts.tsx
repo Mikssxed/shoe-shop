@@ -44,7 +44,12 @@ export default function StoredProducts({
       sx={{ maxWidth: 1850, mx: 'auto', px: '20px', py: { xs: '24px', md: 0 } }}
     >
       {isLoading || status === 'loading' ? (
-        <Skeleton variant="text" width="20%" height="53px" />
+        <Skeleton
+          variant="text"
+          width="20%"
+          height="53px"
+          data-testid="title__skeleton"
+        />
       ) : (
         <Typography sx={{ marginBottom: '24px' }} variant="h1">
           {title}
@@ -71,6 +76,7 @@ export default function StoredProducts({
                 justifyContent: 'center',
                 transition: 'all 0.3s ease-in-out',
               }}
+              data-testid="product__skeleton"
             >
               <ProductCardSkeleton />
             </Grid>
