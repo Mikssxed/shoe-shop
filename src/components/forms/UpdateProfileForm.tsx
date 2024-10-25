@@ -92,7 +92,7 @@ export const UpdateProfileForm: React.FC = () => {
         inputStyle={styles.field}
       />
       <BaseButton type="submit" sx={styles.submitButton} disabled={isPending}>
-        {isPending ? 'Loading...' : 'Save Changes'}
+        {isPending ? 'Saving...' : 'Save Changes'}
       </BaseButton>
     </Box>
   );
