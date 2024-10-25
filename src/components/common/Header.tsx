@@ -89,34 +89,43 @@ const Header = () => {
               onInputClick={onOpenSearch}
             />
           )}
-          <Link
-            href="/bag"
-            style={{
-              width: '24px',
-              height: '24px',
-              position: 'relative',
-              marginRight: cartItems.length > 0 ? '10px' : undefined,
-            }}
-          >
-            <Bag
-              data-testid="header__bagIcon"
-              size="24"
-              color={
-                cartItems.length > 0
-                  ? stylingConstants.palette.primary.main
-                  : stylingConstants.palette.grey[700]
-              }
+          {status === 'loading' ? (
+            <Skeleton
+              variant="circular"
+              width={24}
+              height={24}
+              sx={{ display: 'block' }}
             />
-            {cartItems.length > 0 && (
-              <Box
-                data-testid="header__bagSpan"
-                component="span"
-                sx={styles.cartItemAmount}
-              >
-                {cartItemAmount}
-              </Box>
-            )}
-          </Link>
+          ) : (
+            <Link
+              href={status === 'authenticated' ? '/bag' : '/auth/sign-in'}
+              style={{
+                width: '24px',
+                height: '24px',
+                position: 'relative',
+                marginRight: cartItems.length > 0 ? '10px' : undefined,
+              }}
+            >
+              <Bag
+                data-testid="header__bagIcon"
+                size="24"
+                color={
+                  cartItems.length > 0
+                    ? stylingConstants.palette.primary.main
+                    : stylingConstants.palette.grey[700]
+                }
+              />
+              {cartItems.length > 0 && (
+                <Box
+                  data-testid="header__bagSpan"
+                  component="span"
+                  sx={styles.cartItemAmount}
+                >
+                  {cartItemAmount}
+                </Box>
+              )}
+            </Link>
+          )}
           {status === 'loading' ? (
             <Skeleton
               variant="circular"

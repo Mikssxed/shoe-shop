@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import BaseButton from '@/components/ui/BaseButton';
 import { IActionButtonsProps } from '@/lib/types/props.type';
@@ -26,6 +27,8 @@ export default function ActionButtons({
     isProductWishlisted(id, session?.user?.id),
   );
 
+  const router = useRouter();
+
   useEffect(() => {
     setWishlisted(isProductWishlisted(id, session?.user?.id));
   }, [sessionStatus]);
@@ -44,10 +47,7 @@ export default function ActionButtons({
         autoHideDuration: 2000,
       });
     } else {
-      enqueueSnackbar('You must be logged in to add product to bag', {
-        variant: 'error',
-        autoHideDuration: 2000,
-      });
+      router.push('/auth/sign-in');
     }
   };
 
@@ -67,10 +67,7 @@ export default function ActionButtons({
         });
       }
     } else {
-      enqueueSnackbar('You must be logged in to add product to wishlist', {
-        variant: 'error',
-        autoHideDuration: 2000,
-      });
+      router.push('/auth/sign-in');
     }
   };
 
