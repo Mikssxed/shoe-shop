@@ -38,13 +38,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  if (pathname.startsWith('/bag/thank-you') && pathNames.length > 2) {
-    const id = pathNames[3];
-    const matches = await filterOrderIds([id], token?.sub);
-    if (matches.length === 0)
-      return NextResponse.rewrite(new URL('/not-found', req.url));
-  }
-
   return res;
 }
 
