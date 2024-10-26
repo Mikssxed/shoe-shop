@@ -3,17 +3,17 @@
 import { Box, Container, Divider, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { Fragment, useEffect } from 'react';
 import { enqueueSnackbar } from 'notistack';
+import { Fragment, useEffect } from 'react';
 
 import { BagItem, BagSummary } from '@/components/bag';
-import EmptyProductList from '@/components/common/EmptyProductList';
 import BaseButton from '@/components/ui/BaseButton';
 import BagItemsSkeleton from '@/components/ui/loading-skeletons/BagItemsSkeleton';
 import SummarySectionSkeleton from '@/components/ui/loading-skeletons/SummarySectionSkeleton';
+import { useIsMobile } from '@/hooks';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
 import { useQueryCartItems, validateStoredItems } from '@/tools';
-import { useIsMobile } from '@/hooks';
+import EmptyPage from './checkout/components/EmptyPage';
 
 const Bag = () => {
   const { data: session } = useSession();
@@ -81,21 +81,7 @@ const Bag = () => {
           )}
         </Container>
       ) : (
-        <Container component={'main'} maxWidth="xl" sx={styles.emptyCart_main}>
-          <Typography
-            data-testid="bag__title-desktop-empty"
-            variant="h1"
-            sx={styles.emptyCart_rootTitle}
-          >
-            Cart
-          </Typography>
-          <EmptyProductList
-            text={"You don't have any products yet"}
-            subtext={'Add something to your cart'}
-            link={'/products'}
-            buttonText={'Add product'}
-          />
-        </Container>
+        <EmptyPage />
       )}
       {cart.length > 0 && isMobile && (
         <>

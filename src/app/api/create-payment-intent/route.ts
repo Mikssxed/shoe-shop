@@ -1,4 +1,3 @@
-import { ICartItem } from '@/lib/types';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 

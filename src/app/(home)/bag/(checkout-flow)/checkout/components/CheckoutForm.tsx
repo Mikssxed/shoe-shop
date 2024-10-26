@@ -7,9 +7,13 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import axios from 'axios';
+import { getCode } from 'country-list';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { enqueueSnackbar } from 'notistack';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -18,10 +22,12 @@ import { ControlledInput } from '@/components/controlled';
 import { useIsMobile } from '@/hooks';
 import { CheckoutFormValidation } from '@/lib/validation';
 import { bagPageStyles as styles } from '@/styles/bag/bag.style';
-import { addOrderStatus, clearCartQuery, queryClient } from '@/tools';
-import { useRouter } from 'next/navigation';
-import { enqueueSnackbar } from 'notistack';
-import axios from 'axios';
+import {
+  addOrderStatus,
+  clearCartQuery,
+  queryClient,
+  useQueryCartItems,
+} from '@/tools';
 
 type Props = {
   orderId: string;
@@ -57,9 +63,26 @@ export default function CheckoutForm({ orderId, invoiceId }: Props) {
     resolver: zodResolver(CheckoutFormValidation),
     defaultValues,
   });
+  const { data: cart = [] } = useQueryCartItems(session?.user?.id);
 
   const [message, setMessage] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const hasUnseleckedSize = useMemo(
+    () => cart.some(item => item.selectedSize === 'unselected'),
+    [cart],
+  );
+
+  useEffect(() => {
+    if (hasUnseleckedSize) {
+      enqueueSnackbar(
+        'All products must have selected size! Go back to cart and select size.',
+        {
+          variant: 'error',
+          preventDuplicate: true,
+        },
+      );
+    }
+  }, [hasUnseleckedSize]);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0) {
@@ -91,9 +114,14 @@ export default function CheckoutForm({ orderId, invoiceId }: Props) {
 
   const onSubmit = async (data: z.infer<typeof CheckoutFormValidation>) => {
     try {
+      if (cart.some(item => item.selectedSize === 'unselected'))
+        throw Error(
+          'All products must have selected size! Go back to cart and select size.',
+        );
       if (!stripe || !elements) {
         return;
       }
+      const countryCode = getCode(data.country);
       setIsLoading(true);
       const { error } = await stripe.confirmPayment({
         elements,
@@ -104,15 +132,20 @@ export default function CheckoutForm({ orderId, invoiceId }: Props) {
             phone: data.phone,
             address: {
               city: data.city,
-              country: data.country,
+              country: countryCode,
               line1: data.address,
               postal_code: data.zipCode,
               state: data.state,
             },
           },
+          return_url: `${window.location.origin}/bag/thank-you/${orderId}`,
         },
         redirect: 'if_required',
       });
+
+      if (error) {
+        throw new Error(error?.message);
+      }
 
       //finalize invoice to create invoice pdf
       await axios.put(
@@ -127,10 +160,6 @@ export default function CheckoutForm({ orderId, invoiceId }: Props) {
       addOrderStatus(orderId);
       clearCartQuery(session?.user?.id);
       router.push(`/bag/thank-you/${orderId}`);
-
-      if (error) {
-        throw new Error(error?.message);
-      }
     } catch (error: any) {
       enqueueSnackbar(error?.message || 'An unexpected error occurred.', {
         variant: 'error',

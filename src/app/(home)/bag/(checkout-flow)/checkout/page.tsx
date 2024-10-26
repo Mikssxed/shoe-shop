@@ -1,6 +1,5 @@
 'use client';
-import SummarySectionSkeleton from '@/components/ui/loading-skeletons/SummarySectionSkeleton';
-import { bagPageStyles as styles } from '@/styles/bag/bag.style';
+
 import { useQueryCartItems } from '@/tools';
 import { Container } from '@mui/material';
 import { Elements } from '@stripe/react-stripe-js';
@@ -8,8 +7,13 @@ import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
+
+import SummarySectionSkeleton from '@/components/ui/loading-skeletons/SummarySectionSkeleton';
+import { ICartItem } from '@/lib/types';
+import { bagPageStyles as styles } from '@/styles/bag/bag.style';
 import CheckoutForm from './components/CheckoutForm';
 import CheckoutFormSkeleton from './components/CheckoutFormSkeleton';
+import EmptyPage from './components/EmptyPage';
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -20,22 +24,35 @@ export default function Checkout() {
   const [orderId, setOrderId] = useState('');
   const [invoiceId, setInvoiceId] = useState('');
   const { data: session } = useSession();
-  const { data: cart = [] } = useQueryCartItems(session?.user?.id);
+  const { data: cart = [], isLoading } = useQueryCartItems(session?.user?.id);
+  const [staticCart, setStaticCart] = useState<ICartItem[]>([]);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      setStaticCart(cart);
+    }
+  }, [cart]);
 
   const total = useMemo(
     () =>
-      +cart
+      +staticCart
         .reduce((total: number, item) => total + item.price * item.amount, 0)
         .toFixed(2),
-    [cart],
+    [staticCart],
   );
 
   useEffect(() => {
-    if (!cart.length || !total || !session?.user || clientSecret || orderId)
+    if (
+      !staticCart.length ||
+      !total ||
+      !session?.user ||
+      clientSecret ||
+      orderId
+    )
       return;
 
     const payload = {
-      items: cart,
+      items: staticCart,
       total: total + 20,
       userId: session?.user.id,
     };
@@ -68,7 +85,7 @@ export default function Checkout() {
       .catch(error => {
         console.error('Error creating payment intent:', error);
       });
-  }, [cart, total, session?.user, clientSecret, orderId]);
+  }, [staticCart, total, session?.user, clientSecret, orderId]);
 
   const appearance: { theme: 'stripe' | 'night' | 'flat' | undefined } = {
     theme: 'stripe',
@@ -79,7 +96,7 @@ export default function Checkout() {
     locale: 'en',
   };
 
-  return (
+  return staticCart.length > 0 || isLoading ? (
     <Container component={'main'} maxWidth="xl" sx={styles.main}>
       {(!clientSecret || !session) && (
         <>
@@ -93,5 +110,7 @@ export default function Checkout() {
         </Elements>
       )}
     </Container>
+  ) : (
+    <EmptyPage />
   );
 }
