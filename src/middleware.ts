@@ -37,17 +37,6 @@ export async function middleware(req: NextRequest) {
       }
     }
   }
-  // Does not work - after every checkout intead of showing thank you page it shows 404 page
-  // if (pathNames[2] === 'thank-you') {
-  //   if (pathNames.length > 3) {
-  //     const id = pathNames[3];
-  //     const matches = await filterOrderIds([id], token?.sub);
-  //     if (matches.length === 0) {
-  //       const url = new URL(`/not_found-thank-you-${id}`, req.url);
-  //       return NextResponse.redirect(url);
-  //     }
-  //   }
-  // }
 
   return res;
 }
