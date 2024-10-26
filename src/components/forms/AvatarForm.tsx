@@ -28,6 +28,7 @@ export default function AvatarForm() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof avatarValidation>>({
     resolver: zodResolver(avatarValidation),
@@ -47,8 +48,9 @@ export default function AvatarForm() {
     if (errors.avatar) {
       enqueueSnackbar(errors.avatar.message, {
         variant: 'error',
-        autoHideDuration: 2000,
+        autoHideDuration: 3000,
       });
+      reset();
     }
   }, [errors.avatar]);
 
