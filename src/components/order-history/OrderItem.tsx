@@ -27,9 +27,12 @@ const OrderItem = ({ item }: OrderItemProps) => {
             href={`/products/${item.metadata.id}`}
             style={{ textDecoration: 'none' }}
           >
-            <Tooltip title={`${item.description}`} placement="top-end">
+            <Tooltip
+              title={`${item.metadata.name || item.description}`}
+              placement="top-end"
+            >
               <Typography variant="h2" sx={styles.name}>
-                {item.description}
+                {item.metadata.name || item.description}
               </Typography>
             </Tooltip>
           </Link>

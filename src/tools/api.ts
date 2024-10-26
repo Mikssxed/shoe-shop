@@ -7,7 +7,6 @@ import {
   ApiResponseList,
   BaseWithName,
   BaseWithValue,
-  IEditProductRequest,
   IForgotPasswordReq,
   IForgotPasswordRes,
   IImage,

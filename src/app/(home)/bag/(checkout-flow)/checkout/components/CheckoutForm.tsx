@@ -150,7 +150,7 @@ export default function CheckoutForm({ orderId, invoiceId }: Props) {
       //finalize invoice to create invoice pdf
       await axios.put(
         '/api/orders',
-        { invoiceId, paymentType },
+        { orderId, invoiceId, paymentType },
         {
           headers: { 'Content-Type': 'application/json' },
         },

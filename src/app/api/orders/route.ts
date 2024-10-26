@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
       await stripe.invoiceItems.create({
         invoice: invoice.id,
         customer: customer.id,
-        description: item.name,
+        description: `${item.name} x${item.amount}`,
         amount: item.price * 100 * item.amount,
         metadata: {
           id: item.id,
@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
           gender: item?.gender?.data?.attributes.name || '',
           size: item?.selectedSize.toString(),
           quantity: item.amount,
+          name: item.name,
         },
       });
     });
@@ -88,6 +89,7 @@ export async function PUT(req: NextRequest) {
     const body: {
       invoiceId: string;
       paymentType: string;
+      orderId: string;
     } = await req.json();
 
     await stripe.invoices.update(body.invoiceId, {
@@ -99,6 +101,7 @@ export async function PUT(req: NextRequest) {
         },
       },
       metadata: {
+        orderId: body.orderId,
         paymentMethod: body.paymentType,
       },
     });

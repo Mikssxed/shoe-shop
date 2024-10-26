@@ -22,7 +22,7 @@ import {
   mockSessionUnauthed,
 } from '@/lib/mocks/sessionMocks';
 import { addToCartQuery, getProduct } from '@/tools';
-import { addLastViewedProductId } from '@/utils';
+import { addLastViewedProductId, formatAmount } from '@/utils';
 import { useRouter } from 'next/navigation';
 
 jest.mock('notistack', () => ({
@@ -37,6 +37,7 @@ jest.mock('@/tools', () => ({
 jest.mock('@/utils', () => ({
   addLastViewedProductId: jest.fn(),
   isProductWishlisted: jest.fn(),
+  formatAmount: jest.fn(),
 }));
 
 jest.mock('next-auth/react', () => ({

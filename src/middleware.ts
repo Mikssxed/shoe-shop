@@ -2,20 +2,47 @@ import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import filterOrderIds from './utils/filterOrderIds';
+
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const res = NextResponse.next();
 
   const token = await getToken({ req });
-  const pathnamePage = pathname.split('/')[1];
+  const pathNames = pathname.split('/');
 
-  if ((pathnamePage === 'auth' && token) || pathnamePage === '') {
+  if ((pathNames[1] === 'auth' && token) || pathNames[1] === '') {
     const url = new URL(`/products`, req.url);
     return NextResponse.redirect(url);
   }
-  if (pathnamePage !== 'auth' && !token) {
+  if (pathNames[1] !== 'auth' && !token) {
     const url = new URL(`/auth/sign-in`, req.url);
     return NextResponse.redirect(url);
+  }
+
+  if (pathNames[2] === 'order-history') {
+    const searchParams = req.nextUrl.searchParams;
+    const ids = searchParams.getAll('id');
+    if (ids.length > 0) {
+      const validIds = await filterOrderIds(ids, token?.sub);
+      if (validIds.length !== ids.length) {
+        let searchQuery = '/profile/order-history';
+        validIds.forEach((id, index) => {
+          if (index === 0) searchQuery += '?';
+          searchQuery += `id=${id}`;
+          if (index !== validIds.length - 1) searchQuery += '&';
+        });
+        const url = new URL(searchQuery, req.url);
+        return NextResponse.redirect(url);
+      }
+    }
+  }
+
+  if (pathname.startsWith('/bag/thank-you') && pathNames.length > 2) {
+    const id = pathNames[3];
+    const matches = await filterOrderIds([id], token?.sub);
+    if (matches.length === 0)
+      return NextResponse.rewrite(new URL('/not-found', req.url));
   }
 
   return res;
