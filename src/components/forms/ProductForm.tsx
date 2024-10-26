@@ -217,10 +217,12 @@ const ProductForm = ({
     if (messages?.length) {
       const lastMessage = messages[messages.length - 1];
       if (lastMessage?.content && lastMessage?.role !== 'user') {
-        setValue(
-          'description',
-          lastMessage.content.slice(0, DESCRIPTION_LIMIT),
-        );
+        let cutMessage = lastMessage.content.slice(0, DESCRIPTION_LIMIT);
+        if (cutMessage[cutMessage.length - 1] !== '.') {
+          cutMessage = cutMessage.slice(0, cutMessage.lastIndexOf('.') + 1);
+        }
+
+        setValue('description', cutMessage);
       }
     }
   }, [messages, setValue]);
