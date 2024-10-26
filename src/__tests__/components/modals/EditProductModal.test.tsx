@@ -22,12 +22,14 @@ jest.mock('@/components/forms/ProductForm', () => {
 });
 
 jest.mock('@/components/ui/Modal', () => {
-  return ({ open, onClose, children }: ModalProps) => (
+  const Modal = ({ open, onClose, children }: ModalProps) => (
     <div data-testid="modal" style={{ display: open ? 'block' : 'none' }}>
       <button onClick={onClose}>Close Modal</button>
       {children}
     </div>
   );
+  Modal.displayName = 'Modal';
+  return Modal;
 });
 
 describe('EditProductModal Component', () => {

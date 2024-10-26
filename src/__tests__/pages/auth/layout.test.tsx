@@ -3,13 +3,13 @@ import '@testing-library/jest-dom';
 import Layout from '@/app/auth/layout';
 import { usePathname } from 'next/navigation';
 
-jest.mock(
-  '@/components/common/SideImageLayout',
-  () =>
-    ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="side-image-layout">{children}</div>
-    ),
-);
+jest.mock('@/components/common/SideImageLayout', () => {
+  const Layout = ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="side-image-layout">{children}</div>
+  );
+  Layout.displayName = 'Layout';
+  return Layout;
+});
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
