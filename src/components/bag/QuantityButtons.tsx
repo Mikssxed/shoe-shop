@@ -23,7 +23,6 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
     increaseCartItemAmount(item.id, session?.user?.id, item.selectedSize);
 
   const isMinusDisabled = item.amount <= 1;
-  const isPlusDisabled = item.amount >= item.number;
 
   return (
     <>
@@ -52,7 +51,6 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
           <SymbolButton
             dataTestId="quantity-desktop__increase"
             onClick={onClickIncrease}
-            disabled={isPlusDisabled}
           >
             <Image src="/icons/plus-2.svg" alt="plus" width={12} height={12} />
           </SymbolButton>
@@ -104,7 +102,6 @@ const QuantityButtons: React.FC<IQuantityButtonsProps> = ({ item }) => {
             <SymbolButton
               dataTestId="quantity-mobile__increase"
               onClick={onClickIncrease}
-              disabled={isPlusDisabled}
             >
               <Image
                 src="/icons/plus-2.svg"

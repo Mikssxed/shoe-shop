@@ -1,4 +1,5 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { User } from 'next-auth';
 
 import { getStoredProductIds } from '@/utils';
 import {
@@ -7,8 +8,8 @@ import {
   ProductAttributes,
   ProductsResponse,
   OrderResponseBody,
+  TSelectedSize,
 } from '@/lib/types';
-import { User } from 'next-auth';
 import { queryClient } from '.';
 import {
   getFiltersData,
@@ -399,29 +400,74 @@ export const validateStoredItems = async (
   const storageKey = userId ? `${storeName}_${userId}` : storeName;
   const productIds = getStoredProductIds(storeName, userId);
 
-  const validatedCart = await Promise.allSettled(
+  const validatedProducts = await Promise.allSettled(
     productIds.map(id => getProduct(id)),
   );
 
-  const validCartItems = validatedCart
+  const validProductIds = validatedProducts
     .filter(response => response.status === 'fulfilled')
     .map(result => result.value.data.id);
 
-  const invalidProductIds = validatedCart.filter(
+  const validCartItems = validatedProducts
+    .filter(response => response.status === 'fulfilled')
+    .map(result => ({
+      ...result.value.data.attributes,
+      id: Number(result.value.data.id),
+    }));
+
+  const invalidProductIds = validatedProducts.filter(
     response => response.status === 'rejected',
   );
 
   if (storeName === 'cart') {
+    // update the cart with the validated data and keeping the amount for each item
+    // if the selected size of the product is no longer available, change it as 'unselected'
     queryClient.setQueryData([storageKey], (cartItems: ICartItem[]) => {
-      const updatedCart = cartItems.filter(product =>
-        validCartItems.includes(product.id),
+      const filteredCart = cartItems.filter(product =>
+        validProductIds.includes(product.id),
       );
-      localStorage.setItem(storageKey, JSON.stringify(updatedCart));
-      return updatedCart;
+
+      if (validCartItems.length === filteredCart.length) {
+        const updatedCart = validCartItems.reduce(
+          (acc: ICartItem[], product, index) => {
+            const checkSize = product.sizes?.data.find(
+              size =>
+                product.id === filteredCart[index].id &&
+                Number(size.attributes.value) ===
+                  filteredCart[index].selectedSize,
+            );
+            const selectedSize: TSelectedSize = checkSize
+              ? Number(checkSize.attributes.value)
+              : 'unselected';
+
+            const existingProduct = acc.find(
+              item =>
+                item.id === product.id && item.selectedSize === selectedSize,
+            );
+
+            if (existingProduct) {
+              existingProduct.amount += filteredCart[index].amount;
+            } else {
+              acc.push({
+                ...product,
+                amount: filteredCart[index].amount,
+                selectedSize: selectedSize,
+              });
+            }
+
+            return acc;
+          },
+          [],
+        );
+        localStorage.setItem(storageKey, JSON.stringify(updatedCart));
+        return updatedCart;
+      }
+      return cartItems;
     });
+    queryClient.invalidateQueries({ queryKey: [storageKey] });
   } else {
     const updatedStoredIds = productIds.filter(productId =>
-      validCartItems.includes(Number(productId)),
+      validProductIds.includes(Number(productId)),
     );
     localStorage.setItem(storageKey, JSON.stringify(updatedStoredIds));
   }

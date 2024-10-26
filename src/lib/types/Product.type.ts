@@ -63,9 +63,9 @@ export interface ISelectedSize {
 export interface ICartItem {
   id: number;
   name: string;
-  images?: RequestData<Data<TImage>[]>;
+  images?: RequestData<Data<TImage>[] | null>;
   description: string;
-  number: number;
+  number?: number;
   teamName: string;
   gender?: RequestData<Data<BaseWithName> | null>;
   price: number;

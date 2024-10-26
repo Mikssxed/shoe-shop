@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
         amount: item.price * 100 * item.amount,
         metadata: {
           id: item.id,
-          image: item?.images?.data[0]?.attributes?.url || '',
+          image: item.images?.data ? item?.images?.data[0]?.attributes.url : '',
           gender: item?.gender?.data?.attributes.name || '',
           size: item?.selectedSize.toString(),
           quantity: item.amount,
