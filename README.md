@@ -23,7 +23,7 @@ Go to http://localhost:3000/ (or to the port that hosts the app) in your browser
 
 ## Demo
 
-[LIVE](https://github.com/Mikssxed](https://shoes-shop-t1.vercel.app/))
+[LIVE](https://shoes-shop-t1.vercel.app/)
 
 ## Features
 
