@@ -23,7 +23,7 @@ Go to http://localhost:3000/ (or to the port that hosts the app) in your browser
 
 ## Demo
 
-The project is under development. Most of the features are not available at the moment. You can view the design of some pages. We will let you know you when new features are added. Please stay tuned.
+[LIVE](https://github.com/Mikssxed](https://shoes-shop-t1.vercel.app/))
 
 ## Features
 
